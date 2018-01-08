@@ -7,9 +7,7 @@
     <artifactId>bxs-manager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.baixiaosheng</groupId>
   <artifactId>bxs-manager-jdbc</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <name>bxs-manager-jdbc</name>
   <url>http://maven.apache.org</url>
   <properties>
