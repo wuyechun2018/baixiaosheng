@@ -8,3 +8,7 @@
 &nbsp;&nbsp;(3)bxs-manager-service:是一个Maven构建的组件，用于管理服务层,依赖于bxs-manager-jdbc;  
 &nbsp;&nbsp;(4)bxs-manager-web：是一个Maven构建的组件，用于管理控制层；  
 
+2、项目的日志配置；  
+==
+&nbsp;1)使用SLF4J和Log4j 进行日志记录，后期会使用logback替换Log4j,jar包配置参见pbxs-parent中的pom.xml中日志配置；  
+&nbsp;2)SLF4J(Simple logging Facade for Java)不是一个真正的日志实现，而是一个抽象层（ abstraction layer），它允许你在后台使用任意一个日志类库;  
