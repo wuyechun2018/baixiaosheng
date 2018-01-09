@@ -19,5 +19,16 @@
 	    <artifactId>bxs-manager-pojo</artifactId>
 	    <version>0.0.1-SNAPSHOT</version>
     </dependency>
+    
+    <!-- MySql -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+	</dependency>
+	<!-- 连接池 -->
+	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>druid</artifactId>
+	</dependency>
   </dependencies>
 </project>

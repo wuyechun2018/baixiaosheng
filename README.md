@@ -1,3 +1,5 @@
+#Bxs 是“百晓生”的中文拼音首字符简写，起源于自己想做一个“排行榜”网站，放一些新奇好玩的东西。
+
 1、初始化成一个Maven项目；  
 ==
 &nbsp;1)bxs-parent:全局的配置,公司级别的,管理依赖的jar包版本；  
@@ -11,4 +13,8 @@
 2、项目的日志配置；  
 ==
 &nbsp;1)使用SLF4J和Log4j 进行日志记录，后期会使用logback替换Log4j,jar包配置参见pbxs-parent中的pom.xml中日志配置；  
-&nbsp;2)SLF4J(Simple logging Facade for Java)不是一个真正的日志实现，而是一个抽象层（ abstraction layer），它允许你在后台使用任意一个日志类库;  
+&nbsp;2)SLF4J(Simple logging Facade for Java)不是一个真正的日志实现，而是一个抽象层（ abstraction layer），它允许你在后台使用任意一个日志类库; 
+
+3、访问数据库；
+==
+&nbsp;1)在bxs-manager-jdbc项目pom.xml中添加mysql和数据库连接池驱动jar包配置;
