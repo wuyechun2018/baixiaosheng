@@ -1,4 +1,4 @@
-package org.bxs.manager.service;
+package com.bxs.service;
 
 /**
  * Hello world!
