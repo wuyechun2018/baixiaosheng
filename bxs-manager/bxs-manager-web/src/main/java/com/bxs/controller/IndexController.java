@@ -29,4 +29,14 @@ public class IndexController{
 		ModelAndView mv=new ModelAndView("index");
 		return mv;
 	}
+	
+	
+	@RequestMapping({"/login"})
+	public ModelAndView login(HttpServletRequest request){
+		logger.info("跳转到:{},访问时间是:{}", "login",new DateTime().toString("yyyy/MM/dd HH:mm:ss") );
+		ModelAndView mv=new ModelAndView("login");
+		return mv;
+	}
+	
+	
 }

@@ -25,6 +25,15 @@ Bxs 是“百晓生”的中文拼音首字符简写，起源于自己想做一�
 &nbsp;1)问曰：@service这个注解是标注在接口上还是接口的实现类上？  
 &nbsp;&nbsp;答曰：@Service注解是标注在实现类上的，因为@Service是把spring容器中的bean进行实例化，也就是等同于new操作，只有实现类是可以进行new实例化的，而接口则不能，所以是加在实现类上的;但是，值得一提的是，在controller层注入的是接口，而非实现类。
 
-5、常见问题记录；
+5、关于视图的选择配置；  
+==
+&nbsp;&nbsp;采用SpringMVC的多视图解析器，管理页面采用jsp,前端展示页面采用FreeMarker。在视图选择时，先找ftl下的视图，再寻找Jsp下的视图。  
+
+
+
+
+
+
+0、常见问题记录；
 ==
 1、406 Not Acceptable ，访问/user/list时出现该错误，检查发现正常引用了Json的相关包,但是仍然出现改错误，后发现spring-mvc.xml中没有配置 <mvc:annotation-driven /> ,添加该配置后，正常返回json数据；  

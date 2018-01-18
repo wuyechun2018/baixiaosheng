@@ -7,15 +7,39 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- 扫描web包，应用Spring的注解 -->
-	<context:component-scan base-package="com.bxs.controller"/>
 	<mvc:annotation-driven />
 	
+	
+	<!-- 扫描web包，应用Spring的注解 -->
+	<context:component-scan base-package="com.bxs.controller"/>
+	
 	<!-- 配置视图解析器，将ModelAndView及字符串解析为具体的页面 -->
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-		p:viewClass="org.springframework.web.servlet.view.JstlView" 
-		p:prefix="/WEB-INF/jsp/"
-		p:suffix=".jsp" />
+	 <bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="viewClass"  value="org.springframework.web.servlet.view.JstlView" />  
+        <property name="prefix" value="/WEB-INF/jsp/" />  
+        <property name="suffix" value=".jsp" />  
+        <property name="order" value="1"/> 
+    </bean>  
+	
+	<!--jsp的 viewClass 可以配置为 org.springframework.web.servlet.view.InternalResourceViewResolver -->
+	
+	<!-- 配置freeMarker的模板路径 -->  
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">  
+        <property name="templateLoaderPath" value="WEB-INF/ftl/" />  
+        <property name="defaultEncoding" value="UTF-8" />  
+    </bean>  
+    <!-- freeMarker视图解析器 -->  
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">  
+        <property name="suffix" value=".ftl" />  
+        <property name="contentType" value="text/html;charset=UTF-8" />  
+        <!-- 此变量值为pageContext.request, 页面使用方法：rc.contextPath -->  
+        <property name="requestContextAttribute" value="rc" />
+        <property name="order" value="0"/>    
+    </bean>  	
+	
+	<!--配置多视图解析器,先寻找ftl下的FreeMarker视图，如果没找到则找jsp下的视图  -->
+	
+	<!--处理静态资源  -->
+    <mvc:resources  mapping="/resources/**" location="/resources/" />
 
 </beans>
