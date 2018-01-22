@@ -47,6 +47,23 @@ public class ArticleController {
 	
 	/**
 	 * 
+	 * 编辑文章
+	 * @author: wyc
+	 * @createTime: 2018年1月17日 下午5:05:37
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping("/edit/{id}")
+	public ModelAndView edit(@PathVariable String id) {
+		ModelAndView mv=new ModelAndView("article/edit");
+		Article article=articleService.getArticleById(id);
+		mv.addObject("article",article);
+		return mv;
+	}
+	
+	
+	/**
+	 * 
 	 * 文章列表
 	 * @author: wyc
 	 * @createTime: 2018年1月17日 下午5:05:37

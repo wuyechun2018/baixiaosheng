@@ -46,14 +46,16 @@ table.gridtable td {
 	<th>创建时间</th>
 	<th>更新时间</th>
 	<th>浏览次数</th>
+	<th>操作</th>
 </tr>
  <#list articleList as article>
  <tr >
-	 <td>${article_index+1!}</td>
+	 <td style="text-align:center;width:60px;">${article_index+1!}</td>
 	 <td><a href="${ctx}/article/show/${article.id!}">${article.articleTitle!}<a/></td>
-	 <td>${article.createDate!}</td>
-	 <td>${article.updateDate!}</td>
-	 <td style="text-align:center">${article.viewCount!}</td>
+	 <td style="text-align:center;width:220px;">${article.createDate!}</td>
+	 <td style="text-align:center;width:220px;">${article.updateDate!}</td>
+	 <td style="text-align:center;width:100px;">${article.viewCount!}</td>
+	 <td style="text-align:center"><a href="${ctx}/article/edit/${article.id!}">编辑<a/>|<a href="${ctx}/article/edit/${article.id!}">删除<a/></td>
  </tr>
 </#list> 
 <table>  
