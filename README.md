@@ -29,6 +29,13 @@ Bxs 是“百晓生”的中文拼音首字符简写，起源于自己想做一�
 ==
 &nbsp;&nbsp;采用SpringMVC的多视图解析器，管理页面采用jsp,前端展示页面采用FreeMarker。在视图选择时，先找ftl下的视图，再寻找Jsp下的视图。  
 
+6、富文本编辑器ckeditor的使用；
+==
+使用起来非常简单；  
+1）引入jquery和ckeditor.js;  
+2)在页面上添加 textarea,设置好元素id,在第三步初始化中要用到；  
+3)在页面加载完成的js中进行初始化即可，注意其配置文件config.js； 
+4）提交时使用表单，作为实体字段进行提交。  参考：'bxs-manager-web/src/main/webapp/WEB-INF/jsp/article/add.jsp'  
 
 
 
