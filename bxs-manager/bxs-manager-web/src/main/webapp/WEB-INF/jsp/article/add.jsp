@@ -53,7 +53,7 @@ $(function(){
 			<tr>
 				<td><input type="submit" value="保存" /></td>
 				<td>
-					<a href="${ctx}/article/list">取消</a>
+					<a href="${ctx}/article/manager">取消</a>
 				</td>
 			</tr>
 		</table>

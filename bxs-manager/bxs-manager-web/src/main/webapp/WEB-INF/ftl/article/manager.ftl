@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>文章列表</title>
+<title>文章管理</title>
 
 <style type="text/css">
 table.gridtable {
@@ -37,19 +37,23 @@ table.gridtable td {
 
 </head>
 <body>
+<a href="${ctx}/article/add" style="color:#8FBC8F">创建文章</a>
+<br/>
 <table class="gridtable">
 <tr>
 	<th>序号</th>
 	<th>标题</th>
+	<th>创建时间</th>
 	<th>更新时间</th>
 	<th>浏览次数</th>
 </tr>
  <#list articleList as article>
  <tr >
-	 <td style="width:60px;text-align:center;">${article_index+1!}</td>
-	 <td style="text-align:left;"><a href="${ctx}/article/show/${article.id!}">${article.articleTitle!}<a/></td>
-	 <td style="width:220px;">${article.updateDate!}</td>
-	 <td style="width:100px;">${article.viewCount!}</td>
+	 <td>${article_index+1!}</td>
+	 <td><a href="${ctx}/article/show/${article.id!}">${article.articleTitle!}<a/></td>
+	 <td>${article.createDate!}</td>
+	 <td>${article.updateDate!}</td>
+	 <td style="text-align:center">${article.viewCount!}</td>
  </tr>
 </#list> 
 <table>  

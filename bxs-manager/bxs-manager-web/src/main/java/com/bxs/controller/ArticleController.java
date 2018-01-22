@@ -64,6 +64,23 @@ public class ArticleController {
 	
 	/**
 	 * 
+	 * 文章管理页面
+	 * @author: wyc
+	 * @createTime: 2018年1月17日 下午5:05:37
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping("/manager")
+	public ModelAndView manager() {
+		ModelAndView mv=new ModelAndView("article/manager");
+		List<Article> list=articleService.getList();
+		mv.addObject("articleList",list);
+		return mv;
+	}
+	
+	
+	/**
+	 * 
 	 * 跳转到新增文章表单页面
 	 * @author: wyc
 	 * @createTime: 2018年1月19日 下午5:08:29
@@ -92,7 +109,7 @@ public class ArticleController {
 		article.setUpdateDate(new Date());
 		article.setViewCount(0);
 		articleService.save(article);
-		return "redirect:/article/list";
+		return "redirect:/article/manager";
 	}
 
 	
