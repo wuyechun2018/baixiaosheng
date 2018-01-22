@@ -12,10 +12,13 @@ import javax.persistence.Table;
 @Table(name = "t_user")
 public class User implements java.io.Serializable {
 
-
-	private Long id;
+	//主键
+	private String id;
+    //登录名
 	private String loginName;
+	//密码
 	private String loginPassword;
+	//登录时间
 	private Date loginTime;
 
 
@@ -31,11 +34,11 @@ public class User implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	public Long getId() {
+	public String getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -1,11 +1,30 @@
 package com.bxs.controller;
-
+import java.util.Date;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import com.bxs.pojo.Article;
+import com.bxs.service.ArticleService;
 
+/***
+ * 
+ * 文章维护控制层
+ * @desc: bxs-manager-web
+ * @author: wyc
+ * @createTime: 2018年1月22日 下午4:09:56
+ * @history:
+ * @version: v1.0
+ */
 @Controller
 @RequestMapping("/article")
 public class ArticleController {
+	
+	@Autowired
+	private ArticleService articleService;
+	
 	
 	/**
 	 * 
@@ -15,9 +34,14 @@ public class ArticleController {
 	 * @history:
 	 * @return String
 	 */
-	@RequestMapping("/show")
-	public String show() {
-		return "article/show";
+	@RequestMapping("/show/{id}")
+	public ModelAndView show(@PathVariable String id) {
+		ModelAndView mv=new ModelAndView("article/show");
+		Article article=articleService.getArticleById(id);
+		article.setViewCount(article.getViewCount()+1);
+		articleService.save(article);
+		mv.addObject("article",article);
+		return mv;
 	}
 	
 	
@@ -30,8 +54,47 @@ public class ArticleController {
 	 * @return String
 	 */
 	@RequestMapping("/list")
-	public String list() {
-		return "article/list";
+	public ModelAndView list() {
+		ModelAndView mv=new ModelAndView("article/list");
+		List<Article> list=articleService.getList();
+		mv.addObject("articleList",list);
+		return mv;
 	}
+	
+	
+	/**
+	 * 
+	 * 跳转到新增文章表单页面
+	 * @author: wyc
+	 * @createTime: 2018年1月19日 下午5:08:29
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping("/add")
+	public String add() {
+		return "article/add";
+	}
+	
+	
+	/**
+	 * 
+	 * 保存到数据库
+	 * @author: wyc
+	 * @createTime: 2018年1月22日 下午4:02:40
+	 * @history:
+	 * @param article
+	 * @return String
+	 */
+	@RequestMapping("/save")
+	public String save(Article article) {
+		article.setCreateDate(new Date());
+		article.setDisplayOrder(0);
+		article.setUpdateDate(new Date());
+		article.setViewCount(0);
+		articleService.save(article);
+		return "redirect:/article/list";
+	}
+
+	
 
 }
