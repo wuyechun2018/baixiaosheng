@@ -20,6 +20,9 @@ public class User implements java.io.Serializable {
 	private String loginPassword;
 	//登录时间
 	private Date loginTime;
+	
+	//数据状态,详情参考  com.bxs.common.dict.DataState
+	private String dataState;
 
 
 	public User() {
@@ -69,4 +72,12 @@ public class User implements java.io.Serializable {
 		this.loginTime = loginTime;
 	}
 
+	public String getDataState() {
+		return dataState;
+	}
+
+	public void setDataState(String dataState) {
+		this.dataState = dataState;
+	}
+	
 }

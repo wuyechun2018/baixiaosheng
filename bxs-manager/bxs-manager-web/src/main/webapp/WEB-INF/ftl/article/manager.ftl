@@ -4,37 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>文章管理</title>
-
-<style type="text/css">
-table.gridtable {
-	width:98%;
-	font-family: verdana,arial,sans-serif;
-	font-size:11px;
-	color:#333333;
-	border-width: 1px;
-	border-color: #666666;
-	border-collapse: collapse;
-	margin:10px 5px 10px 5px;
-}
-table.gridtable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #87CEEB;
-	font-size:22px;
-}
-table.gridtable td {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #87CEEB;
-	background-color: #ffffff;
-	text-align:center;
-	font-size:20px;
-}
-</style>
-
+<link href="${ctx}/resources/css/base.css" rel="stylesheet">
 </head>
 <body>
 <a href="${ctx}/article/add" style="color:#8FBC8F">创建文章</a>
