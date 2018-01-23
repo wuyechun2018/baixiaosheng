@@ -11,6 +11,8 @@ import org.springframework.jdbc.core.support.AbstractLobCreatingPreparedStatemen
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.stereotype.Repository;
+
+import com.bxs.common.dict.DataState;
 import com.bxs.pojo.Article;
 
 @Repository
@@ -18,7 +20,7 @@ public class ArticleDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private  final static String ALL_LIST_SQL = "SELECT * FROM T_ARTICLE ORDER BY CREATE_DATE DESC";
+	private  final static String ALL_LIST_SQL = "SELECT * FROM T_ARTICLE WHERE DATA_STATE='1' ORDER BY CREATE_DATE DESC";
 	
 
 	/**
@@ -30,7 +32,7 @@ public class ArticleDao {
 	 * @param article void
 	 */
 	public void save(final Article article) {
-		 String insertSQL = "INSERT INTO T_ARTICLE (ID, ARTICLE_TITLE, ARTICLE_CONTENT, CREATE_DATE,UPDATE_DATE, DISPLAY_ORDER,VIEW_COUNT) VALUES(?,?,?,?,?,?,?)";
+		 String insertSQL = "INSERT INTO T_ARTICLE (ID, ARTICLE_TITLE, ARTICLE_CONTENT, CREATE_DATE,UPDATE_DATE, DISPLAY_ORDER,VIEW_COUNT,DATA_STATE) VALUES(?,?,?,?,?,?,?,?)";
 		 jdbcTemplate.execute(insertSQL,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
 			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
@@ -43,6 +45,7 @@ public class ArticleDao {
 			         ps.setTimestamp(5, new java.sql.Timestamp(article.getUpdateDate().getTime()));
 			         ps.setInt(6, article.getDisplayOrder());
 			         ps.setInt(7, article.getViewCount());
+			         ps.setString(8, article.getDataState());
 			       }
 			     }
 			 );
@@ -99,6 +102,17 @@ public class ArticleDao {
 		}
 	}
 
-	
+	/**
+	 * 
+	 * 逻辑删除
+	 * @author: wyc
+	 * @createTime: 2018年1月23日 上午9:20:35
+	 * @history:
+	 * @param id
+	 */
+	public void delete(String id) {
+		String sql = "UPDATE T_ARTICLE SET DATA_STATE=? WHERE ID=?";
+		jdbcTemplate.update(sql,new Object[]{DataState.Delete.getCode(),id});
+	}
 
 }

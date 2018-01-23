@@ -55,7 +55,7 @@ table.gridtable td {
 	 <td style="text-align:center;width:220px;">${article.createDate!}</td>
 	 <td style="text-align:center;width:220px;">${article.updateDate!}</td>
 	 <td style="text-align:center;width:100px;">${article.viewCount!}</td>
-	 <td style="text-align:center"><a href="${ctx}/article/edit/${article.id!}">编辑<a/>|<a href="${ctx}/article/edit/${article.id!}">删除<a/></td>
+	 <td style="text-align:center"><a href="${ctx}/article/edit/${article.id!}">编辑<a/>|<a href="${ctx}/article/delete/${article.id!}">删除<a/></td>
  </tr>
 </#list> 
 <table>  

@@ -11,6 +11,8 @@ public interface ArticleService {
 	List<Article> getList();
 
 	Article getArticleById(String id);
+
+	void delete(String id);
 	
 	
 }

@@ -33,6 +33,8 @@ public class Article implements java.io.Serializable {
 	private int displayOrder;
 	//浏览次数
 	private int viewCount;
+	//数据状态,详情参考  com.bxs.common.dict.DataState
+	private String dataState;
 
 	public String getId() {
 		return id;
@@ -89,4 +91,13 @@ public class Article implements java.io.Serializable {
 	public void setViewCount(int viewCount) {
 		this.viewCount = viewCount;
 	}
+
+	public String getDataState() {
+		return dataState;
+	}
+
+	public void setDataState(String dataState) {
+		this.dataState = dataState;
+	}
+	
 }

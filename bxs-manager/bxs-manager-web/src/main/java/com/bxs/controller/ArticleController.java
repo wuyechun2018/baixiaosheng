@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.bxs.common.dict.DataState;
 import com.bxs.pojo.Article;
 import com.bxs.service.ArticleService;
 
@@ -59,6 +61,22 @@ public class ArticleController {
 		Article article=articleService.getArticleById(id);
 		mv.addObject("article",article);
 		return mv;
+	}
+	
+	
+	/**
+	 * 
+	 * 删除-逻辑删除
+	 * @author: wyc
+	 * @createTime: 2018年1月23日 上午9:19:39
+	 * @history:
+	 * @param id
+	 * @return String
+	 */
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable String id) {
+		articleService.delete(id);
+		return "redirect:/article/manager";
 	}
 	
 	
@@ -122,9 +140,12 @@ public class ArticleController {
 	@RequestMapping("/save")
 	public String save(Article article) {
 		article.setCreateDate(new Date());
-		article.setDisplayOrder(0);
 		article.setUpdateDate(new Date());
+		//设置为在用
+		article.setDataState(DataState.Use.getCode());
+		//初始化浏览次数为0
 		article.setViewCount(0);
+		article.setDisplayOrder(0);
 		articleService.save(article);
 		return "redirect:/article/manager";
 	}

@@ -34,6 +34,11 @@ public class ArticleServiceImpl implements ArticleService {
 	public Article getArticleById(String id) {
 		return articleDao.findOne(id);
 	}
+
+	@Override
+	public void delete(String id) {
+		articleDao.delete(id);
+	}
 	
 	
 }
