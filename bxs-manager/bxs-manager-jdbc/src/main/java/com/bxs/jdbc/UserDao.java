@@ -2,8 +2,10 @@ package com.bxs.jdbc;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,8 +15,9 @@ import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.stereotype.Repository;
 
 import com.bxs.common.dict.DataState;
-import com.bxs.pojo.Article;
+import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.SysUser;
+import com.bxs.pojo.UserInfoVo;
 
 @Repository
 public class UserDao {
@@ -112,6 +115,31 @@ public class UserDao {
 	public void delete(String id) {
 		String sql = "UPDATE T_USER SET DATA_STATE=? WHERE ID=?";
 		jdbcTemplate.update(sql,new Object[]{DataState.Delete.getCode(),id});
+	}
+
+
+
+	public Long getTotalCount(Map<String, Object> param) {
+		String sql="SELECT COUNT(1) FROM V_USER_INFO T";
+		return  jdbcTemplate.queryForObject(sql,Long.class);
+	}
+
+
+
+	public List<?> getUserList(EUIPager ePager,Map<String, Object> param) {
+		StringBuffer sqlBuff=new StringBuffer("SELECT * FROM V_USER_INFO T WHERE 1=1 \n");
+		if(param.get("deptId")!=null&&StringUtils.isNotBlank(param.get("deptId").toString())){
+			sqlBuff.append(" AND DEPT_ID = '" + param.get("deptId").toString() + "'\n");
+		}
+		
+		if(param.get("loginOrUserName")!=null&&StringUtils.isNotBlank(param.get("loginOrUserName").toString())){
+			sqlBuff.append(" AND  (T.login_name LIKE '%"+param.get("loginOrUserName").toString()+"%' OR T.user_name LIKE '%"+param.get("loginOrUserName")+"%')\n");
+		}
+		
+		//注意MySQL的分页参数
+		String sql="SELECT * FROM ("+sqlBuff.toString()+")S limit ?,?";
+		List<UserInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(UserInfoVo.class));
+		return list;
 	}
 	
 	

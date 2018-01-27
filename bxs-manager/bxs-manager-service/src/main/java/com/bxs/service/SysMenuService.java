@@ -1,9 +1,9 @@
 package com.bxs.service;
 import java.util.List;
-import com.bxs.common.vo.EasyTree;
+import com.bxs.common.vo.EUITree;
 
 public interface SysMenuService {
 
-	List<EasyTree> getListByPid(String pid);
+	List<EUITree> getListByPid(String pid);
 
 }

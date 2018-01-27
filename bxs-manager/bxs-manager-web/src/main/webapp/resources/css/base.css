@@ -60,3 +60,19 @@ table.gridtable td {
 	width:80px;
 	text-align: right;
 }
+
+.btn_a_edit{
+	padding-right: 5px;
+}
+
+.btn_a_delete{
+	padding-left: 5px;
+}
+
+.btn_a_edit a{
+	color:green;
+}
+
+.btn_a_delete a{
+	color:red;
+}

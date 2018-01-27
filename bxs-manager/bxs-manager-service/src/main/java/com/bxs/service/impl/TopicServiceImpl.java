@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bxs.common.vo.EasyTree;
+import com.bxs.common.vo.EUITree;
 import com.bxs.jdbc.TopicDao;
 import com.bxs.pojo.Topic;
 import com.bxs.service.TopicService;
@@ -19,11 +19,11 @@ public class TopicServiceImpl  implements TopicService{
     private TopicDao topicDao;
 	
 	@Override
-	public List<EasyTree> getListByPid(String pid) {
-		List<EasyTree> list=new ArrayList<EasyTree>();
+	public List<EUITree> getListByPid(String pid) {
+		List<EUITree> list=new ArrayList<EUITree>();
 		List<Topic> topicList=topicDao.getListByPid(pid);
 		for (Topic topic : topicList) {
-			EasyTree easyTree=new EasyTree();
+			EUITree easyTree=new EUITree();
 			easyTree.setId(topic.getId());
 			easyTree.setText(topic.getTopicName());
 			easyTree.setState(hasChild(topic.getId())?"closed":"open");

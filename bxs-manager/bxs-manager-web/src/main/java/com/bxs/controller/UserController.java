@@ -1,15 +1,21 @@
 package com.bxs.controller;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bxs.common.dict.DataState;
-import com.bxs.pojo.Article;
+import com.bxs.common.utils.BaseController;
+import com.bxs.common.vo.EUIGrid;
+import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.SysUser;
 import com.bxs.service.UserService;
 
@@ -24,7 +30,7 @@ import com.bxs.service.UserService;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController {
 
 	@Autowired
 	private UserService userService;
@@ -131,5 +137,23 @@ public class UserController {
 		userService.delete(id);
 		return "redirect:/user/manager";
 	}
+	
+	
+	/**
+	 * 
+	 * 返回用户列表数据
+	 * @author: wyc
+	 * @createTime: 2018年1月27日 下午8:25:08
+	 * @history:
+	 * @return EUIGrid EasyUI可识别的固定数据集合
+	 */
+	@RequestMapping("/pagerList")
+	@ResponseBody
+	public  EUIGrid pagerList(HttpServletRequest request){
+		EUIPager ePager=getPager(request);
+		Map<String,Object> param=getParamMap(request);
+		return userService.pagerList(ePager,param);
+	}
+	
 
 }

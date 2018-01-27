@@ -1,8 +1,13 @@
 package com.bxs.service.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.bxs.common.vo.EUIGrid;
+import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.UserDao;
 import com.bxs.pojo.SysUser;
 import com.bxs.service.UserService;
@@ -37,5 +42,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(String id) {
 		userDao.delete(id);		
+	}
+
+	@Override
+	public EUIGrid pagerList(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(userDao.getTotalCount(param));
+		grid.setRows(userDao.getUserList(ePager,param));
+		return grid;
 	}
 }

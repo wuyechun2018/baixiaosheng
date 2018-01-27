@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bxs.common.vo.EasyTree;
+import com.bxs.common.vo.EUITree;
 import com.bxs.jdbc.DeptDao;
 import com.bxs.pojo.Dept;
 import com.bxs.pojo.Topic;
@@ -21,11 +21,11 @@ public class DeptServiceImpl  implements DeptService{
     private DeptDao deptDao;
 	
 	@Override
-	public List<EasyTree> getListByPid(String pid) {
-		List<EasyTree> list=new ArrayList<EasyTree>();
+	public List<EUITree> getListByPid(String pid) {
+		List<EUITree> list=new ArrayList<EUITree>();
 		List<Dept> deptList=deptDao.getListByPid(pid);
 		for (Dept dept : deptList) {
-			EasyTree easyTree=new EasyTree();
+			EUITree easyTree=new EUITree();
 			easyTree.setId(dept.getId());
 			easyTree.setText(dept.getDeptName());
 			easyTree.setState(hasChild(dept.getId())?"closed":"open");

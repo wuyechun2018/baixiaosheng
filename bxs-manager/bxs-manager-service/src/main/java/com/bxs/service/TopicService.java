@@ -1,11 +1,11 @@
 package com.bxs.service;
 import java.util.List;
-import com.bxs.common.vo.EasyTree;
+import com.bxs.common.vo.EUITree;
 import com.bxs.pojo.Topic;
 
 public interface TopicService {
 
-	List<EasyTree> getListByPid(String pid);
+	List<EUITree> getListByPid(String pid);
 	
 	/**
 	 * 

@@ -20,9 +20,20 @@ public class SysUser implements java.io.Serializable {
 	private String loginPassword;
 	//登录时间
 	private Date loginTime;
-	
 	//数据状态,详情参考  com.bxs.common.dict.DataState
 	private String dataState;
+	//办公电话
+	private String officeTelephone;
+	//手机号
+	private String mobilePhone;
+	//姓名
+	private String userName;
+	//生日
+	private String birthday;
+	//部门ID
+	private String deptId;
+	//职位ID
+	private String topicId;
 
 
 	public SysUser() {

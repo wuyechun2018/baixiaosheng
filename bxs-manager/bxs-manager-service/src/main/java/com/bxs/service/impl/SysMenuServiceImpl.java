@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bxs.common.vo.EasyTree;
+import com.bxs.common.vo.EUITree;
 import com.bxs.jdbc.SysMenuDao;
 import com.bxs.pojo.SysMenu;
 import com.bxs.service.SysMenuService;
@@ -18,11 +18,11 @@ public class SysMenuServiceImpl  implements SysMenuService{
 	
 
 	@Override
-	public List<EasyTree> getListByPid(String pid) {
-		List<EasyTree> list=new ArrayList<EasyTree>();
+	public List<EUITree> getListByPid(String pid) {
+		List<EUITree> list=new ArrayList<EUITree>();
 		List<SysMenu> menuList=sysMenuDao.getListByPid(pid);
 		for (SysMenu sysMenu : menuList) {
-			EasyTree easyTree=new EasyTree();
+			EUITree easyTree=new EUITree();
 			easyTree.setId(sysMenu.getId());
 			easyTree.setText(sysMenu.getMenuName());
 			//节点状态，有两个值  'open' or 'closed', 默认为'open'. 当为‘closed’,说明此节点下有子节点否则此节点为叶子节点
