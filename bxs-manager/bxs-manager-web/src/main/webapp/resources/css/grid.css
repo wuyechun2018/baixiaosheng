@@ -1,0 +1,39 @@
+/**用于表格查询框**/
+fieldset {
+	font-size: 12px;
+	border-bottom: none;
+	padding-left: 15px;
+	border-top: 1px solid #d0d1d7;
+	border-left: 1px solid #d0d1d7;
+	border-right: 1px solid #d0d1d7;
+}
+
+/**添加编辑弹出框**/
+.itable {
+	/**border: 1px solid #A8CFEB;**/
+	border-collapse: collapse;
+	margin-bottom: 5px;
+}
+
+.itable th {
+	padding-left: 10px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 23px;
+	width: 150px;
+	/*border: 1px solid silver;*/
+	background-color: #FFF;
+	text-align: right;
+}
+
+.itable td {
+	padding-left: 10px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 23px;
+	width: 150px;
+	/*border: 1px solid silver;*/
+	background-color: #FFF;
+}

@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bxs.jdbc.UserDao;
-import com.bxs.pojo.User;
+import com.bxs.pojo.SysUser;
 import com.bxs.service.UserService;
 
 @Service
@@ -13,12 +13,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
 
-	public List<User> getUserList() {
+	public List<SysUser> getUserList() {
 		return userDao.getUserList();
 	}
 
 	@Override
-	public void save(User user) {
+	public void save(SysUser user) {
 		// 更新操作
 		if (user.getId() != null) {
 			userDao.update(user);
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserById(String id) {
+	public SysUser getUserById(String id) {
 		return userDao.findOne(id);
 	}
 

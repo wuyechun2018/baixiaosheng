@@ -1,13 +1,13 @@
 package com.bxs.service;
 import java.util.List;
-import com.bxs.pojo.User;
+import com.bxs.pojo.SysUser;
 
 public interface UserService {
-	public List<User> getUserList();
+	public List<SysUser> getUserList();
 
-	public void save(User user);
+	public void save(SysUser user);
 
-	public User getUserById(String id);
+	public SysUser getUserById(String id);
 
 	public void delete(String id);
 

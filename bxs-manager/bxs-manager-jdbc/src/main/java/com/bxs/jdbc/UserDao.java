@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bxs.common.dict.DataState;
 import com.bxs.pojo.Article;
-import com.bxs.pojo.User;
+import com.bxs.pojo.SysUser;
 
 @Repository
 public class UserDao {
@@ -24,8 +24,8 @@ public class UserDao {
 
 	private  final static String ALL_LIST_SQL = "SELECT * FROM T_USER WHERE DATA_STATE='1'";
 
-	public List<User> getUserList() {
-		List<User> list = jdbcTemplate.query(ALL_LIST_SQL,new BeanPropertyRowMapper(User.class));
+	public List<SysUser> getUserList() {
+		List<SysUser> list = jdbcTemplate.query(ALL_LIST_SQL,new BeanPropertyRowMapper(SysUser.class));
 		return list;
 	}
 
@@ -39,7 +39,7 @@ public class UserDao {
 	 * @history:
 	 * @param user void
 	 */
-	public void save(final User user) {
+	public void save(final SysUser user) {
 		 String insertSQL = "INSERT INTO T_USER (id, login_name, login_password, login_time,data_state) VALUES(?,?,?,?,?)";
 		 jdbcTemplate.execute(insertSQL,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
@@ -63,7 +63,7 @@ public class UserDao {
 	 * @history:
 	 * @param user void
 	 */
-	public void update(final User user) {
+	public void update(final SysUser user) {
 		String insertSQL = "UPDATE T_USER SET login_name=?,login_password=?,login_time=?,data_state=? WHERE ID=?";
 		 jdbcTemplate.execute(insertSQL,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
@@ -90,8 +90,8 @@ public class UserDao {
 	 * @param id
 	 * @return User
 	 */
-	public User findOne(String id) {
-		List<User> list = jdbcTemplate.query("SELECT * FROM T_USER WHERE ID=?",new Object[]{id},new BeanPropertyRowMapper(User.class));
+	public SysUser findOne(String id) {
+		List<SysUser> list = jdbcTemplate.query("SELECT * FROM T_USER WHERE ID=?",new Object[]{id},new BeanPropertyRowMapper(SysUser.class));
 		if(!list.isEmpty()){
 			return list.get(0);
 		}else{

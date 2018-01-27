@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bxs.common.dict.DataState;
 import com.bxs.pojo.Article;
-import com.bxs.pojo.User;
+import com.bxs.pojo.SysUser;
 import com.bxs.service.UserService;
 
 /**
@@ -42,7 +42,7 @@ public class UserController {
 	@RequestMapping("/manager")
 	public ModelAndView list() {
 		ModelAndView mv=new ModelAndView();
-		List<User> list = userService.getUserList();
+		List<SysUser> list = userService.getUserList();
 		mv.addObject("userList",list);
 		mv.setViewName("/user/manager");
 		return mv;
@@ -72,7 +72,7 @@ public class UserController {
 	 * @return String
 	 */
 	@RequestMapping("/save")
-	public String save(User user) {
+	public String save(SysUser user) {
 		user.setLoginTime(new Date());
 		//设置为在用
 		user.setDataState(DataState.Use.getCode());
@@ -93,7 +93,7 @@ public class UserController {
 	@RequestMapping("/edit/{id}")
 	public ModelAndView edit(@PathVariable String id) {
 		ModelAndView mv=new ModelAndView("user/edit");
-		User user=userService.getUserById(id);
+		SysUser user=userService.getUserById(id);
 		mv.addObject("user",user);
 		return mv;
 	}
@@ -111,7 +111,7 @@ public class UserController {
 	@RequestMapping("/show/{id}")
 	public ModelAndView show(@PathVariable String id) {
 		ModelAndView mv=new ModelAndView("/user/show");
-		User user=userService.getUserById(id);
+		SysUser user=userService.getUserById(id);
 		mv.addObject("user",user);
 		return mv;
 	}
