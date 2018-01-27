@@ -164,8 +164,10 @@ $(function(){
                 
                 <div class="top-bar-right">
                   	<span class="top-bar-exit">
+                  		<%--
                   		<img style="vertical-align:middle;" alt="退出" src="${ctx}/resources/images/exit.png">
-                  		<a style="vertical-align:middle;"  href="${ctx}/loginout" style="font-size:13px;">退出</a>
+                  		 --%>
+                  		<a style="vertical-align:middle;"  href="${ctx}/loginout" style="font-size:16px;">退出系统</a>
                   	</span>
                 </div>
                 
