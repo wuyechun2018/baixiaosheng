@@ -1,5 +1,6 @@
 package com.bxs.controller;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -44,6 +45,21 @@ public class EUIController {
 	@RequestMapping("/topic/list")
 	public String topic(){
 		return "/eui/topic/list";
+	}
+	
+	/**
+	 * 
+	 * 公用跳转方法
+	 * @author: wyc
+	 * @createTime: 2018年1月27日 下午3:15:09
+	 * @history:
+	 * @param module
+	 * @param page
+	 * @return String
+	 */
+	@RequestMapping(value = "/{module}/{page}")
+	public String getDefinedPage(@PathVariable("module") String module,@PathVariable("page") String page) {
+		return "/eui/"+module+"/"+page;
 	}
 
 }

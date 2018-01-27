@@ -19,6 +19,11 @@ import javax.persistence.Table;
 @Table(name = "t_article")
 public class Article implements java.io.Serializable {
 
+	/**
+	 * TODO
+	*/
+	private static final long serialVersionUID = 1L;
+	
 	// 主键
 	private String id;
 	// 文章标题
