@@ -55,3 +55,8 @@ table.gridtable td {
     height: 52px;
     right: 0;
 }
+
+.form-label-right-align{
+	width:80px;
+	text-align: right;
+}

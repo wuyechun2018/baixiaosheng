@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bxs.common.vo.EasyTree;
@@ -24,10 +26,18 @@ public class TopicServiceImpl  implements TopicService{
 			EasyTree easyTree=new EasyTree();
 			easyTree.setId(topic.getId());
 			easyTree.setText(topic.getTopicName());
-			//节点状态，有两个值  'open' or 'closed', 默认为'open'. 当为‘closed’,说明此节点下有子节点否则此节点为叶子节点
 			easyTree.setState(hasChild(topic.getId())?"closed":"open");
 			Map<String, String> attr=new HashMap<String, String>();
-			attr.put("topicPid", topic.getPid());
+			attr.put("pid", topic.getPid());
+			attr.put("topicCode", topic.getTopicCode());
+			//可否签收
+			attr.put("topicType", topic.getTopicType());
+			attr.put("topicDesc", topic.getTopicDesc());
+			//是否在用
+			attr.put("dataState", topic.getDataState());
+			//排序
+			attr.put("displayOrder", topic.getDisplayOrder()+"");
+			
 			easyTree.setAttributes(attr);
 			list.add(easyTree);
 		}
@@ -42,5 +52,21 @@ public class TopicServiceImpl  implements TopicService{
 		}else{
 			return true;
 		}
+	}
+
+	@Override
+	public void save(Topic topic) {
+		// 更新操作
+		if (StringUtils.isNotBlank(topic.getId())) {
+			topicDao.update(topic);
+		} else {
+		// 保存操作
+			topicDao.save(topic);
+		}
+	}
+
+	@Override
+	public void delete(String id) {
+		topicDao.delete(id);
 	}
 }

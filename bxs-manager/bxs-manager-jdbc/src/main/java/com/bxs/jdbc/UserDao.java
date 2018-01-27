@@ -64,8 +64,8 @@ public class UserDao {
 	 * @param user void
 	 */
 	public void update(final SysUser user) {
-		String insertSQL = "UPDATE T_USER SET login_name=?,login_password=?,login_time=?,data_state=? WHERE ID=?";
-		 jdbcTemplate.execute(insertSQL,
+		String updateSQL = "UPDATE T_USER SET login_name=?,login_password=?,login_time=?,data_state=? WHERE ID=?";
+		 jdbcTemplate.execute(updateSQL,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
 			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
 			    	 ps.setString(1, user.getLoginName());

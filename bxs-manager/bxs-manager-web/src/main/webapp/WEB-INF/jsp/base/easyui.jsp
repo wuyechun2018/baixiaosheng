@@ -10,6 +10,7 @@
 <link href="${ctx}/resources/js-lib/jquery-easyui-1.4.3/themes/metro/easyui.css" rel="stylesheet" media="screen">
 <link href="${ctx}/resources/js-lib/jquery-easyui-1.4.3/themes/icon.css" rel="stylesheet" media="screen">
 <link href="${ctx}/resources/css/grid.css" rel="stylesheet" media="screen">
+<link href="${ctx}/resources/css/base.css" rel="stylesheet" media="screen">
 <link href="${ctx}/resources/mine-icons/css/icons.css" rel="stylesheet" media="screen">
 
 

@@ -1,9 +1,13 @@
 package com.bxs.controller;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bxs.common.vo.JsonMsg;
+import com.bxs.pojo.Topic;
 import com.bxs.service.TopicService;
 
 /**
@@ -35,6 +39,41 @@ public class TopicController {
 	@ResponseBody
 	public Object getListByPid(String pid){
 		return topicService.getListByPid(pid);
+	}
+	
+	
+	
+	/**
+	 * 
+	 * 保存操作
+	 * @author: wyc
+	 * @createTime: 2018年1月27日 下午2:26:03
+	 * @history:
+	 * @param topic
+	 * @return Object
+	 */
+	@RequestMapping("/save")
+	@ResponseBody
+	public Object save(Topic topic) {
+		topicService.save(topic);
+		return new JsonMsg();
+	}
+	
+	/**
+	 * 
+	 * 删除操作
+	 * @author: wyc
+	 * @createTime: 2018年1月27日 下午2:50:59
+	 * @history:
+	 * @param request
+	 * @return Object
+	 */
+	@RequestMapping("/delete")
+	@ResponseBody
+	public Object delete(HttpServletRequest request){
+		String id=request.getParameter("id");
+		topicService.delete(id);
+		return new JsonMsg();
 	}
 	
 
