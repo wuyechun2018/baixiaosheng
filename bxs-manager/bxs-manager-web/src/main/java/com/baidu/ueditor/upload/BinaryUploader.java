@@ -1,30 +1,34 @@
 package com.baidu.ueditor.upload;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
+
 import com.baidu.ueditor.PathFormat;
 import com.baidu.ueditor.define.AppInfo;
 import com.baidu.ueditor.define.BaseState;
 import com.baidu.ueditor.define.FileType;
 import com.baidu.ueditor.define.State;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 public class BinaryUploader {
 
 	public static final State save(HttpServletRequest request,
 			Map<String, Object> conf) {
-		FileItemStream fileStream = null;
+		//FileItemStream fileStream = null;
+		InputStream fileStream = null;
+		
 		boolean isAjaxUpload = request.getHeader( "X_Requested_With" ) != null;
 
 		if (!ServletFileUpload.isMultipartContent(request)) {
@@ -39,7 +43,7 @@ public class BinaryUploader {
         }
 
 		try {
-			FileItemIterator iterator = upload.getItemIterator(request);
+			/*FileItemIterator iterator = upload.getItemIterator(request);
 
 			while (iterator.hasNext()) {
 				fileStream = iterator.next();
@@ -47,6 +51,13 @@ public class BinaryUploader {
 				if (!fileStream.isFormField())
 					break;
 				fileStream = null;
+			}*/
+			DefaultMultipartHttpServletRequest multipartRequest=(DefaultMultipartHttpServletRequest)request;
+			Iterator<String> fileNames=multipartRequest.getFileNames();
+			MultipartFile file=null;
+			while (fileNames.hasNext()){
+				file=multipartRequest.getFiles(fileNames.next()).get(0);
+				fileStream=file.getInputStream();
 			}
 
 			if (fileStream == null) {
@@ -54,7 +65,9 @@ public class BinaryUploader {
 			}
 
 			String savePath = (String) conf.get("savePath");
-			String originFileName = fileStream.getName();
+			//String originFileName = fileStream.getName();
+			String originFileName = file.getOriginalFilename();
+			
 			String suffix = FileType.getSuffixByFilename(originFileName);
 
 			originFileName = originFileName.substring(0,
@@ -73,10 +86,10 @@ public class BinaryUploader {
 			//此处做了修改,将文件保存路径设置为当前盘符的media-data下
 			physicalPath=savePath;
 
-			InputStream is = fileStream.openStream();
-			State storageState = StorageManager.saveFileByInputStream(is,
+			//InputStream is = fileStream.openStream();
+			State storageState = StorageManager.saveFileByInputStream(fileStream,
 					physicalPath, maxSize);
-			is.close();
+			fileStream.close();
 
 			if (storageState.isSuccess()) {
 				storageState.putInfo("url", PathFormat.format(savePath));
@@ -85,7 +98,7 @@ public class BinaryUploader {
 			}
 
 			return storageState;
-		} catch (FileUploadException e) {
+		} catch (ClassCastException e) {
 			return new BaseState(false, AppInfo.PARSE_REQUEST_ERROR);
 		} catch (IOException e) {
 		}

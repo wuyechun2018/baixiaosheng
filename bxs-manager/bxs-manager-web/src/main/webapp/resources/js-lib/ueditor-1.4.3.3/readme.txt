@@ -37,6 +37,14 @@ physicalPath=savePath;
 如果是linux服务器，则路径需要调整为：
 <Context docBase="/media-data" path="/media-data" reloadable="true" /> 
 
+7、配置springmvc的文件上传处理器后
+<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="104857600" />
+		<property name="maxInMemorySize" value="4096" />
+</bean>
 
+出现错误了"未找到上传数据" 错误
+原因：SpringMVC封装了conmmons-fileupload的相关方法后，获取不了上传数据
+解决方式：对BinaryUploader.java 进行了修改，解决了问题。
 
 
