@@ -15,6 +15,9 @@ function doQuery(){
     //设置参数
     options.queryParams.deptId=SELECT_NODE_Id;
     options.queryParams.loginOrUserName=$('#loginOrUserName').val();
+    options.queryParams.postName=$('#postName').val();
+    options.queryParams.postName=$('#telephone').val();
+    options.queryParams.birthday=$('#birthday').val();
     $("#dgTable").datagrid(options);
 }
 
@@ -47,7 +50,9 @@ function doQuery(){
 	    queryParams: {
 	    	deptId:'',
 	    	loginOrUserName:'',
-	    	userType:''
+	    	postName:'',
+	    	telephone:'',
+	    	birthday:''
 		},
 		fit:false,
 		pageSize: 20,
@@ -62,8 +67,8 @@ function doQuery(){
 		          {field:'userName',title: '姓名',align: 'left',width: 100},
 		          {field:'deptId',title: '部门ID',align: 'center',width: 100,hidden:true,}, 
 		          {field:'deptName',title: '部门名称',align: 'center',width: 100}, 
-		          {field:'topicId',title: '职位ID',align: 'center',width: 100,hidden:true,}, 
-		          {field:'topicName',title: '职位',align: 'center',width: 100}, 
+		          {field:'postId',title: '职位ID',align: 'center',width: 100,hidden:true,}, 
+		          {field:'postName',title: '职位',align: 'center',width: 100}, 
 		          {field:'officeTelephone',title: '办公电话',align: 'center',width: 100},
 		          {field:'mobileTelephone',title: '手机号',align: 'center',width: 100}, 
 		          {field:'birthday',title: '生日',align: 'center',width: 100},
@@ -95,7 +100,7 @@ function doQuery(){
 					</td>
 					<td style="width:100px;text-align: right;margin-right: 5px;">职位:</td>
 					<td style="width:200px;">
-						<input id="account" name="loginAccount" style="width:150px">
+						<input id="postName" name="postName" style="width:150px">
 					</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
@@ -103,11 +108,11 @@ function doQuery(){
 				<tr>
 					<td style="width:100px;text-align: right;margin-right: 5px;">办公电话/手机号:</td>
 					<td style="width:200px;text-align: left;">
-						<input id="account" name="loginAccount" style="width:150px">
+						<input id="telephone" name="telephone" style="width:150px">
 					</td>
 					<td style="width:100px;text-align: right;margin-right: 5px;">生日:</td>
 					<td style="width:200px;">
-						<input id="account" name="loginAccount" style="width:150px">
+						<input id="birthday" name="birthday" style="width:150px">
 					</td>
 					<td>&nbsp;</td>
 					<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" iconCls="Zoom">查询</a></td>

@@ -42,7 +42,7 @@ public class SysUser implements java.io.Serializable {
 	//部门ID
 	private String deptId;
 	//职位ID
-	private String topicId;
+	private String postId;
 
 
 	public SysUser() {
@@ -98,6 +98,54 @@ public class SysUser implements java.io.Serializable {
 
 	public void setDataState(String dataState) {
 		this.dataState = dataState;
+	}
+
+	public String getOfficeTelephone() {
+		return officeTelephone;
+	}
+
+	public void setOfficeTelephone(String officeTelephone) {
+		this.officeTelephone = officeTelephone;
+	}
+
+	public String getMobilePhone() {
+		return mobilePhone;
+	}
+
+	public void setMobilePhone(String mobilePhone) {
+		this.mobilePhone = mobilePhone;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
+
+	public String getPostId() {
+		return postId;
+	}
+
+	public void setPostId(String postId) {
+		this.postId = postId;
 	}
 	
 }

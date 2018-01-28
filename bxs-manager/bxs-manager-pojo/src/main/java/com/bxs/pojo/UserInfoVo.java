@@ -35,9 +35,9 @@ public class UserInfoVo {
 	//部门名称
 	private String deptName;
 	//职位ID
-	private String topicId;
+	private String postId;
 	//职位名称
-	private String topicName;
+	private String postName;
 	
 	public String getId() {
 		return id;
@@ -106,16 +106,16 @@ public class UserInfoVo {
 		this.deptName = deptName;
 	}
 	public String getTopicId() {
-		return topicId;
+		return postId;
 	}
 	public void setTopicId(String topicId) {
-		this.topicId = topicId;
+		this.postId = topicId;
 	}
-	public String getTopicName() {
-		return topicName;
+	public String getPostName() {
+		return postName;
 	}
-	public void setTopicName(String topicName) {
-		this.topicName = topicName;
+	public void setPostName(String postName) {
+		this.postName = postName;
 	}
 	
 	

@@ -118,22 +118,84 @@ public class UserDao {
 	}
 
 
-
+	/**
+	 * 
+	 *获取条件筛选后的记录总数
+	 * @author: wyc
+	 * @createTime: 2018年1月28日 下午2:57:34
+	 * @history:
+	 * @param param
+	 * @return Long
+	 */
 	public Long getTotalCount(Map<String, Object> param) {
-		String sql="SELECT COUNT(1) FROM V_USER_INFO T";
-		return  jdbcTemplate.queryForObject(sql,Long.class);
-	}
-
-
-
-	public List<?> pagerUserList(EUIPager ePager,Map<String, Object> param) {
-		StringBuffer sqlBuff=new StringBuffer("SELECT * FROM V_USER_INFO T WHERE 1=1 \n");
+		StringBuffer sqlBuff=new StringBuffer("SELECT COUNT(1) FROM V_USER_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n");
+		
+		//部门
 		if(param.get("deptId")!=null&&StringUtils.isNotBlank(param.get("deptId").toString())&&!"1".equals(param.get("deptId").toString())){
 			sqlBuff.append(" AND DEPT_ID = '" + param.get("deptId").toString() + "'\n");
 		}
 		
+		//登录名或者姓名
 		if(param.get("loginOrUserName")!=null&&StringUtils.isNotBlank(param.get("loginOrUserName").toString())){
 			sqlBuff.append(" AND  (T.login_name LIKE '%"+param.get("loginOrUserName").toString()+"%' OR T.user_name LIKE '%"+param.get("loginOrUserName")+"%')\n");
+		}
+		
+		//职务
+		if(param.get("postName")!=null&&StringUtils.isNotBlank(param.get("postName").toString())){
+			sqlBuff.append(" AND  T.post_name LIKE '%"+param.get("postName").toString()+"%' \n");
+		}
+		
+		//办公电话或者手机号
+		if(param.get("telephone")!=null&&StringUtils.isNotBlank(param.get("telephone").toString())){
+			sqlBuff.append(" AND  (T.office_phone LIKE '%"+param.get("telephone").toString()+"%' OR T.mobile_phone LIKE '%"+param.get("telephone")+"%')\n");
+		}
+		
+		//生日
+		if(param.get("birthday")!=null&&StringUtils.isNotBlank(param.get("birthday").toString())){
+			sqlBuff.append(" AND  T.birthday LIKE '%"+param.get("birthday").toString()+"%' \n");
+		}
+		
+		
+		return  jdbcTemplate.queryForObject(sqlBuff.toString(),Long.class);
+	}
+
+
+	/**
+	 * 
+	 * 分页、条件 筛选列表
+	 * @author: wyc
+	 * @createTime: 2018年1月28日 下午2:57:49
+	 * @history:
+	 * @param ePager
+	 * @param param
+	 * @return List<?>
+	 */
+	public List<?> pagerUserList(EUIPager ePager,Map<String, Object> param) {
+		StringBuffer sqlBuff=new StringBuffer("SELECT * FROM V_USER_INFO T WHERE 1=1 \n");
+		
+		//部门
+		if(param.get("deptId")!=null&&StringUtils.isNotBlank(param.get("deptId").toString())&&!"1".equals(param.get("deptId").toString())){
+			sqlBuff.append(" AND DEPT_ID = '" + param.get("deptId").toString() + "'\n");
+		}
+		
+		//登录名或者姓名
+		if(param.get("loginOrUserName")!=null&&StringUtils.isNotBlank(param.get("loginOrUserName").toString())){
+			sqlBuff.append(" AND  (T.login_name LIKE '%"+param.get("loginOrUserName").toString()+"%' OR T.user_name LIKE '%"+param.get("loginOrUserName")+"%')\n");
+		}
+		
+		//职务
+		if(param.get("postName")!=null&&StringUtils.isNotBlank(param.get("postName").toString())){
+			sqlBuff.append(" AND  T.post_name LIKE '%"+param.get("postName").toString()+"%' \n");
+		}
+		
+		//办公电话或者手机号
+		if(param.get("telephone")!=null&&StringUtils.isNotBlank(param.get("telephone").toString())){
+			sqlBuff.append(" AND  (T.office_phone LIKE '%"+param.get("telephone").toString()+"%' OR T.mobile_phone LIKE '%"+param.get("telephone")+"%')\n");
+		}
+		
+		//生日
+		if(param.get("birthday")!=null&&StringUtils.isNotBlank(param.get("birthday").toString())){
+			sqlBuff.append(" AND  T.birthday LIKE '%"+param.get("birthday").toString()+"%' \n");
 		}
 		
 		//注意MySQL的分页参数
