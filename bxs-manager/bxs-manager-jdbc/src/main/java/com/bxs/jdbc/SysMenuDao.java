@@ -18,7 +18,7 @@ public class SysMenuDao {
 	
 	public List<SysMenu> getListByPid(String pid) {
 		
-		String sql="SELECT * FROM t_menu T WHERE T.pid=?";
+		String sql="SELECT * FROM t_menu T WHERE T.pid=? ORDER BY T.DISPLAY_ORDER";
 		//经验总结：数据出现错误时，比如display_order字段为空时，解析为对象列表会出现错误，可以先解析成List<Map<String, Object>>,进行排错。
 		//List<Map<String, Object>> menuList=jdbcTemplate.queryForList(sql, new Object[]{pid});
 		List<SysMenu> list = jdbcTemplate.query(sql,new Object[]{pid},new BeanPropertyRowMapper(SysMenu.class));

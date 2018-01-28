@@ -5,29 +5,28 @@ import javax.persistence.Table;
 
 /**
  * 
- * 部门信息 实体类
- * 
+ * 职务 实体类
  * @desc: bxs-manager-pojo
  * @author: wyc
- * @createTime: 2018年1月27日 上午10:59:34
+ * @createTime: 2018年1月28日 上午10:04:40
  * @history:
  * @version: v1.0
  */
 @Entity
-@Table(name = "t_dept")
-public class Dept {
-	// 主键
+@Table(name = "t_post")
+public class Post {
+	//主键
 	private String id;
-	//主键ID
+	//父主键(暂时用不到该字段)
 	private String pid;
-	//部门编码
-	private String deptCode;
-	//部门名称
-	private String deptName;
-	//部门类型
-	private String deptType;
-	//部门描述
-	private String deptDesc;
+	//部门ID
+	private String deptId;
+	//职务编码
+	private String postCode;
+	//职务名称
+	private String postName;
+	//职务说明
+	private String postDesc;
 	// 排序
 	private int displayOrder;
 	// 数据状态,详情参考 com.bxs.common.dict.DataState
@@ -45,29 +44,29 @@ public class Dept {
 	public void setPid(String pid) {
 		this.pid = pid;
 	}
-	public String getDeptCode() {
-		return deptCode;
+	public String getDeptId() {
+		return deptId;
 	}
-	public void setDeptCode(String deptCode) {
-		this.deptCode = deptCode;
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
 	}
-	public String getDeptName() {
-		return deptName;
+	public String getPostCode() {
+		return postCode;
 	}
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
+	public void setPostCode(String postCode) {
+		this.postCode = postCode;
 	}
-	public String getDeptType() {
-		return deptType;
+	public String getPostName() {
+		return postName;
 	}
-	public void setDeptType(String deptType) {
-		this.deptType = deptType;
+	public void setPostName(String postName) {
+		this.postName = postName;
 	}
-	public String getDeptDesc() {
-		return deptDesc;
+	public String getPostDesc() {
+		return postDesc;
 	}
-	public void setDeptDesc(String deptDesc) {
-		this.deptDesc = deptDesc;
+	public void setPostDesc(String postDesc) {
+		this.postDesc = postDesc;
 	}
 	public int getDisplayOrder() {
 		return displayOrder;
@@ -81,5 +80,5 @@ public class Dept {
 	public void setDataState(String dataState) {
 		this.dataState = dataState;
 	}
-
+	
 }

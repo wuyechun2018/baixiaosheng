@@ -2,6 +2,15 @@ package com.bxs.pojo;
 
 import java.util.Date;
 
+/**
+ * 
+ * 用户信息VO,用户表、部门表、职务表 关联查询
+ * @desc: bxs-manager-pojo
+ * @author: wyc
+ * @createTime: 2018年1月28日 上午10:08:00
+ * @history:
+ * @version: v1.0
+ */
 public class UserInfoVo {
 	//主键
 	private String id;

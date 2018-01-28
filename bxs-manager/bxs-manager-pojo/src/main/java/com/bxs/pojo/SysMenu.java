@@ -1,5 +1,14 @@
 package com.bxs.pojo;
 
+/**
+ * 
+ * 系统菜单实体类
+ * @desc: bxs-manager-pojo
+ * @author: wyc
+ * @createTime: 2018年1月28日 上午10:01:11
+ * @history:
+ * @version: v1.0
+ */
 public class SysMenu {
 
 	// 主键

@@ -126,9 +126,9 @@ public class UserDao {
 
 
 
-	public List<?> getUserList(EUIPager ePager,Map<String, Object> param) {
+	public List<?> pagerUserList(EUIPager ePager,Map<String, Object> param) {
 		StringBuffer sqlBuff=new StringBuffer("SELECT * FROM V_USER_INFO T WHERE 1=1 \n");
-		if(param.get("deptId")!=null&&StringUtils.isNotBlank(param.get("deptId").toString())){
+		if(param.get("deptId")!=null&&StringUtils.isNotBlank(param.get("deptId").toString())&&!"1".equals(param.get("deptId").toString())){
 			sqlBuff.append(" AND DEPT_ID = '" + param.get("deptId").toString() + "'\n");
 		}
 		

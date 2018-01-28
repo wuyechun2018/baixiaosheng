@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	public EUIGrid pagerList(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
 		grid.setTotal(userDao.getTotalCount(param));
-		grid.setRows(userDao.getUserList(ePager,param));
+		grid.setRows(userDao.pagerUserList(ePager,param));
 		return grid;
 	}
 }

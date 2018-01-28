@@ -8,6 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * 
+ * 系统用户实体类
+ * @desc: bxs-manager-pojo
+ * @author: wyc
+ * @createTime: 2018年1月28日 上午10:01:29
+ * @history:
+ * @version: v1.0
+ */
 @Entity
 @Table(name = "t_user")
 public class SysUser implements java.io.Serializable {
