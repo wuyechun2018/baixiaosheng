@@ -16,7 +16,7 @@ function doQuery(){
     options.queryParams.deptId=SELECT_NODE_Id;
     options.queryParams.loginOrUserName=$('#loginOrUserName').val();
     options.queryParams.postName=$('#postName').val();
-    options.queryParams.postName=$('#telephone').val();
+    options.queryParams.telephone=$('#telephone').val();
     options.queryParams.birthday=$('#birthday').val();
     $("#dgTable").datagrid(options);
 }
@@ -70,7 +70,7 @@ function doQuery(){
 		          {field:'postId',title: '职位ID',align: 'center',width: 100,hidden:true,}, 
 		          {field:'postName',title: '职位',align: 'center',width: 100}, 
 		          {field:'officeTelephone',title: '办公电话',align: 'center',width: 100},
-		          {field:'mobileTelephone',title: '手机号',align: 'center',width: 100}, 
+		          {field:'mobilePhone',title: '手机号',align: 'center',width: 100}, 
 		          {field:'birthday',title: '生日',align: 'center',width: 100},
 		          {field:'id',title: '操作',align: 'center',width: 100, formatter:function(val,rec){
 		        	  return "<span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span>|<span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";

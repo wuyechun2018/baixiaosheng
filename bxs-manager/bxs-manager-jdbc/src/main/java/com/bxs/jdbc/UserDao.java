@@ -147,7 +147,7 @@ public class UserDao {
 		
 		//办公电话或者手机号
 		if(param.get("telephone")!=null&&StringUtils.isNotBlank(param.get("telephone").toString())){
-			sqlBuff.append(" AND  (T.office_phone LIKE '%"+param.get("telephone").toString()+"%' OR T.mobile_phone LIKE '%"+param.get("telephone")+"%')\n");
+			sqlBuff.append(" AND  (T.office_telephone LIKE '%"+param.get("telephone").toString()+"%' OR T.mobile_phone LIKE '%"+param.get("telephone")+"%')\n");
 		}
 		
 		//生日
@@ -190,7 +190,7 @@ public class UserDao {
 		
 		//办公电话或者手机号
 		if(param.get("telephone")!=null&&StringUtils.isNotBlank(param.get("telephone").toString())){
-			sqlBuff.append(" AND  (T.office_phone LIKE '%"+param.get("telephone").toString()+"%' OR T.mobile_phone LIKE '%"+param.get("telephone")+"%')\n");
+			sqlBuff.append(" AND  (T.office_telephone LIKE '%"+param.get("telephone").toString()+"%' OR T.mobile_phone LIKE '%"+param.get("telephone")+"%')\n");
 		}
 		
 		//生日
