@@ -47,4 +47,23 @@ physicalPath=savePath;
 原因：SpringMVC封装了conmmons-fileupload的相关方法后，获取不了上传数据
 解决方式：对BinaryUploader.java 进行了修改，解决了问题。
 
+8、修复打开上传图片空间较慢的问题
+1）针对单图片上传， 将/ueditor/ueditor.all.js or /ueditor.all.min.js (根据自己引用的文件来确定) 文件下的以下代码
+accept="image/*"
+改为：
+accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp"
+2）针对多图片上传， 将/ueditor/dialogs/image/image.js 文件下的以下代码
+accept: {
+                    title: 'Images',
+                    extensions: acceptExtensions,
+                    mimeTypes: 'image/*'
+                },
+改为：
+accept: {
+                    title: 'Images',
+                    extensions: acceptExtensions,
+                    mimeTypes: 'image/gif,image/jpeg,image/png,image/jpg,image/bmp'
+          },
+
+
 
