@@ -31,6 +31,8 @@ function addFun(){
 	if(node){
 		$("#form_deptId").val(node.id);
 		$("#form_deptName").textbox('setValue',node.text)
+		$("#form_dataState").val("1");
+		$("#form_displayOrder").val("1");
 	}
 	
 }
@@ -139,7 +141,9 @@ $(function(){
 		          {field:'postCode',title: '职位编码',align: 'left',width: 100},
 		          {field:'deptId',title: '部门ID',align: 'center',width: 100,hidden:true}, 
 		          {field:'deptName',title: '部门名称',align: 'center',width: 100}, 
-		          {field:'postDesc',title: '职责',align: 'center',width: 100}, 
+		          {field:'postDesc',title: '职责',align: 'center',width: 100,formatter:function(val,rec){
+		        	  return toolTipCol(val,rec);
+		          }}, 
 		          {field:'dataState',title: '职位',align: 'center',width: 100,hidden:true}, 
 		          {field:'displayOrder',title: '排序',align: 'center',width: 100,hidden:true},
 		          {field:'id',title: '操作',align: 'center',width: 100, formatter:function(val,rec){
@@ -200,8 +204,8 @@ $(function(){
    			<th>所属部门：</th>
    			<td>
    				<input type="hidden"  id="form_deptId"  name="deptId" ></input>
-   				<input type="hidden"  name="data_state" value="1"></input>
-   				<input type="hidden"  name="display_order" value="1"></input>
+   				<input type="hidden" id="form_dataState"  name="dataState" value="1"></input>
+   				<input type="hidden" id="form_displayOrder"  name="displayOrder" value="1"></input>
    				<input style="width:250px;"  class="easyui-textbox" type="text" id="form_deptName" name="deptName" data-options="required:false"></input>
    			</td>
    		<tr>

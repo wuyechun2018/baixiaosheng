@@ -12,7 +12,8 @@ function getSelectRowIndex(id){
 }
 //字段过长省略显示
 function toolTipCol(val,rec){
-		  if (val.length>=50) {
+		var showVal=val;
+		if (val.length>=50) {
 	        showVal = val.substring(0,45) + "...";
 	    }
 	    return '<span title="'+val+'">'+showVal+'</span>';
