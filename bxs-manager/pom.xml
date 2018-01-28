@@ -39,6 +39,12 @@
 					<webAppConfig>
 						<contextPath>/${project.artifactId}</contextPath>
 					</webAppConfig>
+					<contextHandlers>
+						<contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
+							<contextPath>/media-data</contextPath>
+							<resourceBase>/media-data</resourceBase>
+						</contextHandler>
+					</contextHandlers>
 					<connectors>
 						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
 							<port>2468</port>

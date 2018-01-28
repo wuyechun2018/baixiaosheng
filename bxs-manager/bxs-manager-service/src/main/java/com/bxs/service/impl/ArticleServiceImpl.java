@@ -1,6 +1,7 @@
 package com.bxs.service.impl;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,10 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	public void save(Article article){
 		//更新操作
-		if(article.getId()!=null){
+		if(StringUtils.isNotBlank(article.getId())){
 			articleDao.update(article);
 		}else{
-		//保存操作	
+			//保存操作	
 			articleDao.save(article);
 		}
 		

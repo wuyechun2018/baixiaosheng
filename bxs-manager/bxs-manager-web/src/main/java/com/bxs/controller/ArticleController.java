@@ -151,5 +151,27 @@ public class ArticleController {
 	}
 
 	
+	/**
+	 * 
+	 * EasyUI提交过来的表单信息，进行保存
+	 * @author: wyc
+	 * @createTime: 2018年1月28日 下午5:39:26
+	 * @history:
+	 * @param article
+	 * @return String
+	 */
+	@RequestMapping("/euiSave")
+	public String euiSave(Article article){
+		article.setCreateDate(new Date());
+		article.setUpdateDate(new Date());
+		//设置为在用
+		article.setDataState(DataState.Use.getCode());
+		//初始化浏览次数为0
+		article.setViewCount(0);
+		article.setDisplayOrder(0);
+		articleService.save(article);
+		return "redirect:/eui/article/list";
+	}
+	
 
 }

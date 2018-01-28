@@ -76,3 +76,23 @@ table.gridtable td {
 .btn_a_delete a{
 	color:red;
 }
+
+.btn_a_top{
+	padding-right: 5px;
+}
+
+/*÷√∂•*/
+.btn_a_top a{
+	color:orange;
+}
+
+
+.article-fieldset{
+	font-size:12px;
+	border-top:1px solid #95b8e7;
+	border-left:1px solid #95b8e7;
+	border-right:1px solid #95b8e7;
+	border-bottom:1px solid #95b8e7;
+	padding-left:15px;
+}
+

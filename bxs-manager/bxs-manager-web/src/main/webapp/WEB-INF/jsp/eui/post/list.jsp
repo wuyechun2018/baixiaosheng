@@ -34,7 +34,6 @@ function addFun(){
 		$("#form_dataState").val("1");
 		$("#form_displayOrder").val("1");
 	}
-	
 }
 
 //点击"添加弹出框-保存按钮",提交表单

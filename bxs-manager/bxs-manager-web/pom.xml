@@ -44,6 +44,21 @@
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
 		
+		<!--以下是ueditor中依赖的一些包  --><!--以下是ueditor中依赖的一些包  --><!--以下是ueditor中依赖的一些包  -->
+		<dependency>
+			    <groupId>org.json</groupId>
+			    <artifactId>json</artifactId>
+		</dependency>
+		
+		<dependency>
+			    <groupId>commons-io</groupId>
+			    <artifactId>commons-io</artifactId>
+		</dependency>
+		
+		<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+		</dependency>
     
   </dependencies>
   <build>
