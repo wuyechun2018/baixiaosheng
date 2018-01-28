@@ -37,3 +37,34 @@ fieldset {
 	/*border: 1px solid silver;*/
 	background-color: #FFF;
 }
+
+
+
+.isingelTable {
+	/**border: 1px solid #A8CFEB;**/
+	border-collapse: collapse;
+	margin-bottom: 5px;
+}
+
+.isingelTable th {
+	padding-left: 10px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 23px;
+	width: 100px;
+	background-color: #FFF;
+	text-align: right;
+}
+
+.isingelTable td {
+	padding-left: 10px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 23px;
+	width: 150px;
+	/*border: 1px solid silver;*/
+	background-color: #FFF;
+}
+

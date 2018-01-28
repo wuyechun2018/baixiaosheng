@@ -157,8 +157,8 @@ $(function(){
 			<div id="topbar" class="top-bar">
                 <div class="top-bar-left">
                     <div style="margin-left: 15px; color: #000;height: 52px;">
-                    	<img style="vertical-align:middle;" alt="退出" src="${ctx}/resources/images/system.png">
-                    	<span style="vertical-align:middle;font-family: 华文细黑;font-size:30px;height:52px;line-height: 52px;">系统管理</span>
+                    	<img style="vertical-align:middle;" alt="退出" src="${ctx}/resources/images/logo40.png">
+                    	<span style="vertical-align:middle;font-family: 华文细黑;font-size:30px;height:52px;line-height: 52px;color:#fff">信息管理系统</span>
                     </div>
                 </div>
                 

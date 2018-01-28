@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bxs.common.utils.BaseController;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
+import com.bxs.common.vo.JsonMsg;
+import com.bxs.pojo.Post;
 import com.bxs.service.PostService;
 
 /**
@@ -44,6 +46,40 @@ public class PostController extends BaseController {
 		EUIPager ePager=getPager(request);
 		Map<String,Object> param=getParamMap(request);
 		return postService.pagerList(ePager,param);
+	}
+	
+	/**
+	 * 
+	 * 保存操作
+	 * @author: wyc
+	 * @createTime: 2018年1月28日 下午2:03:52
+	 * @history:
+	 * @param post
+	 * @return Object
+	 */
+	@RequestMapping("/save")
+	@ResponseBody
+	public Object save(Post post) {
+		postService.save(post);
+		return new JsonMsg();
+	}
+	
+	
+	/**
+	 * 
+	 * 删除操作
+	 * @author: wyc
+	 * @createTime: 2018年1月28日 下午2:21:58
+	 * @history:
+	 * @param request
+	 * @return Object
+	 */
+	@RequestMapping("/delete")
+	@ResponseBody
+	public Object delete(HttpServletRequest request){
+		String id=request.getParameter("id");
+		postService.delete(id);
+		return new JsonMsg();
 	}
 	
 

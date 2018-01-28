@@ -1,11 +1,23 @@
+//根据ID获取当前选中行的Index
+function getSelectRowIndex(id){
+	var rows = $("#dgTable").datagrid('getData').rows;
+	var rowIndex=0;
+    for (var i = 0; i < rows.length; i++) {
+        if (rows[i]['id'] == id) {
+        	rowIndex = i;
+            break;
+        }
+    }
+	return rowIndex
+}
+//字段过长省略显示
 function toolTipCol(val,rec){
 		  if (val.length>=50) {
 	        showVal = val.substring(0,45) + "...";
 	    }
 	    return '<span title="'+val+'">'+showVal+'</span>';
 }
-
-
+//验证方式自定义
 $.extend($.fn.validatebox.defaults.rules, {
     idcard: {// 验证身份证
         validator: function (value) {
