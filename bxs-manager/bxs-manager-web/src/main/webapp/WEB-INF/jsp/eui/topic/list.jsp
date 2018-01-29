@@ -202,7 +202,7 @@ $(function() {
 </head>
 <body>
 <div class="easyui-layout" style="width:700px;height:700px;" fit="true">
-        <div data-options="region:'west',split:true,title:'文章栏目维护'" style="width: 240px; padding: 1px;">
+        <div data-options="region:'west',split:false,border:true,title:'文章栏目维护'" style="width: 240px; padding: 1px;">
             <div>
             <%-- 
              <div style="color:red;padding-left:20px;">右键 添加类别 </div>

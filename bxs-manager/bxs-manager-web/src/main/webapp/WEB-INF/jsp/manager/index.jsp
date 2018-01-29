@@ -55,7 +55,7 @@ function loadMenu(){
 
 //添加Tab
 function addTab(params) {
-	var iframe = '<iframe src="' + params.url + '" frameborder="0" style="border:0;width:100%;height:98%;"></iframe>';
+	var iframe = '<iframe src="' + params.url + '" frameborder="0" style="border:0;width:100%;height:100%;"></iframe>';
 	var mainTab = $('#mainTabs');
 	var opts = {
 		title : params.title,
@@ -175,7 +175,7 @@ $(function(){
 		</div>
 		
 		<%--页面底部 --%>
-		<div data-options="region:'south',split:true" style="height:30px;" class="ibackgroud">
+		<div data-options="region:'south',split:false,border:false" style="height:30px;" class="ibackgroud">
 			<div class="south-bottom">Copyright © 2015 Imark. All Rights Reserved 京ICP备 0001XXX号     建议分辨率:1280*800 |关于我们</div>
 		</div>
 		

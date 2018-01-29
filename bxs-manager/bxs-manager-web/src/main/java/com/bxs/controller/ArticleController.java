@@ -1,13 +1,20 @@
 package com.bxs.controller;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bxs.common.dict.DataState;
+import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.Article;
 import com.bxs.service.ArticleService;
 
@@ -171,6 +178,33 @@ public class ArticleController {
 		article.setDisplayOrder(0);
 		articleService.save(article);
 		return "redirect:/eui/article/list";
+	}
+	
+	/**
+	 * 
+	 * 图片预览
+	 * @author: wyc
+	 * @createTime: 2018年1月29日 下午8:38:57
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/preView")
+	@ResponseBody
+	public Object preView(MultipartFile preimage){
+		String fileName=new DateTime().toString("yyyyMMddHHmmss")+"/"+preimage.getOriginalFilename();
+		String realPath="/media-data/image/";
+		File tarFile = new File(realPath, fileName);
+		if (!tarFile.exists()) {
+			tarFile.mkdirs();
+		}
+		try {
+			preimage.transferTo(tarFile);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new JsonMsg(true,realPath+fileName);
 	}
 	
 

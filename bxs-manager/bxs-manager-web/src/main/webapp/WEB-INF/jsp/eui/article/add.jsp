@@ -14,9 +14,27 @@
 <title>添加文章</title>
 <script type="text/javascript">
 
+//预览配图
+function preView(){
+	$('#article_form').form('submit',{
+		url:'${ctx}/article/preView',
+        onSubmit:function(op){
+        	return true;
+        },
+        success:function(data){
+        	var obj=eval('('+ data+ ')');
+        	$('#view_image').attr('src',obj.msg);
+        	$('#article_image').val(obj.msg);
+        }
+      });
+}
+
 //提交表单操作
 function submitForm(){
-	$('#article_form').submit();
+	if($("#article_form").form('validate')){ 
+		 $("#article_form").attr('action',ctx+"/article/euiSave");
+		 $('#article_form').submit();
+	}
 }
 
 //点击"返回按钮",跳转到文章列表页面
@@ -45,28 +63,50 @@ $(function(){
 </script>
 <body>
 
+<table>
+	<tr>
+		<td>
+			<a href="javascript:void(0)" data-options="iconCls:'Arrowleft'" id="resetBtn" class="easyui-linkbutton" onclick="goback()">返回列表</a>
+		</td>
+	</tr>
+</table>
 <fieldset  class="article-fieldset">
  <legend>添加文章</legend>
- <form action="${ctx}/article/euiSave" id="article_form" method="post">
+ <form action="${ctx}/article/euiSave" id="article_form" method="post"  enctype="multipart/form-data">
 	 	<table>
 	 		<tr>
 			 	<th>文章标题：</th>	 		
 	 			<td>
 	 			  <input type="text" name="articleTitle" style="width:300px;" />
 	 			</td>
+	 			
+	 			<td rowspan="3">
+	 				<input type="hidden" id="article_image" name="article_image" style="width:300px;" />
+	 				<img id="view_image" alt="配图预览"  noresize="true" style="width:100px;height:70px;background-color:#ccc;border:1px solid #333">
+	 			</td>
+	 			
 	 		</tr>
 	 		<tr>
 			 	<th>栏目：</th>	 		
 	 			<td>
 	 			 	<input name="topicId" id="topicComboTree" />
 	 			</td>
+	 			
+	 			
 	 		</tr>
+	 		
+	 		<tr>
+				<th>文章配图：</th>	
+				<td style="width:360px;">
+	 				<input name="preimage"  class="easyui-filebox" style="width:310px;" data-options="buttonText:'选择文件', accept:'image/jpeg', prompt : '请选择一个图片类型的文件'"/>
+	 				&nbsp;<a href="javascript:void(0)" onclick="preView()" style="font-size:15px;">预览</a>
+	 			</td>
+	 			
+	 		</tr>
+
 	 		<tr>
 			 	<th>内容：</th>	 		
-	 			<td>
-	 				<%--
-	 			 	<input name="articleContent" id="articleContent" style="width:300px;" />
-	 			 	 --%>
+	 			<td colspan="2">
 	 			 	<script id="editor" name="articleContent" type="text/plain" style="width:800px;height:300px;">
 					</script>
 	 			</td>
@@ -77,7 +117,7 @@ $(function(){
 	    	<table>
 	    		<tr>
 	    			<td style="width:100px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="submitForm()">保存</a></td>
-	    			<td style="width:100px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="goback()">返回</a></td>
+	    			<td style="width:100px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="goback()">重置</a></td>
 	    		</tr>
 	    	</table>
     	</div>

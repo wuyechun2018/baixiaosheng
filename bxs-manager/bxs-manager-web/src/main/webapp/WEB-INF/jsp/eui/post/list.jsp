@@ -159,7 +159,7 @@ $(function(){
 <body>
 <div class="easyui-layout"  fit="true">
     <%-- 左边树 --%>
-    <div data-options="region:'west',split:true,title:'部门信息'" style="width: 240px; padding: 1px;">
+    <div data-options="region:'west',split:false,border:true,title:'部门信息'" style="width: 240px; padding: 1px;">
         <div>
             <ul id="leftTree"></ul>
         </div>

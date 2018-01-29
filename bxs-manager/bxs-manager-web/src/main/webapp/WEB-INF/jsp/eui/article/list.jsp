@@ -49,7 +49,7 @@ $(function(){
 		});
 	
 	 //中间表格
-	var dgTableHeight=$(window).height()-$('.searchBox').height()-28;
+	var dgTableHeight=$(window).height()-$('.searchBox').height()-51;
     dgTable=$('#dgTable').datagrid({  
 		url:ctx+'/user/pagerList',
 		method:'post',
@@ -88,7 +88,7 @@ $(function(){
 </head>
 <body>
 <div class="easyui-layout"  fit="true">
-    <div data-options="region:'west',split:true,title:'文章栏目'" style="width: 240px; padding: 1px;">
+    <div data-options="region:'west',split:false,border:true,title:'文章栏目'" style="width: 240px; padding: 1px;">
         <div>
             <ul id="leftTree"></ul>
         </div>
