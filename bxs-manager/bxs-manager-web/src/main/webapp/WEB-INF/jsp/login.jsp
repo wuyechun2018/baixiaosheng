@@ -17,6 +17,7 @@
 <body>
 	<div class="container">
 		<div class="codrops-top" style="height: 24px;">
+				<%--
                 <a href="">
                     <strong>« Previous Demo: </strong>Responsive Content Navigator
                 </a>
@@ -25,7 +26,7 @@
                         <strong>Back to the Codrops Article</strong>
                     </a>
                 </span>
-                <div class="clr"></div>
+                <div class="clr"></div> --%>
          </div>
          
          <header>
@@ -35,7 +36,7 @@
 	
 		<div id="wrapper">
 			<div id="login" class="animate form">
-				<form action="${ctx}/user/login" method="post" >
+				<form action="${ctx}/user/doLogin" method="post" >
 					<h1>系统登录</h1>
 					<p> <label for="username" class="uname" data-icon="u"> 
 						登录名</label> 
@@ -46,8 +47,9 @@
 						<input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO">
 					</p>
 					<p class="keeplogin">
-						<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping">
+						<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping"/>
 						<label for="loginkeeping">记住我</label>
+						<div style="color: red;">${SYSTEM_ERROR_MSG}</div>
 					</p>
 					<p class="login button">
 						<input type="submit" value="Login">

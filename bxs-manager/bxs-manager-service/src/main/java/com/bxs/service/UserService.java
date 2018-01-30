@@ -5,6 +5,7 @@ import java.util.Map;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.SysUser;
+import com.bxs.pojo.UserInfoVo;
 
 public interface UserService {
 	public List<SysUser> getUserList();
@@ -16,5 +17,7 @@ public interface UserService {
 	public void delete(String id);
 
 	public EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
+
+	public List<UserInfoVo> getUserByLoginName(String username);
 
 }

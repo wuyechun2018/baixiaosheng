@@ -21,10 +21,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bxs.common.dict.DataState;
 import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.utils.BaseController;
+import com.bxs.common.utils.EncryptionUtil;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.SysUser;
+import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.UserService;
 
 /**
@@ -50,9 +52,27 @@ public class UserController extends BaseController {
 	 * @createTime: 2018年1月30日 下午7:39:47
 	 * @history: void
 	 */
-	@RequestMapping("/login")
-	public ModelAndView login(String username,String password){
-		ModelAndView mv=new ModelAndView("/manager/index");
+	@RequestMapping("/doLogin")
+	public ModelAndView doLogin(String username,String password,HttpSession session){
+		ModelAndView mv=new ModelAndView();
+		List<UserInfoVo> list=userService.getUserByLoginName(username);
+		if(!list.isEmpty()){
+			UserInfoVo info=list.get(0);
+			//密码相等
+			if(info.getLoginPassword().equals(EncryptionUtil.getMd5String(password))){
+				//用户信息存入Session
+				session.setAttribute(SystemConstant.CURRENT_SESSION_USER_INFO, info);
+				//携带用户信息
+				mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO, info);
+				//跳转到后台管理主页面
+				mv.setViewName("/manager/index");
+			}else{
+				mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
+				//登录失败，跳转到登录页面
+				mv.setViewName("login");
+			}
+			
+		}
 		return mv;
 	}
 	
@@ -69,7 +89,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/loginout")
 	public String doLoginOut(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		session.removeAttribute(SystemConstant.CURRENT_SESSION_USER_NAME);
+		session.removeAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
 		session.invalidate();
 		return "/login";
 	}

@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bxs.common.dict.DataState;
+import com.bxs.common.utils.EncryptionUtil;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.UserDao;
 import com.bxs.pojo.SysUser;
+import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.UserService;
 
 @Service
@@ -30,6 +32,8 @@ public class UserServiceImpl implements UserService {
 		//设置为有效
 		user.setDataState(DataState.Use.getCode());
 		user.setLoginTime(new Date());
+		//将密码进行MD5加密保存到数据库中
+		user.setLoginPassword(EncryptionUtil.getMd5String(user.getLoginPassword()));
 		
 		// 更新操作
 		if (StringUtils.isNotBlank(user.getId())) {
@@ -57,5 +61,10 @@ public class UserServiceImpl implements UserService {
 		grid.setTotal(userDao.getTotalCount(param));
 		grid.setRows(userDao.pagerUserList(ePager,param));
 		return grid;
+	}
+
+	@Override
+	public List<UserInfoVo> getUserByLoginName(String username) {
+		return userDao.getUserByLoginName(username);
 	}
 }

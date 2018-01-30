@@ -288,6 +288,22 @@ public class UserDao {
 		List<UserInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(UserInfoVo.class));
 		return list;
 	}
+
+
+	/**
+	 * 
+	 * 根据登录名获取用户信息列表
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午10:57:14
+	 * @history:
+	 * @param username
+	 * @return List<UserInfoVo>
+	 */
+	public List<UserInfoVo> getUserByLoginName(String username) {
+		String sql="SELECT * FROM V_USER_INFO T WHERE 1=1 AND T.DATA_STATE='1' AND T.LOGIN_NAME=?";
+		List<UserInfoVo> list = jdbcTemplate.query(sql,new Object[]{username},new BeanPropertyRowMapper(UserInfoVo.class));
+		return list;
+	}
 	
 	
 }
