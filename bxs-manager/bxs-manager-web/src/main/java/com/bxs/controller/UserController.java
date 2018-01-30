@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bxs.common.dict.DataState;
+import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.utils.BaseController;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
@@ -41,6 +43,36 @@ public class UserController extends BaseController {
 	@Autowired
 	private UserService userService;
 	
+	/**
+	 * 
+	 * 系统用户登录
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午7:39:47
+	 * @history: void
+	 */
+	@RequestMapping("/login")
+	public ModelAndView login(String username,String password){
+		ModelAndView mv=new ModelAndView("/manager/index");
+		return mv;
+	}
+	
+	
+	/**
+	 * 
+	 * 系统用户退出
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午8:46:06
+	 * @history:
+	 * @param request
+	 * @return String
+	 */
+	@RequestMapping(value = "/loginout")
+	public String doLoginOut(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute(SystemConstant.CURRENT_SESSION_USER_NAME);
+		session.invalidate();
+		return "/login";
+	}
 	
 	
 	/**
