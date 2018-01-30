@@ -33,6 +33,10 @@ function submitForm(){
 
 //点击"添加按钮"
 function addFun(){
+	$('#addWin').panel({
+		title : '添加',
+		iconCls : "icon-add"
+	});
 	$('#addWin').window('open');
 	$('#addForm').form('clear');
 	var node=$('#leftTree').tree('getSelected');
@@ -81,6 +85,10 @@ function editFun(id) {
   	//加载部门下拉框树
 	loadDeptTree();
     $('#addWin').window('open');
+    $('#addWin').panel({
+		title : '编辑',
+		iconCls : "icon-edit"
+	});
     $("#addForm").form("load", record); 
 }
 
@@ -163,8 +171,8 @@ function doQuery(){
 		pagination: true,  
 		rownumbers: true,  
 		columns:[[
-		          {field:'loginName',title: '登录名',align: 'left',width: 100,hidden:false},
-		          {field:'userName',title: '姓名',align: 'left',width: 100},
+		          {field:'loginName',title: '登录名',align: 'left',width: 100,hidden:true},
+		          {field:'userName',title: '姓名',align: 'center',width: 100},
 		          {field:'deptId',title: '部门ID',align: 'center',width: 100,hidden:true}, 
 		          {field:'deptName',title: '部门名称',align: 'center',width: 100}, 
 		          {field:'postId',title: '职位ID',align: 'center',width: 100,hidden:true}, 
