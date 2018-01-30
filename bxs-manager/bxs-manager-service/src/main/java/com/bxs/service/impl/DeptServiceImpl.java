@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bxs.common.dict.DataState;
 import com.bxs.common.vo.EUITree;
 import com.bxs.jdbc.DeptDao;
 import com.bxs.pojo.Dept;
@@ -58,6 +59,7 @@ public class DeptServiceImpl  implements DeptService{
 
 	@Override
 	public void save(Dept dept) {
+		dept.setDataState(DataState.Use.getCode());
 		// 更新操作
 		if (StringUtils.isNotBlank(dept.getId())) {
 			deptDao.update(dept);

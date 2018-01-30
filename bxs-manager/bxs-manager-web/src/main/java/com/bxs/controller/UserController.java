@@ -164,6 +164,24 @@ public class UserController extends BaseController {
 	
 	/**
 	 * 
+	 * EasyUI 页面删除
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午3:19:45
+	 * @history:
+	 * @param request
+	 * @return String
+	 */
+	@RequestMapping("/euiDelete")
+	@ResponseBody
+	public Object euiDelete(HttpServletRequest request) {
+		String id=request.getParameter("id");
+		userService.delete(id);
+		return new JsonMsg();
+	}
+	
+	
+	/**
+	 * 
 	 * 返回用户列表数据
 	 * @author: wyc
 	 * @createTime: 2018年1月27日 下午8:25:08

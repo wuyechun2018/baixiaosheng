@@ -116,7 +116,7 @@ public class UserDao {
 	 * @param user void
 	 */
 	public void update(final SysUser user) {
-		String updateSQL = "UPDATE T_USER SET login_name=?,login_password=?,login_time=?,data_state=? WHERE ID=?";
+		/**String updateSQL = "UPDATE T_USER SET login_name=?,login_password=?,login_time=?,data_state=? WHERE ID=?";
 		 jdbcTemplate.execute(updateSQL,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
 			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
@@ -127,7 +127,43 @@ public class UserDao {
 				     ps.setString(5, user.getId());
 			       }
 			     }
+			 );**/
+		
+		String sql=	"UPDATE\n" +
+						"  t_user\n" + 
+						"SET\n" + 
+						"  login_name = ?,\n" + 
+						"  login_password = ?,\n" + 
+						"  login_time = ?,\n" + 
+						"  data_state = ?,\n" + 
+						"  office_telephone = ?,\n" + 
+						"  mobile_phone = ?,\n" + 
+						"  user_name = ?,\n" + 
+						"  birthday = ?,\n" + 
+						"  dept_id = ?,\n" + 
+						"  post_id = ?,\n" + 
+						"  user_desc = ?\n" + 
+						"WHERE id = ? ;";
+		jdbcTemplate.execute(sql,
+			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
+			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
+			         ps.setString(1, user.getLoginName());
+			         ps.setString(2, user.getLoginPassword());
+			         ps.setTimestamp(3, new java.sql.Timestamp(user.getLoginTime().getTime()));
+			         ps.setString(4, user.getDataState());
+			         ps.setString(5, user.getOfficeTelephone());
+			         ps.setString(6, user.getMobilePhone());
+			         ps.setString(7, user.getUserName());
+			         ps.setDate(8, new java.sql.Date(user.getBirthday().getTime()));
+			         ps.setString(9, user.getDeptId());
+			         ps.setString(10, user.getPostId());
+			         ps.setString(11, user.getUserDesc());
+			         ps.setString(12, user.getId());
+			       }
+			     }
 			 );
+		
+		
 		
 	}
 
@@ -220,7 +256,7 @@ public class UserDao {
 	 * @return List<?>
 	 */
 	public List<?> pagerUserList(EUIPager ePager,Map<String, Object> param) {
-		StringBuffer sqlBuff=new StringBuffer("SELECT * FROM V_USER_INFO T WHERE 1=1 \n");
+		StringBuffer sqlBuff=new StringBuffer("SELECT * FROM V_USER_INFO T WHERE 1=1 AND T.DATA_STATE='1' \n");
 		
 		//部门
 		if(param.get("deptId")!=null&&StringUtils.isNotBlank(param.get("deptId").toString())&&!"1".equals(param.get("deptId").toString())){

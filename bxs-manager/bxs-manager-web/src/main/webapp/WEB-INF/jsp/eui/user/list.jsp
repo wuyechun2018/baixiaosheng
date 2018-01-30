@@ -39,12 +39,31 @@ function addFun(){
 	if(!node){
 		node=$("#leftTree").tree('getRoot');
 	}
+	
+	//加载部门下拉框树
+	loadDeptTree();
+	
 	if(node){
-		$("#form_deptId").val(node.id);
-		$("#form_deptName").textbox('setValue',node.text);
+		//给部门下拉框赋值
+		$('#deptComboTree').combotree('setValue', node.id);
 		$('#form_postId').combobox('reload', ctx+'/post/getPostByDeptId?deptId='+node.id);
 
 	}
+}
+
+//加载部门下拉框树
+function loadDeptTree(){
+	$('#deptComboTree').combotree({
+		url : '${ctx}/dept/getListByPid?pid=0',
+		onBeforeExpand : function(node, param) {
+			   $('#deptComboTree').combotree("tree").tree("options").url =ctx+ "/dept/getListByPid?pid=" + node.id;
+			},
+		width:'180',
+	    required: true,
+	    onLoadSuccess : function(node, data) {
+	    	$('#deptComboTree').combotree("tree").tree('expandAll');
+		}
+	});
 }
 
 //点击"添加弹出框-取消按钮",提交表单
@@ -52,6 +71,43 @@ function clearForm(){
 	$('#addForm').form('clear');
 	$('#addWin').window('close');
 }
+
+
+//点击“操作列-修改”
+function editFun(id) {
+	var rowIndex=getSelectRowIndex(id);
+    //获取操作列
+    var record=$('#dgTable').datagrid('getData').rows[rowIndex];
+  	//加载部门下拉框树
+	loadDeptTree();
+    $('#addWin').window('open');
+    $("#addForm").form("load", record); 
+}
+
+//点击“操作列-删除”
+function deleteFun(id){
+	$.messager.confirm("删除确认", "您确认删除该用户吗？", function (action) {
+        if (action) {
+        	$.ajax({
+    			cache: true,
+    			type: "POST",
+    			url:'${ctx}/user/euiDelete',
+    			data:{
+    				id:id
+    			},
+    			async: false,
+    		    error: function(request) {
+    		        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+    		    },
+    		    success: function(data) {
+    		    	$.messager.alert('提示信息',data.msg);
+    		    	$("#dgTable").datagrid('reload');
+    		    }
+    		})
+        }
+      })
+}
+
 
 //查询
 function doQuery(){
@@ -107,15 +163,16 @@ function doQuery(){
 		pagination: true,  
 		rownumbers: true,  
 		columns:[[
-		          {field:'loginName',title: '登录名',align: 'left',width: 100,hidden:false,},
+		          {field:'loginName',title: '登录名',align: 'left',width: 100,hidden:false},
 		          {field:'userName',title: '姓名',align: 'left',width: 100},
-		          {field:'deptId',title: '部门ID',align: 'center',width: 100,hidden:true,}, 
+		          {field:'deptId',title: '部门ID',align: 'center',width: 100,hidden:true}, 
 		          {field:'deptName',title: '部门名称',align: 'center',width: 100}, 
-		          {field:'postId',title: '职位ID',align: 'center',width: 100,hidden:true,}, 
+		          {field:'postId',title: '职位ID',align: 'center',width: 100,hidden:true}, 
 		          {field:'postName',title: '职位',align: 'center',width: 100}, 
 		          {field:'officeTelephone',title: '办公电话',align: 'center',width: 100},
 		          {field:'mobilePhone',title: '手机号',align: 'center',width: 100}, 
 		          {field:'birthday',title: '生日',align: 'center',width: 100},
+		          {field:'userDesc',title: '备注',align: 'center',width: 100,hidden:true},
 		          {field:'id',title: '操作',align: 'center',width: 100, formatter:function(val,rec){
 		        	  return "<span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span>|<span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
 		          }}
@@ -184,8 +241,11 @@ function doQuery(){
 	    			<th style="width:160px;">部门：</th>
 	    			<td>
 	    				<input type="hidden" id="id" name="id" ></input>
+	    				<%--
 	    				<input type="hidden"  id="form_deptId"  name="deptId" ></input>
 	    				<input style="width:180px;" class="easyui-textbox"  id="form_deptName" name="deptName" data-options="required:false" readonly="readonly"></input>
+	    				 --%>
+	    				<input id="deptComboTree" name="deptId"  />
 	    			</td>
 	    			
 	    			<th>职位：</th>
