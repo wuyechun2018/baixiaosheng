@@ -28,7 +28,7 @@ public class DeptController {
 	
 	/**
 	 * 
-	 * 根据父主键获取文章栏目
+	 * 根据父主键获取下级部门
 	 * @author: wyc
 	 * @createTime: 2018年1月25日 上午9:06:08
 	 * @history:

@@ -1,4 +1,6 @@
 package com.bxs.controller;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -6,7 +8,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +21,7 @@ import com.bxs.common.dict.DataState;
 import com.bxs.common.utils.BaseController;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
+import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.SysUser;
 import com.bxs.service.UserService;
 
@@ -89,6 +95,23 @@ public class UserController extends BaseController {
 	
 	/**
 	 * 
+	 * EasyUI表单提交过来的表单处理
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 上午11:39:32
+	 * @history:
+	 * @param user
+	 * @return JsonMsg
+	 */
+	@RequestMapping("/euiSave")
+	@ResponseBody
+	public JsonMsg euiSave(SysUser user) {
+		userService.save(user);
+		return new JsonMsg();
+	}
+	
+	
+	/**
+	 * 
 	 * 编辑用户
 	 * @author: wyc
 	 * @createTime: 2018年1月23日 下午9:42:16
@@ -155,5 +178,19 @@ public class UserController extends BaseController {
 		return userService.pagerList(ePager,param);
 	}
 	
+	
+	/**
+	 * 
+	 * 处理"出生日期字段",对于日期字段,前端不传也是可以的，但是，如果传了值，必须进行格式转换
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午1:38:30
+	 * @history:
+	 * @param binder void
+	 */
+	@InitBinder  
+    public void initBinder(WebDataBinder binder) {  
+       DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+       binder.registerCustomEditor(Date.class,new CustomDateEditor(format, true)); 
+   }
 
 }

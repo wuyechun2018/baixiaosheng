@@ -1,5 +1,6 @@
 package com.bxs.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bxs.common.utils.BaseController;
+import com.bxs.common.vo.EUICombobox;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
@@ -46,6 +48,21 @@ public class PostController extends BaseController {
 		EUIPager ePager=getPager(request);
 		Map<String,Object> param=getParamMap(request);
 		return postService.pagerList(ePager,param);
+	}
+	
+	/**
+	 * 
+	 * 根据部门ID获取部门下职位
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 上午9:41:43
+	 * @history:
+	 * @param deptId
+	 * @return EUICombobox 下拉框数据
+	 */
+	@RequestMapping("/getPostByDeptId")
+	@ResponseBody
+	public List<EUICombobox> getPostByDeptId(String deptId){
+		return postService.getPostByDeptId(deptId);
 	}
 	
 	/**

@@ -38,11 +38,13 @@ public class SysUser implements java.io.Serializable {
 	//姓名
 	private String userName;
 	//生日
-	private String birthday;
+	private Date birthday;
 	//部门ID
 	private String deptId;
 	//职位ID
 	private String postId;
+	//备注信息
+	private String userDesc;
 
 
 	public SysUser() {
@@ -124,11 +126,11 @@ public class SysUser implements java.io.Serializable {
 		this.userName = userName;
 	}
 
-	public String getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 
@@ -147,5 +149,14 @@ public class SysUser implements java.io.Serializable {
 	public void setPostId(String postId) {
 		this.postId = postId;
 	}
+
+	public String getUserDesc() {
+		return userDesc;
+	}
+
+	public void setUserDesc(String userDesc) {
+		this.userDesc = userDesc;
+	}
+	
 	
 }

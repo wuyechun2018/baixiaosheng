@@ -10,6 +10,50 @@
 //当前选中的左边树的节点ID,即单位ID，它是一个全局变量
 var SELECT_NODE_Id="";
 
+
+
+//点击"添加弹出框-保存按钮",提交表单
+function submitForm(){
+  if($("#addForm").form('validate')){
+	$.ajax({
+         type: "POST",
+         url:'${ctx}/user/euiSave',
+         data: $('#addForm').serialize(),
+         success: function (data) {
+        	 $('#addWin').window('close');
+		    //刷新列表
+		    $("#dgTable").datagrid('reload');
+         },
+         error: function(data) {
+             alert("error:"+data.responseText);
+          }
+   		});
+   }
+};
+
+//点击"添加按钮"
+function addFun(){
+	$('#addWin').window('open');
+	$('#addForm').form('clear');
+	var node=$('#leftTree').tree('getSelected');
+	if(!node){
+		node=$("#leftTree").tree('getRoot');
+	}
+	if(node){
+		$("#form_deptId").val(node.id);
+		$("#form_deptName").textbox('setValue',node.text);
+		$('#form_postId').combobox('reload', ctx+'/post/getPostByDeptId?deptId='+node.id);
+
+	}
+}
+
+//点击"添加弹出框-取消按钮",提交表单
+function clearForm(){
+	$('#addForm').form('clear');
+	$('#addWin').window('close');
+}
+
+//查询
 function doQuery(){
     var options = $("#dgTable").datagrid("options");
     //设置参数
@@ -125,11 +169,83 @@ function doQuery(){
         <table id="dgTable">
         </table>
     </div>
-    
-    <div id="tb">
-	    <a href="#" id="add" class="easyui-linkbutton" plain="true"  iconCls="Applicationadd">添加</a>
-	</div>
-    
  </div>  
+ 
+ <%--TBar 添加按钮 --%>
+ <div id="tb">
+	   <a href="javascript:void(0)" id="addBtn" onclick="addFun()" class="easyui-linkbutton" plain="true"  iconCls="Applicationadd">添加</a>
+ </div>
+ 
+ <%--点击"添加"弹出的窗口 --%>
+ <div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:630px;height:370px;padding:10px;">
+	    <form id="addForm" method="post">
+	    	<table  class="itable">
+	    		<tr>
+	    			<th style="width:160px;">部门：</th>
+	    			<td>
+	    				<input type="hidden" id="id" name="id" ></input>
+	    				<input type="hidden"  id="form_deptId"  name="deptId" ></input>
+	    				<input style="width:180px;" class="easyui-textbox"  id="form_deptName" name="deptName" data-options="required:false" readonly="readonly"></input>
+	    			</td>
+	    			
+	    			<th>职位：</th>
+	    			<td>
+	    				<%--
+	    				<select class="easyui-combobox" id="postId" name="postId" style="width:180px;">
+	    				</select>
+	    				 --%>
+	    				
+	    				<input style="width:180px;" class="easyui-combobox" id="form_postId" name="postId" data-options="valueField:'id',textField:'text',url:'${ctx}/post/getPostByDeptId?deptId=1'">
+	    			</td>
+	    		</tr>
+	    		
+	    		<tr>
+	    			<th>姓名：</th>
+ 					<td style="text-align: left;">
+	 					<input style="width:180px;" class="easyui-textbox" type="text" id="userName" name="userName" data-options="required:true"></input>
+ 					</td>
+	    			<th>生日：</th>
+	    			<td>
+	    				<input class="easyui-datebox" type="text" ID="birthday" name="birthday" style="width:180px" />
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<th>办公电话：</th>
+	    			<td><input style="width:180px;" class="easyui-textbox" type="text" id="officeTelephone" name="officeTelephone" data-options="required:false"></input></td>
+	    			<th>手机号：</th>
+	    			<td><input style="width:180px;" class="easyui-textbox" type="text" id="mobilePhone" name="mobilePhone" ></input></td>
+	    			
+	    		</tr>
+	    		<tr>
+	    			<th>登录账号：</th>
+ 					<td style="text-align: left;">
+	 					<input style="width:180px;" class="easyui-textbox" type="text" id="loginName" name="loginName" ></input>
+ 					</td>
+	    			<th>登录密码：</th>
+	    			<td>
+	    				<input style="width:180px;"  type="password" id="loginPassword" name="loginPassword" ></input>
+	    			</td>
+	    		</tr>
+	    		
+	    		<tr>
+	    		      <th>备注：</th>
+	    		      <td colspan="6" align="center" style="padding:1px;"><textarea id="userDesc" name="userDesc" style="width:490px;height:80px;"></textarea></td> 
+	    		 </tr> 
+	    	</table>
+	    </form>
+	    <div style="text-align:center;padding:5px">
+	    	<table style="width:100%;">
+    		<tr>
+    			<td style="width:20%;text-align: right;padding-left: 5px;padding-right: 5px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="submitForm()">保存</a></td>
+    			<td style="width:20%;text-align: center;padding-left: 5px;padding-right: 5px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="clearForm()">重置密码</a></td>
+    			<td style="width:20%;text-align: left;padding-left: 5px;padding-right: 5px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearForm()">取消</a></td>
+    		</tr>
+		 	</table>
+	    </div>
+	   
+		
+	</div>
+ 
+ 
 </body>
 </html>

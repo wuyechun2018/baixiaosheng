@@ -39,6 +39,9 @@ public class UserInfoVo {
 	//职位名称
 	private String postName;
 	
+	//备注信息
+	private String userDesc;
+	
 	public String getId() {
 		return id;
 	}
@@ -117,8 +120,16 @@ public class UserInfoVo {
 	public void setPostName(String postName) {
 		this.postName = postName;
 	}
-	
-	
-	
-
+	public String getPostId() {
+		return postId;
+	}
+	public void setPostId(String postId) {
+		this.postId = postId;
+	}
+	public String getUserDesc() {
+		return userDesc;
+	}
+	public void setUserDesc(String userDesc) {
+		this.userDesc = userDesc;
+	}
 }

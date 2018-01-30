@@ -1,16 +1,19 @@
 package com.bxs.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bxs.common.vo.EUICombobox;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.PostDao;
 import com.bxs.pojo.Post;
-import com.bxs.pojo.Topic;
+import com.bxs.pojo.PostInfoVo;
 import com.bxs.service.PostService;
 
 @Service
@@ -44,5 +47,19 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public void delete(String id) {
 		postDao.delete(id);
+	}
+
+
+	@Override
+	public List<EUICombobox> getPostByDeptId(String deptId) {
+		List<EUICombobox> result=new ArrayList<EUICombobox>();
+		List<PostInfoVo> list=postDao.getPostByDeptId(deptId);
+		for (PostInfoVo postInfoVo : list) {
+			EUICombobox combo=new EUICombobox();
+			combo.setId(postInfoVo.getId());
+			combo.setText(postInfoVo.getPostName());
+			result.add(combo);
+		}
+		return result;
 	}
 }

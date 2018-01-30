@@ -43,6 +43,7 @@ public class UserDao {
 	 * @param user void
 	 */
 	public void save(final SysUser user) {
+		 /**
 		 String insertSQL = "INSERT INTO T_USER (id, login_name, login_password, login_time,data_state) VALUES(?,?,?,?,?)";
 		 jdbcTemplate.execute(insertSQL,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
@@ -54,8 +55,56 @@ public class UserDao {
 			         ps.setString(5, user.getDataState());
 			       }
 			     }
-			 );
+			 );**/
 		
+		String sql="INSERT INTO t_user (\n" +
+						"  id,\n" + 
+						"  login_name,\n" + 
+						"  login_password,\n" + 
+						"  login_time,\n" + 
+						"  data_state,\n" + 
+						"  office_telephone,\n" + 
+						"  mobile_phone,\n" + 
+						"  user_name,\n" + 
+						"  birthday,\n" + 
+						"  dept_id,\n" + 
+						"  post_id,\n" + 
+						"  user_desc\n" + 
+						")\n" + 
+						"VALUES\n" + 
+						"  (\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?\n" + 
+						"  ) ;";
+
+		jdbcTemplate.execute(sql,
+			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
+			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
+			         ps.setString(1, UUID.randomUUID().toString());
+			         ps.setString(2, user.getLoginName());
+			         ps.setString(3, user.getLoginPassword());
+			         ps.setTimestamp(4, new java.sql.Timestamp(user.getLoginTime().getTime()));
+			         ps.setString(5, user.getDataState());
+			         ps.setString(6, user.getOfficeTelephone());
+			         ps.setString(7, user.getMobilePhone());
+			         ps.setString(8, user.getUserName());
+			         ps.setDate(9, new java.sql.Date(user.getBirthday().getTime()));
+			         ps.setString(10, user.getDeptId());
+			         ps.setString(11, user.getPostId());
+			         ps.setString(12, user.getUserDesc());
+			       }
+			     }
+			 );
 	}
 	
 	/**

@@ -86,7 +86,7 @@ public class PostDao {
 		
 		//注意MySQL的分页参数
 		String sql="SELECT * FROM ("+sqlBuff.toString()+")S limit ?,?";
-		List<UserInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(PostInfoVo.class));
+		List<PostInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(PostInfoVo.class));
 		return list;
 	}
 
@@ -151,6 +151,26 @@ public class PostDao {
 	public void delete(String id) {
 		String sql = "UPDATE t_post SET DATA_STATE=? WHERE ID=?";
 		jdbcTemplate.update(sql,new Object[]{DataState.Delete.getCode(),id});
+	}
+
+
+	/**
+	 * 
+	 * 根据部门ID获取部门下职位
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 上午10:25:48
+	 * @history:
+	 * @param deptId
+	 * @return List<PostInfoVo>
+	 */
+	public List<PostInfoVo> getPostByDeptId(String deptId) {
+		StringBuffer sqlBuff=new StringBuffer("SELECT * FROM V_POST_INFO T WHERE 1=1 AND T.DATA_STATE='1' \n");
+		//单位ID，其中"1"为根节点，不做筛选，查询全部
+		if(StringUtils.isNotBlank(deptId)&&!"1".equals(deptId)){
+			sqlBuff.append(" AND DEPT_ID = '" + deptId + "'\n");
+		}
+		List<PostInfoVo> list = jdbcTemplate.query(sqlBuff.toString(),new BeanPropertyRowMapper(PostInfoVo.class));
+		return list;
 	}
 
 }

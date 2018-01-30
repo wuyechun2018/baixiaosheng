@@ -1,11 +1,14 @@
 package com.bxs.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bxs.common.dict.DataState;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.UserDao;
@@ -24,8 +27,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void save(SysUser user) {
+		//设置为有效
+		user.setDataState(DataState.Use.getCode());
+		user.setLoginTime(new Date());
+		
 		// 更新操作
-		if (user.getId() != null) {
+		if (StringUtils.isNotBlank(user.getId())) {
 			userDao.update(user);
 		} else {
 			// 保存操作
