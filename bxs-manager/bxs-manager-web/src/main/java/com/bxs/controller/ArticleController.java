@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bxs.common.dict.DataState;
+import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.utils.BaseController;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.Article;
 import com.bxs.pojo.ArticleInfoVo;
+import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
 
 /***
@@ -40,6 +43,24 @@ public class ArticleController extends BaseController{
 	
 	@Autowired
 	private ArticleService articleService;
+	
+	
+	/**
+	 * 
+	 * 跳转到后台管理的编辑页面
+	 * @author: wyc
+	 * @createTime: 2018年1月31日 下午7:13:57
+	 * @history:
+	 * @param id
+	 * @return ModelAndView
+	 */
+	@RequestMapping("/euiEdit")
+	public ModelAndView euiEdit(String id) {
+		ModelAndView mv=new ModelAndView("/eui/article/edit");
+		Article article=articleService.getArticleById(id);
+		mv.addObject("article",article);
+		return mv;
+	}
 	
 	
 	/**
@@ -228,14 +249,14 @@ public class ArticleController extends BaseController{
 	 * @return String
 	 */
 	@RequestMapping("/euiSave")
-	public String euiSave(Article article){
-		article.setCreateDate(new Date());
-		article.setUpdateDate(new Date());
-		//设置为在用
-		article.setDataState(DataState.Use.getCode());
-		//初始化浏览次数为0
-		article.setViewCount(0);
-		article.setDisplayOrder(0);
+	public String euiSave(Article article,HttpSession session){
+		
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			article.setPublishDeptId(info.getDeptId());
+			article.setPublishUserId(info.getId());
+		}
+		
 		articleService.save(article);
 		return "redirect:/eui/article/list";
 	}

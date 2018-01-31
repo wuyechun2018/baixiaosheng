@@ -27,6 +27,12 @@ function addFun(){
 	 location.href=ctx+"/eui/article/add";
 }
 
+//点击“操作列-修改”
+function editFun(id) {
+	location.href=ctx+"/article/euiEdit?id="+id;
+}
+
+
 //文章预览
 function viewFun(id){
 	location.href=ctx+"/article/showArticle?id="+id;
@@ -105,7 +111,7 @@ $(function(){
 		          }},
 		          {field:'publishDeptName',title: '发布部门',align: 'center',width: 80},
 		          {field:'publishUserName',title: '发布人',align: 'center',width: 80}, 
-		          {field:'createDate',title: '发布时间',align: 'center',width: 100}, 
+		          {field:'createDate',title: '发布时间',align: 'center',width: 120}, 
 		          {field:'checkState',title: '状态',align: 'center',width: 100,formatter:function(val,rec){
 		        	  if(val=='1'){
 		        		  return "<span style='color:green'>正常</span>";

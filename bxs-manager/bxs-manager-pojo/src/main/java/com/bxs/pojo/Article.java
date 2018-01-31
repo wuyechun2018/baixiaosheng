@@ -26,6 +26,8 @@ public class Article implements java.io.Serializable {
 
 	// 主键
 	private String id;
+	//文章类型(1:普通 2:图片 3：视频)
+	private String articleType;
 	// 栏目Id
 	private String topicId;
 	// 文章标题
@@ -41,7 +43,7 @@ public class Article implements java.io.Serializable {
 	// 文章审核状态(0:未审核 1:审核通过)
 	private String checkState;
 	// 推荐值（值越大，越先显示）
-	private String topCount;
+	private int topCount;
 	// 浏览次数
 	private int viewCount;
 	// 排序
@@ -59,6 +61,14 @@ public class Article implements java.io.Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getArticleType() {
+		return articleType;
+	}
+
+	public void setArticleType(String articleType) {
+		this.articleType = articleType;
 	}
 
 	public String getTopicId() {
@@ -117,11 +127,11 @@ public class Article implements java.io.Serializable {
 		this.checkState = checkState;
 	}
 
-	public String getTopCount() {
+	public int getTopCount() {
 		return topCount;
 	}
 
-	public void setTopCount(String topCount) {
+	public void setTopCount(int topCount) {
 		this.topCount = topCount;
 	}
 

@@ -41,6 +41,9 @@ function goback(){
         <div class="content" id="zoom">
 			${articleInfoVo.articleContent}
 		</div>
+		<div class="content" style="text-align: center;">
+			<img src="${articleInfoVo.articleImageUrl }" />
+		</div>
         
         <div class="clearfix" style="margin:0 38px;">
     		<div class="chare">
@@ -54,8 +57,8 @@ function goback(){
                 </div>
             </div>
        </div>
-        
     </div>
+   
 </div>
   
 </body>

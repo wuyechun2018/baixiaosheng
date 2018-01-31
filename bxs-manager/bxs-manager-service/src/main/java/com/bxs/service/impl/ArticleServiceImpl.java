@@ -1,14 +1,18 @@
 package com.bxs.service.impl;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.bxs.common.dict.DataState;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.ArticleDao;
 import com.bxs.pojo.Article;
 import com.bxs.pojo.ArticleInfoVo;
+import com.bxs.pojo.SysUser;
 import com.bxs.service.ArticleService;
 
 @Service
@@ -18,11 +22,40 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleDao articleDao;
 	
 	public void save(Article article){
+		//设置为在用
+		article.setDataState(DataState.Use.getCode());
+		article.setDisplayOrder(0);
 		//更新操作
 		if(StringUtils.isNotBlank(article.getId())){
+			//更新时间
+			article.setUpdateDate(new Date());
+			//一些原有属性要保存
+			Article existArticle=getArticleById(article.getId());
+			//创建时间
+			article.setCreateDate(existArticle.getCreateDate());
+			//查看次数
+			article.setViewCount(existArticle.getViewCount());
+			//推荐值
+			article.setTopCount(existArticle.getTopCount());
+			//发布部门ID
+			article.setPublishDeptId(existArticle.getPublishDeptId());
+			//发布人ID
+			article.setPublishUserId(existArticle.getPublishUserId());
+			//文章审核状态(0:未审核 1:审核通过),修改后需要重新审核。
+			article.setCheckState("0");
 			articleDao.update(article);
 		}else{
 			//保存操作	
+			//初始化浏览次数为0
+			article.setViewCount(0);
+			//推荐值 
+			article.setTopCount(0);
+			//创建时间
+			article.setCreateDate(new Date());
+			//更新时间
+			article.setUpdateDate(new Date());
+			//文章审核状态(0:未审核 1:审核通过),默认未审核
+			article.setCheckState("0");
 			articleDao.save(article);
 		}
 		

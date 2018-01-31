@@ -37,7 +37,7 @@ public class ArticleDao {
 	 * @param article void
 	 */
 	public void save(final Article article) {
-		 String insertSQL = "INSERT INTO T_ARTICLE (ID, ARTICLE_TITLE, ARTICLE_CONTENT, CREATE_DATE,UPDATE_DATE, DISPLAY_ORDER,VIEW_COUNT,DATA_STATE) VALUES(?,?,?,?,?,?,?,?)";
+		/* String insertSQL = "INSERT INTO T_ARTICLE (ID, ARTICLE_TITLE, ARTICLE_CONTENT, CREATE_DATE,UPDATE_DATE, DISPLAY_ORDER,VIEW_COUNT,DATA_STATE) VALUES(?,?,?,?,?,?,?,?)";
 		 jdbcTemplate.execute(insertSQL,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
 			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
@@ -53,12 +53,70 @@ public class ArticleDao {
 			         ps.setString(8, article.getDataState());
 			       }
 			     }
+			 );*/
+		String sql="INSERT INTO t_article (\n" +
+						"  id,\n" + 
+						"  article_type,\n" + 
+						"  topic_id,\n" + 
+						"  article_title,\n" + 
+						"  article_image_url,\n" + 
+						"  article_content,\n" + 
+						"  publish_dept_id,\n" + 
+						"  publish_user_id,\n" + 
+						"  check_state,\n" + 
+						"  top_count,\n" + 
+						"  view_count,\n" + 
+						"  display_order,\n" + 
+						"  data_state,\n" + 
+						"  create_date,\n" + 
+						"  update_date\n" + 
+						")\n" + 
+						"VALUES\n" + 
+						"  (\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?\n" + 
+						"  )";
+
+		jdbcTemplate.execute(sql,
+			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
+			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
+			         ps.setString(1, UUID.randomUUID().toString());
+			         ps.setString(2, article.getArticleType());
+			         ps.setString(3, article.getTopicId());
+			         ps.setString(4, article.getArticleTitle());
+			         ps.setString(5, article.getArticleImageUrl());
+			         lobCreator.setClobAsString(ps,6,article.getArticleContent());
+			         ps.setString(7, article.getPublishDeptId());
+			         ps.setString(8, article.getPublishUserId());
+			         ps.setString(9, article.getCheckState());
+			         ps.setInt(10, article.getTopCount());
+			         ps.setInt(11, article.getViewCount());
+			         ps.setInt(12, article.getDisplayOrder());
+			         ps.setString(13, article.getDataState());
+			         ps.setTimestamp(14, new java.sql.Timestamp(article.getCreateDate().getTime()));
+			         ps.setTimestamp(15, new java.sql.Timestamp(article.getUpdateDate().getTime()));
+			       }
+			     }
 			 );
+		
 		
 	}
 	
 	public void update(final Article article) {
-		String insertSQL = "UPDATE T_ARTICLE SET ARTICLE_TITLE=?,ARTICLE_CONTENT=?,CREATE_DATE=?,UPDATE_DATE=?,DISPLAY_ORDER=?,VIEW_COUNT=? WHERE ID=?";
+		/*String insertSQL = "UPDATE T_ARTICLE SET ARTICLE_TITLE=?,ARTICLE_CONTENT=?,CREATE_DATE=?,UPDATE_DATE=?,DISPLAY_ORDER=?,VIEW_COUNT=? WHERE ID=?";
 		 jdbcTemplate.execute(insertSQL,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
 			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
@@ -69,6 +127,47 @@ public class ArticleDao {
 			         ps.setInt(5, article.getDisplayOrder());
 			         ps.setInt(6, article.getViewCount());
 			         ps.setString(7, article.getId());
+			       }
+			     }
+			 );*/
+		
+		String sql=	"UPDATE\n" +
+						"  t_article\n" + 
+						"SET\n" + 
+						"  article_type = ?,\n" + 
+						"  topic_id = ?,\n" + 
+						"  article_title = ?,\n" + 
+						"  article_image_url = ?,\n" + 
+						"  article_content = ?,\n" + 
+						"  publish_dept_id = ?,\n" + 
+						"  publish_user_id = ?,\n" + 
+						"  check_state = ?,\n" + 
+						"  top_count = ?,\n" + 
+						"  view_count =?,\n" + 
+						"  display_order = ?,\n" + 
+						"  data_state = ?,\n" + 
+						"  create_date = ?,\n" + 
+						"  update_date = ?\n" + 
+						"WHERE id = ?";
+
+		jdbcTemplate.execute(sql,
+			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
+			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
+			         ps.setString(1, article.getArticleType());
+			         ps.setString(2, article.getTopicId());
+			         ps.setString(3, article.getArticleTitle());
+			         ps.setString(4, article.getArticleImageUrl());
+			         lobCreator.setClobAsString(ps,5,article.getArticleContent());
+			         ps.setString(6, article.getPublishDeptId());
+			         ps.setString(7, article.getPublishUserId());
+			         ps.setString(8, article.getCheckState());
+			         ps.setInt(9, article.getTopCount());
+			         ps.setInt(10, article.getViewCount());
+			         ps.setInt(11, article.getDisplayOrder());
+			         ps.setString(12, article.getDataState());
+			         ps.setTimestamp(13, new java.sql.Timestamp(article.getCreateDate().getTime()));
+			         ps.setTimestamp(14, new java.sql.Timestamp(article.getUpdateDate().getTime()));
+			         ps.setString(15, article.getId());
 			       }
 			     }
 			 );
@@ -173,8 +272,8 @@ public class ArticleDao {
 			sqlBuff.append(" AND PUBLISH_DEPT_ID = '" + param.get("publishDeptId").toString() + "'\n");
 		}
 		
-		//审核状态,3代表全部状态
-		if(param.get("checkState")!=null&&StringUtils.isNotBlank(param.get("checkState").toString())&&!"1".equals(param.get("topicId").toString())){
+		//审核状态,2代表全部状态,0 未审核 1 已审核
+		if(param.get("checkState")!=null&&StringUtils.isNotBlank(param.get("checkState").toString())&&!"2".equals(param.get("topicId").toString())){
 			sqlBuff.append(" AND CHECK_STATE = '" + param.get("checkState").toString() + "'\n");
 		}
 		
@@ -186,6 +285,8 @@ public class ArticleDao {
 		if(param.get("publishUserName")!=null&&StringUtils.isNotBlank(param.get("publishUserName").toString())){
 			sqlBuff.append(" AND  T.PUBLISH_USER_NAME LIKE '%"+param.get("publishUserName").toString()+"%' \n");
 		}
+		sqlBuff.append(" ORDER BY top_count DESC,UPDATE_DATE DESC");
+		
 		return sqlBuff.toString();
 	}
 

@@ -11,7 +11,7 @@
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/lang/zh-cn/zh-cn.js"></script>
 
 
-<title>添加文章</title>
+<title>修改文章</title>
 <script type="text/javascript">
 
 //预览配图
@@ -77,21 +77,22 @@ $(function(){
 	 		<tr>
 			 	<th>文章标题：</th>	 		
 	 			<td>
-	 			  <input type="text" name="articleTitle" style="width:300px;" />
-	 			   <%--普通类型 --%>
+	 			  <input type="hidden"  value="${article.id}" name="id"  />
+	 			  <%--普通类型 --%>
 	 			  <input type="hidden"  value="1" name="articleType"  />
+	 			  <input value="${article.articleTitle}" type="text" name="articleTitle" style="width:300px;" />
 	 			</td>
 	 			
 	 			<td rowspan="3">
-	 				<input type="hidden" id="article_image_url" name="articleImageUrl" style="width:300px;" />
-	 				<img id="view_image" alt="配图预览"  noresize="true" style="width:100px;height:70px;background-color:#ccc;border:1px solid #333">
+	 				<input type="hidden" id="article_image_url" value="${article.articleImageUrl}" name="articleImageUrl" style="width:300px;" />
+	 				<img id="view_image" alt="配图预览"  src="${article.articleImageUrl}" noresize="true" style="width:100px;height:70px;background-color:#ccc;border:1px solid #333">
 	 			</td>
 	 			
 	 		</tr>
 	 		<tr>
 			 	<th>栏目：</th>	 		
 	 			<td>
-	 			 	<input name="topicId" id="topicComboTree" />
+	 			 	<input name="topicId" id="topicComboTree" value="${article.topicId}" />
 	 			</td>
 	 			
 	 			
@@ -100,7 +101,7 @@ $(function(){
 	 		<tr>
 				<th>文章配图：</th>	
 				<td style="width:360px;">
-	 				<input name="preimage"  class="easyui-filebox" style="width:310px;" data-options="buttonText:'选择文件', accept:'image/jpeg', prompt : '请选择一个图片类型的文件'"/>
+	 				<input name="preimage"   class="easyui-filebox" style="width:310px;" data-options="buttonText:'选择文件', accept:'image/jpeg', prompt : '请选择一个图片类型的文件'"/>
 	 				&nbsp;<a href="javascript:void(0)" onclick="preView()" style="font-size:15px;">预览</a>
 	 			</td>
 	 			
@@ -110,6 +111,7 @@ $(function(){
 			 	<th>内容：</th>	 		
 	 			<td colspan="2">
 	 			 	<script id="editor" name="articleContent" type="text/plain" style="width:800px;height:300px;">
+						${article.articleContent}
 					</script>
 	 			</td>
 	 		</tr>
