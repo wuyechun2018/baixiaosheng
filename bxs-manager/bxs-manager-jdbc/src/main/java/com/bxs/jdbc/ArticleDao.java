@@ -3,7 +3,10 @@ package com.bxs.jdbc;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,7 +16,9 @@ import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.stereotype.Repository;
 
 import com.bxs.common.dict.DataState;
+import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.Article;
+import com.bxs.pojo.ArticleInfoVo;
 
 @Repository
 public class ArticleDao {
@@ -114,5 +119,75 @@ public class ArticleDao {
 		String sql = "UPDATE T_ARTICLE SET DATA_STATE=? WHERE ID=?";
 		jdbcTemplate.update(sql,new Object[]{DataState.Delete.getCode(),id});
 	}
+
+	/**
+	 * 
+	 * 获取条件筛选后的记录总数
+	 * @author: wyc
+	 * @createTime: 2018年1月31日 下午3:03:39
+	 * @history:
+	 * @param param
+	 * @return Long
+	 */
+	public Long getTotalCount(Map<String, Object> param) {
+		String sql="SELECT COUNT(1) FROM V_ARTICLE_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		return  jdbcTemplate.queryForObject(sql,Long.class);
+	}
+
+	
+	/**
+	 * 
+	 * 分页、条件 筛选列表
+	 * @author: wyc
+	 * @createTime: 2018年1月31日 下午3:03:50
+	 * @history:
+	 * @param ePager
+	 * @param param
+	 * @return List<?>
+	 */
+	public List<?> pagerArticleList(EUIPager ePager, Map<String, Object> param) {
+		String  querySql="SELECT * FROM V_ARTICLE_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
+		return list;
+	}
+	
+	
+	/**
+	 * 
+	 * 根据查询参数生成查询语句
+	 * @author: wyc
+	 * @createTime: 2018年1月31日 下午4:35:08
+	 * @history:
+	 * @param param
+	 * @return String
+	 */
+	private String getParamSql(Map<String, Object> param) {
+		StringBuffer sqlBuff=new StringBuffer();
+		//栏目ID,1代表全部栏目
+		if(param.get("topicId")!=null&&StringUtils.isNotBlank(param.get("topicId").toString())&&!"1".equals(param.get("topicId").toString())){
+			sqlBuff.append(" AND TOPIC_ID = '" + param.get("topicId").toString() + "'\n");
+		}
+		//发布部门,1代表全部栏目
+		if(param.get("publishDeptId")!=null&&StringUtils.isNotBlank(param.get("publishDeptId").toString())&&!"1".equals(param.get("topicId").toString())){
+			sqlBuff.append(" AND PUBLISH_DEPT_ID = '" + param.get("publishDeptId").toString() + "'\n");
+		}
+		
+		//审核状态,3代表全部状态
+		if(param.get("checkState")!=null&&StringUtils.isNotBlank(param.get("checkState").toString())&&!"1".equals(param.get("topicId").toString())){
+			sqlBuff.append(" AND CHECK_STATE = '" + param.get("checkState").toString() + "'\n");
+		}
+		
+		//文章标题
+		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
+			sqlBuff.append(" AND  T.ARTICLE_TITLE LIKE '%"+param.get("articleTitle").toString()+"%' \n");
+		}
+		
+		if(param.get("publishUserName")!=null&&StringUtils.isNotBlank(param.get("publishUserName").toString())){
+			sqlBuff.append(" AND  T.PUBLISH_USER_NAME LIKE '%"+param.get("publishUserName").toString()+"%' \n");
+		}
+		return sqlBuff.toString();
+	}
+
 
 }

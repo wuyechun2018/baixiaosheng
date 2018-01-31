@@ -32,13 +32,15 @@ public class UserServiceImpl implements UserService {
 		//设置为有效
 		user.setDataState(DataState.Use.getCode());
 		user.setLoginTime(new Date());
-		//将密码进行MD5加密保存到数据库中
-		user.setLoginPassword(EncryptionUtil.getMd5String(user.getLoginPassword()));
-		
 		// 更新操作
 		if (StringUtils.isNotBlank(user.getId())) {
+			SysUser existUser=getUserById(user.getId());
+			//常规的更新操作,不对密码进行更新，对于修改密码操作,在另外的方法中进行
+			user.setLoginPassword(existUser.getLoginPassword());
 			userDao.update(user);
 		} else {
+			//将密码进行MD5加密保存到数据库中
+			user.setLoginPassword(EncryptionUtil.getMd5String(user.getLoginPassword()));
 			// 保存操作
 			userDao.save(user);
 		}

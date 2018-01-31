@@ -1,7 +1,10 @@
 package com.bxs.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.bxs.common.vo.EUIGrid;
+import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.Article;
 
 public interface ArticleService {
@@ -13,6 +16,8 @@ public interface ArticleService {
 	Article getArticleById(String id);
 
 	void delete(String id);
+
+	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 	
 	
 }

@@ -30,7 +30,7 @@ public class AuthFilter implements Filter{
 		String servletPath = httpServletRequest.getServletPath();
 		System.out.println("1:"+servletPath);
 		//不需要登录页能访问的地址
-		String[] noFilterPathArray = new String[] {"/login","/resources","/doLogin"};
+		String[] noFilterPathArray = new String[] {"/resources","/login","/doLogin"};
 		boolean doFilter=true;
 		for (String noFilterPath : noFilterPathArray) {  
         	if (servletPath.indexOf(noFilterPath) != -1) {  

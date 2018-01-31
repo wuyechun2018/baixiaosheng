@@ -13,17 +13,43 @@ var SELECT_NODE_Id="";
 function doQuery(){
     var options = $("#dgTable").datagrid("options");
     //设置参数
-    options.queryParams.deptId=SELECT_NODE_Id;
-    options.queryParams.loginOrUserName=$('#loginOrUserName').val();
-    options.queryParams.postName=$('#postName').val();
-    options.queryParams.telephone=$('#telephone').val();
-    options.queryParams.birthday=$('#birthday').val();
+    options.queryParams.topicId=SELECT_NODE_Id;
+    options.queryParams.articleTitle=$('#articleTitle').val();
+    options.queryParams.publishUserName=$('#publishUserName').val();
+    options.queryParams.publishDeptId=$("#publishDeptComboTree").combotree("getValue")
+    options.queryParams.checkState=$('#checkState').combobox('getValue');
+    
     $("#dgTable").datagrid(options);
 }
 
 //点击"添加按钮"
 function addFun(){
 	 location.href=ctx+"/eui/article/add";
+}
+
+
+//点击“操作列-删除”
+function deleteFun(id){
+	$.messager.confirm("删除确认", "您确认删除该文章吗？", function (action) {
+        if (action) {
+        	$.ajax({
+    			cache: true,
+    			type: "POST",
+    			url:'${ctx}/article/euiDelete',
+    			data:{
+    				id:id
+    			},
+    			async: false,
+    		    error: function(request) {
+    		        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+    		    },
+    		    success: function(data) {
+    		    	$.messager.alert('提示信息',data.msg);
+    		    	$("#dgTable").datagrid('reload');
+    		    }
+    		})
+        }
+      })
 }
 
 //页面初始化
@@ -51,14 +77,13 @@ $(function(){
 	 //中间表格
 	var dgTableHeight=$(window).height()-$('.searchBox').height()-51;
     dgTable=$('#dgTable').datagrid({  
-		url:ctx+'/user/pagerList',
+		url:ctx+'/article/pagerList',
 		method:'post',
 	    queryParams: {
-	    	deptId:'',
-	    	loginOrUserName:'',
-	    	postName:'',
-	    	telephone:'',
-	    	birthday:''
+	    	topicId:'',
+	    	articleTitle:'',
+	    	publishDeptId:'',
+	    	checkState:''
 		},
 		fit:false,
 		pageSize: 20,
@@ -69,19 +94,39 @@ $(function(){
 		pagination: true,  
 		rownumbers: true,  
 		columns:[[
-		          {field:'postName',title: '栏目',align: 'center',width: 80},
-		          {field:'loginName',title: '标题',align: 'center',width: 120,hidden:false,},
-		          {field:'userName',title: '发布部门',align: 'center',width: 80},
-		          {field:'deptId',title: '发布人',align: 'center',width: 80,hidden:true,}, 
-		          {field:'deptName',title: '发布时间',align: 'center',width: 100}, 
-		          {field:'postId',title: '审核状态',align: 'center',width: 100,hidden:true,}, 
-		          {field:'officeTelephone',title: '查看次数',align: 'center',width: 100},
+		          {field:'topicName',title: '栏目',align: 'center',width: 80},
+		          {field:'articleTitle',title: '标题',align: 'center',width: 120,hidden:false},
+		          {field:'publishDeptName',title: '发布部门',align: 'center',width: 80},
+		          {field:'publishUserName',title: '发布人',align: 'center',width: 80}, 
+		          {field:'createDate',title: '发布时间',align: 'center',width: 100}, 
+		          {field:'checkState',title: '状态',align: 'center',width: 100,formatter:function(val,rec){
+		        	  if(val=='1'){
+		        		  return "<span style='color:green'>正常</span>";
+		        	  }else{
+		        		  return "<span style='color:red'>未审核</span>";
+		        	  }
+		          }}, 
+		          {field:'viewCount',title: '查看次数',align: 'center',width: 50},
 		          {field:'id',title: '操作',align: 'center',width: 100, formatter:function(val,rec){
-		        	  return "<span class='btn_a_top'><a href='javascript:void(0)' onclick=editFun('"+val+"') >置顶</a></span>|<span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span>|<span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
+		        	  return "<span class='btn_a_top'><a href='javascript:void(0)' onclick=editFun('"+val+"') >置顶</a></span><span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span><span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
 		          }}
 		]]
 		,toolbar:$('#tb')
 	  });
+    
+    //查询表单发布部门下拉框树
+    $('#publishDeptComboTree').combotree({
+		url : '${ctx}/dept/getListByPid?pid=0',
+		onBeforeExpand : function(node, param) {
+			   $('#publishDeptComboTree').combotree("tree").tree("options").url =ctx+ "/dept/getListByPid?pid=" + node.id;
+			},
+		width:'155',
+	    required: false,
+	    onLoadSuccess : function(node, data) {
+	    	$('#publishDeptComboTree').combotree("tree").tree('expandAll');
+		}
+	});
+    
  })
 	
 </script>
@@ -100,11 +145,15 @@ $(function(){
 				<tr>
 					<td style="width:100px;text-align: right;margin-right: 5px;">标题:</td>
 					<td style="width:200px;text-align: left;">
-						<input id="loginOrUserName" name="loginOrUserName" style="width:150px">
+						<input id="articleTitle" name="articleTitle" style="width:150px">
 					</td>
 					<td style="width:100px;text-align: right;margin-right: 5px;">审核状态:</td>
 					<td style="width:200px;">
-						<input id="postName" name="postName" style="width:150px">
+						<select data-options="panelHeight:'auto'" class="easyui-combobox" id="checkState" name="checkState"  style="width:150px">
+							<option value="2" selected="selected">全部</option>
+							<option value="0">未审核</option>
+							<option value="1">正常</option>
+						</select>
 					</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
@@ -112,11 +161,11 @@ $(function(){
 				<tr>
 					<td style="width:100px;text-align: right;margin-right: 5px;">发布部门:</td>
 					<td style="width:200px;text-align: left;">
-						<input id="telephone" name="telephone" style="width:150px">
+						<input style="width:160px" id="publishDeptComboTree"  name="publishDeptId" />
 					</td>
 					<td style="width:100px;text-align: right;margin-right: 5px;">发布人:</td>
 					<td style="width:200px;">
-						<input id="birthday" name="birthday" style="width:150px">
+						<input id="publishUserName" name="publishUserName" style="width:150px">
 					</td>
 					<td>&nbsp;</td>
 					<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" iconCls="Zoom">查询</a></td>

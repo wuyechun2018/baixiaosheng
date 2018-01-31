@@ -3,6 +3,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bxs.common.dict.DataState;
+import com.bxs.common.utils.BaseController;
+import com.bxs.common.vo.EUIGrid;
+import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.Article;
 import com.bxs.service.ArticleService;
@@ -29,10 +35,28 @@ import com.bxs.service.ArticleService;
  */
 @Controller
 @RequestMapping("/article")
-public class ArticleController {
+public class ArticleController extends BaseController{
 	
 	@Autowired
 	private ArticleService articleService;
+	
+	
+	/**
+	 * 
+	 * 返回文章列表数据
+	 * @author: wyc
+	 * @createTime: 2018年1月31日 上午11:04:49
+	 * @history:
+	 * @param request
+	 * @return EUIGrid
+	 */
+	@RequestMapping("/pagerList")
+	@ResponseBody
+	public  EUIGrid pagerList(HttpServletRequest request){
+		EUIPager ePager=getPager(request);
+		Map<String,Object> param=getParamMap(request);
+		return articleService.pagerList(ePager,param);
+	}
 	
 	
 	/**
@@ -86,6 +110,23 @@ public class ArticleController {
 		return "redirect:/article/manager";
 	}
 	
+	
+	/**
+	 * 
+	 * EasyUI 页面删除
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午3:19:45
+	 * @history:
+	 * @param request
+	 * @return String
+	 */
+	@RequestMapping("/euiDelete")
+	@ResponseBody
+	public Object euiDelete(HttpServletRequest request) {
+		String id=request.getParameter("id");
+		articleService.delete(id);
+		return new JsonMsg();
+	}
 	
 	/**
 	 * 
