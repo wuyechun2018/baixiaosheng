@@ -22,6 +22,7 @@ import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.Article;
+import com.bxs.pojo.ArticleInfoVo;
 import com.bxs.service.ArticleService;
 
 /***
@@ -127,6 +128,24 @@ public class ArticleController extends BaseController{
 		articleService.delete(id);
 		return new JsonMsg();
 	}
+	
+	
+	/**
+	 * 
+	 * 文章预览
+	 * @author: wyc
+	 * @createTime: 2018年1月17日 下午5:05:37
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping("/showArticle")
+	public ModelAndView showArticle(String id) {
+		ModelAndView mv=new ModelAndView("/eui/article/show");
+		ArticleInfoVo articleInfoVo=articleService.getArticleInfoById(id);
+		mv.addObject("articleInfoVo",articleInfoVo);
+		return mv;
+	}
+	
 	
 	/**
 	 * 

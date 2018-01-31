@@ -8,6 +8,7 @@ import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.ArticleDao;
 import com.bxs.pojo.Article;
+import com.bxs.pojo.ArticleInfoVo;
 import com.bxs.service.ArticleService;
 
 @Service
@@ -48,6 +49,11 @@ public class ArticleServiceImpl implements ArticleService {
 		grid.setTotal(articleDao.getTotalCount(param));
 		grid.setRows(articleDao.pagerArticleList(ePager,param));
 		return grid;
+	}
+
+	@Override
+	public ArticleInfoVo getArticleInfoById(String id) {
+		return articleDao.getArticleInfoById(id);
 	}
 	
 	

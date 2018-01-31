@@ -189,5 +189,23 @@ public class ArticleDao {
 		return sqlBuff.toString();
 	}
 
+	/**
+	 * 
+	 * 获取文章信息
+	 * @author: wyc
+	 * @createTime: 2018年1月31日 下午6:57:44
+	 * @history:
+	 * @param id
+	 * @return ArticleInfoVo
+	 */
+	public ArticleInfoVo getArticleInfoById(String id) {
+		List<ArticleInfoVo> list = jdbcTemplate.query("SELECT * FROM V_ARTICLE_INFO WHERE ID=?",new Object[]{id},new BeanPropertyRowMapper(ArticleInfoVo.class));
+		if(!list.isEmpty()){
+			return list.get(0);
+		}else{
+			return null;
+		}
+	}
+
 
 }

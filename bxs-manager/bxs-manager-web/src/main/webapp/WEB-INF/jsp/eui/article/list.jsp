@@ -27,6 +27,11 @@ function addFun(){
 	 location.href=ctx+"/eui/article/add";
 }
 
+//文章预览
+function viewFun(id){
+	location.href=ctx+"/article/showArticle?id="+id;
+}
+
 
 //点击“操作列-删除”
 function deleteFun(id){
@@ -95,7 +100,9 @@ $(function(){
 		rownumbers: true,  
 		columns:[[
 		          {field:'topicName',title: '栏目',align: 'center',width: 80},
-		          {field:'articleTitle',title: '标题',align: 'center',width: 120,hidden:false},
+		          {field:'articleTitle',title: '标题',align: 'center',width: 120,hidden:false,formatter:function(val,rec){
+		        	  	return "<a title='预览' onclick=viewFun('"+rec.id+"') class='preview_link' href='javascript:void(0)'>"+val+"</a>";
+		          }},
 		          {field:'publishDeptName',title: '发布部门',align: 'center',width: 80},
 		          {field:'publishUserName',title: '发布人',align: 'center',width: 80}, 
 		          {field:'createDate',title: '发布时间',align: 'center',width: 100}, 
