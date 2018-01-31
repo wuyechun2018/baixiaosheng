@@ -263,6 +263,10 @@ public class ArticleDao {
 	 */
 	private String getParamSql(Map<String, Object> param) {
 		StringBuffer sqlBuff=new StringBuffer();
+		
+		if(param.get("articleType")!=null&&StringUtils.isNotBlank(param.get("articleType").toString())&&!"1".equals(param.get("topicId").toString())){
+			sqlBuff.append(" AND ARTICLE_TYPE = '" + param.get("articleType").toString() + "'\n");
+		}
 		//栏目ID,1代表全部栏目
 		if(param.get("topicId")!=null&&StringUtils.isNotBlank(param.get("topicId").toString())&&!"1".equals(param.get("topicId").toString())){
 			sqlBuff.append(" AND TOPIC_ID = '" + param.get("topicId").toString() + "'\n");

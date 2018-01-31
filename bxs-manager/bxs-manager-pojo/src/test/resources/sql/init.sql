@@ -7,10 +7,11 @@ CREATE OR REPLACE VIEW v_post_info AS
 SELECT T.*,S.dept_name FROM T_POST T LEFT JOIN T_DEPT S ON T.dept_id=S.ID;
 
 
-CREATE VIEW  v_article_info AS
+CREATE OR REPLACE VIEW  v_article_info AS
 SELECT J.*,K.user_name AS publish_user_name FROM (
 SELECT M.*,N.dept_name AS publish_dept_name FROM (SELECT T.*,S.topic_name FROM t_article T LEFT JOIN t_topic S ON T.topic_id=S.id)M LEFT JOIN T_DEPT N
 ON M.PUBLISH_DEPT_ID=N.id)J LEFT JOIN T_USER K ON J.PUBLISH_USER_ID=K.id;
+
 
 
 CREATE TABLE `t_user` (

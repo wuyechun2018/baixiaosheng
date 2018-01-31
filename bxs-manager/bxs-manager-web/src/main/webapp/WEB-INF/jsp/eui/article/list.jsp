@@ -14,6 +14,8 @@ function doQuery(){
     var options = $("#dgTable").datagrid("options");
     //设置参数
     options.queryParams.topicId=SELECT_NODE_Id;
+    //该页面只处理普通类型
+    options.queryParams.articleType='1';
     options.queryParams.articleTitle=$('#articleTitle').val();
     options.queryParams.publishUserName=$('#publishUserName').val();
     options.queryParams.publishDeptId=$("#publishDeptComboTree").combotree("getValue")
@@ -91,6 +93,8 @@ $(function(){
 		url:ctx+'/article/pagerList',
 		method:'post',
 	    queryParams: {
+	    	//普通类型
+	    	articleType:'1',
 	    	topicId:'',
 	    	articleTitle:'',
 	    	publishDeptId:'',
