@@ -29,8 +29,7 @@ import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
 
 /***
- * 
- * 文章维护控制层
+ * 文章维护控制层-普通类型文章(1:普通 2:图片 3：视频)
  * @desc: bxs-manager-web
  * @author: wyc
  * @createTime: 2018年1月22日 下午4:09:56
