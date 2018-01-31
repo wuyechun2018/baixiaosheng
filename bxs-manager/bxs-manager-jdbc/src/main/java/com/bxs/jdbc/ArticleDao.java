@@ -264,7 +264,7 @@ public class ArticleDao {
 	private String getParamSql(Map<String, Object> param) {
 		StringBuffer sqlBuff=new StringBuffer();
 		
-		if(param.get("articleType")!=null&&StringUtils.isNotBlank(param.get("articleType").toString())&&!"1".equals(param.get("topicId").toString())){
+		if(param.get("articleType")!=null&&StringUtils.isNotBlank(param.get("articleType").toString())){
 			sqlBuff.append(" AND ARTICLE_TYPE = '" + param.get("articleType").toString() + "'\n");
 		}
 		//栏目ID,1代表全部栏目
@@ -272,12 +272,12 @@ public class ArticleDao {
 			sqlBuff.append(" AND TOPIC_ID = '" + param.get("topicId").toString() + "'\n");
 		}
 		//发布部门,1代表全部栏目
-		if(param.get("publishDeptId")!=null&&StringUtils.isNotBlank(param.get("publishDeptId").toString())&&!"1".equals(param.get("topicId").toString())){
+		if(param.get("publishDeptId")!=null&&StringUtils.isNotBlank(param.get("publishDeptId").toString())){
 			sqlBuff.append(" AND PUBLISH_DEPT_ID = '" + param.get("publishDeptId").toString() + "'\n");
 		}
 		
 		//审核状态,2代表全部状态,0 未审核 1 已审核
-		if(param.get("checkState")!=null&&StringUtils.isNotBlank(param.get("checkState").toString())&&!"2".equals(param.get("topicId").toString())){
+		if(param.get("checkState")!=null&&StringUtils.isNotBlank(param.get("checkState").toString())&&!"2".equals(param.get("checkState").toString())){
 			sqlBuff.append(" AND CHECK_STATE = '" + param.get("checkState").toString() + "'\n");
 		}
 		
