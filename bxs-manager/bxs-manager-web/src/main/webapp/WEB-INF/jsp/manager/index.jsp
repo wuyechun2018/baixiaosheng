@@ -157,7 +157,7 @@ $(function(){
 			<div id="topbar" class="top-bar">
                 <div class="top-bar-left">
                     <div style="margin-left: 15px; color: #000;height: 52px;">
-                    	<img style="vertical-align:middle;" alt="退出" src="${ctx}/resources/images/logo40.png">
+                    	<img style="vertical-align:middle;"  src="${ctx}/resources/images/logo40.png">
                     	<span style="vertical-align:middle;font-family: 华文细黑;font-size:30px;height:52px;line-height: 52px;color:#fff">信息管理系统</span>
                     </div>
                 </div>
@@ -167,7 +167,7 @@ $(function(){
                   		<%--
                   		<img style="vertical-align:middle;" alt="退出" src="${ctx}/resources/images/exit.png">
                   		 --%>
-                  		<a style="vertical-align:middle;"  href="${ctx}/user/loginout" style="font-size:16px;">退出系统</a>
+                  		<a style="vertical-align:middle;color:#fff;font-size:14px;text-decoration: none;"  href="${ctx}/user/loginout" >安全退出</a>
                   	</span>
                 </div>
                 
