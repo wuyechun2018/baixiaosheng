@@ -271,6 +271,11 @@ public class ArticleDao {
 		if(param.get("topicId")!=null&&StringUtils.isNotBlank(param.get("topicId").toString())&&!"1".equals(param.get("topicId").toString())){
 			sqlBuff.append(" AND TOPIC_ID = '" + param.get("topicId").toString() + "'\n");
 		}
+		
+		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())){
+			sqlBuff.append(" AND TOPIC_CODE = '" + param.get("topicCode").toString() + "'\n");
+		}
+		
 		//发布部门,1代表全部栏目
 		if(param.get("publishDeptId")!=null&&StringUtils.isNotBlank(param.get("publishDeptId").toString())){
 			sqlBuff.append(" AND PUBLISH_DEPT_ID = '" + param.get("publishDeptId").toString() + "'\n");

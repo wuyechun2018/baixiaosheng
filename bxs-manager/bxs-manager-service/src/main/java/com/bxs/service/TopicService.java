@@ -39,4 +39,15 @@ public interface TopicService {
 	 */
 	void delete(String id);
 
+	/**
+	 * 
+	 * 根据栏目编码获取栏目信息
+	 * @author: wyc
+	 * @createTime: 2018年2月3日 下午10:48:05
+	 * @history:
+	 * @param topicCode
+	 * @return Topic
+	 */
+	Topic getTopicByCode(String topicCode);
+
 }

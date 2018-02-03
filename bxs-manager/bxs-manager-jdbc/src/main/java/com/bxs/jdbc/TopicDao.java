@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.support.AbstractLobCreatingPreparedStatemen
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.stereotype.Repository;
+
+import com.bxs.pojo.SysUser;
 import com.bxs.pojo.Topic;
 
 @Repository
@@ -101,6 +103,24 @@ public class TopicDao {
 	public void delete(String id) {
 		String sql="DELETE FROM t_topic WHERE ID=?";
 		jdbcTemplate.update(sql,new Object[]{id});
+	}
+
+	/**
+	 * 
+	 * 根据栏目编码获取栏目信息
+	 * @author: wyc
+	 * @createTime: 2018年2月3日 下午10:52:13
+	 * @history:
+	 * @param topicCode
+	 * @return Topic
+	 */
+	public Topic getTopicByCode(String topicCode) {
+		List<Topic> list = jdbcTemplate.query("SELECT * FROM t_topic T WHERE T.TOPIC_CODE=?",new Object[]{topicCode},new BeanPropertyRowMapper(Topic.class));
+		if(!list.isEmpty()){
+			return list.get(0);
+		}else{
+			return null;
+		}
 	}
 
 }

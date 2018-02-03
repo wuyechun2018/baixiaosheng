@@ -2,6 +2,7 @@ package com.bxs.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +26,10 @@ import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.Article;
 import com.bxs.pojo.ArticleInfoVo;
+import com.bxs.pojo.Topic;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
+import com.bxs.service.TopicService;
 
 /***
  * 文章维护控制层-普通类型文章(1:普通 2:图片 3：视频)
@@ -42,6 +45,7 @@ public class ArticleController extends BaseController{
 	
 	@Autowired
 	private ArticleService articleService;
+	
 	
 	
 	/**
@@ -285,6 +289,24 @@ public class ArticleController extends BaseController{
 			e.printStackTrace();
 		}
 		return new JsonMsg(true,realPath+fileName);
+	}
+	
+	/**
+	 * 
+	 *  Portal页面查询-根据文章类型编码获取文章
+	 * @author: wyc
+	 * @createTime: 2018年2月3日 下午10:52:55
+	 * @history:
+	 * @param topicCode
+	 * @return Object
+	 */
+	@RequestMapping("/loadArticleByTopic")
+	@ResponseBody
+	public Object loadArticleByTopic(String topicCode,int page,int rows){
+		EUIPager ePager=new EUIPager(page,rows);
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("topicCode", topicCode);
+		return articleService.pagerList(ePager,param);
 	}
 	
 

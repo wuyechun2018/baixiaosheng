@@ -69,4 +69,9 @@ public class TopicServiceImpl  implements TopicService{
 	public void delete(String id) {
 		topicDao.delete(id);
 	}
+
+	@Override
+	public Topic getTopicByCode(String topicCode) {
+		return topicDao.getTopicByCode(topicCode);
+	}
 }

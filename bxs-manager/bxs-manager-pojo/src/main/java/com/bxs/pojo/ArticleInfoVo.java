@@ -38,6 +38,8 @@ public class ArticleInfoVo {
 	private Date updateDate;
 	// 栏目名称
 	private String topicName;
+	//栏目编码
+	private String topicCode;
 	// 发布文章部门名称
 	private String publishDeptName;
 	// 发布文章用户姓名
@@ -187,5 +189,13 @@ public class ArticleInfoVo {
 
 	public void setPublishUserName(String publishUserName) {
 		this.publishUserName = publishUserName;
+	}
+
+	public String getTopicCode() {
+		return topicCode;
+	}
+
+	public void setTopicCode(String topicCode) {
+		this.topicCode = topicCode;
 	}
 }
