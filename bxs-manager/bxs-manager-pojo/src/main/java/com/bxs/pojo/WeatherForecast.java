@@ -1,5 +1,9 @@
 package com.bxs.pojo;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 
  * 天气预报实体类
@@ -14,7 +18,7 @@ public class WeatherForecast {
 	// 主键
 	private String id;
 	// 时间
-	private String weatherDate;
+	private Date weatherDate;
 	// 天气情况
 	private String weatherConditions;
 	// 描述信息
@@ -28,11 +32,12 @@ public class WeatherForecast {
 		this.id = id;
 	}
 
-	public String getWeatherDate() {
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")  
+	public Date getWeatherDate() {
 		return weatherDate;
 	}
 
-	public void setWeatherDate(String weatherDate) {
+	public void setWeatherDate(Date weatherDate) {
 		this.weatherDate = weatherDate;
 	}
 

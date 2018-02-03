@@ -12,7 +12,7 @@ import com.bxs.common.utils.BaseController;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
-import com.bxs.pojo.SysUser;
+import com.bxs.pojo.WeatherForecast;
 import com.bxs.service.WeatherForecastService;
 
 /**
@@ -25,12 +25,30 @@ import com.bxs.service.WeatherForecastService;
  * @version: v1.0
  */
 @Controller
-@RequestMapping("/weatherForecas")
+@RequestMapping("/weatherForecast")
 public class WeatherForecastController extends BaseController{
 	
 	@Autowired
 	private WeatherForecastService weatherForecastService;
 	
+	
+	@RequestMapping("/save")
+	@ResponseBody
+	public JsonMsg save(WeatherForecast weatherForecast) {
+		weatherForecastService.save(weatherForecast);
+		return new JsonMsg();
+	}
+	
+	
+	
+	/**
+	 * 
+	 * 初始化数据
+	 * @author: wyc
+	 * @createTime: 2018年2月3日 上午10:09:05
+	 * @history:
+	 * @return JsonMsg
+	 */
 	@RequestMapping("/initData")
 	@ResponseBody
 	public JsonMsg initData() {
@@ -38,6 +56,15 @@ public class WeatherForecastController extends BaseController{
 		return new JsonMsg();
 	}
 	
+	/**
+	 * 
+	 * 分页列表
+	 * @author: wyc
+	 * @createTime: 2018年2月3日 上午10:09:19
+	 * @history:
+	 * @param request
+	 * @return EUIGrid
+	 */
 	@RequestMapping("/pagerList")
 	@ResponseBody
 	public  EUIGrid pagerList(HttpServletRequest request){

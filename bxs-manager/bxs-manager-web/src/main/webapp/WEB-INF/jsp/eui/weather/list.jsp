@@ -6,16 +6,54 @@
 <%--放置的位置要特别注意,不能放在第三行,否则会有一些样式问题 --%>
 <%@ include file="/WEB-INF/jsp/base/easyui.jsp" %>
 <title>天气预报</title>
+<style type="text/css">
+.datagrid-row {  
+  height: 42px;  
+  text-align:center;  
+}
+
+.datagrid-editable-input{
+  height: 40px;  
+  text-align:center; 
+}
+
+
+</style>
+
+
 <script type="text/javascript">
 var dgTable;
 $(function(){
+	
+	 $('#weatherDateStart').datebox('setValue',myDateFormatter(new Date()));
+	 $('#weatherDateEnd').datebox('setValue',myDateFormatter(myAddDate(6)));
+	
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/weatherForecast/initData',
+		data:{
+			
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	
+	    }
+	})
+	
+	
+	
 	var searchHeight=$('.searchBox').height();
 	var dgTableHeight=$(window).height()-searchHeight-30;
 	dgTable=$('#dgTable').edatagrid({  
-		url:ctx+'/user/pagerList',
+		url:ctx+'/weatherForecast/pagerList',
 		method:'post',
 	    queryParams: {
-	    	
+	    	weatherDateStart:myDateFormatter(new Date()),
+	    	weatherDateEnd:myDateFormatter(myAddDate(6))
 		},
 		fit:false,
 		pageSize: 20,
@@ -30,23 +68,55 @@ $(function(){
 				   {field:'id',title: '主键',align: 'left',width: 100,hidden:true},
 		           {field:'weatherDate',title: '日期',width: 60,align: 'center'},
 		           {field:'weatherConditions',title: '天气',align: 'center',editor:'text',width: 300}
+		           //{field:'weatherConditions',title: '天气',align: 'center',editor:'text',width: 300,options:{init:initCell}}
 		]]
 		,toolbar:$('#tb')
 		})
 		
+		//$('.datagrid-editable-input').height(40);
+		
+		doQuery();
 	})
 	
 	
 	function onAfterEdit(index,row,changes) {  
-		debugger; 
-	    //alert(row.weatherConditions);
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:'${ctx}/weatherForecast/save',
+			data:{
+				id:row.id,
+				weatherConditions:row.weatherConditions
+			},
+			async: false,
+		    error: function(request) {
+		        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+		    },
+		    success: function(data) {
+		    	
+		    }
+		})
+	} 
+	
+	function initCell(container, options){  
+	    var input = $('<input type="text" class="datagrid-editable-input" style="height: 40px;">').appendTo(container);  
+	    return input;  
 	} 
 	
 	
 	function doQuery(){
 		var options = $("#dgTable").datagrid("options");
+		options.queryParams.weatherDateStart= $('#weatherDateStart').datebox('getValue');
+		options.queryParams.weatherDateEnd= $('#weatherDateEnd').datebox('getValue');
 	    $("#dgTable").datagrid(options);
 	}
+	
+	function saveFun(){
+		 for(var i=0;i<20;i++){
+			 $("#dgTable").datagrid('endEdit',i);
+		 }
+	}
+	
 	
 </script>
 </head>
@@ -59,11 +129,11 @@ $(function(){
 				<tr>
 					<td style="width:100px;text-align: right;margin-right: 5px;">开始时间:</td>
 					<td style="width:200px;text-align: left;">
-						<input id="telephone" name="telephone" style="width:150px">
+						<input class="easyui-datebox" type="text" ID="weatherDateStart" name="weatherDateStart" style="width:150px" />
 					</td>
 					<td style="width:100px;text-align: right;margin-right: 5px;">结束时间:</td>
 					<td style="width:200px;">
-						<input id="birthday" name="birthday" style="width:150px">
+						<input class="easyui-datebox" type="text" ID="weatherDateEnd" name="weatherDateEnd" style="width:150px" />
 					</td>
 					<td>&nbsp;</td>
 					<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" iconCls="Zoom">查询</a></td>
@@ -78,7 +148,7 @@ $(function(){
 </div>
 	
 	<div id="tb">
-	    <a href="#" id="add" class="easyui-linkbutton" plain="true"  iconCls="icon-save">保存</a>
+	    <a href="javascript:void(0)" onclick="saveFun()" id="add" class="easyui-linkbutton" plain="true"  iconCls="icon-save">保存</a>
 	</div>
 	
 <script type="text/javascript" src="${ctx}/resources/js-lib/jquery-easyui-1.4.3/jquery.edatagrid.js"></script>

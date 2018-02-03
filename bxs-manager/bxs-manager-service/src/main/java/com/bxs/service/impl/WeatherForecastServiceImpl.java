@@ -1,6 +1,9 @@
 package com.bxs.service.impl;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.WeatherForecastDao;
+import com.bxs.pojo.SysUser;
 import com.bxs.pojo.WeatherForecast;
 import com.bxs.service.WeatherForecastService;
 
@@ -25,7 +29,7 @@ public class WeatherForecastServiceImpl implements WeatherForecastService{
 			DateTime now = new DateTime();
 			DateTime tomorrow = now.plusDays(i);
 			String dataStr=tomorrow.toString("yyyy-MM-dd");
-			if(isRecordNotExist(dataStr)){
+			if(!isRecordExist(dataStr)){
 				insertRecord(dataStr);
 			}
 		}
@@ -34,9 +38,21 @@ public class WeatherForecastServiceImpl implements WeatherForecastService{
 		
 	}
 
+	/**
+	 * 
+	 * 插入数据,天气状况 为空
+	 * @author: wyc
+	 * @createTime: 2018年2月3日 上午10:21:26
+	 * @history:
+	 * @param dataStr void
+	 */
 	private void insertRecord(String dataStr) {
 		WeatherForecast weatherForecast=new WeatherForecast();
-		weatherForecast.setWeatherDate(dataStr);
+		try {
+			weatherForecast.setWeatherDate(new SimpleDateFormat("yyyy-MM-dd").parse(dataStr));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		weatherForecastDao.save(weatherForecast);
 	}
 
@@ -49,13 +65,40 @@ public class WeatherForecastServiceImpl implements WeatherForecastService{
 	 * @param dataStr
 	 * @return boolean
 	 */
-	private boolean isRecordNotExist(String dataStr) {
-		return false;
+	private boolean isRecordExist(String dataStr) {
+		Long count=weatherForecastDao.getTotalCountByDataStr(dataStr);
+		if(count>0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	@Override
 	public EUIGrid pagerList(EUIPager ePager, Map<String, Object> param) {
-		return null;
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(weatherForecastDao.getTotalCount(param));
+		grid.setRows(weatherForecastDao.pagerList(ePager,param));
+		return grid;
+	}
+
+	@Override
+	public void save(WeatherForecast weatherForecast) {
+		// 更新操作
+		if (StringUtils.isNotBlank(weatherForecast.getId())) {
+			WeatherForecast existWeatherForecast=getWeatherForecastById(weatherForecast.getId());
+			weatherForecast.setWeatherDate(existWeatherForecast.getWeatherDate());
+			weatherForecastDao.update(weatherForecast);
+		} else {
+			// 保存操作
+			weatherForecastDao.save(weatherForecast);
+		}
+
+	}
+	
+	@Override
+	public WeatherForecast getWeatherForecastById(String id) {
+		return weatherForecastDao.getWeatherForecastById(id);
 	}
 
 }
