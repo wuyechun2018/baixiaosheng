@@ -52,12 +52,45 @@ function showArticle(dispDivId,articleData){
 			  var articleTitle=articleObj.articleTitle;
 			  var articleUrl=ctx+"/portal/content?id="+articleObj.id;
 			  var articleTitlePart="";
-			  if(articleTitle.length>=15){
-				  articleTitlePart=articleTitle.substr(0,15);
-			  }else{
-				  articleTitlePart=articleTitle;
+			  //通知
+			  if(dispDivId=='TZ'){
+				  if(articleTitle.length>=30){
+					  articleTitlePart=articleTitle.substr(0,15);
+				  }else{
+					  articleTitlePart=articleTitle;
+				  }
+				  $('#'+dispDivId).append('<li title="'+articleTitle+'"><a target="_blank" href="'+articleUrl+'" >'+articleTitlePart+'</a><span>'+createDate+'</span></li>');
+			  }else if(dispDivId=='SJWJ'||dispDivId=='ZDWJ'||dispDivId=='GZDT'){
+			  //上级文件
+			  	  var cDate=articleObj.createDate.substr(5,5);
+				  if(articleTitle.length>=10){
+					  articleTitlePart=articleTitle.substr(0,10);
+				  }else{
+					  articleTitlePart=articleTitle;
+				  }
+				  $('#'+dispDivId).append('<li><span class="date">'+cDate+'</span><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'" >'+articleTitlePart+'</a></li>');
+			  }else if(dispDivId=='HYTZ'){
+			  //会议通知 
+				  if(articleTitle.length>=12){
+					  articleTitlePart=articleTitle.substr(0,12);
+				  }else{
+					  articleTitlePart=articleTitle;
+				  }
+			      var html='<li><span>></span><a title="'+articleTitle+'" href="'+articleUrl+'">'+articleTitlePart+'</a></li>';
+				  $('#'+dispDivId).append(html);
+			  }else if(dispDivId=='GG'){
+			  //公告	  
+				  //$('#'+dispDivId).append(articleObj.articleContent);
+				  $('#'+dispDivId).append('<a href="'+articleUrl+'">'+articleObj.articleTitle+'</a>');
+			  } else{
+			  //综合要闻&&领导动态	  
+				  if(articleTitle.length>=15){
+					  articleTitlePart=articleTitle.substr(0,15);
+				  }else{
+					  articleTitlePart=articleTitle;
+				  }
+				  $('#'+dispDivId).append('<li><span class="date">'+createDate+'</span><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'" >'+articleTitlePart+'</a></li>');
 			  }
-			  $('#'+dispDivId).append('<li><span class="date">'+createDate+'</span><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'" >'+articleTitlePart+'</a></li>');
 		  }
 	  }
 }
@@ -72,9 +105,27 @@ $(document).ready(function() {
   //综合要闻
   var zhywData=loadArticleByTopic("ZHYW",'1','10');
   showArticle('ZHYW',zhywData);
-  
+  //领导动态
   var lddtData=loadArticleByTopic("LDDT",'1','10');
   showArticle('LDDT',lddtData);
+  //通知
+  var tzData=loadArticleByTopic("TZ",'1','3');
+  showArticle('TZ',tzData);
+  //公告
+  var ggData=loadArticleByTopic("GG",'1','3');
+  showArticle('GG',ggData);
+  //会议通知(加载3条)
+  var hhtzData=loadArticleByTopic("HYTZ",'1','3');
+  showArticle('HYTZ',hhtzData);
+  //上级文件(加载10条)
+  var sjwjData=loadArticleByTopic("SJWJ",'1','10');
+  showArticle('SJWJ',sjwjData);
+  //支队文件(加载10条)
+  var zdwjData=loadArticleByTopic("ZDWJ",'1','10');
+  showArticle('ZDWJ',zdwjData);
+  //工作动态（加载10条）
+  var gzdtData=loadArticleByTopic("GZDT",'1','10');
+  showArticle('GZDT',gzdtData);
   
 });
 </script><!--end of bg-body script-->
@@ -127,12 +178,14 @@ $(document).ready(function() {
     <!--通知开始-->
     <div class="tongzhiBox">
     	<div class="tzgg"><b>通知：</b>
-        	<div class="tzggCon">
-                <ul>
+        	<div class="tzggCon" >
+                <ul id="TZ">
+                	<%--
                     <li> 我hi芜湖撒大苏打撒旦撒旦撒旦撒撒旦不能随便的你们仨百度1<span>[2017-12-12]</span></li>
                     <li> 我hi芜湖撒大苏打撒旦撒旦撒旦撒撒旦不能随便的你们仨百度2<span>[2017-12-12]</span></li>
                     <li> 我hi芜湖撒大苏打撒旦撒旦撒旦撒撒旦不能随便的你们仨百度3<span>[2017-12-12]</span></li>
                     <li> 我hi芜湖撒大苏打撒旦撒旦撒旦撒撒旦不能随便的你们仨百度4<span>[2017-12-12]</span></li>
+                     --%>
                 </ul>
 
       		</div>
@@ -256,28 +309,30 @@ $(document).ready(function() {
     <div class="zhongzhiBox fr">
     	<div class="h_titleBox"><h1>公告</h1></div>
         <div class="ggBox">
-        	<marquee direction="up" scrollamount="2" loop="-1" height="75px">
-        	公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告
+        	<marquee id="GG" direction="up" scrollamount="2" loop="-1" height="75px">
+        	<%--
+        		公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告
             公告公告公告公告公告公告公告
+        	 --%>
             </marquee>
         </div>
         <div class="h_titleBox"><h1>会议通知</h1></div>
         <div class="hyBox">
-        	<ul>
+        	<ul id="HYTZ">
+        	   <%--
             	<li><span>></span><a href="#">会议通知撒大苏打撒</a></li>
                 <li><span>></span><a href="#">会议通知撒大苏打撒</a></li>
                 <li><span>></span><a href="#">会议通知撒大苏打撒</a></li>
+                 --%>
             </ul>
         </div>
         <div class="birthday">
-        	
 			<div class="bd">
 				<ul class="infoList">
 					<li>王XX生日快乐</li>
                     <li>吴XX生日快乐</li>
                     <li>李XX生日快乐</li>
                     <li>胡XX生日快乐</li>
-
 				</ul>
 			</div>
         </div>
@@ -299,7 +354,8 @@ $(document).ready(function() {
             	<h1>上级文件</h1>
                 <a href="#" class="fr more">更多>></a>
             </div>
-            <ul>
+            <ul id="SJWJ">
+               <%--
             	<li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
@@ -310,7 +366,7 @@ $(document).ready(function() {
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
-               
+                --%>
             </ul>
         </div>
         <div class="index_news fl ml10">
@@ -318,7 +374,8 @@ $(document).ready(function() {
             	<h1>支队文件</h1>
                 <a href="#" class="fr more">更多>></a>
             </div>
-            <ul>
+            <ul id="ZDWJ">
+            	<%--
             	<li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
@@ -329,7 +386,7 @@ $(document).ready(function() {
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
-               
+                --%>
             </ul>
         </div>
         <div class="index_news fr">
@@ -337,7 +394,8 @@ $(document).ready(function() {
             	<h1>工作动态</h1>
                 <a href="#" class="fr more">更多>></a>
             </div>
-            <ul>
+            <ul id="GZDT">
+            	<%--
             	<li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
@@ -348,7 +406,7 @@ $(document).ready(function() {
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
                 <li><a href="#"><span class="date">11-11</span>撒旦飒飒萨达萨达是</a></li>
-               
+              --%>
             </ul>
         </div>
         <div class="clear_f"></div>
