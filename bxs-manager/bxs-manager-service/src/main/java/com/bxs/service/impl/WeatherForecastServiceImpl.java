@@ -101,4 +101,9 @@ public class WeatherForecastServiceImpl implements WeatherForecastService{
 		return weatherForecastDao.getWeatherForecastById(id);
 	}
 
+	@Override
+	public WeatherForecast getWeatherForecastByWeatherDate(String weatherDateStr) {
+		return weatherForecastDao.getWeatherForecastByWeatherDate(weatherDateStr);
+	}
+
 }

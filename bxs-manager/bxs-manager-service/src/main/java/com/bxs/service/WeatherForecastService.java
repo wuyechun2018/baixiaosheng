@@ -16,4 +16,6 @@ public interface WeatherForecastService {
 
 	WeatherForecast getWeatherForecastById(String id);
 
+	WeatherForecast getWeatherForecastByWeatherDate(String weatherDateStr);
+
 }

@@ -102,6 +102,40 @@ function showArticle(dispDivId,articleData){
 	  }
 }
 
+//加载当天的信息
+function loadDayInfo(){
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/portal/getDayInfo',
+		data:{
+			
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	for(var i=0;i<3;i++){
+	    		$('#DAYINFO').append('<li>'+data.msg+'</li>');
+	    	}
+			jQuery(".index_day").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:2,interTime:50});
+	    }
+	})
+}
+
+
+
+//展示底部导航
+function showDh(){
+	//全国公安导航,全国交警导航,省公安导航,省交警导航,本市公安导航，本市交警导航,支队机构导航
+	var linkTypeCodeArray = ['QGGADH','QGJJDH','SGADH','SJJDH','SGADH','SJJDH','ZDJGDH'];
+	
+	
+	
+}
+
+
 //展示首页推荐轮播图
 function showSytjArticle(articleData){
 	for(var i=0;i<articleData.total;i++){
@@ -137,6 +171,8 @@ $(document).ready(function() {
     alt: 'Full screen background image'
   });
   
+  //加载天气情况
+  loadDayInfo();
   //综合要闻
   var zhywData=loadArticleByTopic("ZHYW",'1','10','');
   showArticle('ZHYW',zhywData);
@@ -221,6 +257,10 @@ $(document).ready(function() {
   var xwzxData=loadArticleByTopic("XWZX",'1','10','');
   showArticle('XWZX',xwzxData);
   
+  //加载底部导航
+  showDh();
+  
+  
 });
 </script><!--end of bg-body script-->
 <div class="container">
@@ -289,18 +329,17 @@ $(document).ready(function() {
 		</script>
         <div class="index_day">
         	<div class="bd">
-				<ul class="infoList">
-					<li>2017年5月12日  星期二  小雪</li>
+				<ul class="infoList" id="DAYINFO">
+					<%--
                     <li>2017年5月12日  星期二  小雪</li>
                     <li>2017年5月12日  星期二  小雪</li>
                     <li>2017年5月12日  星期二  小雪</li>
-					
+					 --%>
 				</ul>
 			</div>
         </div>
         
         <script type="text/javascript">
-		jQuery(".index_day").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:2,interTime:50});
 		</script>
         
     </div>
@@ -929,8 +968,8 @@ $(document).ready(function() {
 		</div>
         
       </div>
-      <div class="bd">
-        <div class="dh_db">
+      <div class="bd" id="DH">
+        <div class="dh_db" >
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
@@ -943,7 +982,6 @@ $(document).ready(function() {
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
-            
             <div class="clear_f"></div>
         </div>
          <div class="dh_db">

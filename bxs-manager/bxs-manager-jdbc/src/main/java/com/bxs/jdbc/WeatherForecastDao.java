@@ -112,4 +112,13 @@ public class WeatherForecastDao {
 		}
 	}
 
+	public WeatherForecast getWeatherForecastByWeatherDate(String weatherDateStr) {
+		List<WeatherForecast> list = jdbcTemplate.query("SELECT * FROM t_weather_forecast WHERE weather_date=?",new Object[]{weatherDateStr},new BeanPropertyRowMapper(WeatherForecast.class));
+		if(!list.isEmpty()){
+			return list.get(0);
+		}else{
+			return null;
+		}
+	}
+
 }
