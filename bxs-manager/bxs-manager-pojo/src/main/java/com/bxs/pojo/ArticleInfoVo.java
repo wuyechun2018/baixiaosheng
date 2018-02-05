@@ -44,6 +44,10 @@ public class ArticleInfoVo {
 	private String publishDeptName;
 	// 发布文章用户姓名
 	private String publishUserName;
+	//首页推荐（0：不推荐   1：推荐）
+	private String frontSliderState;
+	//文章插图Url，针对图片文章，提取文章中的图片URL
+	private String contentImageUrl;
 
 	public String getId() {
 		return id;
@@ -198,4 +202,21 @@ public class ArticleInfoVo {
 	public void setTopicCode(String topicCode) {
 		this.topicCode = topicCode;
 	}
+
+	public String getFrontSliderState() {
+		return frontSliderState;
+	}
+
+	public void setFrontSliderState(String frontSliderState) {
+		this.frontSliderState = frontSliderState;
+	}
+
+	public String getContentImageUrl() {
+		return contentImageUrl;
+	}
+
+	public void setContentImageUrl(String contentImageUrl) {
+		this.contentImageUrl = contentImageUrl;
+	}
+	
 }

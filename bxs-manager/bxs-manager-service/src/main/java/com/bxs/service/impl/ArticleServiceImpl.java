@@ -41,6 +41,8 @@ public class ArticleServiceImpl implements ArticleService {
 			article.setPublishDeptId(existArticle.getPublishDeptId());
 			//发布人ID
 			article.setPublishUserId(existArticle.getPublishUserId());
+			//首页推荐
+			article.setFrontSliderState(existArticle.getFrontSliderState());
 			//文章审核状态(0:未审核 1:审核通过),修改后需要重新审核。
 			article.setCheckState("0");
 			articleDao.update(article);
@@ -56,6 +58,8 @@ public class ArticleServiceImpl implements ArticleService {
 			article.setUpdateDate(new Date());
 			//文章审核状态(0:未审核 1:审核通过),默认未审核
 			article.setCheckState("0");
+			//首页推荐,默认不推荐
+			article.setFrontSliderState("0");
 			articleDao.save(article);
 		}
 		
@@ -87,6 +91,18 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public ArticleInfoVo getArticleInfoById(String id) {
 		return articleDao.getArticleInfoById(id);
+	}
+
+	@Override
+	public void saveFrontSliderState(Article article) {
+		articleDao.saveFrontSliderState(article);
+	}
+
+	@Override
+	public void addViewCount(String id) {
+		Article article=articleDao.findOne(id);
+		article.setViewCount(article.getViewCount()+1);
+		articleDao.update(article);
 	}
 	
 	

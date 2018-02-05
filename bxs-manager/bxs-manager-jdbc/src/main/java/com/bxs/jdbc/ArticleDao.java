@@ -69,7 +69,8 @@ public class ArticleDao {
 						"  display_order,\n" + 
 						"  data_state,\n" + 
 						"  create_date,\n" + 
-						"  update_date\n" + 
+						"  update_date,\n" + 
+						"  front_slider_state\n" + 
 						")\n" + 
 						"VALUES\n" + 
 						"  (\n" + 
@@ -87,6 +88,7 @@ public class ArticleDao {
 						"    ?,\n" + 
 						"    ?,\n" + 
 						"    ?,\n" + 
+						"    ?\n," + 
 						"    ?\n" + 
 						"  )";
 
@@ -108,6 +110,7 @@ public class ArticleDao {
 			         ps.setString(13, article.getDataState());
 			         ps.setTimestamp(14, new java.sql.Timestamp(article.getCreateDate().getTime()));
 			         ps.setTimestamp(15, new java.sql.Timestamp(article.getUpdateDate().getTime()));
+			         ps.setString(16, article.getFrontSliderState());
 			       }
 			     }
 			 );
@@ -147,7 +150,8 @@ public class ArticleDao {
 						"  display_order = ?,\n" + 
 						"  data_state = ?,\n" + 
 						"  create_date = ?,\n" + 
-						"  update_date = ?\n" + 
+						"  update_date = ?,\n" + 
+						"  front_slider_state = ?\n" + 
 						"WHERE id = ?";
 
 		jdbcTemplate.execute(sql,
@@ -167,7 +171,8 @@ public class ArticleDao {
 			         ps.setString(12, article.getDataState());
 			         ps.setTimestamp(13, new java.sql.Timestamp(article.getCreateDate().getTime()));
 			         ps.setTimestamp(14, new java.sql.Timestamp(article.getUpdateDate().getTime()));
-			         ps.setString(15, article.getId());
+			         ps.setString(15, article.getFrontSliderState());
+			         ps.setString(16, article.getId());
 			       }
 			     }
 			 );
@@ -271,7 +276,12 @@ public class ArticleDao {
 		if(param.get("topicId")!=null&&StringUtils.isNotBlank(param.get("topicId").toString())&&!"1".equals(param.get("topicId").toString())){
 			sqlBuff.append(" AND TOPIC_ID = '" + param.get("topicId").toString() + "'\n");
 		}
+		//首页推荐
+		if(param.get("frontSliderState")!=null&&StringUtils.isNotBlank(param.get("frontSliderState").toString())){
+			sqlBuff.append(" AND front_slider_state = '" + param.get("frontSliderState").toString() + "'\n");
+		}
 		
+		//栏目编码
 		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())){
 			sqlBuff.append(" AND TOPIC_CODE = '" + param.get("topicCode").toString() + "'\n");
 		}
@@ -317,5 +327,16 @@ public class ArticleDao {
 		}
 	}
 
-
+	/**
+	 * 
+	 * 设置首页推荐状态
+	 * @author: wyc
+	 * @createTime: 2018年2月5日 下午3:37:13
+	 * @history:
+	 * @param article void
+	 */
+	public void saveFrontSliderState(Article article) {
+		String sql = "UPDATE T_ARTICLE SET front_slider_state=? WHERE ID=?";
+		jdbcTemplate.update(sql,new Object[]{article.getFrontSliderState(),article.getId()});
+	}
 }

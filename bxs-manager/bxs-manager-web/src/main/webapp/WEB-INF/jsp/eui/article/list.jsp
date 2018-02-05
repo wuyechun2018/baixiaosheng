@@ -40,6 +40,38 @@ function viewFun(id){
 	location.href=ctx+"/article/showArticle?id="+id;
 }
 
+//首页推荐
+function toFront(id){
+	var rowIndex=getSelectRowIndex(id);
+    //获取操作列
+    var record=$('#dgTable').datagrid('getData').rows[rowIndex];
+    $('#toFrontWin').window('open');
+    $("#toFrontForm").form("load", record); 
+}
+
+//关闭首推窗口
+function clearFrontForm(){
+	$('#toFrontForm').form('clear');
+	$('#toFrontWin').window('close');
+}
+
+//提交首推窗口
+function submitFrontForm(){
+	$.ajax({
+        type: "POST",
+        url:'${ctx}/article/saveFrontState',
+        data: $('#toFrontForm').serialize(),
+        success: function (data) {
+       	    $('#toFrontWin').window('close');
+		    //刷新列表
+		    $("#dgTable").datagrid('reload');
+        },
+        error: function(data) {
+            alert("error:"+data.responseText);
+         }
+  		});
+}
+
 
 //点击“操作列-删除”
 function deleteFun(id){
@@ -116,7 +148,7 @@ $(function(){
 		          {field:'publishDeptName',title: '发布部门',align: 'center',width: 80},
 		          {field:'publishUserName',title: '发布人',align: 'center',width: 80}, 
 		          {field:'createDate',title: '发布时间',align: 'center',width: 120}, 
-		          {field:'checkState',title: '状态',align: 'center',width: 100,formatter:function(val,rec){
+		          {field:'checkState',title: '状态',align: 'center',width: 80,formatter:function(val,rec){
 		        	  if(val=='1'){
 		        		  return "<span style='color:green'>正常</span>";
 		        	  }else{
@@ -124,8 +156,8 @@ $(function(){
 		        	  }
 		          }}, 
 		          {field:'viewCount',title: '查看次数',align: 'center',width: 50},
-		          {field:'id',title: '操作',align: 'center',width: 100, formatter:function(val,rec){
-		        	  return "<span class='btn_a_top'><a href='javascript:void(0)' onclick=editFun('"+val+"') >置顶</a></span><span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span><span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
+		          {field:'id',title: '操作',align: 'center',width: 120, formatter:function(val,rec){
+		        	  return "<span class='btn_a_top'><a href='javascript:void(0)' onclick=topFun('"+val+"') >置顶</a></span><span class='btn_a_front'><a href='javascript:void(0)' onclick=toFront('"+val+"') >首推</a></span><span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span><span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
 		          }}
 		]]
 		,toolbar:$('#tb')
@@ -201,6 +233,32 @@ $(function(){
 <div id="tb">
     <a href="javascript:void(0)" onclick="addFun()" id="add" class="easyui-linkbutton" plain="true"  iconCls="Applicationadd">添加</a>
 </div>
-  
+
+<%--点击"首推"弹出的窗口 --%>
+<div id="toFrontWin" class="easyui-window" title="&nbsp;首推" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:460px;height:215px;padding:10px;">
+   <form id="toFrontForm" method="post">
+   	<table  class="isingelTable">
+   		<tr>
+   			<th>首页推荐：</th>
+   			<td>
+   				<input type="hidden" id="id"  name="id" value="1"></input>
+   				
+   				<input  type="radio" id="radio_frontSliderState_n" name="frontSliderState" value="0" checked="checked" />
+			    <label for="radio_frontSliderState_n" >否</label>
+				<input  type="radio" id="radio_frontSliderState_y" name="frontSliderState" value="1" />
+				<label for="radio_frontSliderState_y">是</label>
+   			</td>
+   		<tr>
+   	</table>
+   </form>
+    <div style="text-align:center;padding:25px 5px 5px 5px;">
+    	<table style="width:100%;">
+    		<tr>
+    			<td style="width:50%;text-align: right;padding-right: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="submitFrontForm()">保存</a></td>
+    			<td style="width:50%;text-align: left;padding-left: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearFrontForm()">取消</a></td>
+    		</tr>
+		 </table>
+    </div>
+</div>
 </body>
 </html>

@@ -21,6 +21,8 @@ public interface ArticleService {
 	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 
 	ArticleInfoVo getArticleInfoById(String id);
-	
-	
+
+	void saveFrontSliderState(Article article);
+
+	void addViewCount(String id);
 }

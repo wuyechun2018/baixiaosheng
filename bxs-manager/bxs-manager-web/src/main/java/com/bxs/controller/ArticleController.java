@@ -302,12 +302,34 @@ public class ArticleController extends BaseController{
 	 */
 	@RequestMapping("/loadArticleByTopic")
 	@ResponseBody
-	public Object loadArticleByTopic(String topicCode,int page,int rows){
+	public Object loadArticleByTopic(String topicCode,String frontSliderState,int page,int rows){
 		EUIPager ePager=new EUIPager(page,rows);
 		Map<String,Object> param=new HashMap<String,Object>();
 		param.put("topicCode", topicCode);
+		param.put("frontSliderState", frontSliderState);
 		return articleService.pagerList(ePager,param);
 	}
+	
+	
+	/***
+	 * 
+	 * 设置是否为"首页推荐"
+	 * @author: wyc
+	 * @createTime: 2018年2月5日 下午3:35:21
+	 * @history:
+	 * @param id
+	 * @param frontSliderState
+	 * @return Object
+	 */
+	@RequestMapping("/saveFrontState")
+	@ResponseBody
+	public Object saveFrontState(String id,String frontSliderState){
+		Article article=articleService.getArticleById(id);
+		article.setFrontSliderState(frontSliderState);
+		articleService.saveFrontSliderState(article);
+		return new JsonMsg();
+	}
+	
 	
 
 }

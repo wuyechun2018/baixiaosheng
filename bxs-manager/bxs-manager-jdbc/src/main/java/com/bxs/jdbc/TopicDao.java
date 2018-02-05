@@ -32,7 +32,7 @@ public class TopicDao {
 	 * @return List<Topic>
 	 */
 	public List<Topic> getListByPid(String pid) {
-		String sql="SELECT * FROM t_topic T WHERE T.pid=?";
+		String sql="SELECT * FROM t_topic T WHERE T.pid=? ORDER BY T.DISPLAY_ORDER";
 		List<Topic> list = jdbcTemplate.query(sql,new Object[]{pid},new BeanPropertyRowMapper(Topic.class));
 		return list;
 	}

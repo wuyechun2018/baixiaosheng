@@ -33,6 +33,7 @@ public class PortalController {
 	public ModelAndView content(String id) {
 		ModelAndView mv=new ModelAndView("/portal/content");
 		ArticleInfoVo articleInfoVo=articleService.getArticleInfoById(id);
+		articleService.addViewCount(id);
 		mv.addObject("articleInfoVo",articleInfoVo);
 		return mv;
 	}

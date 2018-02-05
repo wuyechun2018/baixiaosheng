@@ -46,6 +46,8 @@ public class Article implements java.io.Serializable {
 	private int topCount;
 	// 浏览次数
 	private int viewCount;
+	//首页推荐（0：不推荐   1：推荐）
+	private String frontSliderState;
 	// 排序
 	private int displayOrder;
 	// 数据状态,详情参考 com.bxs.common.dict.DataState
@@ -177,6 +179,14 @@ public class Article implements java.io.Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getFrontSliderState() {
+		return frontSliderState;
+	}
+
+	public void setFrontSliderState(String frontSliderState) {
+		this.frontSliderState = frontSliderState;
 	}
 
 }

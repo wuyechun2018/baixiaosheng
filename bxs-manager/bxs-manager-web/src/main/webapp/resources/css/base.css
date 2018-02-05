@@ -62,11 +62,11 @@ table.gridtable td {
 }
 
 .btn_a_edit{
-	padding-right: 5px;
+	padding-right: 6px;
 }
 
 .btn_a_delete{
-	padding-left: 5px;
+	padding-left: 6px;
 }
 
 .btn_a_edit a{
@@ -78,12 +78,20 @@ table.gridtable td {
 }
 
 .btn_a_top{
-	padding-right: 5px;
+	padding-right: 6px;
+}
+
+.btn_a_front{
+	padding-right: 6px;
 }
 
 /*÷√∂•*/
 .btn_a_top a{
 	color:orange;
+}
+
+.btn_a_front a{
+	color:blue;
 }
 
 
