@@ -124,6 +124,33 @@ function loadDayInfo(){
 	})
 }
 
+//生日祝福
+function loadSrzf(){
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/portal/getBirthdayUserList',
+		data:{
+			
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	for(var i=0;i<data.length;i++){
+	    		$('#SRZF').append('<li>'+data[i]+'生日快乐</li>');
+	    	}
+	    	jQuery(".birthday").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"top",autoPlay:true,vis:1});
+	    }
+	})
+	
+	
+	
+	
+	
+	
+}
 
 
 //展示底部导航
@@ -173,6 +200,8 @@ $(document).ready(function() {
   
   //加载天气情况
   loadDayInfo();
+  //加载生日祝福
+  loadSrzf();
   //综合要闻
   var zhywData=loadArticleByTopic("ZHYW",'1','10','');
   showArticle('ZHYW',zhywData);
@@ -457,17 +486,19 @@ $(document).ready(function() {
         </div>
         <div class="birthday">
 			<div class="bd">
-				<ul class="infoList">
+				<ul class="infoList" id="SRZF">
+					<%--
 					<li>王XX生日快乐</li>
                     <li>吴XX生日快乐</li>
                     <li>李XX生日快乐</li>
                     <li>胡XX生日快乐</li>
+                     --%>
 				</ul>
 			</div>
         </div>
         
         <script type="text/javascript">
-		jQuery(".birthday").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"top",autoPlay:true,vis:1});
+		
 		</script>
         
         

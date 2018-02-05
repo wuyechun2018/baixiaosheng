@@ -304,6 +304,14 @@ public class UserDao {
 		List<UserInfoVo> list = jdbcTemplate.query(sql,new Object[]{username},new BeanPropertyRowMapper(UserInfoVo.class));
 		return list;
 	}
+
+
+
+	public List<SysUser> getUserListByBirthday(String dayStr) {
+		String sql="SELECT * FROM T_USER T WHERE T.birthday LIKE ? ";
+		List<SysUser> list = jdbcTemplate.query(sql,new Object[]{"%"+dayStr+"%"},new BeanPropertyRowMapper(SysUser.class));
+		return list;
+	}
 	
 	
 }

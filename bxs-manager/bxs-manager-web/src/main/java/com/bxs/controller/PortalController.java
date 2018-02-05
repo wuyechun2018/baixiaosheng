@@ -1,4 +1,6 @@
 package com.bxs.controller;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.joda.time.DateTime;
@@ -10,9 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.ArticleInfoVo;
-import com.bxs.pojo.Topic;
+import com.bxs.pojo.SysUser;
 import com.bxs.pojo.WeatherForecast;
 import com.bxs.service.ArticleService;
+import com.bxs.service.UserService;
 import com.bxs.service.WeatherForecastService;
 @Controller
 @RequestMapping("/portal")
@@ -23,6 +26,9 @@ public class PortalController {
 	
 	@Autowired
 	private WeatherForecastService weatherForecastService;
+	
+	@Autowired
+	private UserService userService;
 
 	/**
 	 * 
@@ -81,5 +87,25 @@ public class PortalController {
 		return new JsonMsg(showStr);
 	}
 	
+	/**
+	 * 
+	 * 获取当天生日的姓名列表
+	 * @author: wyc
+	 * @createTime: 2018年2月5日 下午11:23:46
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/getBirthdayUserList")
+	@ResponseBody
+	public Object getBirthdayUserList(){
+		DateTime now = new DateTime();
+		String dayStr=now.toString("MM-dd");
+		List<String> list=new ArrayList<String>();
+		List<SysUser> userList=userService.getUserListByBirthday(dayStr);
+		for (SysUser sysUser : userList) {
+			list.add(sysUser.getUserName());
+		}
+		return list;
+	}
 	
 }
