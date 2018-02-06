@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -1158,7 +1159,7 @@ $(document).ready(function() {
     </div>
 </div>
 <script type="text/JavaScript">
-//window.open ('首页弹窗公告.html','公告名称','height=500,width=700,top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no')
+window.open ('${ctx}/portal/pop','公告名称','height=500,width=700,top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no')
 </script>
 
 </body>

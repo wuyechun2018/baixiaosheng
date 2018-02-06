@@ -54,6 +54,34 @@ public class PortalController {
 	
 	/**
 	 * 
+	 * 公告弹出框
+	 * @author: wyc
+	 * @createTime: 2018年2月6日 下午10:33:59
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping(value = "/pop")
+	public String pop() {
+		return "/portal/pop";
+	}
+	
+	
+	/**
+	 * 
+	 * 通列表
+	 * @author: wyc
+	 * @createTime: 2018年2月6日 下午10:33:59
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping(value = "/system-list")
+	public String systemList() {
+		return "/portal/system-list";
+	}
+	
+	
+	/**
+	 * 
 	 * 文章列表
 	 * @author: wyc
 	 * @createTime: 2018年2月6日 上午10:01:48

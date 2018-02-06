@@ -150,93 +150,144 @@ $(document).ready(function() {
     </div>
 	
     
-    <div class="neicontent">
+     <div class="neicontent">
     	<div class="nei_top">
-    		<input id="topicCode" value="${topic.topicCode}" type="hidden"/>
-        	<h1>图片新闻</h1>
-            <div class="n_search fr" id="secrchBox1">
-            	<form action="#" method="post" autocomplete="off" onsubmit="return check('secrchBox1')">
-            	<div class="n_in fl">
-                	<select name="type">
-                    	<option value="0">请选择栏目</option>
-                        <option value="0">综合要闻</option>
-                        <option value="0">通知公告</option>
-                        <option value="0">新闻资讯</option>
-                        <option value="0">后台获取栏目</option>
-                      
-                    </select>
-                </div>
-            	<div class="n_in fl"><input type="text" class="key" name="keys" id="keys" placeholder="请输入关键字" /></div>
-                <div class="n_in fl"><input type="submit" class="btn-search" value="" /></div>
-                </form>
-            </div>
+        	<h1>应用系统列表</h1>
         </div>
         
-        <div class="picbox">
-        	<ul class="qjhn-tu" id="TPZS">
-			
-				  <%--
+        <div class="xitongbox ">
+        	<ul class="clearfix">
+
 				<li>
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
 				</li>
                 <li>
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
-				</li>
-                <li style=" margin-right:0px;">
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
 				</li>
                 <li>
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li style="margin-right:0px;">
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
 				</li>
                 <li>
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
-				</li>
-                <li style=" margin-right:0px;">
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
 				</li>
                 <li>
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
 				</li>
                 <li>
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
 				</li>
-                <li style=" margin-right:0px;">
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
+                <li style="margin-right:0px;">
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
 				</li>
                 <li>
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
 				</li>
                 <li>
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
 				</li>
-                <li style=" margin-right:0px;">
-                	<a target="_blank" title="贺龙故居" href="#">
-					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
-					<span class="qjhn-ti">贺龙故居</span></a>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
 				</li>
-				 --%>
+                <li style="margin-right:0px;">
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li style="margin-right:0px;">
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li style="margin-right:0px;">
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li style="margin-right:0px;">
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li style="margin-right:0px;">
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li>
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                <li style="margin-right:0px;">
+                	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
+					</a>
+				</li>
+                
+
 				
 			
 			</ul>
