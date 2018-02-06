@@ -55,35 +55,32 @@
     }
    
    function showArticle(dispDivId,articleData){
-	    var ulId="";
-	    var count=0;
-	    var sumCount=Math.ceil(articleData.total/6) ;
     	for(var i=0;i<articleData.total;i++){
    		  var articleObj=articleData.rows[i];
 		  var createDate=articleObj.createDate.substr(0,10);
 		  var articleTitle=articleObj.articleTitle;
 		  var articleUrl=ctx+"/portal/content?id="+articleObj.id;
+		  var imageUrl=articleObj.contentImageUrl;
 		  var articleTitlePart="";
 		  if(articleTitle.length>=30){
 			  articleTitlePart=articleTitle.substr(0,15);
 		  }else{
 			  articleTitlePart=articleTitle;
 		  }
-	   	  if(i%6==0){
-		   		    count++;
-		   			ulId=dispDivId+"-"+i
-		   			if(count==sumCount){
-		   				$('#'+dispDivId).append('<ul  style="border-bottom: inherit;" id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a><em></em><span>'+createDate+'</span></li>');	
-		   			}else{
-		   				$('#'+dispDivId).append('<ul  id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a><em></em><span>'+createDate+'</span></li>');	
-		   			}
-	   
-	   			
-	   		}else if(i%6==5){
-	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a><em></em><span>'+createDate+'</span></li><ul/>');
-	   		}else{
-	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a><em></em><span>'+createDate+'</span></li>');
-	   		}
+		  
+		  var liHtml="<li>";
+		  if((i+1)%3==0){
+			  liHtml='<li style="margin-right:0px;">';
+		  }
+		  
+		  var imageHtml=
+			 liHtml +
+      		'<a target="_blank" title="'+articleTitlePart+'" href="'+articleUrl+'">'+
+			'<span class="qjhn-img"><img src="'+imageUrl+'" width="320" height="210"></span>'+
+			'<span class="qjhn-ti">'+articleTitlePart+'</span></a>'+
+		 '</li>';
+		  
+		 $('#'+dispDivId).append(imageHtml);
       }
     	
    }
@@ -96,7 +93,7 @@ $(document).ready(function() {
   
   var topicCode=$('#topicCode').val();
   var tpzsData=loadArticleByTopic(topicCode,'1','12','');
-  showArticle('ATICLE_LIST',tpzsData);
+  showArticle('TPZS',tpzsData);
   
   
 });
@@ -154,6 +151,7 @@ $(document).ready(function() {
     
     <div class="neicontent">
     	<div class="nei_top">
+    		<input id="topicCode" value="${topic.topicCode}" type="hidden"/>
         	<h1>图片新闻</h1>
             <div class="n_search fr" id="secrchBox1">
             	<form action="#" method="post" autocomplete="off" onsubmit="return check('secrchBox1')">
@@ -176,7 +174,7 @@ $(document).ready(function() {
         <div class="picbox">
         	<ul class="qjhn-tu" id="TPZS">
 			
-				  
+				  <%--
 				<li>
                 	<a target="_blank" title="贺龙故居" href="#">
 					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
@@ -237,7 +235,7 @@ $(document).ready(function() {
 					<span class="qjhn-img"><img src="images/1.jpg" width="320" height="210"></span>
 					<span class="qjhn-ti">贺龙故居</span></a>
 				</li>
-				
+				 --%>
 				
 			
 			</ul>

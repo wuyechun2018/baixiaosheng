@@ -968,7 +968,7 @@ $(document).ready(function() {
     <div class="index_tupian mar10">
     	<div class="tp_title">
         	<h1>图片展示</h1>
-            <a href="#" class="more">查看更多>></a>
+            <a target="_blank" href="${ctx}/portal/image-list?topicCode=TPZS" class="more">查看更多>></a>
              <div class="clear_f"></div>
         </div>
         <div class="tp_bg">
