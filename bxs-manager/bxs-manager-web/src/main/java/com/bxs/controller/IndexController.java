@@ -23,7 +23,7 @@ public class IndexController{
 	 * @param request
 	 * @return ModelAndView
 	 */
-	@RequestMapping({"/","/welcome","/index"})
+	/*@RequestMapping({"/","/welcome","/index"})
 	public ModelAndView index(HttpServletRequest request){
 		logger.info("跳转到:{},访问时间是:{}", "index",new DateTime().toString("yyyy/MM/dd HH:mm:ss") );
 		ModelAndView mv=new ModelAndView("index");
@@ -36,7 +36,23 @@ public class IndexController{
 		logger.info("跳转到:{},访问时间是:{}", "login",new DateTime().toString("yyyy/MM/dd HH:mm:ss") );
 		ModelAndView mv=new ModelAndView("login");
 		return mv;
-	}
+	}*/
 	
+	
+	/**
+	 * 
+	 * 系统默认页面
+	 * @author: wyc
+	 * @createTime: 2018年2月6日 下午9:01:02
+	 * @history:
+	 * @param request
+	 * @return ModelAndView
+	 */
+	@RequestMapping({"/","/welcome","/index","/login"})
+	public ModelAndView login(HttpServletRequest request){
+		logger.info("跳转到:{},访问时间是:{}", "login",new DateTime().toString("yyyy/MM/dd HH:mm:ss") );
+		ModelAndView mv=new ModelAndView("login");
+		return mv;
+	}
 	
 }

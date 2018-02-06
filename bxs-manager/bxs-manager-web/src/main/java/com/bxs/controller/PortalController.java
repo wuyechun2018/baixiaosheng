@@ -13,8 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.ArticleInfoVo;
 import com.bxs.pojo.SysUser;
+import com.bxs.pojo.Topic;
 import com.bxs.pojo.WeatherForecast;
 import com.bxs.service.ArticleService;
+import com.bxs.service.TopicService;
 import com.bxs.service.UserService;
 import com.bxs.service.WeatherForecastService;
 @Controller
@@ -29,10 +31,14 @@ public class PortalController {
 	
 	@Autowired
 	private UserService userService;
+	
+	//栏目
+	@Autowired
+	private TopicService topicService;
 
 	/**
 	 * 
-	 * 公用跳转方法
+	 * 首页
 	 * @author: wyc
 	 * @createTime: 2018年2月3日 下午4:53:37
 	 * @history:
@@ -41,8 +47,42 @@ public class PortalController {
 	 * @return String
 	 */
 	@RequestMapping(value = "/index")
-	public String getDefinedPage() {
+	public String index() {
 		return "/portal/index";
+	}
+	
+	
+	/**
+	 * 
+	 * 文章列表
+	 * @author: wyc
+	 * @createTime: 2018年2月6日 上午10:01:48
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping(value = "/list")
+	public ModelAndView list(String topicCode) {
+		Topic topic=topicService.getTopicByCode(topicCode);
+		ModelAndView mv=new ModelAndView("/portal/list");
+		mv.addObject("topic", topic);
+		return mv;
+	}
+	
+	/**
+	 * 
+	 * 图片列表
+	 * @author: wyc
+	 * @createTime: 2018年2月6日 下午3:44:50
+	 * @history:
+	 * @param topicCode
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/image-list")
+	public ModelAndView imageList(String topicCode) {
+		Topic topic=topicService.getTopicByCode(topicCode);
+		ModelAndView mv=new ModelAndView("/portal/image-list");
+		mv.addObject("topic", topic);
+		return mv;
 	}
 	
 	/**

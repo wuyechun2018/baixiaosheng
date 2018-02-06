@@ -15,6 +15,15 @@
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.SuperSlide.2.1.1.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/common.js"></script>
 </head>
+
+<!--[if lt IE 9]>
+  <script src="${ctx}/resources/portal/js/html5.min.js"></script>
+  <script src="${ctx}/resources/portal/jsrespond.min.js"></script>
+<![endif]-->
+<!--[if lt IE 10]>
+    <script type="text/javascript"src="${ctx}/resources/portal/js/placeholder.min.js" charset="utf-8"></script>
+<![endif]-->
+
 <body>
 <div class=" top_body">
 <div id="bg-body"></div>
@@ -303,37 +312,37 @@ $(document).ready(function() {
         	<li>
             	<dl>
             		<dt class="n_1"><a href="${ctx}/portal/index"><span>首页</span></a></dt>
-                	<dd><a href="#">综合要闻</a></dd>
-                    <dd><a href="#">领导动态</a></dd>
-                    <dd><a href="#">通知公告</a></dd>
-                    <dd><a href="#">会议通知</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=ZHYW">综合要闻</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=LDDT">领导动态</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=TZ">通知公告</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=HYTZ">会议通知</a></dd>
                 </dl>
             </li>
             <li>
             	<dl>
             		<dt class="n_2"><a href="#"><span>动态</span></a></dt>
-                	<dd><a href="#">工作动态</a></dd>
-                    <dd><a href="#">新闻观察</a></dd>
-                    <dd><a href="#">预警研判</a></dd>
-                    <dd><a href="#">警务观察</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=GZDT">工作动态</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=XWGC">新闻观察</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=YJYP">预警研判</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=JWGC">警务观察</a></dd>
                 </dl>
             </li>
             <li>
             	<dl>
             		<dt class="n_3"><a href="#"><span>阅览</span></a></dt>
-                	<dd><a href="#">支队文件</a></dd>
-                    <dd><a href="#">值带班表</a></dd>
-                    <dd><a href="#">上级文件</a></dd>
-                    <dd><a href="#">信息报送</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=ZDWJ">支队文件</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=ZDBB">值带班表</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=SJWJ">上级文件</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=XXBS">信息报送</a></dd>
                 </dl>
             </li>
             <li>
             	<dl>
             		<dt class="n_4"><a href="#"><span>警务</span></a></dt>
-                	<dd><a href="#">警务视频</a></dd>
-                    <dd><a href="#">调查研究</a></dd>
-                    <dd><a href="#">舆情动态</a></dd>
-                    <dd><a href="#">工作简报</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=JWSP">警务视频</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=DCYJ">调查研究</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=YQDT">舆情动态</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=GZJB">工作简报</a></dd>
                 </dl>
             </li>
         </ul>
@@ -512,7 +521,7 @@ $(document).ready(function() {
     	<div class="index_news fl ">
         	<div class="titBox">
             	<h1>上级文件</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=SJWJ" class="fr more">更多>></a>
             </div>
             <ul id="SJWJ">
                <%--
@@ -532,7 +541,7 @@ $(document).ready(function() {
         <div class="index_news fl ml10">
         	<div class="titBox">
             	<h1>支队文件</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=ZDWJ" class="fr more">更多>></a>
             </div>
             <ul id="ZDWJ">
             	<%--
@@ -552,7 +561,7 @@ $(document).ready(function() {
         <div class="index_news fr">
         	<div class="titBox">
             	<h1>工作动态</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=GZDT" class="fr more">更多>></a>
             </div>
             <ul id="GZDT">
             	<%--
@@ -611,7 +620,7 @@ $(document).ready(function() {
     	<div class="index_news fl ">
         	<div class="titBox">
             	<h1>警务视频</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=JWSP" class="fr more">更多>></a>
             </div>
             <ul id="JWSP">
             	<%--
@@ -629,7 +638,7 @@ $(document).ready(function() {
         <div class="index_news fl ml10">
         	<div class="titBox">
             	<h1>队伍建设</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=DWJS" class="fr more">更多>></a>
             </div>
             <ul id="DWJS">
             	<%--
@@ -647,7 +656,7 @@ $(document).ready(function() {
         <div class="index_news fr">
         	<div class="titBox">
             	<h1>党风廉政</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=DFLZ" class="fr more">更多>></a>
             </div>
             <ul id="DFLZ">
             	<%--
@@ -671,7 +680,7 @@ $(document).ready(function() {
     	<div class="index_news fl ">
         	<div class="titBox">
             	<h1>会议纪要</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=HYJY" class="fr more">更多>></a>
             </div>
             <ul id="HYJY">
             	<%--
@@ -689,7 +698,7 @@ $(document).ready(function() {
         <div class="index_news fl ml10">
         	<div class="titBox">
             	<h1>调查研究</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=DCYJ" class="fr more">更多>></a>
             </div>
             <ul id="DCYJ">
             	<%--
@@ -707,7 +716,7 @@ $(document).ready(function() {
         <div class="index_news fr">
         	<div class="titBox">
             	<h1>工作简报</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=GZJB" class="fr more">更多>></a>
             </div>
             <ul id="GZJB"> 
                <%--
@@ -746,7 +755,7 @@ $(document).ready(function() {
     	<div class="index_news fl ">
         	<div class="titBox">
             	<h1>工作指令</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=GZZL" class="fr more">更多>></a>
             </div>
             <ul id="GZZL">
             	<%--
@@ -764,7 +773,7 @@ $(document).ready(function() {
         <div class="index_news fl ml10">
         	<div class="titBox">
             	<h1>舆情动态</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=YQDT" class="fr more">更多>></a>
             </div>
             <ul id="YQDT">
             	<%--
@@ -782,7 +791,7 @@ $(document).ready(function() {
         <div class="index_news fr">
         	<div class="titBox">
             	<h1>预警研判</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=YJYP" class="fr more">更多>></a>
             </div>
             <ul id="YJYP">
             	<%--
@@ -821,7 +830,7 @@ $(document).ready(function() {
     	<div class="index_news fl ">
         	<div class="titBox">
             	<h1>每日情况</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=MRQK" class="fr more">更多>></a>
             </div>
             <ul id="MRQK">
             	<%--
@@ -837,7 +846,7 @@ $(document).ready(function() {
         <div class="index_news fl ml10">
         	<div class="titBox">
             	<h1>警务观察</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=JWGC" class="fr more">更多>></a>
             </div>
             <ul id="JWGC">
             	<%--
@@ -853,7 +862,7 @@ $(document).ready(function() {
         <div class="index_news fr">
         	<div class="titBox">
             	<h1>道路建设管理</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=DLJSGL" class="fr more">更多>></a>
             </div>
             <ul id="DLJSGL">
             	<%--
@@ -873,7 +882,7 @@ $(document).ready(function() {
     	<div class="index_news fl ">
         	<div class="titBox">
             	<h1>警坛文苑</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=JTWY" class="fr more">更多>></a>
             </div>
             <ul id="JTWY">
             	<%--
@@ -889,7 +898,7 @@ $(document).ready(function() {
         <div class="index_news fl ml10">
         	<div class="titBox">
             	<h1>新闻资讯</h1>
-                <a href="#" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/list?topicCode=XWZX" class="fr more">更多>></a>
             </div>
             <ul id="XWZX">
             	<%--
