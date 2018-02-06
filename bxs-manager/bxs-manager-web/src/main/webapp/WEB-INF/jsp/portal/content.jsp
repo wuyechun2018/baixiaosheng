@@ -4,8 +4,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<LINK href="${ctx}/resources/resources/portal/images/logo.ico" type="image/x-icon" rel="icon">                        
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK href="${ctx}/resources/portal/images/logo.ico" type="image/x-icon" rel="icon">                        
+<LINK href="${ctx}/resources/portal/images/logo.ico" type="image/x-icon" rel="shortcut icon"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>马鞍山市交警支队</title>
 <link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
 <link href="${ctx}/resources/portal/css/nei.css" rel="stylesheet" />
