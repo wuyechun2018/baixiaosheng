@@ -157,6 +157,38 @@ public class PortalController {
 	
 	/**
 	 * 
+	 * 获取一周的天气字符串
+	 * @author: wyc
+	 * @createTime: 2018年2月7日 下午4:34:18
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/getWeekDayInfo")
+	@ResponseBody
+	public Object getWeekDayInfo() {
+		List<String> resultList=new ArrayList<String>();
+		for(int i=0;i<7;i++){
+			DateTime now = new DateTime();
+			DateTime tomorrow = now.plusDays(i);
+			String dayStr=tomorrow.toString("yyyy-MM-dd");
+			String showStr=tomorrow.toString("yyyy年MM月dd日")+" "+tomorrow.dayOfWeek().getAsShortText(Locale.CHINESE);
+			WeatherForecast wf=weatherForecastService.getWeatherForecastByWeatherDate(dayStr);
+			if(wf!=null){
+				if(wf.getWeatherConditions()!=null){
+					showStr=showStr+" "+wf.getWeatherConditions();
+				}else{
+					showStr=showStr+" ";
+				}
+			}
+			resultList.add(showStr);
+		}
+		return resultList;
+	}
+	
+	
+	
+	/**
+	 * 
 	 * 获取当天生日的姓名列表
 	 * @author: wyc
 	 * @createTime: 2018年2月5日 下午11:23:46

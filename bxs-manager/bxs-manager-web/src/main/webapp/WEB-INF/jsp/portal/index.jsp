@@ -135,6 +135,30 @@ function loadDayInfo(){
 	})
 }
 
+//加载一周的信息
+function loadWeekDayInfo(){
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/portal/getWeekDayInfo',
+		data:{
+			
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	for(var i=0;i<data.length;i++){
+	    		$('#DAYINFO').append('<li>'+data[i]+'</li>');
+	    	}
+		  jQuery(".index_day").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:2,interTime:50});
+	    }
+	})
+}
+
+
+
 //生日祝福
 function loadSrzf(){
 	$.ajax({
@@ -210,7 +234,7 @@ $(document).ready(function() {
   });
   
   //加载天气情况
-  loadDayInfo();
+  loadWeekDayInfo();
   //加载生日祝福
   loadSrzf();
   //综合要闻
