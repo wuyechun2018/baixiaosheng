@@ -7,7 +7,7 @@
 <head>
 <LINK href="${ctx}/resources/portal/images/logo.ico" type="image/x-icon" rel="icon">                        
 <LINK href="${ctx}/resources/portal/images/logo.ico" type="image/x-icon" rel="shortcut icon"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>马鞍山市交警支队</title>
+<title>${articleInfoVo.articleTitle}-${articleInfoVo.topicName}-马鞍山市交警支队</title>
 <link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
 <link href="${ctx}/resources/portal/css/nei.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
@@ -84,7 +84,7 @@ $(document).ready(function() {
     </div>
     
     <div class="nav-path">
-        <div class="dqwz">当前网站位置：<a href="#"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="#"  title="文章栏目" class="CurrChnlCls">文章栏目</a></div>
+        <div class="dqwz">当前网站位置：<a href="${ctx}/portal/index"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="${ctx}/portal/list?topicCode=${articleInfoVo.topicCode}"  title="${articleInfoVo.topicName}" class="CurrChnlCls">${articleInfoVo.topicName}</a></div>
     </div>
 	
 </div>
