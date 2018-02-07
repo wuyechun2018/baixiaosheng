@@ -155,6 +155,23 @@ public class PortalController {
 		return new JsonMsg(showStr);
 	}
 	
+	
+	/**
+	 * 
+	 * 通讯录
+	 * @author: wyc
+	 * @createTime: 2018年2月7日 下午5:26:25
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/contacts")
+	@ResponseBody
+	public Object contacts() {
+		ModelAndView mv=new ModelAndView("/portal/contacts");
+		return mv;
+	}
+	
+	
 	/**
 	 * 
 	 * 获取一周的天气字符串

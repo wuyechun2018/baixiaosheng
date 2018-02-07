@@ -278,6 +278,16 @@ public class UserDao {
 			sqlBuff.append(" AND  (T.office_telephone LIKE '%"+param.get("telephone").toString()+"%' OR T.mobile_phone LIKE '%"+param.get("telephone")+"%')\n");
 		}
 		
+		//办公电话
+		if(param.get("officeTelephone")!=null&&StringUtils.isNotBlank(param.get("officeTelephone").toString())){
+			sqlBuff.append(" AND  T.office_telephone LIKE '%"+param.get("officeTelephone").toString()+"%' \n");
+		}
+		
+		//手机号
+		if(param.get("mobilePhone")!=null&&StringUtils.isNotBlank(param.get("mobilePhone").toString())){
+			sqlBuff.append(" AND  T.mobile_phone LIKE '%"+param.get("mobilePhone")+"%'\n");
+		}
+		
 		//生日
 		if(param.get("birthday")!=null&&StringUtils.isNotBlank(param.get("birthday").toString())){
 			sqlBuff.append(" AND  T.birthday LIKE '%"+param.get("birthday").toString()+"%' \n");
