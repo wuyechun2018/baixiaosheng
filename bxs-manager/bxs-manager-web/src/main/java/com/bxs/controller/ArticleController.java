@@ -319,9 +319,10 @@ public class ArticleController extends BaseController{
 	 */
 	@RequestMapping("/loadArticleByTopic")
 	@ResponseBody
-	public Object loadArticleByTopic(String topicCode,String frontSliderState,int page,int rows){
+	public Object loadArticleByTopic(String articleType,String topicCode,String frontSliderState,int page,int rows){
 		EUIPager ePager=new EUIPager(page,rows);
 		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("articleType", articleType);
 		param.put("topicCode", topicCode);
 		param.put("frontSliderState", frontSliderState);
 		//首页展示审核通过的文章

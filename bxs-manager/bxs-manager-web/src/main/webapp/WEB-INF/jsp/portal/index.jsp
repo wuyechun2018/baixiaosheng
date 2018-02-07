@@ -57,6 +57,33 @@ function loadArticleByTopic(topicCode,page,rows,isSytj){
 	return articleData;
 }
 
+//根据栏目编码加载文章
+function loadImageArticleByTopic(topicCode,page,rows,isSytj){
+	var articleData=null;
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/article/loadArticleByTopic',
+		data:{
+			articleType:'2',
+			topicCode:topicCode,
+			frontSliderState:isSytj,
+			page:page,
+			rows:rows
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	articleData=data;
+	    }
+	})
+	return articleData;
+}
+
+
+
 //加载文章（参数1：要显示的DIV的ID,参数2：要显示的文章数据）
 function showArticle(dispDivId,articleData){
 	for(var i=0;i<articleData.total;i++){
@@ -265,7 +292,7 @@ $(document).ready(function() {
   var gzdtData=loadArticleByTopic("GZDT",'1','10','');
   showArticle('GZDT',gzdtData);
   //图片展示（加载6条）
-  var tpzsData=loadArticleByTopic("TPZS",'1','6','');
+  var tpzsData=loadImageArticleByTopic("TPZS",'1','6','');
   showArticle('TPZS',tpzsData);
   jQuery(".index_tupian").slide({mainCell:"ul",autoPlay:true,effect:"leftMarquee",vis:4,interTime:50});
   

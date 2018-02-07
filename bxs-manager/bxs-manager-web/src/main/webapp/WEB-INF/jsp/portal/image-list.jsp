@@ -39,6 +39,7 @@
     		type: "POST",
     		url:'${ctx}/article/loadArticleByTopic',
     		data:{
+    			articleType:'2',
     			topicCode:topicCode,
     			frontSliderState:isSytj,
     			page:page,
