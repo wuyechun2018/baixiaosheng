@@ -114,3 +114,9 @@ table.gridtable td {
 	color:green;
 	text-decoration: none;
 }
+
+.slink:hover{
+	text-decoration:underline;
+	font-weight: bold;
+}
+

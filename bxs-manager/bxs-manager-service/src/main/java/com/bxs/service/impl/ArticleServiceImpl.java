@@ -2,6 +2,7 @@ package com.bxs.service.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,6 @@ import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.ArticleDao;
 import com.bxs.pojo.Article;
 import com.bxs.pojo.ArticleInfoVo;
-import com.bxs.pojo.SysUser;
 import com.bxs.service.ArticleService;
 
 @Service
@@ -103,6 +103,11 @@ public class ArticleServiceImpl implements ArticleService {
 		Article article=articleDao.findOne(id);
 		article.setViewCount(article.getViewCount()+1);
 		articleDao.update(article);
+	}
+
+	@Override
+	public void saveCheckState(Article article) {
+		articleDao.saveCheckState(article);
 	}
 	
 	

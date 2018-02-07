@@ -25,4 +25,6 @@ public interface ArticleService {
 	void saveFrontSliderState(Article article);
 
 	void addViewCount(String id);
+
+	void saveCheckState(Article article);
 }

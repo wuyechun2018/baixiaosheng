@@ -173,6 +173,23 @@ public class ArticleController extends BaseController{
 	
 	/**
 	 * 
+	 * 文章审核
+	 * @author: wyc
+	 * @createTime: 2018年1月17日 下午5:05:37
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping("/check")
+	public ModelAndView check(String id) {
+		ModelAndView mv=new ModelAndView("/eui/article/check");
+		ArticleInfoVo articleInfoVo=articleService.getArticleInfoById(id);
+		mv.addObject("articleInfoVo",articleInfoVo);
+		return mv;
+	}
+	
+	
+	/**
+	 * 
 	 * 文章列表
 	 * @author: wyc
 	 * @createTime: 2018年1月17日 下午5:05:37
@@ -307,6 +324,8 @@ public class ArticleController extends BaseController{
 		Map<String,Object> param=new HashMap<String,Object>();
 		param.put("topicCode", topicCode);
 		param.put("frontSliderState", frontSliderState);
+		//首页展示审核通过的文章
+		param.put("checkState", "1");
 		return articleService.pagerList(ePager,param);
 	}
 	
@@ -330,6 +349,23 @@ public class ArticleController extends BaseController{
 		return new JsonMsg();
 	}
 	
-	
+	/***
+	 * 
+	 * 设置审核状态
+	 * @author: wyc
+	 * @createTime: 2018年2月5日 下午3:35:21
+	 * @history:
+	 * @param id
+	 * @param frontSliderState
+	 * @return Object
+	 */
+	@RequestMapping("/saveCheckState")
+	@ResponseBody
+	public Object saveCheckState(String id,String checkState){
+		Article article=articleService.getArticleById(id);
+		article.setCheckState(checkState);
+		articleService.saveCheckState(article);
+		return new JsonMsg();
+	}
 
 }

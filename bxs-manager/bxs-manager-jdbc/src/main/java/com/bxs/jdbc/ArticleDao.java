@@ -339,4 +339,18 @@ public class ArticleDao {
 		String sql = "UPDATE T_ARTICLE SET front_slider_state=? WHERE ID=?";
 		jdbcTemplate.update(sql,new Object[]{article.getFrontSliderState(),article.getId()});
 	}
+
+	/**
+	 * 
+	 * 设置审核状态
+	 * @author: wyc
+	 * @createTime: 2018年2月7日 下午2:32:36
+	 * @history:
+	 * @param article void
+	 */
+	public void saveCheckState(Article article) {
+		String sql = "UPDATE T_ARTICLE SET check_state=? WHERE ID=?";
+		jdbcTemplate.update(sql,new Object[]{article.getCheckState(),article.getId()});
+		
+	}
 }

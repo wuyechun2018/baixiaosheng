@@ -40,6 +40,11 @@ function viewFun(id){
 	location.href=ctx+"/article/showArticle?id="+id;
 }
 
+//文章审核
+function checkFun(id){
+	location.href=ctx+"/article/check?id="+id;
+}
+
 //首页推荐
 function toFront(id){
 	var rowIndex=getSelectRowIndex(id);
@@ -150,9 +155,9 @@ $(function(){
 		          {field:'createDate',title: '发布时间',align: 'center',width: 120}, 
 		          {field:'checkState',title: '状态',align: 'center',width: 80,formatter:function(val,rec){
 		        	  if(val=='1'){
-		        		  return "<span style='color:green'>正常</span>";
+		        		  return "<span style='color:green'><a title='请审核' class='slink' onclick=checkFun('"+rec.id+"')>正常</a></span>";
 		        	  }else{
-		        		  return "<span style='color:red'>未审核</span>";
+		        		  return "<span style='color:red'><a title='请审核' class='slink'  onclick=checkFun('"+rec.id+"')>未审核</a></span>";
 		        	  }
 		          }}, 
 		          {field:'viewCount',title: '查看次数',align: 'center',width: 50},
