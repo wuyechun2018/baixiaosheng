@@ -12,6 +12,7 @@
 <link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
 <link href="${ctx}/resources/portal/css/index.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/portal/js/jquery.cookie-1.4.1.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.bcat.bgswitcher.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.SuperSlide.2.1.1.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/common.js"></script>
@@ -1159,7 +1160,17 @@ $(document).ready(function() {
     </div>
 </div>
 <script type="text/JavaScript">
-window.open ('${ctx}/portal/pop','公告名称','height=500,width=700,top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no')
+var isShow=$.cookie('isShow');
+if(isShow=='1'){
+	//doNothing
+}else{
+	window.open ('${ctx}/portal/pop','公告名称','height=500,width=700,top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no')
+	var now = new Date();
+	//10秒 10*1000
+	//暂时定制为15秒
+	now.setTime(now.getTime()+1*15*1000);
+	$.cookie('isShow', '1', { expires: now});
+}
 </script>
 
 </body>
