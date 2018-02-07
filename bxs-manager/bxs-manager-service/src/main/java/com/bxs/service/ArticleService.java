@@ -27,4 +27,6 @@ public interface ArticleService {
 	void addViewCount(String id);
 
 	void saveCheckState(Article article);
+
+	void saveTopCount(Article article);
 }

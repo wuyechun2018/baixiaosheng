@@ -109,6 +109,11 @@ public class ArticleServiceImpl implements ArticleService {
 	public void saveCheckState(Article article) {
 		articleDao.saveCheckState(article);
 	}
+
+	@Override
+	public void saveTopCount(Article article) {
+		articleDao.saveTopCount(article);
+	}
 	
 	
 }

@@ -367,5 +367,23 @@ public class ArticleController extends BaseController{
 		articleService.saveCheckState(article);
 		return new JsonMsg();
 	}
+	
+	
+	/**
+	 * 
+	 * 置顶操作，该文章置于本栏目第一条
+	 * @author: wyc
+	 * @createTime: 2018年2月7日 下午3:37:06
+	 * @history:
+	 * @param id
+	 * @return Object
+	 */
+	@RequestMapping("/saveTopCount")
+	@ResponseBody
+	public Object saveTopCount(String id){
+		Article article=articleService.getArticleById(id);
+		articleService.saveTopCount(article);
+		return new JsonMsg();
+	}
 
 }

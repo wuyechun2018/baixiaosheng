@@ -353,4 +353,36 @@ public class ArticleDao {
 		jdbcTemplate.update(sql,new Object[]{article.getCheckState(),article.getId()});
 		
 	}
+
+	/**
+	 * 
+	 * 该栏目置顶显示
+	 * @author: wyc
+	 * @createTime: 2018年2月7日 下午3:38:10
+	 * @history:
+	 * @param article void
+	 */
+	public void saveTopCount(Article article) {
+		String sql="UPDATE\n" +
+						"  t_article\n" + 
+						"SET\n" + 
+						"  top_count =\n" + 
+						"  (\n" + 
+						"\n" + 
+						"  SELECT M.TOP_COUNT FROM (\n" + 
+						"SELECT\n" + 
+						"  (MAX(TOP_COUNT) + 10) AS TOP_COUNT\n" + 
+						"FROM\n" + 
+						"  t_article t\n" + 
+						"WHERE T.topic_id =\n" + 
+						"  (SELECT\n" + 
+						"    topic_id\n" + 
+						"  FROM\n" + 
+						"    t_article\n" + 
+						"  WHERE id =?)\n" + 
+						")M)\n" + 
+						"WHERE ID = ?";
+
+	  jdbcTemplate.update(sql,new Object[]{article.getId(),article.getId()});
+	}
 }

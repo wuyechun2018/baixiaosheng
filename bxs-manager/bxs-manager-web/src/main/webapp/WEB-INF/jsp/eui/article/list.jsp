@@ -34,6 +34,24 @@ function editFun(id) {
 	location.href=ctx+"/article/euiEdit?id="+id;
 }
 
+//点击"置顶"效果
+function topFun(id){
+	$.ajax({
+        type: "POST",
+        url:'${ctx}/article/saveTopCount',
+        data: {
+        	id:id
+        },
+        success: function (data) {
+        	 $.messager.alert('提示信息',"置顶成功，该文章将显示在本栏目第一条！");
+        	 doQuery();
+        },
+        error: function(data) {
+            alert("error:"+data.responseText);
+         }
+  		});
+}
+
 
 //文章预览
 function viewFun(id){
