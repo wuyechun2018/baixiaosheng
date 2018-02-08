@@ -1,0 +1,100 @@
+{
+	"contentManagement": [
+		{
+			"title": "会员信息",
+			"icon": "&#xe612;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "修改密码",
+					"icon": "&#xe612;",
+					"href": "page/404.html",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "文章信息报送管理",
+			"icon": "&#xe67c;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "信息报送列表",
+					"icon": "&#xe62d;",
+					"href": "list",
+					"spread": false
+				},
+				{
+					"title": "信息报送",
+					"icon": "&#xe681;",
+					"href": "add",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "签收信息报送管理",
+			"icon": "&#xe609;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "签收信息列表",
+					"icon": "&#xe62d;",
+					"href": "list",
+					"spread": false
+				},
+				{
+					"title": "签收信息报送",
+					"icon": "&#xe681;",
+					"href": "list",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "反馈信息报送管理",
+			"icon": "&#xe63c;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "反馈信息列表",
+					"icon": "&#xe62d;",
+					"href": "list",
+					"spread": false
+				},
+				{
+					"title": "反馈信息报送",
+					"icon": "&#xe681;",
+					"href": "list",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "警务视频管理",
+			"icon": "&#xe6ed;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "警务视频列表",
+					"icon": "&#xe62d;",
+					"href": "list",
+					"spread": false
+				},
+				{
+					"title": "添加警务视频",
+					"icon": "&#xe681;",
+					"href": "list",
+					"spread": false
+				}
+			]
+		}
+	]
+}
+
+
