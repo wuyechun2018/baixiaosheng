@@ -80,8 +80,8 @@ var ctx = "${ctx}";
 			
 			<div class="navBar layui-side-scroll" id="navBar">
 				<ul class="layui-nav layui-nav-tree">
-					<li class="layui-nav-item layui-this">
-						<a href="javascript:;" data-url="page/main.html"><i class="layui-icon" data-icon=""></i><cite>后台首页</cite></a>
+					<li class="layui-nav-item ">
+						<a href="javascript:;" data-url="${ctx}/sois/add"><i class="layui-icon" data-icon=""></i><cite>后台首页</cite></a>
 					</li>
 				</ul>
 			</div>
@@ -90,7 +90,7 @@ var ctx = "${ctx}";
 		<div class="layui-body layui-form">
 			<div class="layui-tab mag0" lay-filter="bodyTab" id="top_tabs_box">
 				<ul class="layui-tab-title top_tab" id="top_tabs">
-					<li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i> <cite>后台首页</cite></li>
+					<li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i> <cite>信息上报</cite></li>
 				</ul>
 				<ul class="layui-nav closeBox">
 				  <li class="layui-nav-item">
@@ -104,7 +104,7 @@ var ctx = "${ctx}";
 				</ul>
 				<div class="layui-tab-content clildFrame">
 					<div class="layui-tab-item layui-show">
-						<iframe src="page/main.html"></iframe>
+						<iframe src="${ctx}/sois/add"></iframe>
 					</div>
 				</div>
 			</div>

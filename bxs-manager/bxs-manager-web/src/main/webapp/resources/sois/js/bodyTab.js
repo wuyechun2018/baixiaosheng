@@ -30,7 +30,7 @@ layui.define(["element","jquery"],function(exports){
             if(data[i].spread || data[i].spread == undefined){
                 ulHtml += '<li class="layui-nav-item layui-nav-itemed">';
             }else{
-                ulHtml += '<li class="layui-nav-item">';
+                ulHtml += '<li class="layui-nav-item ">';
             }
             if(data[i].children != undefined && data[i].children.length > 0){
                 ulHtml += '<a>';
@@ -84,7 +84,7 @@ layui.define(["element","jquery"],function(exports){
 	Tab.prototype.render = function() {
 		//显示左侧菜单
 		var _this = this;
-		$(".navBar ul").html('<li class="layui-nav-item layui-this"><a data-url="page/main.html"><i class="layui-icon" data-icon=""></i><cite>后台首页</cite></a></li>').append(_this.navBar(dataStr)).height($(window).height()-210);
+		$(".navBar ul").html('<li class="layui-nav-item "><a data-url="add"><i class="layui-icon" data-icon=""></i><cite>后台首页</cite></a></li>').append(_this.navBar(dataStr)).height($(window).height()-210);
 		element.init();  //初始化页面元素
 		$(window).resize(function(){
 			$(".navBar").height($(window).height()-210);

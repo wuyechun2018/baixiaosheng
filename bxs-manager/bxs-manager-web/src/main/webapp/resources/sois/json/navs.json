@@ -10,7 +10,7 @@
 					"title": "修改密码",
 					"icon": "&#xe612;",
 					"href": "page/404.html",
-					"spread": false
+					"spread": true
 				}
 			]
 		},
@@ -18,19 +18,19 @@
 			"title": "文章信息报送管理",
 			"icon": "&#xe67c;",
 			"href": "",
-			"spread": false,
+			"spread": true,
 			"children": [
 				{
 					"title": "信息报送列表",
 					"icon": "&#xe62d;",
 					"href": "list",
-					"spread": false
+					"spread": true
 				},
 				{
 					"title": "信息报送",
 					"icon": "&#xe681;",
 					"href": "add",
-					"spread": false
+					"spread": true
 				}
 			]
 		},
@@ -44,13 +44,13 @@
 					"title": "签收信息列表",
 					"icon": "&#xe62d;",
 					"href": "list",
-					"spread": false
+					"spread": true
 				},
 				{
 					"title": "签收信息报送",
 					"icon": "&#xe681;",
 					"href": "list",
-					"spread": false
+					"spread": true
 				}
 			]
 		},
@@ -64,13 +64,13 @@
 					"title": "反馈信息列表",
 					"icon": "&#xe62d;",
 					"href": "list",
-					"spread": false
+					"spread": true
 				},
 				{
 					"title": "反馈信息报送",
 					"icon": "&#xe681;",
 					"href": "list",
-					"spread": false
+					"spread": true
 				}
 			]
 		},

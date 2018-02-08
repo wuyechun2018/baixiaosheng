@@ -3,14 +3,19 @@ package com.bxs.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.utils.DataPipeUtil;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
+import com.bxs.pojo.Article;
+import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
 
 /**
@@ -29,6 +34,29 @@ public class SoisController {
 	
 	@Autowired
 	private ArticleService articleService;
+	
+	
+	/**
+	 * 
+	 * 信息上报
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午10:42:01
+	 * @history:
+	 * @param article
+	 * @param session
+	 * @return String
+	 */
+	@RequestMapping("/save")
+	public String save(Article article,HttpSession session){
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			article.setPublishDeptId(info.getDeptId());
+			article.setPublishUserId(info.getId());
+		}
+		articleService.save(article);
+		return "redirect:/sois/list";
+	}
+	
 	
 	/**
 	 * 
