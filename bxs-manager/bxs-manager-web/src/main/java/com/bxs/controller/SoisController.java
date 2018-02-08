@@ -90,6 +90,20 @@ public class SoisController {
 		return "/sois/index";
 	}
 	
+
+	/**
+	 * 
+	 * 报送系统登录
+	 * @author: wyc
+	 * @createTime: 2018年2月9日 上午12:02:56
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/login")
+	public Object login() {
+		return "/sois/login";
+	}
+	
 	
 	/**
 	 * 
