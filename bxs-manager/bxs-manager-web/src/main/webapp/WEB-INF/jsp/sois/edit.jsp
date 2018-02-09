@@ -27,7 +27,7 @@ var topicData=null;
 		<fieldset class="layui-elem-field layui-field-title"
 			style="margin-top: 20px;">
 
-			<legend>添加投稿信息</legend>
+			<legend>编辑投稿信息</legend>
 
 		</fieldset>
 		<form class="layui-form" action="${ctx}/sois/save" method="post">
@@ -35,18 +35,11 @@ var topicData=null;
 			<div class="layui-form-item">
 				<label class="layui-form-label">投稿栏目</label>
 				<input type="hidden"  value="0"  name="checkState"  />
-				<input type="hidden"  value="2018-01-01"  name="publishDate" id="publishDate" />
-				<input type="hidden"  value="1" name="articleType"  />
+				<input type="hidden"  value="${article.id}" name="id" />
+				<input type="hidden"  value="${article.publishDate}" name="publishDate" id="publishDate" />
+				<input type="hidden"  value="${article.articleType}" name="articleType"  />
 				<div class="layui-input-block">
-					<select name="topicId" id="topicId" class="layui-input topicId" lay-verify="required">
-						<%--
-						<option value="1"></option>
-						<option value="0">北京</option>
-						<option value="1">上海</option>
-						<option value="2">广州</option>
-						<option value="3">深圳</option>
-						<option value="4">杭州</option>
-						 --%>
+					<select name="topicId" id="topicId" value="${article.topicId}" lay-verify="required">
 					</select>
 				</div>
 			</div>
@@ -54,7 +47,7 @@ var topicData=null;
 			<div class="layui-form-item">
 				<label class="layui-form-label">文章标题</label>
 				<div class="layui-input-block">
-					<input type="text" class="layui-input articleTitle" name="articleTitle" required lay-verify="required"
+					<input type="text" name="articleTitle"  value="${article.articleTitle}" required lay-verify="required"
 						placeholder="请输入标题" autocomplete="off" class="layui-input">
 				</div>
 			</div>
@@ -62,7 +55,7 @@ var topicData=null;
 			<div class="layui-form-item">
 	           	 <label class="layui-form-label">形象图</label>
 	             <div class="layui-input-inline" style="width: 250px;">
-	                <input type="text" name="articleImageUrl" value="" class="layui-input" id="articleImageUrl"> 
+	                <input type="text" value="${article.articleImageUrl}" name="articleImageUrl" value="" class="layui-input" id="articleImageUrl"> 
 	             </div>
 	            <div class="layui-input-inline" >
 	                <button type="button" name="preimage" class="layui-btn" id="articleImageBtn">上传图片</button>
@@ -78,6 +71,8 @@ var topicData=null;
 				<label class="layui-form-label">文章内容</label>
 				<div class="layui-input-block">
 					<script id="editor" name="articleContent" type="text/plain" style="width:100%;height:180px;">
+						${article.articleContent}
+
 					</script>
 				</div>
 			</div>
@@ -95,7 +90,6 @@ var topicData=null;
 		//Demo
 		layui.use(['form','upload'], function(){
 			var $ = layui.jquery;
-			
 			$.ajax({
 				cache: true,
 				type: "POST",
@@ -123,7 +117,6 @@ var topicData=null;
 		        }
 		        ,done: function(res){
 		        	articleImageUrl.value=res.msg;
-		        	//$('#viewImg').attr('src', res.msg);
 		        }
 		        ,error: function(){
 		          
@@ -133,17 +126,16 @@ var topicData=null;
 		  var form = layui.form;
 		  //监听提交
 		  form.on('submit(formDemo)', function(data){
-		    //layer.msg(JSON.stringify(data.field));
-		    //return false;
+		   
 		  });
 		  $('#topicId').append('<option value="1"></option>');
 		  for(var i=0;i<topicData.length;i++){
-			  debugger;
 	    	  var topicObj=topicData[i];
 	    	  $('#topicId').append('<option value="'+topicObj.id+'">'+topicObj.text+'</option>');
 	      }
+		  var topicId="${article.topicId}";
+		  $('#topicId').val(topicId);
 		  form.render('select');
-		  publishDate.value=myDateFormatter(new Date());
 		});
 </script>
 

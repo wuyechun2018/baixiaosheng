@@ -17,8 +17,11 @@ var ctx = "${ctx}";
 	<script type="text/javascript" src="${ctx}/resources/js-lib/layui/layui.js"></script>
 	<script>
 			layui.use('table', function(){
-			  var table = layui.table;
-			  table.render({
+			   $ = layui.jquery;
+			   var form = layui.form;
+			   var table = layui.table;
+			 
+			   var tableIns =  table.render({
 			    elem: '#newsList'
 			    ,url:'${ctx}/sois/getArticleList/'
 			    ,cols: [[
@@ -40,16 +43,87 @@ var ctx = "${ctx}";
 			    	       }
 			    	 }
 			      }
-			      ,{title: '操作',width:160, templet: '#opBarTpl',align:'center'}
+			      ,{title: '操作',width:160, toolbar: '#opBarTpl',align:'center'}
 			    ]]
 			    ,page: true
 			  });
+			  
+			  /**
+			  function addNews(editObj){
+			        var index = layui.layer.open({
+			            title : "添加文章",
+			            type : 2,
+			            content : "${ctx}/sois/add",
+			            success : function(layero, index){
+			            	debugger;
+			                var body = layui.layer.getChildFrame('body', index);
+			                if(editObj){
+			                	body.find(".topicId select").val(editObj.topicId);
+			                    body.find(".articleTitle").val(editObj.articleTitle);
+			                    
+			                    form.render();
+			                }
+			                setTimeout(function(){
+			                    layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
+			                        tips: 3
+			                    });
+			                },500)
+			            }
+			        })
+			        layui.layer.full(index);
+			    }**/
+			  
+			  //文章预览
+			  function view(url){
+			    	var index = layui.layer.open({
+			            title : "文章预览",
+			            type : 2,
+			            area:  ['1002px', '500px'],
+			            content : url,
+			            maxmin: true,
+			            success : function(layero, index){
+			                
+			            }
+			        })
+			        layui.layer.full(index);
+				}  
+			  
+			  table.on('tool(newsList)', function(obj){
+			        var layEvent = obj.event,
+			        data = obj.data;
+			        if(layEvent === 'edit'){
+			        	location.href=ctx+"/sois/edit/"+data.id;
+			        } else if(layEvent === 'del'){
+			            layer.confirm('确定删除此文章？',{icon:3, title:'提示信息'},function(index){
+		                 	$.ajax({
+				    			cache: true,
+				    			type: "POST",
+				    			url:'${ctx}/sois/delete',
+				    			data:{
+				    				id:data.id
+				    			},
+				    			async: false,
+				    		    error: function(request) {
+				    		        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+				    		    },
+				    		    success: function(data) {
+				    		    	tableIns.reload();
+				                    layer.close(index);
+				    		    }
+   							})
+			            });
+			        } else if(layEvent === 'view'){
+			        	var url=ctx+"/sois/show/"+data.id;
+			        	view(url);
+			        }
+			    });
+			  
 			});
 </script>
 	<div class="admin-main">
 		<form action="#" method="post">
 			<blockquote class="layui-elem-quote">
-				<a href="信息报送.html" class="layui-btn"> <i class="layui-icon">&#xe608;</i>
+				<a href="${ctx}/sois/add" class="layui-btn"> <i class="layui-icon">&#xe608;</i>
 					添加信息
 				</a>
 				<div class="layui-form-item" style="float: right;">
@@ -68,7 +142,7 @@ var ctx = "${ctx}";
 		<fieldset class="layui-elem-field">
 			<legend>数据列表</legend>
 			<div class="layui-field-box">
-				<table class="layui-table" lay-skin="line" id="newsList">
+				<table class="layui-table" lay-skin="line" id="newsList" lay-filter="newsList">
 				</table>
 			</div>
 		</fieldset>
@@ -81,9 +155,9 @@ var ctx = "${ctx}";
 	
 	<!--操作-->
 	<script type="text/html" id="opBarTpl">
-		 <a  class="layui-btn layui-btn-normal layui-btn-xs" href="javascript:void(0);" onClick="view('页面预览.html');" >预览</a>
-         <a  class="layui-btn layui-btn-xs" href="javascript:void(0);">编辑</a>
-         <a class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:void(0);">删除</a>
+		 <a lay-event="view" class="layui-btn layui-btn-normal layui-btn-xs" href="javascript:void(0);"  >预览</a>
+         <a lay-event="edit" class="layui-btn layui-btn-xs" href="javascript:void(0);">编辑</a>
+         <a lay-event="del" class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:void(0);">删除</a>
 	</script>
 	
 </body>

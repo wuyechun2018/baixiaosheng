@@ -16,10 +16,10 @@
 <link rel="stylesheet" href="https://think.ctolog.com/static/theme/default/css/login.css">
  --%>
 
-<link rel="stylesheet" href="${ctx}/resources/sois/ncss/bootstrap.min.css?ver=180209"/>
-<link rel="stylesheet" href="${ctx}/resources/sois/ncss/layui.css?ver=180209"/>
-<link rel="stylesheet" href="${ctx}/resources/sois/ncss/console.css?ver=180209">
-<link rel="stylesheet" href="${ctx}/resources/sois/ncss/animate.css?ver=180209">
+<link rel="stylesheet" href="${ctx}/resources/sois/ncss/bootstrap.min.css"/>
+<link rel="stylesheet" href="${ctx}/resources/sois/ncss/layui.css"/>
+<link rel="stylesheet" href="${ctx}/resources/sois/ncss/console.css">
+<link rel="stylesheet" href="${ctx}/resources/sois/ncss/animate.css">
 <link rel="stylesheet" href="${ctx}/resources/sois/ncss/login.css">
 
 
@@ -42,8 +42,9 @@ var ctx = "${ctx}";
     <!-- 顶部导航条 开始 -->
     <div class="header">
         <span class="title notselect">
-        	<%--欢迎登录 Think.Admin 后台管理 <sup>2.00 dev</sup> --%>
+        	<%--欢迎登录 Think.Admin 后台管理 <sup>2.00 dev</sup> 
             <div style="padding-top:5px;font-size:28px;font-family: Microsoft YaHei">马鞍山公安局交警支队信息报送系统</div>
+        	--%>
         </span>
         <ul>
             <!--<li class="notselect"><a href="javascript:void(0)" target="_blank">帮助</a></li>-->
@@ -60,7 +61,7 @@ var ctx = "${ctx}";
 
     <!-- 页面表单主体 开始 -->
     <div class="container" style="top:50%;margin-top:-300px">
-        <form onsubmit="return false;" data-time="0.001" data-auto="true" method="post"
+        <form action="${ctx}/sois/doLogin" data-time="0.001" data-auto="true" method="post"
               class="content layui-form animated fadeInDown">
             <div class="people">
                 <div class="tou"></div>
@@ -69,21 +70,22 @@ var ctx = "${ctx}";
             </div>
             <ul>
                 <li>
-                    <input name='username' class="hide"/>
-                    <input required="required" pattern="^\S{4,}$" value="admin" name="username"
+                    
+                    <input required="required"  value="" name="username"
                            autofocus="autofocus" autocomplete="off" class="login-input username"
-                           title="请输入4位及以上的字符" placeholder="请输入用户名/手机号码"/>
+                           title="请输入用户名" placeholder="请输入用户名"/>
                 </li>
                 <li>
-                    <input name='password' class="hide"/>
-                    <input required="required" pattern="^\S{4,}$" value="admin" name="password"
+                   
+                    <input required="required"  value="" name="password"
                            type="password" autocomplete="off" class="login-input password"
-                           title="请输入4位及以上的字符" placeholder="请输入密码"/>
+                           title="请输入密码" placeholder="请输入密码"/>
                 </li>
                 <li class="text-center">
                     <button type="submit" class="layui-btn " data-form-loaded="立 即 登 入">立 即 登 入</button>
                     <!--<a style="position:absolute;display:block;right:0" href="javascript:void(0)">忘记密码？</a>-->
                 </li>
+                <li>${SYSTEM_ERROR_MSG}</li>
             </ul>
         </form>
     </div>

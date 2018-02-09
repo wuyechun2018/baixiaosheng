@@ -56,6 +56,7 @@ public class UserController extends BaseController {
 	public ModelAndView doLogin(String username,String password,HttpSession session){
 		ModelAndView mv=new ModelAndView();
 		List<UserInfoVo> list=userService.getUserByLoginName(username);
+		mv.setViewName("login");
 		if(!list.isEmpty()){
 			UserInfoVo info=list.get(0);
 			//密码相等

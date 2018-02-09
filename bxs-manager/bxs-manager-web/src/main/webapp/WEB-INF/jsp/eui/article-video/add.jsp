@@ -58,7 +58,8 @@ $(function(){
 	
 	//编辑器
 	var ue = UE.getEditor('editor');
-	
+	//发布日期默认为当天
+	$('#publishDate').datebox('setValue',myDateFormatter(new Date()));
 });
 </script>
 <body>
