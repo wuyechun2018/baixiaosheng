@@ -56,6 +56,13 @@ public class Article implements java.io.Serializable {
 	private Date createDate;
 	// 更新时间
 	private Date updateDate;
+	//信息来源
+	private String newsfrom;
+	//作者
+	private String author;
+	//发布时间
+	private Date publishDate;
+	
 
 	public String getId() {
 		return id;
@@ -189,4 +196,28 @@ public class Article implements java.io.Serializable {
 		this.frontSliderState = frontSliderState;
 	}
 
+	public String getNewsfrom() {
+		return newsfrom;
+	}
+
+	public void setNewsfrom(String newsfrom) {
+		this.newsfrom = newsfrom;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public Date getPublishDate() {
+		return publishDate;
+	}
+
+	public void setPublishDate(Date publishDate) {
+		this.publishDate = publishDate;
+	}
+	
 }

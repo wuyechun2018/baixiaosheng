@@ -48,6 +48,13 @@ public class ArticleInfoVo {
 	private String frontSliderState;
 	//文章插图Url，针对图片文章，提取文章中的图片URL
 	private String contentImageUrl;
+	
+	//信息来源
+	private String newsfrom;
+	//作者
+	private String author;
+	//发布时间
+	private Date publishDate;
 
 	public String getId() {
 		return id;
@@ -217,6 +224,31 @@ public class ArticleInfoVo {
 
 	public void setContentImageUrl(String contentImageUrl) {
 		this.contentImageUrl = contentImageUrl;
+	}
+
+	public String getNewsfrom() {
+		return newsfrom;
+	}
+
+	public void setNewsfrom(String newsfrom) {
+		this.newsfrom = newsfrom;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")  
+	public Date getPublishDate() {
+		return publishDate;
+	}
+
+	public void setPublishDate(Date publishDate) {
+		this.publishDate = publishDate;
 	}
 	
 }

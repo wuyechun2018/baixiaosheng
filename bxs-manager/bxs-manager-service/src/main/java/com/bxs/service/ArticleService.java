@@ -29,4 +29,6 @@ public interface ArticleService {
 	void saveCheckState(Article article);
 
 	void saveTopCount(Article article);
+
+	void savePlusInfo(ArticleInfoVo article);
 }

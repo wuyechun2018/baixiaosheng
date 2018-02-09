@@ -70,7 +70,10 @@ public class ArticleDao {
 						"  data_state,\n" + 
 						"  create_date,\n" + 
 						"  update_date,\n" + 
-						"  front_slider_state\n" + 
+						"  front_slider_state,\n" + 
+						"  newsfrom,\n" + 
+						"  author,\n" + 
+						"  publish_date\n" + 
 						")\n" + 
 						"VALUES\n" + 
 						"  (\n" + 
@@ -88,8 +91,11 @@ public class ArticleDao {
 						"    ?,\n" + 
 						"    ?,\n" + 
 						"    ?,\n" + 
-						"    ?\n," + 
-						"    ?\n" + 
+						"    ?,\n" + 
+						"    ?,\n" +
+						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?\n" +
 						"  )";
 
 		jdbcTemplate.execute(sql,
@@ -111,6 +117,9 @@ public class ArticleDao {
 			         ps.setTimestamp(14, new java.sql.Timestamp(article.getCreateDate().getTime()));
 			         ps.setTimestamp(15, new java.sql.Timestamp(article.getUpdateDate().getTime()));
 			         ps.setString(16, article.getFrontSliderState());
+			         ps.setString(17, article.getNewsfrom());
+			         ps.setString(18, article.getAuthor());
+			         ps.setDate(19, new java.sql.Date(article.getPublishDate().getTime()));
 			       }
 			     }
 			 );
@@ -151,7 +160,10 @@ public class ArticleDao {
 						"  data_state = ?,\n" + 
 						"  create_date = ?,\n" + 
 						"  update_date = ?,\n" + 
-						"  front_slider_state = ?\n" + 
+						"  front_slider_state = ?,\n" + 
+						"  newsfrom = ?,\n" + 
+						"  author = ?,\n" + 
+						"  publish_date = ?\n" + 
 						"WHERE id = ?";
 
 		jdbcTemplate.execute(sql,
@@ -172,7 +184,10 @@ public class ArticleDao {
 			         ps.setTimestamp(13, new java.sql.Timestamp(article.getCreateDate().getTime()));
 			         ps.setTimestamp(14, new java.sql.Timestamp(article.getUpdateDate().getTime()));
 			         ps.setString(15, article.getFrontSliderState());
-			         ps.setString(16, article.getId());
+			         ps.setString(16, article.getNewsfrom());
+			         ps.setString(17, article.getAuthor());
+			         ps.setDate(18, new java.sql.Date(article.getPublishDate().getTime()));
+			         ps.setString(19, article.getId());
 			       }
 			     }
 			 );
@@ -384,5 +399,24 @@ public class ArticleDao {
 						"WHERE ID = ?";
 
 	  jdbcTemplate.update(sql,new Object[]{article.getId(),article.getId()});
+	}
+
+	/**
+	 * 
+	 * 设置附加消息
+	 * @author: wyc
+	 * @createTime: 2018年2月9日 下午3:20:56
+	 * @history:
+	 * @param article void
+	 */
+	public void savePlusInfo(ArticleInfoVo article) {
+		String sql="UPDATE\n" +
+						"  t_article T\n" + 
+						"SET\n" + 
+						"  T.newsfrom =?,\n" + 
+						"  T.author = ?,\n" + 
+						"  T.publish_date = ?\n" + 
+						" WHERE T.id=?";
+	   jdbcTemplate.update(sql,new Object[]{article.getNewsfrom(),article.getAuthor(),article.getPublishDate(),article.getId()});
 	}
 }

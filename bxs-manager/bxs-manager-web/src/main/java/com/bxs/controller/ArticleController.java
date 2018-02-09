@@ -1,6 +1,9 @@
 package com.bxs.controller;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +14,10 @@ import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,10 +32,8 @@ import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.Article;
 import com.bxs.pojo.ArticleInfoVo;
-import com.bxs.pojo.Topic;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
-import com.bxs.service.TopicService;
 
 /***
  * 文章维护控制层-普通类型文章(1:普通 2:图片 3：视频)
@@ -386,5 +390,53 @@ public class ArticleController extends BaseController{
 		articleService.saveTopCount(article);
 		return new JsonMsg();
 	}
+
+	
+	/**
+	 * 
+	 * 处理"发布日期字段",对于日期字段,前端不传也是可以的，但是，如果传了值，必须进行格式转换
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午1:38:30
+	 * @history:
+	 * @param binder void
+	 */
+	@InitBinder  
+    public void initBinder(WebDataBinder binder) {  
+       DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+       binder.registerCustomEditor(Date.class,new CustomDateEditor(format, true)); 
+   }
+	
+	
+	/**
+	 * 
+	 * 处理数据  xx精神/本站原创/孙xx/2018-1-26
+	 * @author: wyc
+	 * @createTime: 2018年2月9日 下午2:31:10
+	 * @history:
+	 * @param id
+	 * @return Object
+	 * @throws ParseException 
+	 */
+	@RequestMapping("/handleTheData")
+	@ResponseBody
+	public Object handleTheData(String id) throws ParseException{
+		EUIPager ePager=new EUIPager(1,100);
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("articleTitle", "/");
+		EUIGrid grid=articleService.pagerList(ePager,param);
+		for(int i=0;i<grid.getRows().size();i++){
+			ArticleInfoVo article=(ArticleInfoVo) grid.getRows().get(i);
+			String[] titleArray=article.getArticleTitle().split("/");
+			
+			article.setNewsfrom(titleArray[1]);
+			article.setAuthor(titleArray[2]);
+			article.setPublishDate(new SimpleDateFormat("yyyy-MM-dd").parse(titleArray[3]));
+			
+			articleService.savePlusInfo(article);
+		}
+		return new JsonMsg();
+	}
+	
+	
 
 }

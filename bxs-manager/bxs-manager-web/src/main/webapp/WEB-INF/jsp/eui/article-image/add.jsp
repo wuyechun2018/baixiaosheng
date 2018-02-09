@@ -108,6 +108,28 @@ $(function(){
 					</script>
 	 			</td>
 	 		</tr>
+	 		
+	 		<tr>
+			 	<th>信息来源：</th>	 		
+	 			<td>
+	 			  <input type="text" name="newsfrom" style="width:300px;" />
+	 			</td>
+	 		</tr>
+	 		
+	 		<tr>
+			 	<th>作者：</th>	 		
+	 			<td>
+	 			  <input type="text" name="author" style="width:300px;" />
+	 			</td>
+	 		</tr>
+	 		
+	 		<tr>
+			 	<th>发布时间：</th>	 		
+	 			<td>
+	 				<input class="easyui-datebox" type="text" ID="publishDate" name="publishDate" style="width:300px" />
+	 			</td>
+	 		</tr>
+	 		
 	 	</table>
 	 	
 	 	 <div style="text-align:center;padding-top:15px">

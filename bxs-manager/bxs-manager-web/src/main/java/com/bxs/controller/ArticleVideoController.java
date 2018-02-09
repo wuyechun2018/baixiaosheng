@@ -1,9 +1,16 @@
 package com.bxs.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -82,5 +89,20 @@ public class ArticleVideoController {
 		mv.addObject("articleInfoVo",articleInfoVo);
 		return mv;
 	}
+	
+	/**
+	 * 
+	 * 处理"发布日期字段",对于日期字段,前端不传也是可以的，但是，如果传了值，必须进行格式转换
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午1:38:30
+	 * @history:
+	 * @param binder void
+	 */
+	@InitBinder  
+    public void initBinder(WebDataBinder binder) {  
+       DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+       binder.registerCustomEditor(Date.class,new CustomDateEditor(format, true)); 
+   }
+
 
 }

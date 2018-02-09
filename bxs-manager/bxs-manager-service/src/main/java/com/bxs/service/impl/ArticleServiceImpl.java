@@ -114,6 +114,11 @@ public class ArticleServiceImpl implements ArticleService {
 	public void saveTopCount(Article article) {
 		articleDao.saveTopCount(article);
 	}
+
+	@Override
+	public void savePlusInfo(ArticleInfoVo article) {
+		articleDao.savePlusInfo(article);
+	}
 	
 	
 }
