@@ -254,7 +254,7 @@ $(document).ready(function() {
     	<div class="f_nav">
             <a href="javascript:void(0);" onclick="SetHome(this,'#');">加入收藏</a>
             <a href="javascript:void(0);" onclick="AddFavorite('我的网站',location.href)">设为首页</a>
-            <a href="#">信息报送</a>
+            <a href="${ctx}/sois/index">信息报送</a>
             <a href="#">旧版</a>
             <span>建议分辨率为1440*960</span>
             <span>浏览器IE8以上版本</span>

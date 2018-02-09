@@ -28,6 +28,7 @@ import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.Article;
 import com.bxs.pojo.ArticleInfoVo;
+import com.bxs.pojo.SysUser;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
 import com.bxs.service.UserService;
@@ -52,6 +53,50 @@ public class SoisController {
 	
 	@Autowired
 	private UserService userService;
+	
+	
+	
+	/**
+	 * 
+	 * 修改密码
+	 * @author: wyc
+	 * @createTime: 2018年2月9日 下午10:55:24
+	 * @history:
+	 * @param id
+	 * @return ModelAndView
+	 */
+	@RequestMapping("/pwd")
+	public Object pwd(HttpSession session) {
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			ModelAndView mv=new ModelAndView("sois/pwd");
+			mv.addObject("userinfo",info);
+			return mv;
+		}else{
+			return "redirect:/sois/login";
+		}
+	}
+	
+	/**
+	 * 
+	 * 用户信息
+	 * @author: wyc
+	 * @createTime: 2018年2月9日 下午11:13:03
+	 * @history:
+	 * @param session
+	 * @return Object
+	 */
+	@RequestMapping("/userInfo")
+	public Object userInfo(HttpSession session) {
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			ModelAndView mv=new ModelAndView("sois/userInfo");
+			mv.addObject("userinfo",info);
+			return mv;
+		}else{
+			return "redirect:/sois/login";
+		}
+	}
 	
 	
 	
