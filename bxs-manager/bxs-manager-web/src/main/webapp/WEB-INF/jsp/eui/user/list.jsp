@@ -43,7 +43,8 @@ function addFun(){
 	if(!node){
 		node=$("#leftTree").tree('getRoot');
 	}
-	
+	//生日默认为当天
+	$('#birthday_form').datebox('setValue',myDateFormatter(new Date()));
 	//加载部门下拉框树
 	loadDeptTree();
 	
@@ -51,7 +52,6 @@ function addFun(){
 		//给部门下拉框赋值
 		$('#deptComboTree').combotree('setValue', node.id);
 		$('#form_postId').combobox('reload', ctx+'/post/getPostByDeptId?deptId='+node.id);
-
 	}
 }
 
@@ -274,7 +274,7 @@ function doQuery(){
  					</td>
 	    			<th>生日：</th>
 	    			<td>
-	    				<input class="easyui-datebox" type="text" ID="birthday" name="birthday" style="width:180px" />
+	    				<input class="easyui-datebox" type="text" ID="birthday_form" name="birthday" style="width:180px" />
 	    			</td>
 	    		</tr>
 	    		<tr>
