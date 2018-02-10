@@ -9,7 +9,7 @@
 				{
 					"title": "修改密码",
 					"icon": "&#xe612;",
-					"href": "page/404.html",
+					"href": "pwd",
 					"spread": true
 				}
 			]

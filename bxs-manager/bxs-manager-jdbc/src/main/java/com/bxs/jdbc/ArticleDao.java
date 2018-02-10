@@ -301,9 +301,14 @@ public class ArticleDao {
 			sqlBuff.append(" AND TOPIC_CODE = '" + param.get("topicCode").toString() + "'\n");
 		}
 		
-		//发布部门,1代表全部栏目
+		//发布部门,1代表全部部门
 		if(param.get("publishDeptId")!=null&&StringUtils.isNotBlank(param.get("publishDeptId").toString())){
 			sqlBuff.append(" AND PUBLISH_DEPT_ID = '" + param.get("publishDeptId").toString() + "'\n");
+		}
+		
+		//发布人
+		if(param.get("publishUserId")!=null&&StringUtils.isNotBlank(param.get("publishUserId").toString())){
+			sqlBuff.append(" AND PUBLISH_USER_ID = '" + param.get("publishUserId").toString() + "'\n");
 		}
 		
 		//审核状态,2代表全部状态,0 未审核 1 已审核

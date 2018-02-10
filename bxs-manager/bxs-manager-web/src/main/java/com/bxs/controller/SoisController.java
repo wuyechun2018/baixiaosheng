@@ -187,9 +187,16 @@ public class SoisController {
 	 */
 	@RequestMapping("/getArticleList")
 	@ResponseBody
-	public Object getArticleList(int page,int limit){
+	public Object getArticleList(int page,int limit,String articleType,HttpSession session){
 		EUIPager ePager=new EUIPager(page,limit);
 		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("articleType", articleType);
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			//此处需要注意，如果能要看到部门上报，则只加publishDeptId参数，不加publishUserId
+			//param.put("publishUserId", info.getId());
+			param.put("publishDeptId", info.getDeptId());
+		}
 		EUIGrid grid=articleService.pagerList(ePager,param);
 		return DataPipeUtil.toLayUIGrid(grid);
 	}

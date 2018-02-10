@@ -24,6 +24,7 @@ var ctx = "${ctx}";
 			   var tableIns =  table.render({
 			    elem: '#newsList'
 			    ,url:'${ctx}/sois/getArticleList/'
+			    ,where: {articleType: '4'}
 			    ,cols: [[
 				  {title: '序号',width:80,templet: '#indexTpl',align:'center'}       
 			      //,{field:'id', width:10, title: 'ID', sort: true}

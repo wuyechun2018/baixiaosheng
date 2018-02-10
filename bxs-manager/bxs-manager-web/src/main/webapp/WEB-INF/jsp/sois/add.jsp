@@ -35,8 +35,9 @@ var topicData=null;
 			<div class="layui-form-item">
 				<label class="layui-form-label">投稿栏目</label>
 				<input type="hidden"  value="0"  name="checkState"  />
+				<%--4为信息报送 --%>
+				<input type="hidden"  value="4"  name="articleType"  />
 				<input type="hidden"  value="2018-01-01"  name="publishDate" id="publishDate" />
-				<input type="hidden"  value="1" name="articleType"  />
 				<div class="layui-input-block">
 					<select name="topicId" id="topicId" class="layui-input topicId" lay-verify="required">
 						<%--
