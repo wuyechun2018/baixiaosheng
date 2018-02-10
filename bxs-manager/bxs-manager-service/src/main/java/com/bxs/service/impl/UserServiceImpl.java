@@ -79,4 +79,14 @@ public class UserServiceImpl implements UserService {
 	public List<SysUser> getUserListByBirthday(String dayStr) {
 		return userDao.getUserListByBirthday(dayStr);
 	}
+
+	@Override
+	public List<SysUser> getUserWhoLoginNameIsNull() {
+		return userDao.getUserWhoLoginNameIsNull();
+	}
+
+	@Override
+	public void updateUserInfo(SysUser user) {
+		userDao.updateUserInfo(user);
+	}
 }

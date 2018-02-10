@@ -22,4 +22,8 @@ public interface UserService {
 
 	public List<SysUser> getUserListByBirthday(String dayStr);
 
+	public List<SysUser> getUserWhoLoginNameIsNull();
+
+	public void updateUserInfo(SysUser user);
+
 }

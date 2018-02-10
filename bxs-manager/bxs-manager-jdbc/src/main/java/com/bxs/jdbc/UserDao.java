@@ -322,6 +322,36 @@ public class UserDao {
 		List<SysUser> list = jdbcTemplate.query(sql,new Object[]{"%"+dayStr+"%"},new BeanPropertyRowMapper(SysUser.class));
 		return list;
 	}
+
+
+	/**
+	 * 
+	 * 获取登录名为空的用户
+	 * @author: wyc
+	 * @createTime: 2018年2月10日 上午11:17:48
+	 * @history:
+	 * @return List<SysUser>
+	 */
+	public List<SysUser> getUserWhoLoginNameIsNull() {
+		String sql="SELECT * FROM t_user T WHERE login_name='' ";
+		List<SysUser> list = jdbcTemplate.query(sql,new BeanPropertyRowMapper(SysUser.class));
+		return list;
+	}
+
+
+
+	/**
+	 * 
+	 * 更新用户信息
+	 * @author: wyc
+	 * @createTime: 2018年2月10日 上午11:24:32
+	 * @history:
+	 * @param user void
+	 */
+	public void updateUserInfo(SysUser user) {
+		String sql="UPDATE T_USER T SET T.login_name=? WHERE ID=?";
+		jdbcTemplate.update(sql,new Object[]{user.getLoginName(),user.getId()});
+	}
 	
 	
 }

@@ -22,6 +22,7 @@ import com.bxs.common.dict.DataState;
 import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.utils.BaseController;
 import com.bxs.common.utils.EncryptionUtil;
+import com.bxs.common.utils.PinyinUtil;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
@@ -247,6 +248,27 @@ public class UserController extends BaseController {
 		EUIPager ePager=getPager(request);
 		Map<String,Object> param=getParamMap(request);
 		return userService.pagerList(ePager,param);
+	}
+	
+	
+	/**
+	 * 
+	 * 初始化登录名为用户名的汉语拼音
+	 * @author: wyc
+	 * @createTime: 2018年2月10日 上午11:04:02
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/initLoginName")
+	@ResponseBody
+	public Object initLoginName(){
+		List<SysUser> list=userService.getUserWhoLoginNameIsNull();
+		for (SysUser sysUser : list) {
+			String loginName=PinyinUtil.toPinyin(sysUser.getUserName());
+			sysUser.setLoginName(loginName);
+			userService.updateUserInfo(sysUser);
+		}
+		return new JsonMsg();
 	}
 	
 	
