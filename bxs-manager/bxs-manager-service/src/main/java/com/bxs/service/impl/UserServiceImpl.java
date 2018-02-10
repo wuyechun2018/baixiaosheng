@@ -29,6 +29,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void save(SysUser user) {
+		//fix 前端页面生日不填的错误
+		if(user.getBirthday()==null){
+			user.setBirthday(new Date());
+		}
+		
 		//设置为有效
 		user.setDataState(DataState.Use.getCode());
 		user.setLoginTime(new Date());
