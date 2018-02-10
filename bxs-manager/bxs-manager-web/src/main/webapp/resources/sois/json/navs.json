@@ -43,13 +43,13 @@
 				{
 					"title": "签收信息列表",
 					"icon": "&#xe62d;",
-					"href": "list",
+					"href": "signList",
 					"spread": true
 				},
 				{
 					"title": "签收信息报送",
 					"icon": "&#xe681;",
-					"href": "list",
+					"href": "signAdd",
 					"spread": true
 				}
 			]
@@ -63,13 +63,13 @@
 				{
 					"title": "反馈信息列表",
 					"icon": "&#xe62d;",
-					"href": "list",
+					"href": "feedbackList",
 					"spread": true
 				},
 				{
 					"title": "反馈信息报送",
 					"icon": "&#xe681;",
-					"href": "list",
+					"href": "feedbackAdd",
 					"spread": true
 				}
 			]

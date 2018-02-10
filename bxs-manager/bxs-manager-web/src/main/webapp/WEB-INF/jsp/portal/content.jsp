@@ -107,11 +107,11 @@ $(document).ready(function() {
         
         <div class="clearfix" style="margin:0 38px;">
     		<div class="chare">
-    			<%--
+    			<%----%>
 				<div class="chare-left">
-				信息来源：马鞍山日报&nbsp;&nbsp;&nbsp;&nbsp;责任编辑：王磊
+				信息来源：${articleInfoVo.newsfrom}&nbsp;&nbsp;&nbsp;&nbsp;责任编辑：${articleInfoVo.author}
 				</div>
-				 --%>
+				 
                 <div class="chare-right">	
                     <span><a href="javascript:printme()" class="dy">打印</a></span>
                     

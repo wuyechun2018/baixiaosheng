@@ -35,9 +35,42 @@ function editFun(id) {
 }
 
 
+//点击"置顶"效果
+function topFun(id){
+	$.ajax({
+        type: "POST",
+        url:'${ctx}/article/saveTopCount',
+        data: {
+        	id:id
+        },
+        success: function (data) {
+        	 $.messager.alert('提示信息',"置顶成功，该文章将显示在本栏目第一条！");
+        	 doQuery();
+        },
+        error: function(data) {
+            alert("error:"+data.responseText);
+         }
+  		});
+}
+
+
 //文章预览
 function viewFun(id){
-	location.href=ctx+"/articleImage/showArticle?id="+id;
+	location.href=ctx+"/article/showArticle?id="+id;
+}
+
+//文章审核
+function checkFun(id){
+	location.href=ctx+"/article/check?id="+id;
+}
+
+//首页推荐
+function toFront(id){
+	var rowIndex=getSelectRowIndex(id);
+    //获取操作列
+    var record=$('#dgTable').datagrid('getData').rows[rowIndex];
+    $('#toFrontWin').window('open');
+    $("#toFrontForm").form("load", record); 
 }
 
 
@@ -119,14 +152,15 @@ $(function(){
 		          {field:'createDate',title: '发布时间',align: 'center',width: 120}, 
 		          {field:'checkState',title: '状态',align: 'center',width: 100,formatter:function(val,rec){
 		        	  if(val=='1'){
-		        		  return "<span style='color:green'>正常</span>";
+		        		  return "<span style='color:green'><a title='请审核' class='slink' onclick=checkFun('"+rec.id+"')>正常</a></span>";
 		        	  }else{
-		        		  return "<span style='color:red'>未审核</span>";
+		        		  return "<span style='color:red'><a title='请审核' class='slink'  onclick=checkFun('"+rec.id+"')>未审核</a></span>";
 		        	  }
 		          }}, 
 		          {field:'viewCount',title: '查看次数',align: 'center',width: 50},
 		          {field:'id',title: '操作',align: 'center',width: 100, formatter:function(val,rec){
-		        	  return "<span class='btn_a_top'><a href='javascript:void(0)' onclick=editFun('"+val+"') >置顶</a></span><span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span><span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
+		        	 // return "<span class='btn_a_top'><a href='javascript:void(0)' onclick=editFun('"+val+"') >置顶</a></span><span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span><span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
+		        	  return "<span class='btn_a_top'><a href='javascript:void(0)' onclick=topFun('"+val+"') >置顶</a></span><span class='btn_a_front'><a href='javascript:void(0)' onclick=toFront('"+val+"') >首推</a></span><span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span><span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
 		          }}
 		]]
 		,toolbar:$('#tb')

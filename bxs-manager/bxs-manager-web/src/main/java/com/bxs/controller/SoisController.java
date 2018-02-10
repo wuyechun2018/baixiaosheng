@@ -135,21 +135,7 @@ public class SoisController {
 	}
 	
 	
-	/**
-	 * 
-	 * 编辑文章
-	 * @author: wyc
-	 * @createTime: 2018年1月17日 下午5:05:37
-	 * @history:
-	 * @return String
-	 */
-	@RequestMapping("/edit/{id}")
-	public ModelAndView edit(@PathVariable String id) {
-		ModelAndView mv=new ModelAndView("sois/edit");
-		Article article=articleService.getArticleById(id);
-		mv.addObject("article",article);
-		return mv;
-	}
+	
 	
 	
 	
@@ -172,6 +158,51 @@ public class SoisController {
 		}
 		articleService.save(article);
 		return "redirect:/sois/list";
+	}
+	
+	
+	/**
+	 * 
+	 * 信息上报
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午10:42:01
+	 * @history:
+	 * @param article
+	 * @param session
+	 * @return String
+	 */
+	@RequestMapping("/signSave")
+	public String signSave(Article article,HttpSession session){
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			article.setPublishDeptId(info.getDeptId());
+			article.setPublishUserId(info.getId());
+		}
+		articleService.save(article);
+		return "redirect:/sois/signList";
+	}
+	
+	
+	
+	/**
+	 * 
+	 * 信息上报
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午10:42:01
+	 * @history:
+	 * @param article
+	 * @param session
+	 * @return String
+	 */
+	@RequestMapping("/feedbackSave")
+	public String feedbackSave(Article article,HttpSession session){
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			article.setPublishDeptId(info.getDeptId());
+			article.setPublishUserId(info.getId());
+		}
+		articleService.save(article);
+		return "redirect:/sois/feebackList";
 	}
 	
 	
@@ -255,6 +286,112 @@ public class SoisController {
 	public Object add() {
 		return "/sois/add";
 	}
+	
+	
+	/**
+	 * 
+	 * 编辑文章
+	 * @author: wyc
+	 * @createTime: 2018年1月17日 下午5:05:37
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping("/edit/{id}")
+	public ModelAndView edit(@PathVariable String id) {
+		ModelAndView mv=new ModelAndView("sois/edit");
+		Article article=articleService.getArticleById(id);
+		mv.addObject("article",article);
+		return mv;
+	}
+	
+	/**
+	 * 
+	 * 信息报送列表-签收信息
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午4:05:54
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/signList")
+	public Object signList() {
+		return "/sois/signList";
+	}
+	
+	
+	/**
+	 * 
+	 * 信息报送-签收信息
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午4:05:54
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/signAdd")
+	public Object signAdd() {
+		return "/sois/signAdd";
+	}
+	
+	
+	/**
+	 * 
+	 * 编辑文章-签收信息
+	 * @author: wyc
+	 * @createTime: 2018年1月17日 下午5:05:37
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping("/signEdit/{id}")
+	public ModelAndView signEdit(@PathVariable String id) {
+		ModelAndView mv=new ModelAndView("sois/signEdit");
+		Article article=articleService.getArticleById(id);
+		mv.addObject("article",article);
+		return mv;
+	}
+	
+	/**
+	 * 
+	 * 信息报送列表-反馈信息
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午4:05:54
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/feedbackList")
+	public Object feedbackList() {
+		return "/sois/feedbackList";
+	}
+	
+	
+	/**
+	 * 
+	 * 信息报送-反馈信息
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午4:05:54
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/feedbackAdd")
+	public Object feedbackAdd() {
+		return "/sois/feedbackAdd";
+	}
+	
+	
+	/**
+	 * 
+	 * 编辑文章-反馈信息
+	 * @author: wyc
+	 * @createTime: 2018年1月17日 下午5:05:37
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping("/feedbackEdit/{id}")
+	public ModelAndView feedbackEdit(@PathVariable String id) {
+		ModelAndView mv=new ModelAndView("sois/feedbackEdit");
+		Article article=articleService.getArticleById(id);
+		mv.addObject("article",article);
+		return mv;
+	}
+	
 	
 	
 	/**
