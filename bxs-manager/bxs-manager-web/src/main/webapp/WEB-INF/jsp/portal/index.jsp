@@ -116,7 +116,7 @@ function loadImageArticleByTopic(topicCode,page,rows,isSytj){
 
 //加载文章（参数1：要显示的DIV的ID,参数2：要显示的文章数据）
 function showArticle(dispDivId,articleData){
-	for(var i=0;i<articleData.total;i++){
+	for(var i=0;i<articleData.rows.length;i++){
 		  if(i<8){
 			  var articleObj=articleData.rows[i];
 			  var createDate=articleObj.createDate.substr(0,10);
@@ -240,7 +240,7 @@ function loadSrzf(){
 
 //展示超链接
 function showLink(dispDivId,linkData){
-	for(var i=0;i<linkData.total;i++){
+	for(var i=0;i<linkData.rows.length;i++){
 		var linkObj=linkData.rows[i]
 		$('#'+dispDivId).append('<a href="'+linkObj.linkUrl+'" target="_blank" title="'+linkObj.linkName+'">'+linkObj.linkName+'</a>');
 	}
@@ -260,10 +260,39 @@ function showDh(){
 	jQuery(".index_daohang").slide();
 }
 
+//展示快速通道
+function loadKstd(){
+	var kstdData=loadLinkByTypeCode('KSTD',1,8);
+	debugger;
+	for(var i=0;i<kstdData.rows.length;i++){
+		var linkObj=kstdData.rows[i]
+		var linkUrl='';
+		if(linkObj&&linkObj.linkUrl){
+			linkUrl=linkObj.linkUrl
+		}
+		var linkName=''
+		if(linkObj&&linkObj.linkName){
+			linkName=linkObj.linkName
+		}
+		
+		$('#KSTD').append('<li><a href="'+linkUrl+'" title="'+linkName+'" ><img src="${ctx}/resources/portal/images/ic1.jpg" /></a></li>');
+		//$('#KSTD').append('<li><a href="'+linkObj.linkUrl+'" target="_blank" title="'+linkObj.linkName+'">'+linkObj.linkName+'</a></li>');
+	}
+}
+
+//展示直达
+function loadZD(){
+	var zdData=loadLinkByTypeCode('ZD',1,4);
+	for(var i=0;i<zdData.rows.length;i++){
+		var linkObj=zdData.rows[i]
+		$('#ZD').append('<a href="'+linkObj.linkUrl+'">'+linkObj.linkName+'</a>');
+	}
+}
+
 
 //展示首页推荐轮播图
 function showSytjArticle(articleData){
-	for(var i=0;i<articleData.total;i++){
+	for(var i=0;i<articleData.rows.length;i++){
 		var articleObj=articleData.rows[i];
 		var articleTitle=articleObj.articleTitle;
 		var articleImageUrl=articleObj.articleImageUrl;
@@ -387,6 +416,11 @@ $(document).ready(function() {
   //加载底部导航
   showDh();
   
+  //快速通道
+  loadKstd();
+  
+  //直达
+  //loadZD();
   
 });
 </script><!--end of bg-body script-->
@@ -674,7 +708,7 @@ $(document).ready(function() {
     <div class="index3 mar10">
     	<div class="ksrk_i"></div>
         <div class="ksrk_more"><a href="#">更多系统</a></div>
-        <ul class="ksrkBox">
+        <ul class="ksrkBox" id="">
         	<li><a href'#'><img src="${ctx}/resources/portal/images/xt.jpg" /></a></li>
             <li><a href'#'><img src="${ctx}/resources/portal/images/xt.jpg" /></a></li>
             <li><a href'#'><img src="${ctx}/resources/portal/images/xt.jpg" /></a></li>
@@ -694,11 +728,13 @@ $(document).ready(function() {
             </form>
         </div>
         
-        <div class="s_link fl">
+        <div class="s_link fl" id="ZD">
+        	<%----%>
         	<a href="#">部局直达</a>
             <a href="#">总队直达</a>
             <a href="#">市局直达</a>
             <a href="#">省厅直达</a>
+             
         </div>
     </div>
     <!--搜索结束-->
@@ -825,7 +861,8 @@ $(document).ready(function() {
     
     <!--快速通道开始-->
     <div class="kstdBox mar10">
-    	<ul>
+    	<ul id="KSTD">
+    		<%--
         	<li><a href="#"><img src="${ctx}/resources/portal/images/ic1.jpg" /></a></li>
             <li><a href="#"><img src="${ctx}/resources/portal/images/ic1.jpg" /></a></li>
             <li><a href="#"><img src="${ctx}/resources/portal/images/ic1.jpg" /></a></li>
@@ -834,6 +871,7 @@ $(document).ready(function() {
             <li><a href="#"><img src="${ctx}/resources/portal/images/ic1.jpg" /></a></li>
             <li><a href="#"><img src="${ctx}/resources/portal/images/ic1.jpg" /></a></li>
             <li><a href="#"><img src="${ctx}/resources/portal/images/ic1.jpg" /></a></li>
+             --%>
         </ul>
         <div class="clear_f"></div>
     </div>
