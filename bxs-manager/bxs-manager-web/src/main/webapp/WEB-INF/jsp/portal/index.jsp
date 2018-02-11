@@ -56,6 +56,13 @@ function loadLinkByTypeCode(linkTypeCode,page,rows){
 	return linkData;
 }
 
+//站内搜索点击查询
+function doSearch(){
+	var keys=$('#keys').val();
+	location.href="${ctx}/portal/searchList?keys="+keys;
+}
+
+
 //根据栏目编码加载文章
 function loadArticleByTopic(topicCode,page,rows,isSytj){
 	var articleData=null;
@@ -683,7 +690,7 @@ $(document).ready(function() {
         	<div class="s_tit fl">站内搜索</div>
         	<form action="#" method="post" autocomplete="off" onsubmit="return check('secrchBox')">
             	<div class="s1 fl"><input type="text" name="keys" id="keys" class="index_s" placeholder="请输入关键字" /></div>
-                <div class="s1 fl"><input type="submit" class="index_submit" value="搜索" /></div>
+                <div class="s1 fl"><input type="button" class="index_submit" value="搜索"  onclick="doSearch()"/></div>
             </form>
         </div>
         

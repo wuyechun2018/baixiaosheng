@@ -96,6 +96,23 @@ public class PortalController {
 		return mv;
 	}
 	
+	
+	
+	/**
+	 * 
+	 * 文章列表
+	 * @author: wyc
+	 * @createTime: 2018年2月6日 上午10:01:48
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping(value = "/searchList")
+	public ModelAndView searchList(String keys) {
+		ModelAndView mv=new ModelAndView("/portal/list");
+		mv.addObject("keys", keys);
+		return mv;
+	}
+	
 	/**
 	 * 
 	 * 图片列表

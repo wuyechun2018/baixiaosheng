@@ -11,7 +11,18 @@
 <link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
 <link href="${ctx}/resources/portal/css/nei.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/portal/js/jquery.highlight-3.4.0.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.bcat.bgswitcher.js"></script>
+
+<style type="text/css">
+.highlight{
+background:#FF0;
+color:#E00;
+}
+
+
+</style>
+
 </head>
 
 <!--[if lt IE 9]>
@@ -33,7 +44,6 @@
     
    //根据栏目编码加载文章
     function loadArticleByTopic(topicCode,page,rows,isSytj,keys){
-	   debugger;
     	var articleData=null;
     	$.ajax({
     		cache: true,
@@ -91,6 +101,18 @@
     	
    }
    
+
+//高亮显示   
+function highlightshow(keys){
+     if(keys.length > 0) { 
+         //$('#ATICLE_LIST').removeHighlight();
+         $('#ATICLE_LIST').unhighlight();
+         $('#ATICLE_LIST').highlight(keys);
+         //$(".highlight").css({ backgroundColor: "#FFFF88" });
+     }
+}   
+   
+   
 //查询   
 function doSearch(){
 	var text=$("#topicTypeCombobox").find("option:selected").text();
@@ -100,6 +122,7 @@ function doSearch(){
 	$('#span_topicName').html(text);
 	$('#h1_topicName').html(text);
 	loadList(keys);
+	highlightshow(keys);
 } 
 
 //加载查询框的下拉列表
@@ -139,7 +162,14 @@ $(document).ready(function() {
     urls: srcBgArray,
     alt: 'Full screen background image'
   });
-  loadList('');
+  var searchkey='${keys}';
+  if(searchkey){
+	$('keys').val(searchkey); 
+	loadList(searchkey);
+	highlightshow(searchkey);
+  }else{
+	loadList('');
+  }
   loadTopic();
 });
 </script><!--end of bg-body script-->
