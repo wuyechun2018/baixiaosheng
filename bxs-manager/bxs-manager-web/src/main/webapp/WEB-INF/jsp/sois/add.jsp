@@ -8,8 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>信息报送</title>
-<link rel="stylesheet"
-	href="${ctx}/resources/js-lib/layui/css/layui.css">
+<link rel="stylesheet" href="${ctx}/resources/js-lib/layui/css/layui.css">
 <link rel="stylesheet" href="${ctx}/resources/sois/css/global.css">
 <script type="text/javascript">
 var ctx = "${ctx}";

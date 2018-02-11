@@ -8,11 +8,11 @@
 <LINK href="${ctx}/resources/portal/images/logo.ico" type="image/x-icon" rel="icon">                        
 <LINK href="${ctx}/resources/portal/images/logo.ico" type="image/x-icon" rel="shortcut icon"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${topic.topicName}-马鞍山市交警支队</title>
-<link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
+<%-- --%>
+<link rel="stylesheet" href="${ctx}/resources/js-lib/layui/css/layui.css">
+<link href="${ctx}/resources/portal/css/cssm.css" rel="stylesheet" />
 <link href="${ctx}/resources/portal/css/nei.css" rel="stylesheet" />
-
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="${ctx}/resources/portal/js/jqpaginator.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.highlight-3.4.0.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.bcat.bgswitcher.js"></script>
 
@@ -22,19 +22,10 @@ background:#FF0;
 color:#E00;
 }
 
-.pagination2 {
-    height: 30px;
+select{
+	font-family:Arial;
+	font-size:13.3333px;
 }
-
-.pagination2 a:HOVER {
-    text-decoration: none;
-}
-
-.pagination2 .active {
-    background: #1061bc;
-    color: #fff;
-}
-
 
 
 </style>
@@ -83,8 +74,7 @@ color:#E00;
     	return articleData;
     }
    
-   function showArticle(dispDivId,articleData,nowpage){
-	   $('#'+dispDivId).html('');
+   function showArticle(dispDivId,articleData){
 	    var ulId="";
 	    var count=0;
 	    var sumCount=Math.ceil(articleData.rows.length/6) ;
@@ -99,28 +89,22 @@ color:#E00;
 		  }else{
 			  articleTitlePart=articleTitle;
 		  }
-		  
-		  var emHtml='<em></em>';
-		  if(i>4||nowpage>1){
-			  emHtml='';
-		  }
-		  
 	   	  if(i%6==0){
 		   		    count++;
 		   			ulId=dispDivId+"-"+count
 		   			if(count==sumCount){
-		   				$('#'+dispDivId).append('<ul  style="border-bottom: inherit;" id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span>'+createDate+'</span></li>');	
+		   				$('#'+dispDivId).append('<ul  style="border-bottom: inherit;" id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a><em></em><span>'+createDate+'</span></li>');	
 		   			}else{
-		   				$('#'+dispDivId).append('<ul  id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span>'+createDate+'</span></li>');	
+		   				$('#'+dispDivId).append('<ul  id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a><em></em><span>'+createDate+'</span></li>');	
 		   			}
 	   
 	   			
 	   		}else if(i%6==5){
-	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span>'+createDate+'</span></li><ul/>');
+	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a><em></em><span>'+createDate+'</span></li><ul/>');
 	   			
 	   			$('#'+dispDivId).append('<DIV style="BORDER-TOP: #e4e6eb 1px dashed; OVERFLOW: hidden; HEIGHT: 1px"></DIV>');
 	   		}else{
-	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span>'+createDate+'</span></li>');
+	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a><em></em><span>'+createDate+'</span></li>');
 	   		}
       }
     	
@@ -175,29 +159,17 @@ function loadTopic(){
 
  
 //加载列表
-function loadList(keys){
+function loadList(keys,page,limit){
+	 $('#ATICLE_LIST').html('');
 	 var topicCode=$('#topicCode').val();
-	 var articleData=loadArticleByTopic(topicCode,'1','18','',keys);
-	 showArticle('ATICLE_LIST',articleData,1);
-	 var sumcount=articleData.total;
-	 if(sumcount==0){
-		 sumcount=18;
-	 }
-	 
-	 $("#lpage").jqPaginator({
-		    totalCounts:sumcount,
-		    pageSize:18,
-		    visiblePages: 8,
-		    currentPage: 1,
-		    prev: '<a class="first" href="javascript:void(0);">&lt;上一页<\/a>',
-		    next: '<a class="end" href="javascript:void(0);">&gt;下一页<\/a>',
-		    page: '<a href="javascript:void(0);">{{page}}<\/a>',
-		    onPageChange: function (n) {
-		    	var articleData=loadArticleByTopic(topicCode,n,'18','',keys);
-		   		 showArticle('ATICLE_LIST',articleData,n);
-		    }
-		});
-	 
+	 var articleData=loadArticleByTopic(topicCode,page,limit,'',keys);
+	 showArticle('ATICLE_LIST',articleData);
+	 initpage(articleData.total);
+}
+
+//加载分页
+function initpage(count){
+	
 }
     
 $(document).ready(function() {
@@ -208,10 +180,10 @@ $(document).ready(function() {
   var searchkey='${keys}';
   if(searchkey){
 	$('keys').val(searchkey); 
-	loadList(searchkey);
+	loadList(searchkey,'1','18');
 	highlightshow(searchkey);
   }else{
-	loadList('');
+	loadList('','1','18');
   }
   loadTopic();
 });
@@ -340,13 +312,64 @@ $(document).ready(function() {
 			</ul>
 			--%>
 			</div>
+<script type="text/javascript" src="${ctx}/resources/js-lib/layui/layui.js"></script>
 		
 		
-<div class="page pagination2" id="lpage">
+<div class="page" id="lpage">
 <a class="first">＜上一页</a><a class="page-on">1</a><a href="#">2</a><a href="#">3</a><span>...</span><a href="#">28</a><a class="end" href="#">下一页 &gt;</a>
 </div>
 
+<script type="text/javascript">
+layui.use('laypage', function(){
+	  var laypage = layui.laypage;
+	  //执行一个laypage实例
+	  laypage.render({
+	    elem: 'lpage'
+	    ,count: 79
+	    ,limit:18
+	    ,jump: function(obj, first){
+	    	//首次不执行
+	    	 if(first){
+	    		 debugger;
+	    		 $('#ATICLE_LIST').html('');
+		    	 var topicCode=$('#topicCode').val();
+		    	 //var articleData=loadArticleByTopic(topicCode,obj.curr,'18','',keys);
+		    	 //showArticle('ATICLE_LIST',articleData);
+		    	 
+		    	 $.ajax({
+			    		cache: true,
+			    		type: "POST",
+			    		url:'${ctx}/article/loadArticle',
+			    		data:{
+			    			topicCode:'XWGC'
+			    			page:1,
+			    			rows:'18'
+			    		},
+			    		async: false,
+			    	    error: function(request) {
+			    	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+			    	    },
+			    	    success: function(data) {
+			    	    	
+			    	    }
+    			})
+		    	 
+		    	 
+		    	 
+		    	 
+		    	 
+		    	 
+	    	  }
+	    	
+	    }
+	    
+	  });
+	});
 
+
+
+
+</script>
 
 				
 </div>
