@@ -170,6 +170,10 @@ public class LinkDao {
 		if(param.get("linkTypeId")!=null&&StringUtils.isNotBlank(param.get("linkTypeId").toString())&&!"1".equals(param.get("linkTypeId").toString())){
 			sqlBuff.append(" AND T.LINK_TYPE_ID = '" + param.get("linkTypeId").toString() + "'\n");
 		}
+		//导航类型Code
+		if(param.get("linkTypeCode")!=null&&StringUtils.isNotBlank(param.get("linkTypeCode").toString())){
+			sqlBuff.append(" AND  T.link_type_code = '"+param.get("linkTypeCode").toString()+"' \n");
+		}
 		
 		//链接名称
 		if(param.get("linkName")!=null&&StringUtils.isNotBlank(param.get("linkName").toString())){

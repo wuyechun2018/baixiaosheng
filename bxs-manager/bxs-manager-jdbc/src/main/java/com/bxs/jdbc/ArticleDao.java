@@ -297,7 +297,7 @@ public class ArticleDao {
 		}
 		
 		//栏目编码
-		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())){
+		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())&&!"1".equals(param.get("topicCode").toString())){
 			sqlBuff.append(" AND TOPIC_CODE = '" + param.get("topicCode").toString() + "'\n");
 		}
 		

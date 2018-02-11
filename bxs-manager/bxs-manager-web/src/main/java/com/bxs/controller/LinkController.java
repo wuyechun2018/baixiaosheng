@@ -1,5 +1,6 @@
 package com.bxs.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,5 +81,26 @@ public class LinkController extends BaseController {
 		return new JsonMsg();
 	}
 	
+	
+	/**
+	 * 
+	 * 根据链接类型编码查询链接
+ 	 * @author: wyc
+	 * @createTime: 2018年2月11日 下午9:52:38
+	 * @history:
+	 * @param linkTypeCode
+	 * @param page
+	 * @param rows
+	 * @return Object
+	 */
+	@RequestMapping("/loadLinkByTypeCode")
+	@ResponseBody
+	public Object loadLinkByTypeCode(String linkTypeCode,int page,int rows){
+		EUIPager ePager=new EUIPager(page,rows);
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("linkTypeCode", linkTypeCode);
+		
+		return linkService.pagerList(ePager,param);
+	}
 
 }

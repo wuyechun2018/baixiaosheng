@@ -82,6 +82,16 @@ var topicData=null;
 					</script>
 				</div>
 			</div>
+			
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">签收部门</label>
+				<div class="layui-input-block">
+					 <input type="checkbox" name="signDept" title="写作">
+				     <input type="checkbox" name="signDept" title="阅读" checked>
+				     <input type="checkbox" name="signDept" title="发呆">
+				</div>
+			</div>
+			
 			<div class="layui-form-item">
 				<div class="layui-input-block">
 					<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
@@ -139,7 +149,6 @@ var topicData=null;
 		  });
 		  $('#topicId').append('<option value="1"></option>');
 		  for(var i=0;i<topicData.length;i++){
-			  debugger;
 	    	  var topicObj=topicData[i];
 	    	  $('#topicId').append('<option value="'+topicObj.id+'">'+topicObj.text+'</option>');
 	      }

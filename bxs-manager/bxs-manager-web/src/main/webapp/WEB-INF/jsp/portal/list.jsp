@@ -32,13 +32,15 @@
 
     
    //根据栏目编码加载文章
-    function loadArticleByTopic(topicCode,page,rows,isSytj){
+    function loadArticleByTopic(topicCode,page,rows,isSytj,keys){
+	   debugger;
     	var articleData=null;
     	$.ajax({
     		cache: true,
     		type: "POST",
-    		url:'${ctx}/article/loadArticleByTopic',
+    		url:'${ctx}/article/loadArticle',
     		data:{
+    			articleTitle:keys,
     			topicCode:topicCode,
     			frontSliderState:isSytj,
     			page:page,
@@ -58,21 +60,21 @@
    function showArticle(dispDivId,articleData){
 	    var ulId="";
 	    var count=0;
-	    var sumCount=Math.ceil(articleData.total/6) ;
-    	for(var i=0;i<articleData.total;i++){
+	    var sumCount=Math.ceil(articleData.rows.length/6) ;
+    	for(var i=0;i<articleData.rows.length;i++){
    		  var articleObj=articleData.rows[i];
 		  var createDate=articleObj.createDate.substr(0,10);
 		  var articleTitle=articleObj.articleTitle;
 		  var articleUrl=ctx+"/portal/content?id="+articleObj.id;
 		  var articleTitlePart="";
 		  if(articleTitle.length>=30){
-			  articleTitlePart=articleTitle.substr(0,15);
+			  articleTitlePart=articleTitle.substr(0,30);
 		  }else{
 			  articleTitlePart=articleTitle;
 		  }
 	   	  if(i%6==0){
 		   		    count++;
-		   			ulId=dispDivId+"-"+i
+		   			ulId=dispDivId+"-"+count
 		   			if(count==sumCount){
 		   				$('#'+dispDivId).append('<ul  style="border-bottom: inherit;" id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a><em></em><span>'+createDate+'</span></li>');	
 		   			}else{
@@ -88,18 +90,57 @@
       }
     	
    }
+   
+//查询   
+function doSearch(){
+	var text=$("#topicTypeCombobox").find("option:selected").text();
+	var value=$("#topicTypeCombobox").val();
+	var keys=$("#keys").val();
+	$('#topicCode').val(value);
+	$('#span_topicName').html(text);
+	$('#h1_topicName').html(text);
+	loadList(keys);
+} 
+
+//加载查询框的下拉列表
+function loadTopic(){
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/topic/getListByPid?pid=1',
+		data:{
+			
+		},
+		async: false,
+	    error: function(request) {
+	        
+	    },
+	    success: function(data) {
+	      $('#topicTypeCombobox').append('<option value="1">请选择栏目</option>');
+    	  for(var i=0;i<data.length;i++){
+	    	  var topicObj=data[i];
+	    	  $('#topicTypeCombobox').append('<option value="'+topicObj.attributes.topicCode+'">'+topicObj.text+'</option>');
+	      }
+	    }
+	}) 
+}
+
+ 
+//加载列表
+function loadList(keys){
+	 $('#ATICLE_LIST').html('');
+	 var topicCode=$('#topicCode').val();
+	 var articleData=loadArticleByTopic(topicCode,'1','18','',keys);
+	 showArticle('ATICLE_LIST',articleData);
+}
     
 $(document).ready(function() {
   $('#bg-body').bcatBGSwitcher({
     urls: srcBgArray,
     alt: 'Full screen background image'
   });
-  
-  var topicCode=$('#topicCode').val();
-  var articleData=loadArticleByTopic(topicCode,'1','10','');
-  showArticle('ATICLE_LIST',articleData);
-  
-  
+  loadList('');
+  loadTopic();
 });
 </script><!--end of bg-body script-->
 <div class="container">
@@ -149,26 +190,27 @@ $(document).ready(function() {
     </div>
     
     <div class="nav-path">
-        <div class="dqwz">当前网站位置：<a href="${ctx}/portal/index"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="${ctx}/portal/list?topicCode=${topic.topicCode}"  title="${topic.topicName}" class="CurrChnlCls">${topic.topicName}</a></div>
+        <div class="dqwz">当前网站位置：<a href="${ctx}/portal/index"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="${ctx}/portal/list?topicCode=${topic.topicCode}"  title="${topic.topicName}" class="CurrChnlCls"><span id="span_topicName">${topic.topicName}</span></a></div>
     </div>
 <div class="neicontent">
     	<div class="nei_top">
     		<input id="topicCode" value="${topic.topicCode}" type="hidden"/>
-        	<h1>${topic.topicName}</h1>
+        	<h1 id="h1_topicName">${topic.topicName}</h1>
             <div class="n_search fr" id="secrchBox1">
             	<form action="#" method="post" autocomplete="off" onsubmit="return check('secrchBox1')">
             	<div class="n_in fl">
-                	<select name="type">
+                	<select name="type" id="topicTypeCombobox">
+                		<%--
                     	<option value="0">请选择栏目</option>
                         <option value="0">综合要闻</option>
                         <option value="0">通知公告</option>
                         <option value="0">新闻资讯</option>
                         <option value="0">后台获取栏目</option>
-                      
+                       --%>
                     </select>
                 </div>
             	<div class="n_in fl"><input type="text" class="key" name="keys" id="keys" placeholder="请输入关键字" /></div>
-                <div class="n_in fl"><input type="submit" class="btn-search" value="" /></div>
+                <div class="n_in fl"><input type="button" class="btn-search" onclick="doSearch()" /></div>
                 </form>
             </div>
         </div>

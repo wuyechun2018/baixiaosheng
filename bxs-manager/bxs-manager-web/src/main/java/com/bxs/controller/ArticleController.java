@@ -335,6 +335,26 @@ public class ArticleController extends BaseController{
 	}
 	
 	
+	/**
+	 * 
+	 *  Portal页面查询-根据文章类型编码获取文章
+	 * @author: wyc
+	 * @createTime: 2018年2月3日 下午10:52:55
+	 * @history:
+	 * @param topicCode
+	 * @return Object
+	 */
+	@RequestMapping("/loadArticle")
+	@ResponseBody
+	public Object loadArticle(int page,int rows,HttpServletRequest request){
+		EUIPager ePager=new EUIPager(page,rows);
+		Map<String,Object> param=getParamMap(request);
+		return articleService.pagerList(ePager,param);
+	}
+	
+	
+	
+	
 	/***
 	 * 
 	 * 设置是否为"首页推荐"

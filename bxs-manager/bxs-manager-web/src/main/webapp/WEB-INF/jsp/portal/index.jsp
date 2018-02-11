@@ -33,6 +33,29 @@
 var ctx = "${ctx}";    
 var srcBgArray = [ctx+"/resources/portal/images/banner1.jpg",ctx+"/resources/portal/images/banner2.jpg",ctx+"/resources/portal/images/banner3.jpg"];
 
+//根据类型编码查询链接
+function loadLinkByTypeCode(linkTypeCode,page,rows){
+	var linkData=null;
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/link/loadLinkByTypeCode',
+		data:{
+			linkTypeCode:linkTypeCode,
+			page:page,
+			rows:rows
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	linkData=data;
+	    }
+	})
+	return linkData;
+}
+
 //根据栏目编码加载文章
 function loadArticleByTopic(topicCode,page,rows,isSytj){
 	var articleData=null;
@@ -206,22 +229,28 @@ function loadSrzf(){
 	    	jQuery(".birthday").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"top",autoPlay:true,vis:1});
 	    }
 	})
-	
-	
-	
-	
-	
-	
 }
+
+//展示超链接
+function showLink(dispDivId,linkData){
+	for(var i=0;i<linkData.total;i++){
+		var linkObj=linkData.rows[i]
+		$('#'+dispDivId).append('<a href="'+linkObj.linkUrl+'" target="_blank" title="'+linkObj.linkName+'">'+linkObj.linkName+'</a>');
+	}
+	$('#'+dispDivId).append('<div class="clear_f"></div>');
+}
+
 
 
 //展示底部导航
 function showDh(){
 	//全国公安导航,全国交警导航,省公安导航,省交警导航,本市公安导航，本市交警导航,支队机构导航
-	var linkTypeCodeArray = ['QGGADH','QGJJDH','SGADH','SJJDH','SGADH','SJJDH','ZDJGDH'];
-	
-	
-	
+	var linkTypeCodeArray = ['QGGADH','QGJJDH','SGADH','SJJDH','BSGADH','BSJJDH','ZDJGDH'];
+	for(var i=0;i<linkTypeCodeArray.length;i++){
+		var linkData=loadLinkByTypeCode(linkTypeCodeArray[i],1,30);
+		showLink(linkTypeCodeArray[i],linkData);
+	}
+	jQuery(".index_daohang").slide();
 }
 
 
@@ -1055,14 +1084,15 @@ $(document).ready(function() {
               <li>省公安导航</li>
               <li>省交警导航</li>
               <li>本市公安导航</li>
-              <li>本市公安导航</li>
+              <li>本市交警导航</li>
               <li>支队机构导航</li>
           </ul>
 		</div>
         
       </div>
       <div class="bd" id="DH">
-        <div class="dh_db" >
+        <div class="dh_db" id="QGGADH" >
+        	<%--
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
@@ -1076,8 +1106,10 @@ $(document).ready(function() {
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <div class="clear_f"></div>
+             --%>
         </div>
-         <div class="dh_db">
+         <div class="dh_db" id="QGJJDH">
+         <%--
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
@@ -1092,8 +1124,10 @@ $(document).ready(function() {
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             
             <div class="clear_f"></div>
+             --%>
         </div>
-         <div class="dh_db">
+         <div class="dh_db" id="SGADH">
+           <%--
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
@@ -1108,8 +1142,10 @@ $(document).ready(function() {
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             
             <div class="clear_f"></div>
+             --%>
         </div>
-         <div class="dh_db">
+         <div class="dh_db" id="SJJDH">
+           <%--
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
@@ -1124,8 +1160,10 @@ $(document).ready(function() {
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             
             <div class="clear_f"></div>
+             --%>
         </div>
-         <div class="dh_db">
+         <div class="dh_db" id="BSGADH">
+           <%--
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
@@ -1140,8 +1178,10 @@ $(document).ready(function() {
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             
             <div class="clear_f"></div>
+             --%>
         </div>
-         <div class="dh_db">
+         <div class="dh_db" id="BSJJDH">
+           <%--
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
@@ -1156,8 +1196,10 @@ $(document).ready(function() {
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             
             <div class="clear_f"></div>
+             --%>
         </div>
-         <div class="dh_db">
+         <div class="dh_db" id="ZDJGDH">
+           <%--
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             <a href="#" target="_blank" title="链接名称">链接名称</a>
@@ -1172,6 +1214,7 @@ $(document).ready(function() {
             <a href="#" target="_blank" title="链接名称">链接名称</a>
             
             <div class="clear_f"></div>
+             --%>
         </div>
         
         

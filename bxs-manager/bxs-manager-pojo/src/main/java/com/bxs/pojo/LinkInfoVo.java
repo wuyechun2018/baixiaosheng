@@ -29,6 +29,8 @@ public class LinkInfoVo {
 	private int displayOrder;
 	//链接类型名称
 	private String linkTypeName;
+	//链接类型编码
+	private String linkTypeCode;
 	
 
 	public String getId() {
@@ -103,7 +105,12 @@ public class LinkInfoVo {
 		this.linkTypeName = linkTypeName;
 	}
 
-	
-	
+	public String getLinkTypeCode() {
+		return linkTypeCode;
+	}
+
+	public void setLinkTypeCode(String linkTypeCode) {
+		this.linkTypeCode = linkTypeCode;
+	}
 
 }
