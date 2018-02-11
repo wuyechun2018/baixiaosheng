@@ -74,7 +74,7 @@ var ctx = "${ctx}";
 							 --%>
 							 <dd><a href="javascript:;" data-url="${ctx}/sois/userInfo"><i class="seraph icon-ziliao" data-icon="icon-ziliao"></i><cite>个人资料</cite></a></dd>
 							<dd><a href="javascript:;" data-url="${ctx}/sois/pwd"><i class="seraph icon-xiugai" data-icon="icon-xiugai"></i><cite>修改密码</cite></a></dd>
-							<dd><a href="page/login/login.html" class="signOut"><i class="seraph icon-tuichu"></i><cite>退出</cite></a></dd>
+							<dd><a href="${ctx}/sois/loginout" class="signOut"><i class="seraph icon-tuichu"></i><cite>退出</cite></a></dd>
 						</dl>
 					</li>
 				</ul>

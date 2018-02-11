@@ -55,6 +55,23 @@ public class SoisController {
 	private UserService userService;
 	
 	
+	/**
+	 * 
+	 * 信息上报主页面,点击"退出系统"按钮
+	 * @author: wyc
+	 * @createTime: 2018年2月11日 上午11:41:16
+	 * @history:
+	 * @param request
+	 * @return String
+	 */
+	@RequestMapping(value = "/loginout")
+	public String doLoginOut(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		session.invalidate();
+		return "/sois/login";
+	}
+	
 	
 	/**
 	 * 
