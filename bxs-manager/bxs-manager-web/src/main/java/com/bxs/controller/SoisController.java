@@ -98,8 +98,6 @@ public class SoisController {
 		}
 	}
 	
-	
-	
 	/**
 	 * 
 	 * 显示文章
@@ -134,11 +132,6 @@ public class SoisController {
 		return new JsonMsg();
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * 
 	 * 信息上报
@@ -155,6 +148,8 @@ public class SoisController {
 		if(info!=null){
 			article.setPublishDeptId(info.getDeptId());
 			article.setPublishUserId(info.getId());
+			//作者默认为上报人
+			article.setAuthor(info.getUserName());
 		}
 		articleService.save(article);
 		return "redirect:/sois/list";
@@ -177,6 +172,9 @@ public class SoisController {
 		if(info!=null){
 			article.setPublishDeptId(info.getDeptId());
 			article.setPublishUserId(info.getId());
+			
+			//作者默认为上报人
+			article.setAuthor(info.getUserName());
 		}
 		articleService.save(article);
 		return "redirect:/sois/signList";
@@ -200,9 +198,12 @@ public class SoisController {
 		if(info!=null){
 			article.setPublishDeptId(info.getDeptId());
 			article.setPublishUserId(info.getId());
+			
+			//作者默认为上报人
+			article.setAuthor(info.getUserName());
 		}
 		articleService.save(article);
-		return "redirect:/sois/feebackList";
+		return "redirect:/sois/feedbackList";
 	}
 	
 	

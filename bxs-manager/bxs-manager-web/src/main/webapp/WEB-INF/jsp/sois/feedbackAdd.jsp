@@ -35,8 +35,8 @@ var topicData=null;
 			<div class="layui-form-item">
 				<label class="layui-form-label">投稿栏目</label>
 				<input type="hidden"  value="0"  name="checkState"  />
-				<%--4为信息报送 --%>
-				<input type="hidden"  value="4"  name="articleType"  />
+				<%--6为反馈信息 --%>
+				<input type="hidden"  value="6"  name="articleType"  />
 				<input type="hidden"  value="2018-01-01"  name="publishDate" id="publishDate" />
 				<div class="layui-input-block">
 					<select name="topicId" id="topicId" class="layui-input topicId" lay-verify="required">
@@ -139,7 +139,6 @@ var topicData=null;
 		  });
 		  $('#topicId').append('<option value="1"></option>');
 		  for(var i=0;i<topicData.length;i++){
-			  debugger;
 	    	  var topicObj=topicData[i];
 	    	  $('#topicId').append('<option value="'+topicObj.id+'">'+topicObj.text+'</option>');
 	      }
