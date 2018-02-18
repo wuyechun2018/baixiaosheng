@@ -121,7 +121,7 @@ $(function(){
 	
 	 //中间表格
 	var dgTableHeight=$(window).height()-$('.searchBox').height()-51;
-    dgTable=$('#dgTable').datagrid({  
+    $('#dgTable').datagrid({  
 		url:ctx+'/article/pagerList',
 		method:'post',
 	    queryParams: {
