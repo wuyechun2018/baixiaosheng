@@ -33,6 +33,25 @@ FROM
   LEFT JOIN T_USER K 
     ON J.PUBLISH_USER_ID = K.id ;
 
+    
+ CREATE OR REPLACE VIEW v_article_mini_info AS 
+SELECT 
+      T.id,
+      t.article_type,
+      t.article_title,
+      t.publish_dept_id,
+      t.publish_user_id,
+      t.check_state,
+      t.front_slider_state,
+      t.create_date,
+      t.publish_date,
+      t.data_state,
+      S.topic_name,
+      S.topic_code
+    FROM
+      t_article T 
+      LEFT JOIN t_topic S 
+        ON T.topic_id = S.id;
 
 
 

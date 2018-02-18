@@ -19,6 +19,8 @@ public interface ArticleService {
 	void delete(String id);
 
 	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
+	
+	EUIGrid pagerMiniList(EUIPager ePager, Map<String, Object> param);
 
 	ArticleInfoVo getArticleInfoById(String id);
 

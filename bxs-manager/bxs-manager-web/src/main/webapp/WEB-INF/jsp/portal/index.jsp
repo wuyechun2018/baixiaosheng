@@ -69,9 +69,10 @@ function loadArticleByTopic(topicCode,page,rows,isSytj){
 	$.ajax({
 		cache: true,
 		type: "POST",
-		url:'${ctx}/article/loadArticleByTopic',
+		url:'${ctx}/article/loadMiniArticleByTopic',
 		data:{
 			topicCode:topicCode,
+			//首页推荐
 			frontSliderState:isSytj,
 			page:page,
 			rows:rows
@@ -263,7 +264,6 @@ function showDh(){
 //展示快速通道
 function loadKstd(){
 	var kstdData=loadLinkByTypeCode('KSTD',1,8);
-	debugger;
 	for(var i=0;i<kstdData.rows.length;i++){
 		var linkObj=kstdData.rows[i]
 		var linkUrl='';

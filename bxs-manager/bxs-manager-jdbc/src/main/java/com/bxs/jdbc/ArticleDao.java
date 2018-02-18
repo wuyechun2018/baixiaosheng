@@ -19,6 +19,7 @@ import com.bxs.common.dict.DataState;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.Article;
 import com.bxs.pojo.ArticleInfoVo;
+import com.bxs.pojo.ArticleMiniInfoVo;
 
 @Repository
 public class ArticleDao {
@@ -268,6 +269,23 @@ public class ArticleDao {
 		String  querySql="SELECT * FROM V_ARTICLE_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
 		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
 		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
+		return list;
+	}
+	
+	/**
+	 * 
+	 * 分页、条件 筛选列表(去除首页不展示的字段，提升首页加载速度)
+	 * @author: wyc
+	 * @createTime: 2018年2月18日 下午8:54:22
+	 * @history:
+	 * @param ePager
+	 * @param param
+	 * @return List<?>
+	 */
+	public List<?>  pagerMiniArticleList(EUIPager ePager, Map<String, Object> param){
+		String  querySql="SELECT * FROM V_ARTICLE_MINI_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<ArticleMiniInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleMiniInfoVo.class));
 		return list;
 	}
 	

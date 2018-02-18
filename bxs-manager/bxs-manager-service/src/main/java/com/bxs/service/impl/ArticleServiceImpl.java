@@ -87,6 +87,16 @@ public class ArticleServiceImpl implements ArticleService {
 		grid.setRows(articleDao.pagerArticleList(ePager,param));
 		return grid;
 	}
+	
+	
+	@Override
+	public EUIGrid pagerMiniList(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(articleDao.getTotalCount(param));
+		grid.setRows(articleDao.pagerMiniArticleList(ePager,param));
+		return grid;
+	}
+	
 
 	@Override
 	public ArticleInfoVo getArticleInfoById(String id) {
@@ -119,6 +129,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public void savePlusInfo(ArticleInfoVo article) {
 		articleDao.savePlusInfo(article);
 	}
+
 	
 	
 }
