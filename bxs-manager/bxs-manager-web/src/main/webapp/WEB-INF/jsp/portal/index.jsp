@@ -1041,7 +1041,7 @@ $(document).ready(function() {
         <div class="xxpmBox fr">
         	<div class="xx_tit">
             	<h1>信息排名</h1>
-                <a href="#" class="fr more">更多排名>></a>
+                <a href="${ctx}/portal/info-list" target="_blank" class="fr more">更多排名>></a>
             </div>
             <div class="xx_bg">
             	<dl class="xx_h">

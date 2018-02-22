@@ -17,6 +17,7 @@ var topicData=null;
 </head>
 <body>
 <script type="text/javascript" src="${ctx}/resources/js-lib/base.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js-lib/jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js-lib/layui/layui.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/ueditor.config.layui.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/ueditor.all.min.js"> </script>
@@ -39,8 +40,8 @@ var topicData=null;
 				<input type="hidden"  value="2018-01-01"  name="publishDate" id="publishDate" />
 				<div class="layui-input-block">
 					<select name="topicId" id="topicId" class="layui-input topicId" lay-verify="required">
+						<option value="1" ></option>
 						<%--
-						<option value="1"></option>
 						<option value="0">北京</option>
 						<option value="1">上海</option>
 						<option value="2">广州</option>
@@ -138,12 +139,11 @@ var topicData=null;
 		  });
 		  $('#topicId').append('<option value="1"></option>');
 		  for(var i=0;i<topicData.length;i++){
-			  debugger;
 	    	  var topicObj=topicData[i];
 	    	  $('#topicId').append('<option value="'+topicObj.id+'">'+topicObj.text+'</option>');
 	      }
 		  form.render('select');
-		  publishDate.value=myDateFormatter(new Date());
+		  $('#publishDate').val(myDateFormatter(new Date()));
 		});
 </script>
 

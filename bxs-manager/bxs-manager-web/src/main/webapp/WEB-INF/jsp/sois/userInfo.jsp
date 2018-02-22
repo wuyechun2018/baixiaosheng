@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>修改密码</title>
+<title>用户信息</title>
 <link rel="stylesheet" href="${ctx}/resources/js-lib/layui/css/layui.css">
 
 <style type="text/css">

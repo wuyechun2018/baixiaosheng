@@ -40,6 +40,7 @@ var topicData=null;
 				<input type="hidden"  value="${article.articleType}" name="articleType"  />
 				<div class="layui-input-block">
 					<select name="topicId" id="topicId" value="${article.topicId}" lay-verify="required">
+							<option value="1"></option>
 					</select>
 				</div>
 			</div>

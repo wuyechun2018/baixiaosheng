@@ -130,6 +130,22 @@ public class PortalController {
 		return mv;
 	}
 	
+	
+	/**
+	 * 
+	 * 信息排名
+	 * @author: wyc
+	 * @createTime: 2018年2月6日 下午3:44:50
+	 * @history:
+	 * @param topicCode
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/info-list")
+	public ModelAndView infoList(String topicCode) {
+		ModelAndView mv=new ModelAndView("/portal/info-list");
+		return mv;
+	}
+	
 	/**
 	 *  
 	 * 查看文章内容

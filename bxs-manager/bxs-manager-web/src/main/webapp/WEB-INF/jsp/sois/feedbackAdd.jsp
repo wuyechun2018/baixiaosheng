@@ -40,8 +40,8 @@ var topicData=null;
 				<input type="hidden"  value="2018-01-01"  name="publishDate" id="publishDate" />
 				<div class="layui-input-block">
 					<select name="topicId" id="topicId" class="layui-input topicId" lay-verify="required">
-						<%--
 						<option value="1"></option>
+						<%--
 						<option value="0">北京</option>
 						<option value="1">上海</option>
 						<option value="2">广州</option>
@@ -143,7 +143,7 @@ var topicData=null;
 	    	  $('#topicId').append('<option value="'+topicObj.id+'">'+topicObj.text+'</option>');
 	      }
 		  form.render('select');
-		  publishDate.value=myDateFormatter(new Date());
+		  $('#publishDate').val(myDateFormatter(new Date()));
 		});
 </script>
 
