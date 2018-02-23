@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.ArticleInfoVo;
 import com.bxs.pojo.SignInfoVo;
 import com.bxs.pojo.SysUser;
 import com.bxs.pojo.Topic;
+import com.bxs.pojo.UserInfoVo;
 import com.bxs.pojo.WeatherForecast;
 import com.bxs.service.ArticleService;
 import com.bxs.service.SignService;
@@ -162,7 +166,7 @@ public class PortalController {
 	 * @return ModelAndView
 	 */
 	@RequestMapping("/content")
-	public ModelAndView content(String id) {
+	public ModelAndView content(String id,HttpSession session) {
 		ModelAndView mv=new ModelAndView("/portal/content");
 		ArticleInfoVo articleInfoVo=articleService.getArticleInfoById(id);
 		articleService.addViewCount(id);
@@ -172,6 +176,15 @@ public class PortalController {
 		if(StringUtils.isNotBlank(articleType)&&("4".equals(articleType)||"5".equals(articleType))){
 			List<SignInfoVo> signList=signService.getSignListByArticleId(id);
 			mv.addObject("signList",signList);
+		}
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			mv.addObject("userInfo",info);
+			//判断是否需要签收
+			List<SignInfoVo> needSignList=signService.getSignListByArticleIdAndDeptId(id,info.getDeptId());
+			if(!needSignList.isEmpty()){
+				mv.addObject("needSign",true);
+			}
 		}
 		return mv;
 	}

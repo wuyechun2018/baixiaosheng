@@ -10,6 +10,7 @@ import com.bxs.common.dict.DataState;
 import com.bxs.jdbc.SignDao;
 import com.bxs.pojo.Sign;
 import com.bxs.pojo.SignInfoVo;
+import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.SignService;
 
 @Service
@@ -49,6 +50,16 @@ public class SignServiceImpl implements SignService {
 	@Override
 	public void deleteSignByArticleId(String articleId) {
 		signDao.deleteSignByArticleId(articleId);
+	}
+
+	@Override
+	public List<SignInfoVo> getSignListByArticleIdAndDeptId(String id, String deptId) {
+		return signDao.getSignListByArticleIdAndDeptId(id,deptId);
+	}
+
+	@Override
+	public void signArticle(String articleId, UserInfoVo info) {
+		signDao.signArticle(articleId,info);
 	}
 	
 }

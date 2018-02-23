@@ -27,6 +27,9 @@ public class Sign implements java.io.Serializable{
 	//签收部门Id
 	private String signDeptId;
 	
+	//签收用户Id
+	private String signUserId;
+	
 	//签收状态(0 未签收 1已签收)
 	private String signState;
 	
@@ -75,6 +78,14 @@ public class Sign implements java.io.Serializable{
 
 	public void setSignDeptId(String signDeptId) {
 		this.signDeptId = signDeptId;
+	}
+
+	public String getSignUserId() {
+		return signUserId;
+	}
+
+	public void setSignUserId(String signUserId) {
+		this.signUserId = signUserId;
 	}
 
 	public String getSignState() {

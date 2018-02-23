@@ -30,6 +30,12 @@ public class SignInfoVo implements java.io.Serializable{
 	//签收部门名称
 	private String signDeptName;
 	
+	//签收用户Id
+	private String signUserId;
+	
+	//签收用户姓名
+	private String signUserName;
+	
 	//签收状态(0 未签收 1已签收)
 	private String signState;
 	
@@ -136,8 +142,19 @@ public class SignInfoVo implements java.io.Serializable{
 		this.updateDate = updateDate;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getSignUserId() {
+		return signUserId;
 	}
 
+	public void setSignUserId(String signUserId) {
+		this.signUserId = signUserId;
+	}
+
+	public String getSignUserName() {
+		return signUserName;
+	}
+
+	public void setSignUserName(String signUserName) {
+		this.signUserName = signUserName;
+	}
 }

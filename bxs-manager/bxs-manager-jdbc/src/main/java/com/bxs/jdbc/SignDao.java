@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.bxs.common.dict.DataState;
 import com.bxs.pojo.Sign;
 import com.bxs.pojo.SignInfoVo;
+import com.bxs.pojo.UserInfoVo;
 
 @Repository
 public class SignDao {
@@ -38,6 +39,7 @@ public class SignDao {
 						"  article_id = ?,\n" + 
 						"  article_type =?,\n" + 
 						"  sign_dept_id = ?,\n" + 
+						"  sign_user_id = ?,\n" + 
 						"  sign_state = ?,\n" + 
 						"  sign_content = ?,\n" + 
 						"  sign_date = ?,\n" + 
@@ -52,13 +54,14 @@ public class SignDao {
 				         ps.setString(1, sign.getArticleId());
 				         ps.setString(2, sign.getArticleType());
 				         ps.setString(3, sign.getSignDeptId());
-				         ps.setString(4, sign.getSignState());
-				         lobCreator.setClobAsString(ps,5,sign.getSignContent());
-				         ps.setTimestamp(6, new java.sql.Timestamp(sign.getSignDate().getTime()));
-				         ps.setString(7, sign.getDataState());
-				         ps.setTimestamp(8, new java.sql.Timestamp(sign.getCreateDate().getTime()));
-				         ps.setTimestamp(9, new java.sql.Timestamp(sign.getUpdateDate().getTime()));
-				         ps.setString(10,sign.getId());
+				         ps.setString(4, sign.getSignDeptId());
+				         ps.setString(5, sign.getSignState());
+				         lobCreator.setClobAsString(ps,6,sign.getSignContent());
+				         ps.setTimestamp(7, new java.sql.Timestamp(sign.getSignDate().getTime()));
+				         ps.setString(8, sign.getDataState());
+				         ps.setTimestamp(9, new java.sql.Timestamp(sign.getCreateDate().getTime()));
+				         ps.setTimestamp(10, new java.sql.Timestamp(sign.getUpdateDate().getTime()));
+				         ps.setString(11,sign.getId());
 			       }
 			     }
 			 );
@@ -79,6 +82,7 @@ public class SignDao {
 						 "  article_id,\n" + 
 						 "  article_type,\n" + 
 						 "  sign_dept_id,\n" + 
+						 "  sign_user_id,\n" + 
 						 "  sign_state,\n" + 
 						 "  sign_content,\n" + 
 						 "  sign_date,\n" + 
@@ -88,6 +92,7 @@ public class SignDao {
 						 ")\n" + 
 						 "VALUES\n" + 
 						 "  (\n" + 
+						 "    ?,\n" + 
 						 "    ?,\n" + 
 						 "    ?,\n" + 
 						 "    ?,\n" + 
@@ -108,12 +113,13 @@ public class SignDao {
 			         ps.setString(2, sign.getArticleId());
 			         ps.setString(3, sign.getArticleType());
 			         ps.setString(4, sign.getSignDeptId());
-			         ps.setString(5, sign.getSignState());
-			         lobCreator.setClobAsString(ps,6,sign.getSignContent());
-			         ps.setTimestamp(7, new java.sql.Timestamp(sign.getSignDate().getTime()));
-			         ps.setString(8, sign.getDataState());
-			         ps.setTimestamp(9, new java.sql.Timestamp(sign.getCreateDate().getTime()));
-			         ps.setTimestamp(10, new java.sql.Timestamp(sign.getUpdateDate().getTime()));
+			         ps.setString(5, sign.getSignDeptId());
+			         ps.setString(6, sign.getSignState());
+			         lobCreator.setClobAsString(ps,7,sign.getSignContent());
+			         ps.setTimestamp(8, new java.sql.Timestamp(sign.getSignDate().getTime()));
+			         ps.setString(9, sign.getDataState());
+			         ps.setTimestamp(10, new java.sql.Timestamp(sign.getCreateDate().getTime()));
+			         ps.setTimestamp(11, new java.sql.Timestamp(sign.getUpdateDate().getTime()));
 			       }
 			     }
 			 );
@@ -148,6 +154,22 @@ public class SignDao {
 		List<SignInfoVo> list = jdbcTemplate.query(sql,new Object[]{id},new BeanPropertyRowMapper(SignInfoVo.class));
 		return list;
 	}
+	
+	/**
+	 * 
+	 * 根据文章Id和签收部门Id获取签收信息
+	 * @author: wyc
+	 * @createTime: 2018年2月23日 下午11:05:11
+	 * @history:
+	 * @param id
+	 * @param deptId
+	 * @return List<SignInfoVo>
+	 */
+	public List<SignInfoVo> getSignListByArticleIdAndDeptId(String id, String deptId) {
+		String sql="SELECT * FROM v_sign_info T WHERE T.data_state='1' AND T.article_id=? AND t.sign_dept_id=?";
+		List<SignInfoVo> list = jdbcTemplate.query(sql,new Object[]{id,deptId},new BeanPropertyRowMapper(SignInfoVo.class));
+		return list;
+	}
 
 
 	/**
@@ -162,5 +184,23 @@ public class SignDao {
 		String sql = "UPDATE t_sign SET DATA_STATE=? WHERE ARTICLE_ID=?";
 		jdbcTemplate.update(sql,new Object[]{DataState.Delete.getCode(),articleId});
 	}
+
+
+	/**
+	 * 
+	 * 文章签收操作
+	 * @author: wyc
+	 * @createTime: 2018年2月23日 下午11:31:53
+	 * @history:
+	 * @param articleId
+	 * @param info void
+	 */
+	public void signArticle(String articleId, UserInfoVo info) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	
 
 }

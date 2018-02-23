@@ -49,6 +49,28 @@ $(document).ready(function() {
     alt: 'Full screen background image'
   });
 });
+
+//签收操作
+function doSign(){
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/sign/signArticle',
+		data:{
+			articleId:''
+		},
+		async: false,
+	    error: function(request) {
+	        
+	    },
+	    success: function(data) {
+	    	
+	    }
+	})
+	
+}
+
+
 </script><!--end of bg-body script-->
 <div class="container">
 	<div class="header">
@@ -138,13 +160,35 @@ $(document).ready(function() {
        <div class="clearfix" style="margin:20px 38px;">
        	<div class="denglu_k clearfix">
           <!--未登录状态-->
-          <div class="denglu1 clearfix" id="denglu1">
-              <form action="#" method="post" autocomplete="off" onsubmit="return checkdl('denglu1')">
-              <div class="n_in fl"><input type="text" name="name" id="name" class="qs_in" placeholder="请输入账号" /></div>
-              <div class="n_in fl"><input type="password" name="password" id="password"  class="qs_in"    placeholder="请输入密码" /></div>
-              <div class="n_in fl"><input type="submit" class="ss_sub" value="签 收" /></div>
-              </form>
-          </div>
+          
+         <c:choose> 
+			  <c:when test="${empty userInfo}">   
+			   	 <div class="denglu1 clearfix" id="denglu1">
+		              <form action="#" method="post" autocomplete="off" onsubmit="return checkdl('denglu1')">
+		              <div class="n_in fl"><input type="text" name="name" id="name" class="qs_in" placeholder="请输入账号" /></div>
+		              <div class="n_in fl"><input type="password" name="password" id="password"  class="qs_in"    placeholder="请输入密码" /></div>
+		              <div class="n_in fl"><input type="submit" class="ss_sub" value="签 收" /></div>
+		              </form>
+         		 </div>
+			  </c:when> 
+			  <c:otherwise>
+			  	 <div class="denglu2 clearfix">
+		              <span>${userInfo.deptName}</span>-${userInfo.userName},您好，欢迎登录马鞍山公安局交警支队。
+		              <%--判断是否为签收部门用户,如果不是，则不需签收 --%>
+		              <c:choose> 
+			              <c:when test="${empty needSign}">   
+			             	 <a href="javascript:void(0)" class="a_buxuqianhsou">不需签收</a>
+			              </c:when> 
+				 		  <c:otherwise>
+				 		   	<a href="javascript:void(0)"  onclick="doSign()"  class="a_qianhsou">签收</a>
+				 		   </c:otherwise>
+			 		   </c:choose>
+          		 </div>
+			  
+			  </c:otherwise>
+		</c:choose>
+          
+         
         </div>
        </div>
        
@@ -162,8 +206,6 @@ $(document).ready(function() {
             		<div class="qs_td clearfix">
 	                	<ul>
 	                    	<li class="qs_bumen">${sign.signDeptName}</li>
-	                    	
-	                    	
 	                    	<c:choose> 
 								  <c:when test="${sign.signState=='0'}">   
 								   	<li class="qs_time">-</li>
@@ -174,8 +216,6 @@ $(document).ready(function() {
 								  	<li class="qs_zt"><font class="n_qs">已签收</font></li>
 								  </c:otherwise> 
 							</c:choose>
-	                        
-	                        
 	                    </ul>
                 	</div>
         		</c:forEach>

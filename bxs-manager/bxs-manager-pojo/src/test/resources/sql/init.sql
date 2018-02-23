@@ -54,7 +54,9 @@ SELECT
         ON T.topic_id = S.id;
 
 CREATE OR REPLACE VIEW v_sign_info AS 
-SELECT T.*,S.dept_name AS sign_dept_name FROM t_sign T LEFT JOIN t_dept S ON T.sign_dept_id=S.ID;        
+SELECT m.*,n.user_name AS sign_user_name FROM (
+SELECT T.*,S.dept_name AS sign_dept_name FROM t_sign T LEFT JOIN t_dept S ON T.sign_dept_id=S.ID)m LEFT JOIN t_user n ON m.sign_user_id=n.id ;
+        
         
 
 
@@ -79,6 +81,7 @@ CREATE TABLE `t_sign` (
   `article_id` varchar(36) DEFAULT NULL COMMENT '文章主键',
   `article_type` varchar(10) DEFAULT NULL COMMENT '文章类型',
   `sign_dept_id` varchar(36) DEFAULT NULL COMMENT '签收部门主键',
+  `sign_user_id` varchar(36) DEFAULT NULL COMMENT '签收用户主键',
   `sign_state` varchar(10) DEFAULT NULL COMMENT '签收状态(0 未签收 1已签收)',
   `sign_content` text COMMENT '反馈内容',
   `sign_date` datetime DEFAULT NULL COMMENT '签收时间',
