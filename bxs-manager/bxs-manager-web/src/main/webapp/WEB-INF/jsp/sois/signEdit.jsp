@@ -14,6 +14,7 @@
 <script type="text/javascript">
 var ctx = "${ctx}";
 var topicData=null;
+var deptData=null;
 </script>
 </head>
 <body>
@@ -77,6 +78,16 @@ var topicData=null;
 					</script>
 				</div>
 			</div>
+			
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">签收部门</label>
+				<div class="layui-input-block" id="qsbmDiv">
+					<%--
+					 <input type="checkbox" name="signDept" title="写作">
+				      --%>
+				</div>
+			</div>
+			
 			<div class="layui-form-item">
 				<div class="layui-input-block">
 					<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
@@ -94,7 +105,7 @@ var topicData=null;
 			$.ajax({
 				cache: true,
 				type: "POST",
-				url:'${ctx}/topic/getListByPid?pid=1',
+				url:'${ctx}/topic/getSignListByPid?pid=1',
 				data:{
 					
 				},
@@ -104,6 +115,23 @@ var topicData=null;
 			    },
 			    success: function(data) {
 			    	topicData=data;
+			    }
+			})
+			
+			//发送请求，获取"签收部门",用于 加载下拉框
+			$.ajax({
+				cache: true,
+				type: "POST",
+				url:'${ctx}/dept/getListByPid?pid=1',
+				data:{
+					
+				},
+				async: false,
+			    error: function(request) {
+			        
+			    },
+			    success: function(data) {
+			    	deptData=data;
 			    }
 			}) 
 			
@@ -137,6 +165,16 @@ var topicData=null;
 		  var topicId="${article.topicId}";
 		  $('#topicId').val(topicId);
 		  form.render('select');
+		  
+		  //加载签收部门
+		  for(var i=0;i<deptData.length;i++){
+	    	  var deptObj=deptData[i];
+	    	  $('#qsbmDiv').append('<input type="checkbox" name="signDept" value="'+deptObj.id+'" title="'+deptObj.text+'">');
+	      }
+		  form.render('checkbox');
+		  
+		  
+		  
 		});
 </script>
 

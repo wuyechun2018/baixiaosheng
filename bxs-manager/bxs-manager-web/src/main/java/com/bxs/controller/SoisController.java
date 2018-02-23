@@ -17,6 +17,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,7 +29,6 @@ import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.Article;
 import com.bxs.pojo.ArticleInfoVo;
-import com.bxs.pojo.SysUser;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
 import com.bxs.service.UserService;
@@ -175,7 +175,7 @@ public class SoisController {
 	
 	/**
 	 * 
-	 * 信息上报
+	 * 信息上报-签收信息报送
 	 * @author: wyc
 	 * @createTime: 2018年2月8日 下午10:42:01
 	 * @history:
@@ -184,7 +184,7 @@ public class SoisController {
 	 * @return String
 	 */
 	@RequestMapping("/signSave")
-	public String signSave(Article article,HttpSession session){
+	public String signSave(Article article,@RequestParam(value = "signDept", required = false)String[] signDeptArray,HttpSession session,HttpServletRequest request){
 		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
 		if(info!=null){
 			article.setPublishDeptId(info.getDeptId());
@@ -192,6 +192,11 @@ public class SoisController {
 			
 			//作者默认为上报人
 			article.setAuthor(info.getUserName());
+		}
+		if(signDeptArray!=null){
+			for (String sDept : signDeptArray) {
+				System.out.println(sDept);
+			}
 		}
 		articleService.save(article);
 		return "redirect:/sois/signList";

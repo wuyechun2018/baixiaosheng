@@ -14,6 +14,7 @@
 <script type="text/javascript">
 var ctx = "${ctx}";
 var topicData=null;
+var deptData=null;
 </script>
 </head>
 <body>
@@ -85,10 +86,27 @@ var topicData=null;
 			
 			<div class="layui-form-item layui-form-text">
 				<label class="layui-form-label">签收部门</label>
-				<div class="layui-input-block">
+				<div class="layui-input-block" id="qsbmDiv">
+					<%--
 					 <input type="checkbox" name="signDept" title="写作">
 				     <input type="checkbox" name="signDept" title="阅读" checked>
 				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="写作">
+				     <input type="checkbox" name="signDept" title="阅读" checked>
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				     <input type="checkbox" name="signDept" title="发呆">
+				      --%>
 				</div>
 			</div>
 			
@@ -107,10 +125,11 @@ var topicData=null;
 		layui.use(['form','upload'], function(){
 			var $ = layui.jquery;
 			
+			//发送请求，获取"可签收的投稿栏目",用于 加载下拉框
 			$.ajax({
 				cache: true,
 				type: "POST",
-				url:'${ctx}/topic/getListByPid?pid=1',
+				url:'${ctx}/topic/getSignListByPid?pid=1',
 				data:{
 					
 				},
@@ -121,7 +140,25 @@ var topicData=null;
 			    success: function(data) {
 			    	topicData=data;
 			    }
+			})
+			
+			//发送请求，获取"签收部门",用于 加载下拉框
+			$.ajax({
+				cache: true,
+				type: "POST",
+				url:'${ctx}/dept/getListByPid?pid=1',
+				data:{
+					
+				},
+				async: false,
+			    error: function(request) {
+			        
+			    },
+			    success: function(data) {
+			    	deptData=data;
+			    }
 			}) 
+			
 			
 			var upload = layui.upload;
 			//创建一个上传组件
@@ -153,6 +190,15 @@ var topicData=null;
 	    	  $('#topicId').append('<option value="'+topicObj.id+'">'+topicObj.text+'</option>');
 	      }
 		  form.render('select');
+		  
+		  //加载签收部门
+		  for(var i=0;i<deptData.length;i++){
+	    	  var deptObj=deptData[i];
+	    	  $('#qsbmDiv').append('<input type="checkbox" name="signDept" value="'+deptObj.id+'" title="'+deptObj.text+'">');
+	      }
+		  form.render('checkbox');
+		  
+		  
 		  $('#publishDate').val(myDateFormatter(new Date()));
 		});
 </script>

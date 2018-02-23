@@ -7,6 +7,9 @@ public interface TopicService {
 
 	List<EUITree> getListByPid(String pid);
 	
+	
+	List<EUITree> getSignListByPid(String pid);
+	
 	/**
 	 * 
 	 * 是否含有子节点
@@ -49,5 +52,7 @@ public interface TopicService {
 	 * @return Topic
 	 */
 	Topic getTopicByCode(String topicCode);
+
+	
 
 }

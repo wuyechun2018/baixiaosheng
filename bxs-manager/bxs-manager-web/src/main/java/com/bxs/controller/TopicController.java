@@ -42,6 +42,21 @@ public class TopicController {
 	}
 	
 	
+	/**
+	 * 
+	 * 根据父主键获取文章栏目(可签收的栏目)
+	 * @author: wyc
+	 * @createTime: 2018年1月25日 上午9:06:08
+	 * @history:
+	 * @param pid
+	 * @return Object
+	 */
+	@RequestMapping("/getSignListByPid")
+	@ResponseBody
+	public Object getSignListByPid(String pid){
+		return topicService.getSignListByPid(pid);
+	}
+	
 	
 	/**
 	 * 

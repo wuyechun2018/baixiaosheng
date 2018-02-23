@@ -36,6 +36,22 @@ public class TopicDao {
 		List<Topic> list = jdbcTemplate.query(sql,new Object[]{pid},new BeanPropertyRowMapper(Topic.class));
 		return list;
 	}
+	
+	/**
+	 * 
+	 * 根据父主键获取栏目数据(可签收的栏目)
+	 * @author: wyc
+	 * @createTime: 2018年2月23日 上午10:20:16
+	 * @history:
+	 * @param pid
+	 * @return List<Topic>
+	 */
+	public List<Topic> getSignListByPid(String pid) {
+		//目前的逻辑是，只要不设置为“不可签收”，都是可签收的栏目
+		String sql="SELECT * FROM t_topic T WHERE T.topic_type<>'2'  AND T.pid=?  ORDER BY T.DISPLAY_ORDER";
+		List<Topic> list = jdbcTemplate.query(sql,new Object[]{pid},new BeanPropertyRowMapper(Topic.class));
+		return list;
+	}
 
 	/**
 	 * 
@@ -122,5 +138,7 @@ public class TopicDao {
 			return null;
 		}
 	}
+
+	
 
 }

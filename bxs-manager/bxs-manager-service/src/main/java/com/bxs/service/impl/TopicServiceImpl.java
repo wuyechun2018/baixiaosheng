@@ -43,6 +43,34 @@ public class TopicServiceImpl  implements TopicService{
 		}
 		return list;
 	}
+	
+	
+	
+	@Override
+	public List<EUITree> getSignListByPid(String pid) {
+		List<EUITree> list=new ArrayList<EUITree>();
+		List<Topic> topicList=topicDao.getSignListByPid(pid);
+		for (Topic topic : topicList) {
+			EUITree easyTree=new EUITree();
+			easyTree.setId(topic.getId());
+			easyTree.setText(topic.getTopicName());
+			easyTree.setState(hasChild(topic.getId())?"closed":"open");
+			Map<String, String> attr=new HashMap<String, String>();
+			attr.put("pid", topic.getPid());
+			attr.put("topicCode", topic.getTopicCode());
+			//可否签收
+			attr.put("topicType", topic.getTopicType());
+			attr.put("topicDesc", topic.getTopicDesc());
+			//是否在用
+			attr.put("dataState", topic.getDataState());
+			//排序
+			attr.put("displayOrder", topic.getDisplayOrder()+"");
+			
+			easyTree.setAttributes(attr);
+			list.add(easyTree);
+		}
+		return list;
+	}
 
 	@Override
 	public boolean hasChild(String pid) {
