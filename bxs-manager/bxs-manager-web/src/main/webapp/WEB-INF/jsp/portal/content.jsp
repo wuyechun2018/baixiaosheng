@@ -12,6 +12,18 @@
 <link href="${ctx}/resources/portal/css/nei.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.bcat.bgswitcher.js"></script>
+<style type="text/css">
+input:-webkit-autofill, 
+textarea:-webkit-autofill, 
+select:-webkit-autofill { 
+       -webkit-box-shadow: 0 0 0 1000px white inset; 
+}
+input[type=text]:focus, input[type=password]:focus, textarea:focus {
+      -webkit-box-shadow: 0 0 0 1000px white inset; 
+}
+
+</style>
+
 </head>
 
 <!--[if lt IE 9]>
@@ -21,6 +33,7 @@
 <!--[if lt IE 10]>
     <script type="text/javascript"src="${ctx}/resources/portal/js/placeholder.min.js" charset="utf-8"></script>
 <![endif]-->
+
 
 
 
@@ -117,6 +130,72 @@ $(document).ready(function() {
                     
                     <span><a href="javascript:window.close()" class="close">关闭页面</a></span>
                 </div>
+            </div>
+       </div>
+       
+       
+        <!--登陆签收-->
+       <div class="clearfix" style="margin:20px 38px;">
+       	<div class="denglu_k clearfix">
+          <!--未登录状态-->
+          <div class="denglu1 clearfix" id="denglu1">
+              <form action="#" method="post" autocomplete="off" onsubmit="return checkdl('denglu1')">
+              <div class="n_in fl"><input type="text" name="name" id="name" class="qs_in" placeholder="请输入账号" /></div>
+              <div class="n_in fl"><input type="password" name="password" id="password"  class="qs_in"    placeholder="请输入密码" /></div>
+              <div class="n_in fl"><input type="submit" class="ss_sub" value="签 收" /></div>
+              </form>
+          </div>
+        </div>
+       </div>
+       
+         <div class="clearfix" style="margin:20px 38px;">
+			<div class="qianshou_box">
+            	<div class="qs_h clearfix">
+                	<ul>
+                    	<li class="qs_bumen">部门</li>
+                        <li class="qs_time">签收时间</li>
+                        <li class="qs_zt">签收状态</li>
+                    </ul>
+                </div>
+                
+                <c:forEach items="${signList}" var="sign">
+            		<div class="qs_td clearfix">
+	                	<ul>
+	                    	<li class="qs_bumen">${sign.signDeptName}</li>
+	                    	
+	                    	
+	                    	<c:choose> 
+								  <c:when test="${sign.signState=='0'}">   
+								   	<li class="qs_time">-</li>
+								   	<li class="qs_zt"><font class="n_wqs">未签收</font></li>
+								  </c:when> 
+								  <c:otherwise>   
+								    <li class="qs_time"><fmt:formatDate value="${sign.signDate}"  pattern="yyyy-MM-dd HH:mm"/></li>
+								  	<li class="qs_zt"><font class="n_qs">已签收</font></li>
+								  </c:otherwise> 
+							</c:choose>
+	                        
+	                        
+	                    </ul>
+                	</div>
+        		</c:forEach>
+                
+                <%--
+                <div class="qs_td clearfix">
+                	<ul>
+                    	<li class="qs_bumen">法制科</li>
+                        <li class="qs_time">2017-8-12 8:00 54:12</li>
+                        <li class="qs_zt"><font class="n_qs">已签收</font></li>
+                    </ul>
+                </div>
+                <div class="qs_td clearfix">
+                	<ul>
+                    	<li class="qs_bumen">宣传科</li>
+                        <li class="qs_time">2017-8-12 8:00 54:12</li>
+                        <li class="qs_zt"><font class="n_qs">已签收</font></li>
+                    </ul>
+                </div>
+                 --%>
             </div>
        </div>
         

@@ -53,6 +53,9 @@ SELECT
       LEFT JOIN t_topic S 
         ON T.topic_id = S.id;
 
+CREATE OR REPLACE VIEW v_sign_info AS 
+SELECT T.*,S.dept_name AS sign_dept_name FROM t_sign T LEFT JOIN t_dept S ON T.sign_dept_id=S.ID;        
+        
 
 
 CREATE TABLE `t_user` (
@@ -69,4 +72,18 @@ CREATE TABLE `t_user` (
   `post_id` varchar(36) DEFAULT NULL COMMENT '职位ID',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `t_sign` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `article_id` varchar(36) DEFAULT NULL COMMENT '文章主键',
+  `article_type` varchar(10) DEFAULT NULL COMMENT '文章类型',
+  `sign_dept_id` varchar(36) DEFAULT NULL COMMENT '签收部门主键',
+  `sign_state` varchar(10) DEFAULT NULL COMMENT '签收状态(0 未签收 1已签收)',
+  `sign_content` text COMMENT '反馈内容',
+  `sign_date` datetime DEFAULT NULL COMMENT '签收时间',
+  `data_state` varchar(10) DEFAULT NULL COMMENT '数据状态',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -3,6 +3,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,9 +11,10 @@ import org.springframework.jdbc.core.support.AbstractLobCreatingPreparedStatemen
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.stereotype.Repository;
+
 import com.bxs.common.dict.DataState;
-import com.bxs.pojo.Article;
 import com.bxs.pojo.Sign;
+import com.bxs.pojo.SignInfoVo;
 
 @Repository
 public class SignDao {
@@ -141,9 +143,9 @@ public class SignDao {
 	 * @param id
 	 * @return List<Sign>
 	 */
-	public List<Sign> getSignListByArticleId(String id) {
-		String sql="SELECT * FROM t_sign T WHERE T.data_state='1' AND T.article_id=?";
-		List<Sign> list = jdbcTemplate.query(sql,new Object[]{id},new BeanPropertyRowMapper(Sign.class));
+	public List<SignInfoVo> getSignListByArticleId(String id) {
+		String sql="SELECT * FROM v_sign_info T WHERE T.data_state='1' AND T.article_id=?";
+		List<SignInfoVo> list = jdbcTemplate.query(sql,new Object[]{id},new BeanPropertyRowMapper(SignInfoVo.class));
 		return list;
 	}
 

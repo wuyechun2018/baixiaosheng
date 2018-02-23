@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.bxs.common.dict.DataState;
 import com.bxs.jdbc.SignDao;
 import com.bxs.pojo.Sign;
+import com.bxs.pojo.SignInfoVo;
 import com.bxs.service.SignService;
 
 @Service
@@ -41,7 +42,7 @@ public class SignServiceImpl implements SignService {
 	}
 
 	@Override
-	public List<Sign> getSignListByArticleId(String id) {
+	public List<SignInfoVo> getSignListByArticleId(String id) {
 		return signDao.getSignListByArticleId(id);
 	}
 

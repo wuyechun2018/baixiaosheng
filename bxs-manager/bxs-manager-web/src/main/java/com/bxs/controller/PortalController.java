@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.ArticleInfoVo;
+import com.bxs.pojo.SignInfoVo;
 import com.bxs.pojo.SysUser;
 import com.bxs.pojo.Topic;
 import com.bxs.pojo.WeatherForecast;
 import com.bxs.service.ArticleService;
+import com.bxs.service.SignService;
 import com.bxs.service.TopicService;
 import com.bxs.service.UserService;
 import com.bxs.service.WeatherForecastService;
@@ -35,6 +38,9 @@ public class PortalController {
 	//栏目
 	@Autowired
 	private TopicService topicService;
+	
+	@Autowired
+	private SignService signService;
 
 	/**
 	 * 
@@ -161,6 +167,12 @@ public class PortalController {
 		ArticleInfoVo articleInfoVo=articleService.getArticleInfoById(id);
 		articleService.addViewCount(id);
 		mv.addObject("articleInfoVo",articleInfoVo);
+		String articleType=articleInfoVo.getArticleType();
+		//4为信息报送，5为签收信息报送
+		if(StringUtils.isNotBlank(articleType)&&("4".equals(articleType)||"5".equals(articleType))){
+			List<SignInfoVo> signList=signService.getSignListByArticleId(id);
+			mv.addObject("signList",signList);
+		}
 		return mv;
 	}
 	

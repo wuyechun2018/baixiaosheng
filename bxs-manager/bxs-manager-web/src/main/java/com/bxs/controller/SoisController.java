@@ -30,6 +30,7 @@ import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.Article;
 import com.bxs.pojo.ArticleInfoVo;
 import com.bxs.pojo.Sign;
+import com.bxs.pojo.SignInfoVo;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
 import com.bxs.service.SignService;
@@ -388,7 +389,7 @@ public class SoisController {
 	public ModelAndView signEdit(@PathVariable String id) {
 		ModelAndView mv=new ModelAndView("sois/signEdit");
 		Article article=articleService.getArticleById(id);
-		List<Sign> signList=signService.getSignListByArticleId(id);
+		List<SignInfoVo> signList=signService.getSignListByArticleId(id);
 		mv.addObject("article",article);
 		mv.addObject("signList",signList);
 		return mv;
