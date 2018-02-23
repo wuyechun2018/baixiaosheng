@@ -37,7 +37,7 @@ public class ArticleDao {
 	 * @history:
 	 * @param article void
 	 */
-	public void save(final Article article) {
+	public String save(final Article article) {
 		/* String insertSQL = "INSERT INTO T_ARTICLE (ID, ARTICLE_TITLE, ARTICLE_CONTENT, CREATE_DATE,UPDATE_DATE, DISPLAY_ORDER,VIEW_COUNT,DATA_STATE) VALUES(?,?,?,?,?,?,?,?)";
 		 jdbcTemplate.execute(insertSQL,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
@@ -98,11 +98,11 @@ public class ArticleDao {
 						"    ?,\n" + 
 						"    ?\n" +
 						"  )";
-
+		final String keyId= UUID.randomUUID().toString();
 		jdbcTemplate.execute(sql,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
 			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
-			         ps.setString(1, UUID.randomUUID().toString());
+			         ps.setString(1,keyId);
 			         ps.setString(2, article.getArticleType());
 			         ps.setString(3, article.getTopicId());
 			         ps.setString(4, article.getArticleTitle());
@@ -124,8 +124,7 @@ public class ArticleDao {
 			       }
 			     }
 			 );
-		
-		
+		return keyId;
 	}
 	
 	public void update(final Article article) {

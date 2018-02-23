@@ -10,7 +10,7 @@ import com.bxs.pojo.ArticleInfoVo;
 
 public interface ArticleService {
 
-	void save(Article article);
+	String save(Article article);
 
 	List<Article> getList();
 

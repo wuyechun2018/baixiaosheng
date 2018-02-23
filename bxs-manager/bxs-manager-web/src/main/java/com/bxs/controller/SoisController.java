@@ -29,8 +29,10 @@ import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.Article;
 import com.bxs.pojo.ArticleInfoVo;
+import com.bxs.pojo.Sign;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
+import com.bxs.service.SignService;
 import com.bxs.service.UserService;
 
 /**
@@ -53,6 +55,10 @@ public class SoisController {
 	
 	@Autowired
 	private UserService userService;
+	
+	
+	@Autowired
+	private SignService signService;
 	
 	
 	/**
@@ -189,16 +195,31 @@ public class SoisController {
 		if(info!=null){
 			article.setPublishDeptId(info.getDeptId());
 			article.setPublishUserId(info.getId());
-			
 			//作者默认为上报人
 			article.setAuthor(info.getUserName());
 		}
+		//文章主键Id
+		String keyId=articleService.save(article);
+		
+		//根据文章主键,删除原有的签收信息
+		signService.deleteSignByArticleId(keyId);
+		
+		//发送新的签收信息
 		if(signDeptArray!=null){
 			for (String sDept : signDeptArray) {
-				System.out.println(sDept);
+				//签收信息
+				Sign sign=new Sign();
+				sign.setArticleId(keyId);
+				sign.setArticleType(article.getArticleType());
+				//签收部门ID
+				sign.setSignDeptId(sDept);
+				//签收状态(0 未签收 1已签收)
+				sign.setSignState("0");
+				sign.setSignContent("");
+				sign.setSignDate(new Date());
+				signService.save(sign);
 			}
 		}
-		articleService.save(article);
 		return "redirect:/sois/signList";
 	}
 	
@@ -367,7 +388,9 @@ public class SoisController {
 	public ModelAndView signEdit(@PathVariable String id) {
 		ModelAndView mv=new ModelAndView("sois/signEdit");
 		Article article=articleService.getArticleById(id);
+		List<Sign> signList=signService.getSignListByArticleId(id);
 		mv.addObject("article",article);
+		mv.addObject("signList",signList);
 		return mv;
 	}
 	

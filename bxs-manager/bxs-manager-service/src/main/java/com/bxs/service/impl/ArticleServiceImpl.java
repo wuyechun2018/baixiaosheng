@@ -21,7 +21,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Autowired
     private ArticleDao articleDao;
 	
-	public void save(Article article){
+	public String save(Article article){
 		//设置为在用
 		article.setDataState(DataState.Use.getCode());
 		article.setDisplayOrder(0);
@@ -46,6 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
 			//文章审核状态(0:未审核 1:审核通过),修改后需要重新审核。
 			article.setCheckState("0");
 			articleDao.update(article);
+			return article.getId();
 		}else{
 			//保存操作	
 			//初始化浏览次数为0
@@ -60,7 +61,7 @@ public class ArticleServiceImpl implements ArticleService {
 			article.setCheckState("0");
 			//首页推荐,默认不推荐
 			article.setFrontSliderState("0");
-			articleDao.save(article);
+			return articleDao.save(article);
 		}
 		
 	}

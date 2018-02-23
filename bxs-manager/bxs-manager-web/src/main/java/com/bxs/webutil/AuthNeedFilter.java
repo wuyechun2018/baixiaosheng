@@ -29,7 +29,7 @@ public class AuthNeedFilter implements Filter{
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		String servletPath = httpServletRequest.getServletPath();
 		//不需要登录页能访问的地址
-		String[] needFilterPathArray = new String[] {"/sois/index","/manager/index"};
+		String[] needFilterPathArray = new String[] {"/sois/index","/manager/index","/sois/add","/sois/signAdd","/sois/feedbackAdd"};
 		boolean doFilter=false;
 		for (String needFilterPath : needFilterPathArray) {  
         	if (servletPath.indexOf(needFilterPath) != -1) {  

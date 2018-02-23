@@ -166,16 +166,39 @@ var deptData=null;
 		  $('#topicId').val(topicId);
 		  form.render('select');
 		  
+		  
+		  var signDeptArray = new Array();
+		  <c:forEach items="${signList}" var="sign" varStatus="status" >  
+		  	signDeptArray.push("${sign.signDeptId}");  
+	       </c:forEach>
+		  
+		  
 		  //加载签收部门
 		  for(var i=0;i<deptData.length;i++){
 	    	  var deptObj=deptData[i];
-	    	  $('#qsbmDiv').append('<input type="checkbox" name="signDept" value="'+deptObj.id+'" title="'+deptObj.text+'">');
+	    	  var deptId=deptObj.id;
+	    	  if(isChecked(signDeptArray,deptId)){
+		    	  $('#qsbmDiv').append('<input type="checkbox" name="signDept" checked="true" value="'+deptId+'" title="'+deptObj.text+'">');
+	    	  }else{
+		    	  $('#qsbmDiv').append('<input type="checkbox" name="signDept" value="'+deptId+'" title="'+deptObj.text+'">');
+	    	  }
 	      }
 		  form.render('checkbox');
 		  
-		  
-		  
 		});
+
+		//是否选中
+		function isChecked(signDeptArray,deptId){
+			var checkStatus=false;
+			for(var i=0;i<signDeptArray.length;i++){
+				 var signDeptId=signDeptArray[i];
+		    	 if(deptId==signDeptId){
+		    		 checkStatus=true;		    		 
+		    		 break;
+		    	 }
+		    }
+			return checkStatus;
+		}
 </script>
 
 </body>
