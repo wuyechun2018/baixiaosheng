@@ -52,23 +52,59 @@ $(document).ready(function() {
 
 //签收操作
 function doSign(){
+	var articleId='${articleInfoVo.id}';
 	$.ajax({
 		cache: true,
 		type: "POST",
 		url:'${ctx}/sign/signArticle',
 		data:{
-			articleId:''
+			articleId:articleId,
+			signContent:''
 		},
 		async: false,
 	    error: function(request) {
 	        
 	    },
 	    success: function(data) {
+	    	if(data.success==true){
+	    		alert(data.msg);
+	    	}else{
+	    		alert(data.msg);
+	    	}
+	    	location.reload();
 	    	
 	    }
 	})
-	
 }
+
+//登录&&签收
+function doLoginAndSign(){
+	var articleId='${articleInfoVo.id}';
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/sign/loginAndSign',
+		data:{
+			articleId:articleId,
+			signContent:'',
+			loginName:$('#loginName').val(),
+			loginPassword:$('#loginPassword').val()
+		},
+		async: false,
+	    error: function(request) {
+	        
+	    },
+	    success: function(data) {
+	    	if(data.success==true){
+	    		alert(data.msg);
+	    		location.reload();
+	    	}else{
+	    		alert(data.msg);
+	    	}
+	    }
+	})
+}
+
 
 
 </script><!--end of bg-body script-->
@@ -165,9 +201,9 @@ function doSign(){
 			  <c:when test="${empty userInfo}">   
 			   	 <div class="denglu1 clearfix" id="denglu1">
 		              <form action="#" method="post" autocomplete="off" onsubmit="return checkdl('denglu1')">
-		              <div class="n_in fl"><input type="text" name="name" id="name" class="qs_in" placeholder="请输入账号" /></div>
-		              <div class="n_in fl"><input type="password" name="password" id="password"  class="qs_in"    placeholder="请输入密码" /></div>
-		              <div class="n_in fl"><input type="submit" class="ss_sub" value="签 收" /></div>
+		              <div class="n_in fl"><input type="text" name="name" id="loginName" class="qs_in" placeholder="请输入账号" /></div>
+		              <div class="n_in fl"><input type="password" name="password" id="loginPassword"  class="qs_in"    placeholder="请输入密码" /></div>
+		              <div class="n_in fl"><input type="button" onclick="doLoginAndSign()" class="ss_sub" value="签 收" /></div>
 		              </form>
          		 </div>
 			  </c:when> 
@@ -177,14 +213,21 @@ function doSign(){
 		              <%--判断是否为签收部门用户,如果不是，则不需签收 --%>
 		              <c:choose> 
 			              <c:when test="${empty needSign}">   
-			             	 <a href="javascript:void(0)" class="a_buxuqianhsou">不需签收</a>
+			             	 <a href="javascript:void(0)" class="a_buxuqianhsou">无需签收</a>
 			              </c:when> 
 				 		  <c:otherwise>
-				 		   	<a href="javascript:void(0)"  onclick="doSign()"  class="a_qianhsou">签收</a>
+				 		  	
+				 		  	 <c:choose> 
+			  						<c:when test="${empty hasSigned}"> 
+			  							 <a href="javascript:void(0)"  onclick="doSign()"  class="a_qianhsou">签收</a>
+			  						</c:when>
+			  						<c:otherwise>
+			  							 <a href="javascript:void(0)"  class="a_yiqianhsou">已签收</a>
+			  						</c:otherwise>
+			  				</c:choose>  
 				 		   </c:otherwise>
 			 		   </c:choose>
           		 </div>
-			  
 			  </c:otherwise>
 		</c:choose>
           

@@ -28,7 +28,7 @@ var ctx = "${ctx}";
 			    ,cols: [[
 				  {title: '序号',width:80,templet: '#indexTpl',align:'center'}       
 			      //,{field:'id', width:10, title: 'ID', sort: true}
-			      ,{field:'topicName', width:120, title: '所属分类',align:'center'}
+			      ,{field:'topicName', width:110, title: '所属分类',align:'center'}
 			      ,{field:'articleTitle', width:280, title: '标题' ,templet: function(d){
 			    	 	 return "<sapn title='"+d.articleTitle+"'>"+d.articleTitle+"</span>";
 		    		 }}
@@ -38,13 +38,13 @@ var ctx = "${ctx}";
 			      ,{field:'checkState', width:80, title: '状态', sort: false,align:'center'
 			    	 ,templet: function(d){
 			    	       if(d.checkState=='1'){
-			    	    	   return "正常";
+			    	    	   return '<span style="color:#5FB878;font-weight:bold;">正常</span>';
 			    	       }else{
-			    	    	   return "未审核";
+			    	    	   return '<span style="color:#FF5722;font-weight:bold;">未审核</span>';
 			    	       }
 			    	 }
 			      }
-			      ,{title: '操作',width:160, toolbar: '#opBarTpl',align:'center'}
+			      ,{title: '操作',width:210, toolbar: '#opBarTpl',align:'center'}
 			    ]]
 			    ,page: true
 			  });
@@ -63,7 +63,22 @@ var ctx = "${ctx}";
 			            }
 			        })
 			        layui.layer.full(index);
-				}  
+				}
+			  
+			  function showSignPage(url){
+			    	var index = layui.layer.open({
+			            title : "签收信息",
+			            type : 2,
+			            area:  ['1002px', '500px'],
+			            content : url,
+			            maxmin: true,
+			            success : function(layero, index){
+			                
+			            }
+			        })
+			        layui.layer.full(index);
+				}
+			  
 			  
 			  table.on('tool(newsList)', function(obj){
 			        var layEvent = obj.event,
@@ -92,7 +107,11 @@ var ctx = "${ctx}";
 			        } else if(layEvent === 'view'){
 			        	var url=ctx+"/sois/show/"+data.id;
 			        	view(url);
+			        }else if(layEvent === 'sign'){
+			        	var url=ctx+"/sois/showSign/"+data.id;
+			        	showSignPage(url);
 			        }
+			        
 			    });
 			  
 			});
@@ -130,11 +149,18 @@ var ctx = "${ctx}";
     	{{d.LAY_TABLE_INDEX+1}}
 	</script>
 	
-	<!--操作-->
-	<script type="text/html" id="opBarTpl">
-		 <a lay-event="view" class="layui-btn layui-btn-normal layui-btn-xs" href="javascript:void(0);"  >预览</a>
-         <a lay-event="edit" class="layui-btn layui-btn-xs" href="javascript:void(0);">编辑</a>
-         <a lay-event="del" class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:void(0);">删除</a>
+	<!--操作,审核通过的，不可进行编辑和删除-->
+	  <script type="text/html" id="opBarTpl">
+		  <a title="预览页面" lay-event="view" class="layui-btn layui-btn-normal layui-btn-xs" href="javascript:void(0);">预览</a>
+	      <a title="查看签收信息" lay-event="sign" class="layui-btn layui-btn-warm layui-btn-xs" href="javascript:void(0);">签收</a>
+		 
+		 {{#  if(d.checkState == 1){ }}
+    			 <a title="已审核通过，不可编辑"  class="layui-btn layui-btn-disabled layui-btn-xs" href="javascript:void(0);">编辑</a>
+         		 <a title="已审核通过，不可删除" class="layui-btn layui-btn-disabled layui-btn-xs" href="javascript:void(0);">删除</a>
+  		  {{#  } else { }}
+    			 <a lay-event="edit" class="layui-btn layui-btn-xs" href="javascript:void(0);">编辑</a>
+         		 <a lay-event="del" class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:void(0);">删除</a>
+  		  {{#  } }}
 	</script>
 	
 </body>

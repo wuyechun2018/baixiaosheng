@@ -2,8 +2,10 @@ package com.bxs.jdbc;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +15,8 @@ import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.stereotype.Repository;
 
 import com.bxs.common.dict.DataState;
+import com.bxs.common.vo.EUIPager;
+import com.bxs.pojo.ArticleInfoVo;
 import com.bxs.pojo.Sign;
 import com.bxs.pojo.SignInfoVo;
 import com.bxs.pojo.UserInfoVo;
@@ -54,7 +58,7 @@ public class SignDao {
 				         ps.setString(1, sign.getArticleId());
 				         ps.setString(2, sign.getArticleType());
 				         ps.setString(3, sign.getSignDeptId());
-				         ps.setString(4, sign.getSignDeptId());
+				         ps.setString(4, sign.getSignUserId());
 				         ps.setString(5, sign.getSignState());
 				         lobCreator.setClobAsString(ps,6,sign.getSignContent());
 				         ps.setTimestamp(7, new java.sql.Timestamp(sign.getSignDate().getTime()));
@@ -113,7 +117,7 @@ public class SignDao {
 			         ps.setString(2, sign.getArticleId());
 			         ps.setString(3, sign.getArticleType());
 			         ps.setString(4, sign.getSignDeptId());
-			         ps.setString(5, sign.getSignDeptId());
+			         ps.setString(5, sign.getSignUserId());
 			         ps.setString(6, sign.getSignState());
 			         lobCreator.setClobAsString(ps,7,sign.getSignContent());
 			         ps.setTimestamp(8, new java.sql.Timestamp(sign.getSignDate().getTime()));
@@ -195,12 +199,80 @@ public class SignDao {
 	 * @param articleId
 	 * @param info void
 	 */
-	public void signArticle(String articleId, UserInfoVo info) {
-		// TODO Auto-generated method stub
+	public void signArticle(final Sign sign) {
+		String sql="UPDATE\n" +
+				"  t_sign\n" + 
+				"SET\n" + 
+				"  sign_user_id = ?,\n" + 
+				"  sign_state = ?,\n" + 
+				"  sign_content = ?,\n" + 
+				"  sign_date = ?\n" + 
+				"WHERE article_id = ? AND sign_dept_id=?";
+
+		jdbcTemplate.execute(sql,
+	     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
+	       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
+		         ps.setString(1, sign.getSignUserId());
+		         ps.setString(2, sign.getSignState());
+		         lobCreator.setClobAsString(ps,3,sign.getSignContent());
+		         ps.setTimestamp(4, new java.sql.Timestamp(sign.getSignDate().getTime()));
+		         ps.setString(5, sign.getArticleId());
+		         ps.setString(6, sign.getSignDeptId());
+	       }
+	     }
+	 );
 		
 	}
 
 
-	
+	/**
+	 * 
+	 * 获取条件筛选后的记录总数
+	 * @author: wyc
+	 * @createTime: 2018年2月24日 下午2:33:53
+	 * @history:
+	 * @param param
+	 * @return Long
+	 */
+	public Long getTotalCount(Map<String, Object> param) {
+		String sql="SELECT COUNT(1) FROM v_sign_info T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		return  jdbcTemplate.queryForObject(sql,Long.class);
+	}
+
+
+	/**
+	 * 
+	 * 根据查询参数生成查询语句
+	 * @author: wyc
+	 * @createTime: 2018年2月24日 下午2:33:25
+	 * @history:
+	 * @param param
+	 * @return String
+	 */
+	private String getParamSql(Map<String, Object> param) {
+		StringBuffer sqlBuff=new StringBuffer();
+		if(param.get("articleId")!=null&&StringUtils.isNotBlank(param.get("articleId").toString())){
+			sqlBuff.append(" AND ARTICLE_ID = '" + param.get("articleId").toString() + "'\n");
+		}
+		return sqlBuff.toString();
+	}
+
+
+	/**
+	 * 
+	 * 分页、条件 筛选列表
+	 * @author: wyc
+	 * @createTime: 2018年2月24日 下午2:33:41
+	 * @history:
+	 * @param ePager
+	 * @param param
+	 * @return List<?>
+	 */
+	public List<?> pagerSignList(EUIPager ePager, Map<String, Object> param) {
+		String  querySql="SELECT * FROM v_sign_info T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<SignInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(SignInfoVo.class));
+		return list;
+	}
 
 }

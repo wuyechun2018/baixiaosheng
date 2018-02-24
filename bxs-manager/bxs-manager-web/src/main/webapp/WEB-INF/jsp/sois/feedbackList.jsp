@@ -37,10 +37,10 @@ var ctx = "${ctx}";
 			      ,{field:'viewCount', width:80, title: '浏览量', sort: false,align:'center'}
 			      ,{field:'checkState', width:80, title: '状态', sort: false,align:'center'
 			    	 ,templet: function(d){
-			    	       if(d.checkState=='1'){
-			    	    	   return "正常";
+			    		 	if(d.checkState=='1'){
+			    	    	   return '<span style="color:#5FB878;font-weight:bold;">正常</span>';
 			    	       }else{
-			    	    	   return "未审核";
+			    	    	   return '<span style="color:#FF5722;font-weight:bold;">未审核</span>';
 			    	       }
 			    	 }
 			      }

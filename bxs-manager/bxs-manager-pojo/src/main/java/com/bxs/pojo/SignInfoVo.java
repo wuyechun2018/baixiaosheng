@@ -2,6 +2,8 @@ package com.bxs.pojo;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 
  * 签收信息 
@@ -110,6 +112,7 @@ public class SignInfoVo implements java.io.Serializable{
 		this.signContent = signContent;
 	}
 
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	public Date getSignDate() {
 		return signDate;
 	}

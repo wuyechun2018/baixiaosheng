@@ -37,10 +37,10 @@ var ctx = "${ctx}";
 			      ,{field:'viewCount', width:80, title: '浏览量', sort: false,align:'center'}
 			      ,{field:'checkState', width:80, title: '状态', sort: false,align:'center'
 			    	 ,templet: function(d){
-			    	       if(d.checkState=='1'){
-			    	    	   return "正常";
+			    		  if(d.checkState=='1'){
+			    	    	   return '<span style="color:#5FB878;font-weight:bold;">正常</span>';
 			    	       }else{
-			    	    	   return "未审核";
+			    	    	   return '<span style="color:#FF5722;font-weight:bold;">未审核</span>';
 			    	       }
 			    	 }
 			      }
@@ -157,9 +157,16 @@ var ctx = "${ctx}";
 	<!--操作-->
 	<script type="text/html" id="opBarTpl">
 		 <a lay-event="view" class="layui-btn layui-btn-normal layui-btn-xs" href="javascript:void(0);"  >预览</a>
-         <a lay-event="edit" class="layui-btn layui-btn-xs" href="javascript:void(0);">编辑</a>
-         <a lay-event="del" class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:void(0);">删除</a>
-	</script>
+	
+		 {{#  if(d.checkState == 1){ }}
+    			 <a title="已审核通过，不可编辑"  class="layui-btn layui-btn-disabled layui-btn-xs" href="javascript:void(0);">编辑</a>
+         		 <a title="已审核通过，不可删除" class="layui-btn layui-btn-disabled layui-btn-xs" href="javascript:void(0);">删除</a>
+  		  {{#  } else { }}
+    			 <a lay-event="edit" class="layui-btn layui-btn-xs" href="javascript:void(0);">编辑</a>
+         		 <a lay-event="del" class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:void(0);">删除</a>
+  		  {{#  } }}
+
+</script>
 	
 </body>
 

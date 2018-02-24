@@ -1,12 +1,15 @@
 package com.bxs.service.impl;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bxs.common.dict.DataState;
+import com.bxs.common.vo.EUIGrid;
+import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.SignDao;
 import com.bxs.pojo.Sign;
 import com.bxs.pojo.SignInfoVo;
@@ -58,8 +61,16 @@ public class SignServiceImpl implements SignService {
 	}
 
 	@Override
-	public void signArticle(String articleId, UserInfoVo info) {
-		signDao.signArticle(articleId,info);
+	public void signArticle(Sign sign) {
+		signDao.signArticle(sign);
+	}
+
+	@Override
+	public EUIGrid pagerList(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(signDao.getTotalCount(param));
+		grid.setRows(signDao.pagerSignList(ePager,param));
+		return grid;
 	}
 	
 }

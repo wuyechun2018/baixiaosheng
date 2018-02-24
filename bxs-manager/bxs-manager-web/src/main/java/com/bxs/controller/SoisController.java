@@ -141,6 +141,44 @@ public class SoisController {
 	
 	/**
 	 * 
+	 * 查看签收信息
+	 * @author: wyc
+	 * @createTime: 2018年2月24日 上午11:51:21
+	 * @history:
+	 * @param id
+	 * @return ModelAndView
+	 */
+	@RequestMapping("/showSign/{id}")
+	public ModelAndView showSign(@PathVariable String id) {
+		ModelAndView mv=new ModelAndView("sois/showSign");
+		ArticleInfoVo articleInfoVo=articleService.getArticleInfoById(id);
+		mv.addObject("articleInfoVo",articleInfoVo);
+		return mv;
+	}
+	
+	
+	
+	/**
+	 * 
+	 * 查看反馈信息
+	 * @author: wyc
+	 * @createTime: 2018年2月24日 上午11:51:21
+	 * @history:
+	 * @param id
+	 * @return ModelAndView
+	 */
+	@RequestMapping("/showFeedback/{id}")
+	public ModelAndView showFeedback(@PathVariable String id) {
+		ModelAndView mv=new ModelAndView("sois/showFeedback");
+		ArticleInfoVo articleInfoVo=articleService.getArticleInfoById(id);
+		mv.addObject("articleInfoVo",articleInfoVo);
+		return mv;
+	}
+	
+	
+	
+	/**
+	 * 
 	 * 删除
 	 * @author: wyc
 	 * @createTime: 2018年2月9日 下午10:03:27
@@ -214,6 +252,8 @@ public class SoisController {
 				sign.setArticleType(article.getArticleType());
 				//签收部门ID
 				sign.setSignDeptId(sDept);
+				//签收人ID,签收操作的时候记录
+				sign.setSignUserId("");
 				//签收状态(0 未签收 1已签收)
 				sign.setSignState("0");
 				sign.setSignContent("");
@@ -274,6 +314,27 @@ public class SoisController {
 			param.put("publishDeptId", info.getDeptId());
 		}
 		EUIGrid grid=articleService.pagerList(ePager,param);
+		return DataPipeUtil.toLayUIGrid(grid);
+	}
+	
+	
+	/**
+	 * 
+	 * 获取签收信息列表
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午4:26:01
+	 * @history:
+	 * @param page
+	 * @param limit
+	 * @return Object
+	 */
+	@RequestMapping("/getSignList")
+	@ResponseBody
+	public Object getSignList(int page,int limit,String articleId,HttpSession session){
+		EUIPager ePager=new EUIPager(page,limit);
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("articleId", articleId);
+		EUIGrid grid=signService.pagerList(ePager,param);
 		return DataPipeUtil.toLayUIGrid(grid);
 	}
 	

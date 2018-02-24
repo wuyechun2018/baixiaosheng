@@ -1,9 +1,10 @@
 package com.bxs.service;
 import java.util.List;
-
+import java.util.Map;
+import com.bxs.common.vo.EUIGrid;
+import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.Sign;
 import com.bxs.pojo.SignInfoVo;
-import com.bxs.pojo.UserInfoVo;
 
 public interface SignService {
 
@@ -17,6 +18,8 @@ public interface SignService {
 
 	List<SignInfoVo> getSignListByArticleIdAndDeptId(String id, String deptId);
 
-	void signArticle(String articleId, UserInfoVo info);
+	void signArticle(Sign sign);
+
+	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 
 }

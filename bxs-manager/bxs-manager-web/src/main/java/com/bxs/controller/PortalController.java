@@ -184,6 +184,12 @@ public class PortalController {
 			List<SignInfoVo> needSignList=signService.getSignListByArticleIdAndDeptId(id,info.getDeptId());
 			if(!needSignList.isEmpty()){
 				mv.addObject("needSign",true);
+				//判断是否已经签收
+				SignInfoVo sInfo=needSignList.get(0);
+				//如果已经签收，则加入"已签收标志"，否则不加，前端直接判断是否有该标志即可
+				if(sInfo.getSignState()!=null&&"1".equals(sInfo.getSignState())){
+					mv.addObject("hasSigned",true);
+				}
 			}
 		}
 		return mv;
