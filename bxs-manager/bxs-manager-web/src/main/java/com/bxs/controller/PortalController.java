@@ -173,7 +173,7 @@ public class PortalController {
 		mv.addObject("articleInfoVo",articleInfoVo);
 		String articleType=articleInfoVo.getArticleType();
 		//4为信息报送，5为签收信息报送
-		if(StringUtils.isNotBlank(articleType)&&("4".equals(articleType)||"5".equals(articleType))){
+		if(StringUtils.isNotBlank(articleType)&&("5".equals(articleType)||"6".equals(articleType))){
 			List<SignInfoVo> signList=signService.getSignListByArticleId(id);
 			mv.addObject("signList",signList);
 		}

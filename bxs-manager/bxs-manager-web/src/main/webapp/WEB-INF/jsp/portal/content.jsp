@@ -216,13 +216,30 @@ function doLoginAndSign(){
 			             	 <a href="javascript:void(0)" class="a_buxuqianhsou">无需签收</a>
 			              </c:when> 
 				 		  <c:otherwise>
-				 		  	
 				 		  	 <c:choose> 
 			  						<c:when test="${empty hasSigned}"> 
 			  							 <a href="javascript:void(0)"  onclick="doSign()"  class="a_qianhsou">签收</a>
+			  						
+			  							<div class="n_fankui" id="n_fankui">
+							              	  <form action="#" method="post" autocomplete="off" onsubmit="return checkfk('n_fankui')">
+							                      <div class="n_in fl">
+							                      	<textarea name="message" id="message" class="message" placeholder="填写的反馈信息"></textarea>
+							                      </div>
+							                      <div class="n_in fl"><input type="submit" class="ss_sub" value="提交反馈" /></div>
+							                  </form>
+              							</div>
 			  						</c:when>
 			  						<c:otherwise>
 			  							 <a href="javascript:void(0)"  class="a_yiqianhsou">已签收</a>
+			  							 
+			  							 <div class="n_fankui" id="n_fankui">
+							              	  <form action="#" method="post" autocomplete="off" onsubmit="return checkfk('n_fankui')">
+							                      <div class="n_in fl">
+							                      	<textarea name="message" id="message" class="message" placeholder="填写的反馈信息"></textarea>
+							                      </div>
+							                      <div class="n_in fl"><input type="submit" class="ss_sub" value="提交反馈" /></div>
+							                  </form>
+              							</div>
 			  						</c:otherwise>
 			  				</c:choose>  
 				 		   </c:otherwise>

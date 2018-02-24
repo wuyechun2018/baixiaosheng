@@ -277,16 +277,38 @@ public class SoisController {
 	 * @return String
 	 */
 	@RequestMapping("/feedbackSave")
-	public String feedbackSave(Article article,HttpSession session){
+	public String feedbackSave(Article article,@RequestParam(value = "signDept", required = false)String[] signDeptArray,HttpSession session,HttpServletRequest request){
 		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
 		if(info!=null){
 			article.setPublishDeptId(info.getDeptId());
 			article.setPublishUserId(info.getId());
-			
 			//作者默认为上报人
 			article.setAuthor(info.getUserName());
 		}
-		articleService.save(article);
+		//文章主键Id
+		String keyId=articleService.save(article);
+		
+		//根据文章主键,删除原有的签收信息
+		signService.deleteSignByArticleId(keyId);
+		
+		//发送新的签收信息
+		if(signDeptArray!=null){
+			for (String sDept : signDeptArray) {
+				//签收信息
+				Sign sign=new Sign();
+				sign.setArticleId(keyId);
+				sign.setArticleType(article.getArticleType());
+				//签收部门ID
+				sign.setSignDeptId(sDept);
+				//签收人ID,签收操作的时候记录
+				sign.setSignUserId("");
+				//签收状态(0 未签收 1已签收)
+				sign.setSignState("0");
+				sign.setSignContent("");
+				sign.setSignDate(new Date());
+				signService.save(sign);
+			}
+		}
 		return "redirect:/sois/feedbackList";
 	}
 	
@@ -496,7 +518,9 @@ public class SoisController {
 	public ModelAndView feedbackEdit(@PathVariable String id) {
 		ModelAndView mv=new ModelAndView("sois/feedbackEdit");
 		Article article=articleService.getArticleById(id);
+		List<SignInfoVo> signList=signService.getSignListByArticleId(id);
 		mv.addObject("article",article);
+		mv.addObject("signList",signList);
 		return mv;
 	}
 	

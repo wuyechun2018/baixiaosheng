@@ -14,6 +14,7 @@
 <script type="text/javascript">
 var ctx = "${ctx}";
 var topicData=null;
+var deptData=null;
 </script>
 </head>
 <body>
@@ -77,6 +78,16 @@ var topicData=null;
 					</script>
 				</div>
 			</div>
+			
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">签收部门</label>
+				<div class="layui-input-block" id="qsbmDiv">
+					<%--
+					 <input type="checkbox" name="signDept" title="写作">
+				      --%>
+				</div>
+			</div>
+			
 			<div class="layui-form-item">
 				<div class="layui-input-block">
 					<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
@@ -104,6 +115,23 @@ var topicData=null;
 			    },
 			    success: function(data) {
 			    	topicData=data;
+			    }
+			})
+			
+			//发送请求，获取"签收部门",用于 加载下拉框
+			$.ajax({
+				cache: true,
+				type: "POST",
+				url:'${ctx}/dept/getListByPid?pid=1',
+				data:{
+					
+				},
+				async: false,
+			    error: function(request) {
+			        
+			    },
+			    success: function(data) {
+			    	deptData=data;
 			    }
 			}) 
 			
@@ -137,7 +165,38 @@ var topicData=null;
 		  var topicId="${article.topicId}";
 		  $('#topicId').val(topicId);
 		  form.render('select');
+		  
+		  var signDeptArray = new Array();
+		  <c:forEach items="${signList}" var="sign" varStatus="status" >  
+		  	signDeptArray.push("${sign.signDeptId}");  
+	       </c:forEach>
+		  
+		  
+		  //加载签收部门
+		  for(var i=0;i<deptData.length;i++){
+	    	  var deptObj=deptData[i];
+	    	  var deptId=deptObj.id;
+	    	  if(isChecked(signDeptArray,deptId)){
+		    	  $('#qsbmDiv').append('<input type="checkbox" name="signDept" checked="true" value="'+deptId+'" title="'+deptObj.text+'">');
+	    	  }else{
+		    	  $('#qsbmDiv').append('<input type="checkbox" name="signDept" value="'+deptId+'" title="'+deptObj.text+'">');
+	    	  }
+	      }
+		  form.render('checkbox');
 		});
+		
+		//是否选中
+		function isChecked(signDeptArray,deptId){
+			var checkStatus=false;
+			for(var i=0;i<signDeptArray.length;i++){
+				 var signDeptId=signDeptArray[i];
+		    	 if(deptId==signDeptId){
+		    		 checkStatus=true;		    		 
+		    		 break;
+		    	 }
+		    }
+			return checkStatus;
+		}
 </script>
 
 </body>

@@ -129,11 +129,18 @@ var ctx = "${ctx}";
     	{{d.LAY_TABLE_INDEX+1}}
 	</script>
 	
-	<!--操作-->
-	<script type="text/html" id="opBarTpl">
-		 <a lay-event="view" class="layui-btn layui-btn-normal layui-btn-xs" href="javascript:void(0);"  >预览</a>
-         <a lay-event="edit" class="layui-btn layui-btn-xs" href="javascript:void(0);">编辑</a>
-         <a lay-event="del" class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:void(0);">删除</a>
+	<!--操作,审核通过的，不可进行编辑和删除-->
+	  <script type="text/html" id="opBarTpl">
+		  <a title="预览页面" lay-event="view" class="layui-btn layui-btn-normal layui-btn-xs" href="javascript:void(0);">预览</a>
+	      <a title="查看反馈信息" lay-event="sign" class="layui-btn layui-btn-warm layui-btn-xs" href="javascript:void(0);">签收</a>
+		 
+		 {{#  if(d.checkState == 1){ }}
+    			 <a title="已审核通过，不可编辑"  class="layui-btn layui-btn-disabled layui-btn-xs" href="javascript:void(0);">编辑</a>
+         		 <a title="已审核通过，不可删除" class="layui-btn layui-btn-disabled layui-btn-xs" href="javascript:void(0);">删除</a>
+  		  {{#  } else { }}
+    			 <a lay-event="edit" class="layui-btn layui-btn-xs" href="javascript:void(0);">编辑</a>
+         		 <a lay-event="del" class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:void(0);">删除</a>
+  		  {{#  } }}
 	</script>
 	
 </body>
