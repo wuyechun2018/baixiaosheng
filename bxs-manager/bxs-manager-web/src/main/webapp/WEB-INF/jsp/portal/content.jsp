@@ -106,6 +106,33 @@ function doLoginAndSign(){
 }
 
 
+//提交反馈信息
+function submitFeedback(){
+	var articleId='${articleInfoVo.id}';
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/sign/submitFeedback',
+		data:{
+			articleId:articleId,
+			signContent:$('#message').val()
+		},
+		async: false,
+	    error: function(request) {
+	        
+	    },
+	    success: function(data) {
+	    	if(data.success==true){
+	    		alert(data.msg);
+	    		location.reload();
+	    	}else{
+	    		alert(data.msg);
+	    	}
+	    }
+	})
+}
+
+
 
 </script><!--end of bg-body script-->
 <div class="container">
@@ -219,27 +246,31 @@ function doLoginAndSign(){
 				 		  	 <c:choose> 
 			  						<c:when test="${empty hasSigned}"> 
 			  							 <a href="javascript:void(0)"  onclick="doSign()"  class="a_qianhsou">签收</a>
-			  						
-			  							<div class="n_fankui" id="n_fankui">
-							              	  <form action="#" method="post" autocomplete="off" onsubmit="return checkfk('n_fankui')">
-							                      <div class="n_in fl">
-							                      	<textarea name="message" id="message" class="message" placeholder="填写的反馈信息"></textarea>
-							                      </div>
-							                      <div class="n_in fl"><input type="submit" class="ss_sub" value="提交反馈" /></div>
-							                  </form>
-              							</div>
+			  							 <%-- 反馈信息显示反馈输入框 --%>
+			  							 <c:if test="${articleInfoVo.articleType=='6'}">
+					  							<div class="n_fankui" id="n_fankui">
+									              	  <form action="#" method="post" autocomplete="off" onsubmit="return checkfk('n_fankui')">
+									                      <div class="n_in fl">
+									                      	<textarea name="message" id="message" class="message" placeholder="填写的反馈信息">${signConent}</textarea>
+									                      </div>
+									                      <div class="n_in fl"><input type="button" onclick="submitFeedback()" class="ss_sub" value="提交反馈" /></div>
+									                  </form>
+		              							</div>
+	              						  </c:if>	
 			  						</c:when>
 			  						<c:otherwise>
 			  							 <a href="javascript:void(0)"  class="a_yiqianhsou">已签收</a>
-			  							 
-			  							 <div class="n_fankui" id="n_fankui">
-							              	  <form action="#" method="post" autocomplete="off" onsubmit="return checkfk('n_fankui')">
-							                      <div class="n_in fl">
-							                      	<textarea name="message" id="message" class="message" placeholder="填写的反馈信息"></textarea>
-							                      </div>
-							                      <div class="n_in fl"><input type="submit" class="ss_sub" value="提交反馈" /></div>
-							                  </form>
-              							</div>
+			  							 <%-- 反馈信息显示反馈输入框 --%>
+			  							 <c:if test="${articleInfoVo.articleType=='6'}">
+				  							 <div class="n_fankui" id="n_fankui">
+								              	  <form action="#" method="post" autocomplete="off" onsubmit="return checkfk('n_fankui')">
+								                      <div class="n_in fl">
+								                      	<textarea name="message" id="message" class="message" placeholder="填写的反馈信息">${signConent}</textarea>
+								                      </div>
+								                      <div class="n_in fl"><input type="button" onclick="submitFeedback()" class="ss_sub" value="提交反馈" /></div>
+								                  </form>
+	              							</div>
+              							</c:if>
 			  						</c:otherwise>
 			  				</c:choose>  
 				 		   </c:otherwise>

@@ -190,6 +190,7 @@ public class PortalController {
 				if(sInfo.getSignState()!=null&&"1".equals(sInfo.getSignState())){
 					mv.addObject("hasSigned",true);
 				}
+				mv.addObject("signConent",sInfo.getSignContent()==null?"":sInfo.getSignContent());
 			}
 		}
 		return mv;

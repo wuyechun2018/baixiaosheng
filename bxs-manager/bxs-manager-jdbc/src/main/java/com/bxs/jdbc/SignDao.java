@@ -275,4 +275,31 @@ public class SignDao {
 		return list;
 	}
 
+
+	/**
+	 * 
+	 * 提交反馈信息
+	 * @author: wyc
+	 * @createTime: 2018年2月24日 下午10:29:51
+	 * @history:
+	 * @param sign void
+	 */
+	public void submitFeedback(final Sign sign) {
+		String sql="UPDATE\n" +
+				"  t_sign\n" + 
+				"SET\n" + 
+				"  sign_content = ?\n" + 
+				"WHERE article_id = ? AND sign_dept_id=?";
+
+		jdbcTemplate.execute(sql,
+	     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
+	       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
+		         lobCreator.setClobAsString(ps,1,sign.getSignContent());
+		         ps.setString(2, sign.getArticleId());
+		         ps.setString(3, sign.getSignDeptId());
+	       }
+	     }
+	   );
+	}
+
 }

@@ -62,7 +62,22 @@ var ctx = "${ctx}";
 			            }
 			        })
 			        layui.layer.full(index);
-				}  
+				} 
+			  
+			  //弹出页面，显示反馈信息
+			  function showSignPage(url){
+			    	var index = layui.layer.open({
+			            title : "反馈信息",
+			            type : 2,
+			            area:  ['1002px', '500px'],
+			            content : url,
+			            maxmin: true,
+			            success : function(layero, index){
+			                
+			            }
+			        })
+			        layui.layer.full(index);
+				}
 			  
 			  table.on('tool(newsList)', function(obj){
 			        var layEvent = obj.event,
@@ -91,6 +106,9 @@ var ctx = "${ctx}";
 			        } else if(layEvent === 'view'){
 			        	var url=ctx+"/sois/show/"+data.id;
 			        	view(url);
+			        }else if(layEvent === 'sign'){
+			        	var url=ctx+"/sois/showFeedback/"+data.id;
+			        	showSignPage(url);
 			        }
 			    });
 			  
@@ -132,7 +150,7 @@ var ctx = "${ctx}";
 	<!--操作,审核通过的，不可进行编辑和删除-->
 	  <script type="text/html" id="opBarTpl">
 		  <a title="预览页面" lay-event="view" class="layui-btn layui-btn-normal layui-btn-xs" href="javascript:void(0);">预览</a>
-	      <a title="查看反馈信息" lay-event="sign" class="layui-btn layui-btn-warm layui-btn-xs" href="javascript:void(0);">签收</a>
+	      <a title="查看反馈信息" lay-event="sign" class="layui-btn layui-btn-warm layui-btn-xs" href="javascript:void(0);">反馈</a>
 		 
 		 {{#  if(d.checkState == 1){ }}
     			 <a title="已审核通过，不可编辑"  class="layui-btn layui-btn-disabled layui-btn-xs" href="javascript:void(0);">编辑</a>

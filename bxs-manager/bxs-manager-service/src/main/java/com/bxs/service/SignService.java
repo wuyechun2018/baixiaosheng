@@ -22,4 +22,6 @@ public interface SignService {
 
 	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 
+	void submitFeedback(Sign sign);
+
 }

@@ -72,5 +72,10 @@ public class SignServiceImpl implements SignService {
 		grid.setRows(signDao.pagerSignList(ePager,param));
 		return grid;
 	}
+
+	@Override
+	public void submitFeedback(Sign sign) {
+		signDao.submitFeedback(sign);
+	}
 	
 }

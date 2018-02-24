@@ -61,6 +61,30 @@ public class SignController extends BaseController {
 		
 	}
 	
+	/**
+	 * 
+	 * 提交反馈信息
+	 * @author: wyc
+	 * @createTime: 2018年2月24日 下午10:19:58
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/submitFeedback")
+	@ResponseBody
+	public Object submitFeedback(String articleId,String signContent,HttpSession session){
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			Sign sign=new Sign();
+			sign.setArticleId(articleId);
+			sign.setSignDeptId(info.getDeptId());
+			sign.setSignContent(signContent);
+			signService.submitFeedback(sign);
+			return new JsonMsg(true,"反馈信息已提交！");
+		}else{
+			return new JsonMsg(false,"请登录！");
+		}
+	}
+	
 	
 	/**
 	 * 

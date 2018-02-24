@@ -19,7 +19,7 @@ var ctx = "${ctx}";
 			layui.use('table', function(){
 			   $ = layui.jquery;
 			   var table = layui.table;
-			   var articleId='${articleId}';
+			   var articleId='${articleInfoVo.id}';
 			   
 			   var tableIns =  table.render({
 			    elem: '#newsList'

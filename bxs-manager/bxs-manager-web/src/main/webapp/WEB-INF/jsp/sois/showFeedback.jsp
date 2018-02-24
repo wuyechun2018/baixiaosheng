@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>签收信息列表</title>
+<title>反馈信息列表</title>
 <link rel="stylesheet" href="${ctx}/resources/js-lib/layui/css/layui.css">
 <link rel="stylesheet" href="${ctx}/resources/sois/css/global.css">
 <script type="text/javascript">
@@ -19,7 +19,7 @@ var ctx = "${ctx}";
 			layui.use('table', function(){
 			   $ = layui.jquery;
 			   var table = layui.table;
-			   var articleId='${articleId}';
+			   var articleId='${articleInfoVo.id}';
 			   
 			   var tableIns =  table.render({
 			    elem: '#newsList'
@@ -47,15 +47,39 @@ var ctx = "${ctx}";
 			    	       }
 			    	 }
 			      }
+			      ,{title: '操作',width:210, toolbar: '#opBarTpl',align:'center'}
 			    
 			    ]]
 			    ,page: true
 			  });
+			   
+			   function view(text){
+			    	layui.layer.open({
+			            title : '反馈信息',
+			            type : 1,
+			            area:  ['700px', '300px'],
+			            content : '<div style="padding: 5px 10px;">'+text+'</div>',
+			            maxmin: false,
+			            success : function(layero, index){
+			                
+			            }
+			        })
+			        
+				}
+			   
+			   table.on('tool(newsList)', function(obj){
+			        var layEvent = obj.event,
+			        data = obj.data;
+			        if(layEvent === 'view'){
+			        	view(data.signContent);
+			  	  }
+			   })
+			   
 			});
 </script>
 	<div class="admin-main">
 		<fieldset class="layui-elem-field">
-			<legend>签收信息列表</legend>
+			<legend>收到反馈信息列表</legend>
 			<div class="layui-field-box">
 				<table class="layui-table" lay-skin="line" id="newsList" lay-filter="newsList">
 				</table>
@@ -70,7 +94,11 @@ var ctx = "${ctx}";
 	
 	<!--操作,审核通过的，不可进行编辑和删除-->
 	  <script type="text/html" id="opBarTpl">
-		  <a title="预览页面" lay-event="view" class="layui-btn layui-btn-normal layui-btn-xs" href="javascript:void(0);">预览</a>
+          {{#  if(d.signContent !=''){ }}
+    			  <a title="预览页面" lay-event="view" class="layui-btn layui-btn-normal layui-btn-xs" href="javascript:void(0);">查看反馈信息</a>
+  		  {{#  } else { }}
+    			  <a title="预览页面"  class="layui-btn layui-btn-disabled layui-btn-xs" href="javascript:void(0);">无反馈信息</a>
+  		  {{#  } }}
 	</script>
 	
 </body>
