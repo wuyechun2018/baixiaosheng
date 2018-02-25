@@ -85,7 +85,16 @@ $(function(){
 	 			
 	 			<td rowspan="3">
 	 				<input type="hidden" id="article_image_url" value="${article.articleImageUrl}" name="articleImageUrl" style="width:300px;" />
-	 				<img id="view_image" alt="配图预览"  src="${article.articleImageUrl}" noresize="true" style="width:100px;height:70px;background-color:#ccc;border:1px solid #333">
+	 				
+	 				
+	 				<c:if test="${empty article.articleImageUrl }">  
+ 						<img id="view_image" alt="无配图"  src="${ctx}/resources/images/nopic.png" noresize="true" style="width:100px;height:70px;background-color:#ccc;border:1px solid #333">
+					</c:if>  
+	 				
+	 				<c:if test="${!empty article.articleImageUrl }">  
+ 						<img id="view_image" alt="配图预览"  src="${article.articleImageUrl}" noresize="true" style="width:100px;height:70px;background-color:#ccc;border:1px solid #333">
+					</c:if>
+	 				
 	 			</td>
 	 			
 	 		</tr>
@@ -101,8 +110,9 @@ $(function(){
 	 		<tr>
 				<th>文章配图：</th>	
 				<td style="width:360px;">
-	 				<input name="preimage"   class="easyui-filebox" style="width:310px;" data-options="buttonText:'选择文件', accept:'image/jpeg', prompt : '请选择一个图片类型的文件'"/>
-	 				&nbsp;<a href="javascript:void(0)" onclick="preView()" style="font-size:15px;">预览</a>
+	 				<input name="preimage" value="${article.articleImageUrl}"  class="easyui-filebox" style="width:310px;" data-options="onChange:function(){preView()},buttonText:'选择文件', accept:'image/jpeg', prompt : '请选择一个图片类型的文件'"/>
+	 				<%--
+	 				&nbsp;<a href="javascript:void(0)" onclick="preView()" style="font-size:15px;">预览</a> --%>
 	 			</td>
 	 			
 	 		</tr>
