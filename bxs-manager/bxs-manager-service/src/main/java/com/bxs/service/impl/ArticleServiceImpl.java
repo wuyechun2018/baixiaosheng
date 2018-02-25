@@ -31,6 +31,8 @@ public class ArticleServiceImpl implements ArticleService {
 			article.setUpdateDate(new Date());
 			//一些原有属性要保存
 			Article existArticle=getArticleById(article.getId());
+			//文章类型
+			article.setArticleType(existArticle.getArticleType());
 			//创建时间
 			article.setCreateDate(existArticle.getCreateDate());
 			//查看次数
