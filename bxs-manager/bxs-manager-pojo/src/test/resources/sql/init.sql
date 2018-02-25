@@ -44,6 +44,8 @@ SELECT
       t.check_state,
       t.front_slider_state,
       t.create_date,
+      t.update_date,
+      t.top_count,
       t.publish_date,
       t.data_state,
       S.topic_name,

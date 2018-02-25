@@ -218,7 +218,7 @@ function submitFeedback(){
             </div>
        </div>
        
-       
+       <c:if test="${articleInfoVo.articleType=='5'||articleInfoVo.articleType=='6'}">
         <!--登陆签收-->
        <div class="clearfix" style="margin:20px 38px;">
        	<div class="denglu_k clearfix">
@@ -310,26 +310,10 @@ function submitFeedback(){
 	                    </ul>
                 	</div>
         		</c:forEach>
-                
-                <%--
-                <div class="qs_td clearfix">
-                	<ul>
-                    	<li class="qs_bumen">法制科</li>
-                        <li class="qs_time">2017-8-12 8:00 54:12</li>
-                        <li class="qs_zt"><font class="n_qs">已签收</font></li>
-                    </ul>
-                </div>
-                <div class="qs_td clearfix">
-                	<ul>
-                    	<li class="qs_bumen">宣传科</li>
-                        <li class="qs_time">2017-8-12 8:00 54:12</li>
-                        <li class="qs_zt"><font class="n_qs">已签收</font></li>
-                    </ul>
-                </div>
-                 --%>
             </div>
        </div>
         
+       </c:if> 
     </div>
 </div>
 

@@ -88,6 +88,33 @@ function loadArticleByTopic(topicCode,page,rows,isSytj){
 	return articleData;
 }
 
+
+//根据栏目编码加载文章-所有的文章信息
+function loadArticleAllInfoByTopic(topicCode,page,rows,isSytj){
+	var articleData=null;
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/article/loadArticleByTopic',
+		data:{
+			topicCode:topicCode,
+			//首页推荐
+			frontSliderState:isSytj,
+			page:page,
+			rows:rows
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	articleData=data;
+	    }
+	})
+	return articleData;
+}
+
+
 //根据栏目编码加载文章
 function loadImageArticleByTopic(topicCode,page,rows,isSytj){
 	var articleData=null;
@@ -336,7 +363,7 @@ $(document).ready(function() {
   var lddtData=loadArticleByTopic("LDDT",'1','10','');
   showArticle('LDDT',lddtData);
   //首页推荐（ZHYW 中有首推标志的）
-  var sytjData=loadArticleByTopic("ZHYW",'1','5','1');
+  var sytjData=loadArticleAllInfoByTopic("ZHYW",'1','5','1');
   showSytjArticle(sytjData);
   //通知
   var tzData=loadArticleByTopic("TZ",'1','3','');
