@@ -45,9 +45,10 @@ function goback(){
 $(function(){
 	//栏目选择 下拉树
 	$('#topicComboTree').combotree({
-		url : '${ctx}/topic/getListByPid?pid=0',
+		url : '${ctx}/topic/getListByPidAndTopicName?pid=0',
+		queryParams:{topicName:'图片'},		
 		onBeforeExpand : function(node, param) {
-			   $('#topicComboTree').combotree("tree").tree("options").url =ctx+ "/topic/getListByPid?pid=" + node.id;
+			   $('#topicComboTree').combotree("tree").tree("options").url =ctx+ "/topic/getListByPidAndTopicName?pid=" + node.id;
 			},
 		width:'305',
 	    required: true,

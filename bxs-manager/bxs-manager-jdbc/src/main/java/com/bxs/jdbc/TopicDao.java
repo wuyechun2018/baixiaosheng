@@ -139,6 +139,22 @@ public class TopicDao {
 		}
 	}
 
+	/**
+	 * 
+	 * 根据父主键和栏目名称获取栏目数据
+	 * @author: wyc
+	 * @createTime: 2018年2月25日 上午11:22:09
+	 * @history:
+	 * @param pid
+	 * @param topicName
+	 * @return List<Topic>
+	 */
+	public List<Topic> getListByPidAndTopicName(String pid, String topicName) {
+		String sql="SELECT * FROM t_topic T WHERE T.pid=? AND (t.id=1 OR T.topic_name LIKE ? ) ORDER BY T.DISPLAY_ORDER";
+		List<Topic> list = jdbcTemplate.query(sql,new Object[]{pid,"%"+topicName+"%"},new BeanPropertyRowMapper(Topic.class));
+		return list;
+	}
+
 	
 
 }

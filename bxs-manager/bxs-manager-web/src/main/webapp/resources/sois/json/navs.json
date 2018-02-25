@@ -83,13 +83,13 @@
 				{
 					"title": "警务视频列表",
 					"icon": "&#xe62d;",
-					"href": "list",
+					"href": "videoList",
 					"spread": false
 				},
 				{
 					"title": "添加警务视频",
 					"icon": "&#xe681;",
-					"href": "list",
+					"href": "videoAdd",
 					"spread": false
 				}
 			]

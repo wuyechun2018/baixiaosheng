@@ -7,6 +7,8 @@ public interface TopicService {
 
 	List<EUITree> getListByPid(String pid);
 	
+	List<EUITree> getListByPidAndName(String pid, String topicName);
+	
 	
 	List<EUITree> getSignListByPid(String pid);
 	
@@ -52,6 +54,9 @@ public interface TopicService {
 	 * @return Topic
 	 */
 	Topic getTopicByCode(String topicCode);
+
+
+	
 
 	
 

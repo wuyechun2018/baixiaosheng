@@ -212,9 +212,36 @@ public class SoisController {
 			article.setPublishUserId(info.getId());
 			//作者默认为上报人
 			article.setAuthor(info.getUserName());
+			//消息来源
+			article.setNewsfrom(info.getDeptName()+"上报");
 		}
 		articleService.save(article);
 		return "redirect:/sois/list";
+	}
+	
+	/**
+	 * 
+	 * 信息上报
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午10:42:01
+	 * @history:
+	 * @param article
+	 * @param session
+	 * @return String
+	 */
+	@RequestMapping("/videoSave")
+	public String videoSave(Article article,HttpSession session){
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			article.setPublishDeptId(info.getDeptId());
+			article.setPublishUserId(info.getId());
+			//作者默认为上报人
+			article.setAuthor(info.getUserName());
+			//消息来源
+			article.setNewsfrom(info.getDeptName()+"上报");
+		}
+		articleService.save(article);
+		return "redirect:/sois/videoList";
 	}
 	
 	
@@ -236,6 +263,8 @@ public class SoisController {
 			article.setPublishUserId(info.getId());
 			//作者默认为上报人
 			article.setAuthor(info.getUserName());
+			//消息来源
+			article.setNewsfrom(info.getDeptName()+"上报");
 		}
 		//文章主键Id
 		String keyId=articleService.save(article);
@@ -284,6 +313,8 @@ public class SoisController {
 			article.setPublishUserId(info.getId());
 			//作者默认为上报人
 			article.setAuthor(info.getUserName());
+			//消息来源
+			article.setNewsfrom(info.getDeptName()+"上报");
 		}
 		//文章主键Id
 		String keyId=articleService.save(article);
@@ -489,6 +520,52 @@ public class SoisController {
 	@RequestMapping("/feedbackList")
 	public Object feedbackList() {
 		return "/sois/feedbackList";
+	}
+	
+	
+	/**
+	 * 
+	 * 信息报送列表-警务视频
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午4:05:54
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/videoList")
+	public Object videoList() {
+		return "/sois/videoList";
+	}
+	
+	
+	/**
+	 * 
+	 * 信息报送列表-添加警务视频
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午4:05:54
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/videoAdd")
+	public Object videoAdd() {
+		return "/sois/videoAdd";
+	}
+	
+	
+	/**
+	 * 
+	 * 信息报送列表-警务视频编辑页面
+	 * @author: wyc
+	 * @createTime: 2018年2月25日 上午10:33:30
+	 * @history:
+	 * @param id
+	 * @return ModelAndView
+	 */
+	@RequestMapping("/videoEdit/{id}")
+	public ModelAndView videoEdit(@PathVariable String id) {
+		ModelAndView mv=new ModelAndView("sois/videoEdit");
+		Article article=articleService.getArticleById(id);
+		mv.addObject("article",article);
+		return mv;
 	}
 	
 	

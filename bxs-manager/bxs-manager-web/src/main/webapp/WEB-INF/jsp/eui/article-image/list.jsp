@@ -56,7 +56,7 @@ function topFun(id){
 
 //文章预览
 function viewFun(id){
-	location.href=ctx+"/article/showArticle?id="+id;
+	location.href=ctx+"/articleImage/showArticle?id="+id;
 }
 
 //文章审核
@@ -102,10 +102,11 @@ function deleteFun(id){
 $(function(){
 	 $('#leftTree').tree({
 			checkbox : false,
-			url : '${ctx}/topic/getListByPid?pid=0',
+			url : '${ctx}/topic/getListByPidAndTopicName?pid=0',
+			queryParams:{topicName:'图片'},		
 			method : 'post',
 			onBeforeExpand : function(node, param) {
-			   $('#leftTree').tree('options').url = ctx+ "/topic/getListByPid?pid=" + node.id;
+			   $('#leftTree').tree('options').url = ctx+ "/topic/getListByPidAndTopicName?pid=" + node.id;
 			},
 			onClick : function(node) {
 				//此处给全局变量赋值
@@ -158,7 +159,7 @@ $(function(){
 		        	  }
 		          }}, 
 		          {field:'viewCount',title: '查看次数',align: 'center',width: 50},
-		          {field:'id',title: '操作',align: 'center',width: 100, formatter:function(val,rec){
+		          {field:'id',title: '操作',align: 'center',width: 120, formatter:function(val,rec){
 		        	 // return "<span class='btn_a_top'><a href='javascript:void(0)' onclick=editFun('"+val+"') >置顶</a></span><span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span><span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
 		        	  return "<span class='btn_a_top'><a href='javascript:void(0)' onclick=topFun('"+val+"') >置顶</a></span><span class='btn_a_front'><a href='javascript:void(0)' onclick=toFront('"+val+"') >首推</a></span><span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span><span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
 		          }}
