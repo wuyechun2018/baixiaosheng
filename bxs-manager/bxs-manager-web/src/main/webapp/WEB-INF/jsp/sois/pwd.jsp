@@ -33,7 +33,7 @@ var ctx = "${ctx}";
 <body class="childrenBody">
 <form class="layui-form layui-row changePwd">
 	<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
-		<div class="layui-input-block layui-red pwdTips">旧密码,新密码输入一致才能提交</div>
+		<div class="layui-input-block layui-red pwdTips">请记录好修改后的新密码，忘记密码请联系管理员重置</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">用户名</label>
 			<div class="layui-input-block">
@@ -41,15 +41,21 @@ var ctx = "${ctx}";
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">旧密码</label>
+			<label class="layui-form-label">登录名</label>
 			<div class="layui-input-block">
-				<input type="password" value="" placeholder="请输入旧密码" lay-verify="required|oldPwd" class="layui-input pwd">
+				<input type="text" value="${userinfo.loginName}" disabled class="layui-input layui-disabled">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">原密码</label>
+			<div class="layui-input-block">
+				<input type="password" id="oldPwd" value="" placeholder="请输入原密码" lay-verify="required|oldPwd" class="layui-input pwd">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">新密码</label>
 			<div class="layui-input-block">
-				<input type="password" value="" placeholder="请输入新密码" lay-verify="required|newPwd" id="oldPwd" class="layui-input pwd">
+				<input type="password" id="newPwd" value="" placeholder="请输入新密码" lay-verify="required|newPwd"  class="layui-input pwd">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -67,6 +73,6 @@ var ctx = "${ctx}";
 	</div>
 </form>
 <script type="text/javascript" src="${ctx}/resources/js-lib/layui/layui.js"></script>
-<script type="text/javascript" src="${ctx}/resources/user.js"></script>
+<script type="text/javascript" src="${ctx}/resources/sois/js/pwd.js"></script>
 </body>
 </html>

@@ -96,6 +96,58 @@ public class UserController extends BaseController {
 		return "/login";
 	}
 	
+	/**
+	 * 
+	 * 验证密码是否正确
+	 * @author: wyc
+	 * @createTime: 2018年2月26日 下午7:03:03
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/isPwdCorrect")
+	@ResponseBody
+	public Object isPwdCorrect(String password,HttpSession session){
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			if(info.getLoginPassword().equals(EncryptionUtil.getMd5String(password))){
+				return new JsonMsg(true,"密码正确");
+			}else{
+				return new JsonMsg(false,"密码错误，请重新输入！");
+			}
+		}else{
+			return new JsonMsg(false,"请重新登录");
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * 修改密码
+	 * @author: wyc
+	 * @createTime: 2018年2月26日 下午7:03:03
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/changePwd")
+	@ResponseBody
+	public Object changePwd(String oldPwd,String newPwd,HttpSession session){
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			//判断原密码输入是否正确，需要重新从数据库中加载用户信息
+			SysUser user=userService.getUserById(info.getId());
+			if(user.getLoginPassword().equals(EncryptionUtil.getMd5String(oldPwd))){
+				userService.resetPwd(info.getId(),EncryptionUtil.getMd5String(newPwd));
+				info.setLoginPassword(newPwd);
+				//session.removeAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+				return new JsonMsg(true,"密码修改成功,请使用新密码重新登录！");
+			}else{
+				return new JsonMsg(false,"原密码错误，请重新输入！");
+			}
+		}else{
+			return new JsonMsg(false,"请重新登录");
+		}
+	}
+	
 	
 	/**
 	 * 
