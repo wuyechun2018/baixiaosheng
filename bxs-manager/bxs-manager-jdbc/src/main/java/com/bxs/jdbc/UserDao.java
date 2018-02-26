@@ -352,6 +352,21 @@ public class UserDao {
 		String sql="UPDATE T_USER T SET T.login_name=? WHERE ID=?";
 		jdbcTemplate.update(sql,new Object[]{user.getLoginName(),user.getId()});
 	}
+
+
+	/**
+	 * 
+	 * 重置用户密码
+	 * @author: wyc
+	 * @createTime: 2018年2月26日 下午4:51:30
+	 * @history:
+	 * @param id
+	 * @param password void
+	 */
+	public void resetPwd(String id, String password) {
+		String sql="UPDATE T_USER T SET T.login_password=? WHERE ID=?";
+		jdbcTemplate.update(sql,new Object[]{password,id});
+	}
 	
 	
 }

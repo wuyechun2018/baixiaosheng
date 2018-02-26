@@ -26,4 +26,6 @@ public interface UserService {
 
 	public void updateUserInfo(SysUser user);
 
+	public void resetPwd(String id, String password);
+
 }

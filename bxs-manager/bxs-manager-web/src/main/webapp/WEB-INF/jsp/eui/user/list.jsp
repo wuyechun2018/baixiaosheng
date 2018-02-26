@@ -31,6 +31,28 @@ function submitForm(){
    }
 };
 
+//重置密码
+function resetPwd(){
+	$.messager.confirm("删除确认", "您确认重置该用户的密码吗？(重置密码为：123456)", function (action) {
+        if (action) {
+			$.ajax({
+		        type: "POST",
+		        url:'${ctx}/user/resetPwd',
+		        data: {
+		        	id:$('#id').val()
+		        },
+		        success: function (data) {
+		        	$.messager.alert('提示信息',data.msg);
+		        },
+		        error: function(data) {
+		            alert("error:"+data.responseText);
+		         }
+		  		});
+        }
+	}) 
+}
+
+
 //点击"添加按钮"
 function addFun(){
 	$('#addWin').panel({
@@ -203,7 +225,7 @@ function doQuery(){
             <legend>信息查询</legend>
             <table style="width:100%;">
 				<tr>
-					<td style="width:100px;text-align: right;margin-right: 5px;">姓名:</td>
+					<td style="width:100px;text-align: right;margin-right: 5px;">姓名/登录名:</td>
 					<td style="width:200px;text-align: left;">
 						<input id="loginOrUserName" name="loginOrUserName" style="width:150px">
 					</td>
@@ -305,7 +327,7 @@ function doQuery(){
 	    	<table style="width:100%;">
     		<tr>
     			<td style="width:20%;text-align: right;padding-left: 5px;padding-right: 5px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="submitForm()">保存</a></td>
-    			<td style="width:20%;text-align: center;padding-left: 5px;padding-right: 5px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="clearForm()">重置密码</a></td>
+    			<td style="width:20%;text-align: center;padding-left: 5px;padding-right: 5px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="resetPwd()">重置密码</a></td>
     			<td style="width:20%;text-align: left;padding-left: 5px;padding-right: 5px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearForm()">取消</a></td>
     		</tr>
 		 	</table>

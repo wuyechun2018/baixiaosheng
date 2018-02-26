@@ -166,6 +166,24 @@ public class UserController extends BaseController {
 	
 	/**
 	 * 
+	 * 重置密码
+	 * @author: wyc
+	 * @createTime: 2018年2月26日 下午4:47:35
+	 * @history:
+	 * @return JsonMsg
+	 */
+	@RequestMapping("/resetPwd")
+	@ResponseBody
+	public JsonMsg resetPwd(String id){
+		String password="123456";
+		userService.resetPwd(id,EncryptionUtil.getMd5String(password));
+		return new JsonMsg(true,"密码已重置，请使用新密码（"+password+"）登录");
+	}
+	
+	
+	
+	/**
+	 * 
 	 * 编辑用户
 	 * @author: wyc
 	 * @createTime: 2018年1月23日 下午9:42:16

@@ -89,4 +89,9 @@ public class UserServiceImpl implements UserService {
 	public void updateUserInfo(SysUser user) {
 		userDao.updateUserInfo(user);
 	}
+
+	@Override
+	public void resetPwd(String id, String password) {
+		userDao.resetPwd(id,password);
+	}
 }
