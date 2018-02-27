@@ -9,7 +9,7 @@
 <LINK href="${ctx}/resources/portal/images/logo.ico" type="image/x-icon" rel="shortcut icon"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${topic.topicName}-马鞍山市交警支队</title>
 <link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
-<link href="${ctx}/resources/portal/css/nei.css" rel="stylesheet" />
+<link href="${ctx}/resources/portal/css/nei-v2.css" rel="stylesheet" />
 
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jqpaginator.min.js"></script>
@@ -17,14 +17,22 @@
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.bcat.bgswitcher.js"></script>
 
 <style type="text/css">
-.highlight{
-background:#FF0;
-color:#E00;
+
+.cdateSpan{
+	float: right;
+    color: #999;
+    font-size: 14px;
 }
 
 .pagination2 {
     height: 30px;
 }
+
+.highlight{
+background:#FF0;
+color:#E00;
+}
+
 
 .pagination2 a:HOVER {
     text-decoration: none;
@@ -83,6 +91,13 @@ color:#E00;
     	return articleData;
     }
    
+   //自定义高亮
+   function myHighlight(srcStr,keyword){
+	   var htmlReg = new RegExp(keyword, "ig");
+	   var tarStr=srcStr.replace(htmlReg,"<span style='color:#E00;font-size:14px;'>"+keyword+"</span>")
+  	   return tarStr;
+   }
+   
    function showArticle(dispDivId,articleData,nowpage){
 	   $('#'+dispDivId).html('');
 	    var ulId="";
@@ -99,6 +114,8 @@ color:#E00;
 		  }else{
 			  articleTitlePart=articleTitle;
 		  }
+		  //var keyword='${keys}';
+		  //articleTitlePart=myHighlight(articleTitlePart,keyword);
 		  
 		  var emHtml='<em></em>';
 		  if(i>4||nowpage>1){
@@ -109,18 +126,18 @@ color:#E00;
 		   		    count++;
 		   			ulId=dispDivId+"-"+count
 		   			if(count==sumCount){
-		   				$('#'+dispDivId).append('<ul  style="border-bottom: inherit;" id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span>'+createDate+'</span></li>');	
+		   				$('#'+dispDivId).append('<ul  style="border-bottom: inherit;" id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span class="cdateSpan">'+createDate+'</span></li>');	
 		   			}else{
-		   				$('#'+dispDivId).append('<ul  id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span>'+createDate+'</span></li>');	
+		   				$('#'+dispDivId).append('<ul  id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li>');	
 		   			}
 	   
 	   			
 	   		}else if(i%6==5){
-	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span>'+createDate+'</span></li><ul/>');
+	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li><ul/>');
 	   			
 	   			$('#'+dispDivId).append('<DIV style="BORDER-TOP: #e4e6eb 1px dashed; OVERFLOW: hidden; HEIGHT: 1px"></DIV>');
 	   		}else{
-	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span>'+createDate+'</span></li>');
+	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li>');
 	   		}
       }
     	
@@ -194,7 +211,9 @@ function loadList(keys){
 		    page: '<a href="javascript:void(0);">{{page}}<\/a>',
 		    onPageChange: function (n) {
 		    	var articleData=loadArticleByTopic(topicCode,n,'18','',keys);
-		   		 showArticle('ATICLE_LIST',articleData,n);
+		   		showArticle('ATICLE_LIST',articleData,n);
+		   		//高亮
+		   		highlightshow(keys);
 		    }
 		});
 	 
@@ -263,12 +282,27 @@ $(document).ready(function() {
     </div>
     
     <div class="nav-path">
+    	<c:if test="${empty keys}">
         <div class="dqwz">当前网站位置：<a href="${ctx}/portal/index"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="${ctx}/portal/list?topicCode=${topic.topicCode}"  title="${topic.topicName}" class="CurrChnlCls"><span id="span_topicName">${topic.topicName}</span></a></div>
+    	</c:if>
+    	
+    	<c:if test="${!empty keys}">
+        <div class="dqwz">当前网站位置：<a href="${ctx}/portal/index"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<span id="span_topicName">搜索-<span style="color:red;">${keys}</span></span></div>
+    	</c:if>
     </div>
 <div class="neicontent">
     	<div class="nei_top">
-    		<input id="topicCode" value="${topic.topicCode}" type="hidden"/>
-        	<h1 id="h1_topicName">${topic.topicName}</h1>
+    		<c:if test="${empty keys}">
+       		 	<input id="topicCode" value="${topic.topicCode}" type="hidden"/>
+        		<h1 id="h1_topicName">${topic.topicName}</h1>
+    	</c:if>
+    	
+    	<c:if test="${!empty keys}">
+      			<input id="topicCode" value="${topic.topicCode}" type="hidden"/>
+        		<h1 id="h1_topicName">搜索列表</h1>
+    	</c:if>
+    	
+    		
             <div class="n_search fr" id="secrchBox1">
             	<form action="#" method="post" autocomplete="off" onsubmit="return check('secrchBox1')">
             	<div class="n_in fl">
