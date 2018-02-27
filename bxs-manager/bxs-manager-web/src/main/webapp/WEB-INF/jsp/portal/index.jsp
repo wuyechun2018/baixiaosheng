@@ -275,7 +275,38 @@ function showLink(dispDivId,linkData){
 	$('#'+dispDivId).append('<div class="clear_f"></div>');
 }
 
+//展示专题导航
+function loadZtdh(){
+	var ztdhData=loadLinkByTypeCode('ZTDH',1,6);
+	for(var i=0;i<ztdhData.rows.length;i++){
+		var linkObj=ztdhData.rows[i]
+		var linkUrl='';
+		var linkImageUrl='';
+		if(linkObj&&linkObj.linkUrl){
+			if(linkObj.linkUrl.indexOf('http')>-1){
+				linkUrl=linkObj.linkUrl;
+			}else{
+				//如果不是包含"http"的绝对路径，则添加当前项目路径
+				linkUrl=ctx+linkObj.linkUrl;
+			}
+		}
+		var linkName=''
+		if(linkObj&&linkObj.linkName){
+			linkName=linkObj.linkName;
+		}
+		if(linkObj&&linkObj.linkImageUrl){
+			linkImageUrl=linkObj.linkImageUrl;
+		}
+		
+		var targetType="_blank";
+		if(linkObj&&linkObj.linkTargetType){
+			targetType=linkObj.linkTargetType;
+		}
+		$('#ZTDH').append('<li><a target="'+targetType+'" href="'+linkUrl+'" title="'+linkName+'" ><img src="'+linkImageUrl+'" /></a></li>');
+	}
+	jQuery(".index_zhuanti").slide({mainCell:"ul",autoPlay:true,effect:"leftMarquee",vis:4,interTime:50});
 
+}
 
 //展示底部导航
 function showDh(){
@@ -483,6 +514,9 @@ $(document).ready(function() {
   
   //快速入口,又叫快速导航
   loadKsdh();
+  
+  //专题导航
+  loadZtdh();
   
   //直达
   //loadZD();
@@ -1002,9 +1036,10 @@ $(document).ready(function() {
         </div>
         <div class="clear_f"></div>
     </div>
-    <%--专题 --%>
+    <%--专题导航 --%>
     <div class="index_zhuanti mar10">
-    	<ul class="picList">
+    	<ul class="picList" id="ZTDH">
+    		<%--
         	<li><a href="#"><img src="${ctx}/resources/portal/images/zhuanti.jpg" /></a></li>
             <li><a href="#"><img src="${ctx}/resources/portal/images/zhuanti.jpg" /></a></li>
             <li><a href="#"><img src="${ctx}/resources/portal/images/zhuanti.jpg" /></a></li>
@@ -1013,12 +1048,15 @@ $(document).ready(function() {
             <li><a href="#"><img src="${ctx}/resources/portal/images/zhuanti.jpg" /></a></li>
             <li><a href="#"><img src="${ctx}/resources/portal/images/zhuanti.jpg" /></a></li>
             <li><a href="#"><img src="${ctx}/resources/portal/images/zhuanti.jpg" /></a></li>
+        	--%>
         </ul>
     </div>
     
+    <%--
     <script type="text/javascript">
 		jQuery(".index_zhuanti").slide({mainCell:"ul",autoPlay:true,effect:"leftMarquee",vis:4,interTime:50});
-	</script>
+	</script> 
+	--%>
     
     <div class="index2 mar10">
     	<div class="index_news fl ">
