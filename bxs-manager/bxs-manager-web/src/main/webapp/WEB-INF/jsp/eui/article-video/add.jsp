@@ -17,7 +17,7 @@
 //预览配图
 function preView(){
 	$('#article_form').form('submit',{
-		url:'${ctx}/article/preView',
+		url:'${ctx}/article/preViewImage',
         onSubmit:function(op){
         	return true;
         },

@@ -123,8 +123,12 @@ var topicData=null;
 		          
 		        }
 		        ,done: function(res){
-		        	articleImageUrl.value=res.msg;
+		        	//var obj=eval('('+ res+ ')');
+		        	//$('#articleImageUrl').val(obj.msg);
+		        	//articleImageUrl.value=res.msg;
+		        	$('#articleImageUrl').val(res.msg);
 		        	//$('#viewImg').attr('src', res.msg);
+		        	
 		        }
 		        ,error: function(){
 		          

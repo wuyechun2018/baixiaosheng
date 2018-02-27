@@ -1,6 +1,7 @@
 package com.bxs.controller;
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
@@ -310,6 +312,37 @@ public class ArticleController extends BaseController{
 			e.printStackTrace();
 		}
 		return new JsonMsg(true,realPath+fileName);
+	}
+	
+	
+	
+	/**
+	 * 
+	 * 图片预览-另一种写法，解决IE中返回application/json弹出下载框问题
+	 * @author: wyc
+	 * @createTime: 2018年1月29日 下午8:38:57
+	 * @history:
+	 * @return Object
+	 * @throws IOException 
+	 */
+	@RequestMapping("/preViewImage")
+	public void preViewImage(MultipartFile preimage,HttpServletResponse response) throws IOException{
+		String fileName=new DateTime().toString("yyyyMMddHHmmss")+"/"+preimage.getOriginalFilename();
+		String realPath="/media-data/image/";
+		File tarFile = new File(realPath, fileName);
+		if (!tarFile.exists()) {
+			tarFile.mkdirs();
+		}
+		try {
+			preimage.transferTo(tarFile);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		response.setContentType("text/html;charset=UTF-8");
+		Writer writer = response.getWriter();
+		writer.write("{\"success\": \""+true+"\",\"msg\":\'"+realPath+fileName+"\'}");
 	}
 	
 	/**

@@ -5,6 +5,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%--放置的位置要特别注意,不能放在第三行,否则会有一些样式问题 --%>
 <%@ include file="/WEB-INF/jsp/base/easyui.jsp" %>
+<script type="text/javascript" src="${ctx}/resources/js-lib/jquery/ajaxfileupload.js"></script>
+
 <title>友情链接</title>
 <script type="text/javascript">
 //当前选中的左边树的节点ID,即单位ID，它是一个全局变量
@@ -55,6 +57,24 @@ function loadAddLinkTree(){
 }
 
 
+//图片上传
+function preView(){
+  $.ajaxFileUpload({
+          url:'${ctx}/article/preViewImage',
+          secureuri:false ,
+          fileElementId:'filebox_file_id_1',
+          dataType: 'text',
+          success: function (data){
+        	 var dataObj=eval("(" + data + ")");
+             $('#view_image').attr('src',dataObj.msg);
+             $('#article_image_url').val(dataObj.msg);
+          },
+          error: function (data, status, e){
+        	  debugger;
+          }
+      });
+    return false;
+}
 
 
 
@@ -156,7 +176,8 @@ function submitForm(){
 		    $("#dgTable").datagrid('reload');
          },
          error: function(data) {
-             alert("error:"+data.responseText);
+             //alert("error:"+data.responseText);
+             //ReferenceError: obj is not defined
           }
    		});
    }
@@ -285,7 +306,7 @@ function loadLeftTree(){
 	
 	 //中间表格
 	var dgTableHeight=$(window).height()-$('.searchBox').height()-28;
-    dgTable=$('#dgTable').datagrid({  
+    $('#dgTable').datagrid({  
 		url:ctx+'/link/pagerList',
 		method:'post',
 	    queryParams: {
@@ -365,62 +386,68 @@ function loadLeftTree(){
 </div>
  
  <%--点击"添加"弹出的窗口 --%>
- <div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:460px;height:370px;padding:10px;">
+ <div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:680px;height:390px;padding:10px;">
 	    <form id="addForm" method="post">
 		   	<table class="isingelTable">
-		   		<tr>
-		   			<th>导航类型：</th>
-		   			<td>
-		   				<input type="hidden" name="id" ></input>
-		   				<input style="width:250px;"  class="easyui-textbox" type="text" id="addlinkComboTree" name="linkTypeId" data-options="required:false"></input>
-		   			</td>
-		   		<tr>
-		   		
-		   		<tr>
-		   			<th>导航名称：</th>
-		   			<td>
-		   				<input style="width:250px;"  class="easyui-textbox" type="text"  name="linkName" data-options="required:true"></input>
-		   			</td>
-		   		</tr>
-		   	
-		   		<tr>
-		   			<th>导航地址：</th>
-		   			<td>
-		   				<input style="width:250px;"  class="easyui-textbox" type="text"  name="linkUrl" ></input>
-		   			</td>
-		   		</tr>
-		   		
-		   		<tr>
-		   			<th>打开方式：</th>
-		   			<td>
-		   				<select data-options="panelHeight:'auto'" class="easyui-combobox"  name="linkTargetType"  style="width:250px">
-							<option value="_blank" selected="selected">_blank(新窗口)</option>
-							<option value="_self">_self(当前窗口)</option>
-							<option value="_parent">_parent(父窗口)</option>
-							<option value="_top">_top(顶级窗口)</option>
-						</select>
-		   			</td>
-		   		</tr>
-		   		
-		   		<tr>
-		   			<th>排序：</th>
-		   			<td>
-		   				<input style="width:250px;"  class="easyui-textbox" type="text"  name="displayOrder" ></input>
-		   			</td>
-		   		</tr>
-		   		<tr>
-		   		      <th>备注：</th>
-		   		      <td colspan="6" align="center" style="padding:1px;">
-		   		      	<textarea name="linkDesc" style="width:248px;height:80px;">
-		   		      </textarea></td> 
-		   		 </tr> 
-		   	</table>
+				  <tr>
+					    <th>导航类型：</th>
+					    <td>
+					      <input type="hidden" name="id"></input>
+					      <input style="width:250px;" class="easyui-textbox" type="text" id="addlinkComboTree" name="linkTypeId" data-options="required:false"></input>
+					    </td>
+					    <td rowspan="7" style="border: 1px solid;width:258px;text-align: center;">
+					    	<img id="view_image" src="${ctx}/resources/images/image.png" alt="配图预览"  noresize="true" style="max-width:270px;max-height:270px;background-color:#ccc;border:1px solid #333">
+					    	<input type="hidden" id="article_image_url" name="articleImageUrl" style="width:300px;" />
+					    </td>
+				    </tr>
+				      <tr>
+				        <th>导航名称：</th>
+				        <td>
+				          <input style="width:250px;" class="easyui-textbox" type="text" name="linkName" data-options="required:true"></input>
+				        </td>
+				      </tr>
+				      <tr>
+				        <th>导航地址：</th>
+				        <td>
+				          <input style="width:250px;" class="easyui-textbox" type="text" name="linkUrl"></input>
+				        </td>
+				      </tr>
+				      <tr>
+				        <th>打开方式：</th>
+				        <td>
+				          <select data-options="panelHeight:'auto'" class="easyui-combobox" name="linkTargetType" style="width:250px">
+				            <option value="_blank" selected="selected">_blank(新窗口)</option>
+				            <option value="_self">_self(当前窗口)</option>
+				            <option value="_parent">_parent(父窗口)</option>
+				            <option value="_top">_top(顶级窗口)</option></select>
+				        </td>
+				      </tr>
+				      <tr>
+				        <th>链接配图：</th>
+				        <td>
+				         	<input name="preimage" id="preimage"  class="easyui-filebox"  style="width:250px;" data-options="onChange:function(){preView()},buttonText:'选择文件', accept:'image/jpeg', prompt : '请选择一个图片类型的文件'"/>
+				        </td>
+				      </tr>
+				      
+				      <tr>
+				        <th>排序：</th>
+				        <td>
+				          <input style="width:250px;" class="easyui-textbox" type="text" name="displayOrder"></input>
+				        </td>
+				      </tr>
+				      <tr>
+				        <th>备注：</th>
+				        <td align="center" style="padding:1px;">
+				          <textarea name="linkDesc" style="width:248px;height:80px;"></textarea>
+				        </td>
+				      </tr>
+			</table>
 	    </form>
 	    <div style="text-align:center;padding:5px">
 	    	<table style="width:100%;">
     		<tr>
     			<td style="width:20%;text-align: right;padding-left: 5px;padding-right: 5px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="submitForm()">保存</a></td>
-    			<td style="width:20%;text-align: left;padding-left: 5px;padding-right: 5px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearForm()">取消</a></td>
+    			<td style="width:20%;text-align: left;padding-left: 5px;padding-right: 5px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearForm()">取消2</a></td>
     		</tr>
 		 	</table>
 	    </div>
