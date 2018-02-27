@@ -294,16 +294,51 @@ function loadKstd(){
 	for(var i=0;i<kstdData.rows.length;i++){
 		var linkObj=kstdData.rows[i]
 		var linkUrl='';
+		var linkImageUrl='';
 		if(linkObj&&linkObj.linkUrl){
-			linkUrl=linkObj.linkUrl
+			if(linkObj.linkUrl.indexOf('http')>-1){
+				linkUrl=linkObj.linkUrl;
+			}else{
+				//如果不是包含"http"的绝对路径，则添加当前项目路径
+				linkUrl=ctx+linkObj.linkUrl;
+			}
 		}
 		var linkName=''
 		if(linkObj&&linkObj.linkName){
-			linkName=linkObj.linkName
+			linkName=linkObj.linkName;
+		}
+		if(linkObj&&linkObj.linkImageUrl){
+			linkImageUrl=linkObj.linkImageUrl;
 		}
 		
-		$('#KSTD').append('<li><a href="'+linkUrl+'" title="'+linkName+'" ><img src="${ctx}/resources/portal/images/ic1.jpg" /></a></li>');
+		$('#KSTD').append('<li><a href="'+linkUrl+'" title="'+linkName+'" ><img src="'+linkImageUrl+'" /></a></li>');
 		//$('#KSTD').append('<li><a href="'+linkObj.linkUrl+'" target="_blank" title="'+linkObj.linkName+'">'+linkObj.linkName+'</a></li>');
+	}
+}
+
+//加载 快速入口(快速导航)
+function loadKsdh(){
+	var kstdData=loadLinkByTypeCode('KSDH',1,8);
+	for(var i=0;i<kstdData.rows.length;i++){
+		var linkObj=kstdData.rows[i]
+		var linkUrl='';
+		var linkImageUrl='';
+		if(linkObj&&linkObj.linkUrl){
+			if(linkObj.linkUrl.indexOf('http')>-1){
+				linkUrl=linkObj.linkUrl;
+			}else{
+				//如果不是包含"http"的绝对路径，则添加当前项目路径
+				linkUrl=ctx+linkObj.linkUrl;
+			}
+		}
+		var linkName=''
+		if(linkObj&&linkObj.linkName){
+			linkName=linkObj.linkName;
+		}
+		if(linkObj&&linkObj.linkImageUrl){
+			linkImageUrl=linkObj.linkImageUrl;
+		}
+		$('#KSDH').append('<li><a href="'+linkUrl+'" title="'+linkName+'" ><img src="'+linkImageUrl+'" /></a></li>');
 	}
 }
 
@@ -445,6 +480,9 @@ $(document).ready(function() {
   
   //快速通道
   loadKstd();
+  
+  //快速入口,又叫快速导航
+  loadKsdh();
   
   //直达
   //loadZD();
@@ -601,7 +639,7 @@ $(document).ready(function() {
         </div>
         
         <script type="text/javascript">
-        	$('#lg1').click(function () {  
+        	$('#lg1').hover(function () {  
                 $("#lg2").removeClass("on");//清空liCSS属性  
                 $(this).addClass('on');//选中li添加属性
 				$(this).parent().parent().css('background','url(${ctx}/resources/portal/images/1.png)');  
@@ -609,7 +647,7 @@ $(document).ready(function() {
                 $("#LDDT").css("display", "none");  
                
             });  
-            $('#lg2').click(function () {  
+            $('#lg2').hover(function () {  
                 $("#lg1").removeClass("on");//清空liCSS属性  
                 $(this).addClass('on');//选中li添加属性 
 				$(this).parent().parent().css('background','url(${ctx}/resources/portal/images/2.png)');  
@@ -731,16 +769,18 @@ $(document).ready(function() {
         <div class="clear_f"></div>
     </div>
     
-    <!--快速入口开始-->
+    <!--快速入口开始,又叫快速导航-->
     <div class="index3 mar10">
     	<div class="ksrk_i"></div>
-        <div class="ksrk_more"><a href="#">更多系统</a></div>
-        <ul class="ksrkBox" id="">
+        <div class="ksrk_more"><a href="${ctx}/portal/system-list" target="_blank">更多系统</a></div>
+        <ul class="ksrkBox" id="KSDH">
+        	<%--
         	<li><a href'#'><img src="${ctx}/resources/portal/images/xt.jpg" /></a></li>
             <li><a href'#'><img src="${ctx}/resources/portal/images/xt.jpg" /></a></li>
             <li><a href'#'><img src="${ctx}/resources/portal/images/xt.jpg" /></a></li>
             <li><a href'#'><img src="${ctx}/resources/portal/images/xt.jpg" /></a></li>
             <li><a href'#'><img src="${ctx}/resources/portal/images/xt.jpg" /></a></li>
+             --%>
         </ul>
         <div class="clear_f"></div>
     </div>
@@ -1330,7 +1370,7 @@ var isShow=$.cookie('isShow');
 if(isShow=='1'){
 	//doNothing
 }else{
-	window.open ('${ctx}/portal/pop','公告名称','height=500,width=700,top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no')
+	window.open ('${ctx}/portal/pop','公告名称','height=500,width=700,top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no');
 	var now = new Date();
 	//10秒 10*1000
 	//暂时定制为15秒

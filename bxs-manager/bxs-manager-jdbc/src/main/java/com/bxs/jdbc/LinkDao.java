@@ -76,6 +76,7 @@ public class LinkDao {
 						"  link_name =  ?,\n" + 
 						"  link_desc =  ?,\n" + 
 						"  link_url =  ?,\n" + 
+						"  link_image_url =  ?,\n" + 
 						"  link_target_type =  ?,\n" + 
 						"  data_state =  ?,\n" + 
 						"  display_order =  ?\n" + 
@@ -88,10 +89,11 @@ public class LinkDao {
 			         ps.setString(2, link.getLinkName());
 			         ps.setString(3, link.getLinkDesc());
 			         ps.setString(4, link.getLinkUrl());
-			         ps.setString(5, link.getLinkTargetType());
-			         ps.setString(6, link.getDataState());
-			         ps.setInt(7, link.getDisplayOrder());
-			         ps.setString(8, link.getId());
+			         ps.setString(5, link.getLinkImageUrl());
+			         ps.setString(6, link.getLinkTargetType());
+			         ps.setString(7, link.getDataState());
+			         ps.setInt(8, link.getDisplayOrder());
+			         ps.setString(9, link.getId());
 			       }
 			     }
 			 );
@@ -113,12 +115,14 @@ public class LinkDao {
 						"  link_name,\n" + 
 						"  link_desc,\n" + 
 						"  link_url,\n" + 
+						"  link_image_url,\n" + 
 						"  link_target_type,\n" + 
 						"  data_state,\n" + 
 						"  display_order\n" + 
 						")\n" + 
 						"VALUES\n" + 
 						"  (\n" + 
+						"    ?,\n" + 
 						"    ?,\n" + 
 						"    ?,\n" + 
 						"    ?,\n" + 
@@ -137,9 +141,10 @@ public class LinkDao {
 			         ps.setString(3, link.getLinkName());
 			         ps.setString(4, link.getLinkDesc());
 			         ps.setString(5, link.getLinkUrl());
-			         ps.setString(6, link.getLinkTargetType());
-			         ps.setString(7, link.getDataState());
-			         ps.setInt(8, link.getDisplayOrder());
+			         ps.setString(6, link.getLinkImageUrl());
+			         ps.setString(7, link.getLinkTargetType());
+			         ps.setString(8, link.getDataState());
+			         ps.setInt(9, link.getDisplayOrder());
 			       }
 			     }
 			 );

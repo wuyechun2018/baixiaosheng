@@ -3,8 +3,7 @@ AS
 SELECT M.*,N.POST_NAME FROM (SELECT T.*,S.DEPT_NAME FROM t_user T LEFT JOIN T_DEPT S  ON  T.DEPT_ID=S.ID)M LEFT JOIN T_POST N ON M.POST_ID=N.ID;
 
 CREATE OR REPLACE VIEW v_link_info AS
-SELECT t.*,s.link_type_name FROM t_link t LEFT JOIN t_link_type s ON t.link_type_id=s.id;
-
+SELECT t.*,s.link_type_name,s.link_type_code FROM t_link t LEFT JOIN t_link_type s ON t.link_type_id=s.id;
 
 CREATE OR REPLACE VIEW v_post_info AS
 SELECT T.*,S.dept_name FROM T_POST T LEFT JOIN T_DEPT S ON T.dept_id=S.ID;

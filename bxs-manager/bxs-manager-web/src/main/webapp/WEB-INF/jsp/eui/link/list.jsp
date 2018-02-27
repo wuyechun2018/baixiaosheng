@@ -67,7 +67,7 @@ function preView(){
           success: function (data){
         	 var dataObj=eval("(" + data + ")");
              $('#view_image').attr('src',dataObj.msg);
-             $('#article_image_url').val(dataObj.msg);
+             $('#link_image_url').val(dataObj.msg);
           },
           error: function (data, status, e){
         	  debugger;
@@ -226,6 +226,14 @@ function editFun(id) {
 		iconCls : "icon-edit"
 	});
     $("#addForm").form("load", record); 
+   	if(record.linkImageUrl){
+   	  $('#view_image').attr('src',record.linkImageUrl);
+   	  $('#preimage').filebox('setValue',record.linkImageUrl);
+   	
+   	}else{
+   	  $('#view_image').attr('src',ctx+"/resources/images/nopic.png");	
+   	}
+   
 }
 
 //点击“操作列-删除”
@@ -397,7 +405,7 @@ function loadLeftTree(){
 					    </td>
 					    <td rowspan="7" style="border: 1px solid;width:258px;text-align: center;">
 					    	<img id="view_image" src="${ctx}/resources/images/image.png" alt="配图预览"  noresize="true" style="max-width:270px;max-height:270px;background-color:#ccc;border:1px solid #333">
-					    	<input type="hidden" id="article_image_url" name="articleImageUrl" style="width:300px;" />
+					    	<input type="hidden" id="link_image_url" name="linkImageUrl" style="width:300px;" />
 					    </td>
 				    </tr>
 				      <tr>

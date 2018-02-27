@@ -21,6 +21,8 @@ public class LinkInfoVo {
 	private String linkDesc;
 	// 链接地址
 	private String linkUrl;
+	//链接配图地址
+	private String linkImageUrl;
 	// 链接打开窗口方式
 	private String linkTargetType;
 	// 数据状态（0：删除 1：正常）
@@ -71,6 +73,14 @@ public class LinkInfoVo {
 
 	public void setLinkUrl(String linkUrl) {
 		this.linkUrl = linkUrl;
+	}
+
+	public String getLinkImageUrl() {
+		return linkImageUrl;
+	}
+
+	public void setLinkImageUrl(String linkImageUrl) {
+		this.linkImageUrl = linkImageUrl;
 	}
 
 	public String getLinkTargetType() {

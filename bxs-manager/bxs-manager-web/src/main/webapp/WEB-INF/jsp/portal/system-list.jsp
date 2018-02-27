@@ -55,6 +55,42 @@
     	return articleData;
     }
    
+   
+  //根据类型编码查询链接
+    function loadLinkByTypeCode(linkTypeCode,page,rows){
+    	var linkData=null;
+    	$.ajax({
+    		cache: true,
+    		type: "POST",
+    		url:'${ctx}/link/loadLinkByTypeCode',
+    		data:{
+    			linkTypeCode:linkTypeCode,
+    			page:page,
+    			rows:rows
+    		},
+    		async: false,
+    	    error: function(request) {
+    	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+    	    },
+    	    success: function(data) {
+    	    	linkData=data;
+    	    }
+    	})
+    	return linkData;
+    }
+  
+  //展示快速导航
+  function showKsdh(dispDivId,ksdhData){
+	  for(var i=0;i<ksdhData.total;i++){
+   		  var linkObj=ksdhData.rows[i];
+   		  var linkHtml='<li>'+
+         				 '<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg"></a>'+
+          				'</li>';
+   		 $('#'+dispDivId).append(linkHtml);
+	  }
+  }
+  
+   
    function showArticle(dispDivId,articleData){
     	for(var i=0;i<articleData.total;i++){
    		  var articleObj=articleData.rows[i];
@@ -92,9 +128,9 @@ $(document).ready(function() {
     alt: 'Full screen background image'
   });
   
-  var topicCode=$('#topicCode').val();
-  var tpzsData=loadArticleByTopic(topicCode,'1','12','');
-  showArticle('TPZS',tpzsData);
+  //快速导航
+  var ksdhData=loadLinkByTypeCode('KSDH','1','12','');
+  showKsdh('TPZS',ksdhData);
   
   
 });
@@ -146,7 +182,7 @@ $(document).ready(function() {
     </div>
     
      <div class="nav-path">
-        <div class="dqwz">当前网站位置：<a href="#"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="#"  title="文章栏目" class="CurrChnlCls">文章栏目</a></div>
+        <div class="dqwz">当前网站位置：<a href="${ctx}/portal/index"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="#"  title="应用系统列表" class="CurrChnlCls">应用系统列表</a></div>
     </div>
 	
     
@@ -156,8 +192,8 @@ $(document).ready(function() {
         </div>
         
         <div class="xitongbox ">
-        	<ul class="clearfix">
-
+        	<ul class="clearfix" id="KSDH">
+				<%--
 				<li>
                 	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
 					</a>
@@ -286,7 +322,7 @@ $(document).ready(function() {
                 	<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg">
 					</a>
 				</li>
-                
+                --%>
 
 				
 			
