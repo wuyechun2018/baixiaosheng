@@ -177,7 +177,7 @@ function loadTopic(){
 //加载列表
 function loadList(keys){
 	 var topicCode=$('#topicCode').val();
-	 var articleData=loadArticleByTopic(topicCode,'1','18','',keys);
+	 var articleData=loadArticleByTopic(topicCode,'1','10000','',keys);
 	 showArticle('ATICLE_LIST',articleData,1);
 	 var sumcount=articleData.total;
 	 if(sumcount==0){
@@ -190,7 +190,7 @@ function loadList(keys){
 		    visiblePages: 8,
 		    currentPage: 1,
 		    prev: '<a class="first" href="javascript:void(0);">&lt;上一页<\/a>',
-		    next: '<a class="end" href="javascript:void(0);">&gt;下一页<\/a>',
+		    next: '<a class="end" href="javascript:void(0);">下一页&gt;<\/a>',
 		    page: '<a href="javascript:void(0);">{{page}}<\/a>',
 		    onPageChange: function (n) {
 		    	var articleData=loadArticleByTopic(topicCode,n,'18','',keys);

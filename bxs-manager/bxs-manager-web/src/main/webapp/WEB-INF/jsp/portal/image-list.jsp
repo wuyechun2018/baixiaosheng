@@ -11,6 +11,7 @@
 <link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
 <link href="${ctx}/resources/portal/css/nei.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/portal/js/jqpaginator.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.bcat.bgswitcher.js"></script>
 </head>
 
@@ -57,6 +58,7 @@
     }
    
    function showArticle(dispDivId,articleData){
+	    $('#'+dispDivId).html('');
     	for(var i=0;i<articleData.total;i++){
    		  var articleObj=articleData.rows[i];
 		  var createDate=articleObj.createDate.substr(0,10);
@@ -94,9 +96,23 @@ $(document).ready(function() {
   });
   
   var topicCode=$('#topicCode').val();
-  var tpzsData=loadArticleByTopic(topicCode,'1','12','');
-  showArticle('TPZS',tpzsData);
+  var tpzsData=loadArticleByTopic(topicCode,'1','10000','');
+  showArticle(topicCode,tpzsData);
+  var sumcount=tpzsData.total;
   
+  $("#lpage").jqPaginator({
+	    totalCounts:sumcount,
+	    pageSize:21,
+	    visiblePages: 8,
+	    currentPage: 1,
+	    prev: '<a class="first" href="javascript:void(0);">&lt;上一页<\/a>',
+	    next: '<a class="end" href="javascript:void(0);">下一页&gt;<\/a>',
+	    page: '<a href="javascript:void(0);">{{page}}<\/a>',
+	    onPageChange: function (n) {
+	    	var tpzsData=loadArticleByTopic(topicCode,n,'20');
+	    	showArticle(topicCode,tpzsData);
+	    }
+	});
   
 });
 </script><!--end of bg-body script-->
@@ -147,7 +163,7 @@ $(document).ready(function() {
     </div>
     
      <div class="nav-path">
-        <div class="dqwz">当前网站位置：<a href="#"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="#"  title="文章栏目" class="CurrChnlCls">文章栏目</a></div>
+        <div class="dqwz">当前网站位置：<a href="${ctx}/portal/index"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="#"  title="图片新闻" class="CurrChnlCls">文章栏目</a></div>
     </div>
 	
     
@@ -243,18 +259,8 @@ $(document).ready(function() {
 			</ul>
         	
         
-           <div class="page"><a class="first">＜上一页</a><a class="page-on">1</a><a href="#">2</a><a href="#">3</a><span>...</span><a href="#">28</a><a class="end" href="#">下一页 &gt;</a>
-                <style>
-                .page span{
-                    width: 30px;
-                    height: 30px;
-                    line-height: 30px;
-                    text-align: center;
-                    float: left;
-                    color: #00679d;
-                    font-size: 16px;
-                }
-                </style>
+           <div class="page pagination2" id="lpage">
+			<a class="first">＜上一页</a><a class="page-on">1</a><a href="#">2</a><a href="#">3</a><span>...</span><a href="#">28</a><a class="end" href="#">下一页 &gt;</a>
 			</div>
        </div>
         

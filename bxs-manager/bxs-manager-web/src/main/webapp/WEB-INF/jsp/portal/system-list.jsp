@@ -11,7 +11,32 @@
 <link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
 <link href="${ctx}/resources/portal/css/nei.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/portal/js/jqpaginator.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.bcat.bgswitcher.js"></script>
+
+<style type="text/css">
+.highlight{
+background:#FF0;
+color:#E00;
+}
+
+.pagination2 {
+    height: 30px;
+}
+
+.pagination2 a:HOVER {
+    text-decoration: none;
+}
+
+.pagination2 .active {
+    background: #1061bc;
+    color: #fff;
+}
+
+</style>
+
+
+
 </head>
 
 <!--[if lt IE 9]>
@@ -81,11 +106,34 @@
   
   //展示快速导航
   function showKsdh(dispDivId,ksdhData){
+	  $('#'+dispDivId).html('');
 	  for(var i=0;i<ksdhData.total;i++){
-   		  var linkObj=ksdhData.rows[i];
-   		  var linkHtml='<li>'+
-         				 '<a target="_blank" title="系统1" href="#"><img src="images/ic1.jpg"></a>'+
-          				'</li>';
+   		    var linkObj=ksdhData.rows[i];
+	   		 var linkUrl='';
+			 var linkImageUrl='';
+			 if(linkObj&&linkObj.linkUrl){
+				if(linkObj.linkUrl.indexOf('http')>-1){
+					linkUrl=linkObj.linkUrl;
+				}else{
+					//如果不是包含"http"的绝对路径，则添加当前项目路径
+					linkUrl=ctx+linkObj.linkUrl;
+				}
+			}
+			var linkName=''
+			if(linkObj&&linkObj.linkName){
+				linkName=linkObj.linkName;
+			}
+			if(linkObj&&linkObj.linkImageUrl){
+				linkImageUrl=linkObj.linkImageUrl;
+			}
+   		  var linkHtml='<li>';
+          if((i+1)%4==0){
+        	  linkHtml='<li style="margin-right:0px;">'
+          }	
+          linkHtml=linkHtml+
+			 		'<a target="_blank" title="'+linkName+'" href="'+linkUrl+'"><img src="'+linkImageUrl+'"></a>'+
+				'</li>';
+          				
    		 $('#'+dispDivId).append(linkHtml);
 	  }
   }
@@ -129,9 +177,23 @@ $(document).ready(function() {
   });
   
   //快速导航
-  var ksdhData=loadLinkByTypeCode('KSDH','1','12','');
-  showKsdh('TPZS',ksdhData);
+  var ksdhData=loadLinkByTypeCode('KSDH','1',1000);
+  showKsdh('KSDH',ksdhData);
+  var sumcount=ksdhData.total;
   
+  $("#lpage").jqPaginator({
+	    totalCounts:sumcount,
+	    pageSize:20,
+	    visiblePages: 8,
+	    currentPage: 1,
+	    prev: '<a class="first" href="javascript:void(0);">&lt;上一页<\/a>',
+	    next: '<a class="end" href="javascript:void(0);">下一页&gt;<\/a>',
+	    page: '<a href="javascript:void(0);">{{page}}<\/a>',
+	    onPageChange: function (n) {
+	    	var ksdhData=loadLinkByTypeCode('KSDH',n,'20');
+	    	showKsdh('KSDH',ksdhData,n);
+	    }
+	});
   
 });
 </script><!--end of bg-body script-->
@@ -329,19 +391,9 @@ $(document).ready(function() {
 			</ul>
         	
         
-           <div class="page"><a class="first">＜上一页</a><a class="page-on">1</a><a href="#">2</a><a href="#">3</a><span>...</span><a href="#">28</a><a class="end" href="#">下一页 &gt;</a>
-                <style>
-                .page span{
-                    width: 30px;
-                    height: 30px;
-                    line-height: 30px;
-                    text-align: center;
-                    float: left;
-                    color: #00679d;
-                    font-size: 16px;
-                }
-                </style>
-			</div>
+           <div class="page pagination2" id="lpage">
+			<a class="first">＜上一页</a><a class="page-on">1</a><a href="#">2</a><a href="#">3</a><span>...</span><a href="#">28</a><a class="end" href="#">下一页 &gt;</a>
+		</div>
        </div>
         
     </div>
