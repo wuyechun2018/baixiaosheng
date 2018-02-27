@@ -1,3 +1,82 @@
+(function(jQuery){ 
+
+
+if(jQuery.browser) return; 
+
+
+jQuery.browser = {}; 
+jQuery.browser.mozilla = false; 
+jQuery.browser.webkit = false; 
+jQuery.browser.opera = false; 
+jQuery.browser.msie = false; 
+
+
+var nAgt = navigator.userAgent; 
+jQuery.browser.name = navigator.appName; 
+jQuery.browser.fullVersion = ''+parseFloat(navigator.appVersion); 
+jQuery.browser.majorVersion = parseInt(navigator.appVersion,10); 
+var nameOffset,verOffset,ix; 
+
+
+// In Opera, the true version is after "Opera" or after "Version" 
+if ((verOffset=nAgt.indexOf("Opera"))!=-1) { 
+jQuery.browser.opera = true; 
+jQuery.browser.name = "Opera"; 
+jQuery.browser.fullVersion = nAgt.substring(verOffset+6); 
+if ((verOffset=nAgt.indexOf("Version"))!=-1) 
+jQuery.browser.fullVersion = nAgt.substring(verOffset+8); 
+} 
+// In MSIE, the true version is after "MSIE" in userAgent 
+else if ((verOffset=nAgt.indexOf("MSIE"))!=-1) { 
+jQuery.browser.msie = true; 
+jQuery.browser.name = "Microsoft Internet Explorer"; 
+jQuery.browser.fullVersion = nAgt.substring(verOffset+5); 
+} 
+// In Chrome, the true version is after "Chrome" 
+else if ((verOffset=nAgt.indexOf("Chrome"))!=-1) { 
+jQuery.browser.webkit = true; 
+jQuery.browser.name = "Chrome"; 
+jQuery.browser.fullVersion = nAgt.substring(verOffset+7); 
+} 
+// In Safari, the true version is after "Safari" or after "Version" 
+else if ((verOffset=nAgt.indexOf("Safari"))!=-1) { 
+jQuery.browser.webkit = true; 
+jQuery.browser.name = "Safari"; 
+jQuery.browser.fullVersion = nAgt.substring(verOffset+7); 
+if ((verOffset=nAgt.indexOf("Version"))!=-1) 
+jQuery.browser.fullVersion = nAgt.substring(verOffset+8); 
+} 
+// In Firefox, the true version is after "Firefox" 
+else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) { 
+jQuery.browser.mozilla = true; 
+jQuery.browser.name = "Firefox"; 
+jQuery.browser.fullVersion = nAgt.substring(verOffset+8); 
+} 
+// In most other browsers, "name/version" is at the end of userAgent 
+else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) < 
+(verOffset=nAgt.lastIndexOf('/')) ) 
+{ 
+jQuery.browser.name = nAgt.substring(nameOffset,verOffset); 
+jQuery.browser.fullVersion = nAgt.substring(verOffset+1); 
+if (jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()) { 
+jQuery.browser.name = navigator.appName; 
+} 
+} 
+// trim the fullVersion string at semicolon/space if present 
+if ((ix=jQuery.browser.fullVersion.indexOf(";"))!=-1) 
+jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix); 
+if ((ix=jQuery.browser.fullVersion.indexOf(" "))!=-1) 
+jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix); 
+
+
+jQuery.browser.majorVersion = parseInt(''+jQuery.browser.fullVersion,10); 
+if (isNaN(jQuery.browser.majorVersion)) { 
+jQuery.browser.fullVersion = ''+parseFloat(navigator.appVersion); 
+jQuery.browser.majorVersion = parseInt(navigator.appVersion,10); 
+} 
+jQuery.browser.version = jQuery.browser.majorVersion; 
+})(jQuery); 
+
 
 jQuery.extend({
 	handleError: function( s, xhr, status, e )      {
@@ -17,6 +96,7 @@ jQuery.extend({
         //create frame
         var frameId = 'jUploadFrame' + id;
 
+        /**
         if(window.ActiveXObject) {
             var io = document.createElement('<iframe id="' + frameId + '" name="' + frameId + '" />');
             if(typeof uri== 'boolean'){
@@ -25,7 +105,25 @@ jQuery.extend({
             else if(typeof uri== 'string'){
                 io.src = uri;
             }
-        }
+        }**/
+        //解决IE兼容性问题
+        
+        
+        if(window.ActiveXObject) {  
+        	   if(jQuery.browser.version=="9.0" || jQuery.browser.version=="10.0"){  
+        	        var io = document.createElement('iframe');  
+        	        io.id = frameId;  
+        	        io.name = frameId;  
+        	    }else if(jQuery.browser.version=="6.0" || jQuery.browser.version=="7.0" || jQuery.browser.version=="8.0"){  
+        	        var io = document.createElement('<iframe id="' + frameId + '" name="' + frameId + '" />');  
+        	        if(typeof uri== 'boolean'){  
+        	            io.src = 'javascript:false';  
+        	        }  
+        	        else if(typeof uri== 'string'){  
+        	            io.src = uri;  
+        	        }  
+        	    }  
+        	} 
         else {
             var io = document.createElement('iframe');
             io.id = frameId;
@@ -45,11 +143,23 @@ jQuery.extend({
         var formId = 'jUploadForm' + id;
         var fileId = 'jUploadFile' + id;
         var form = $('<form  action="" method="POST" name="' + formId + '" id="' + formId + '" enctype="multipart/form-data"></form>');
-        var oldElement = $('#' + fileElementId);
-        var newElement = $(oldElement).clone();
-        $(oldElement).attr('id', fileId);
-        $(oldElement).before(newElement);
-        $(oldElement).appendTo(form);
+       
+       //解决第二次上传无效问题 
+       // var oldElement = $('#' + fileElementId);
+       // var newElement = $(oldElement).clone();
+       // $(oldElement).attr('id', fileId);
+       // $(oldElement).before(newElement);
+       // $(oldElement).appendTo(form);
+        
+        
+        var oldElement = jQuery('#' + fileElementId);  
+        var newElement = oldElement.clone(true);  
+        newElement[0].files=oldElement[0].files;  
+        oldElement.attr('id', fileId);  
+        oldElement.before(newElement);  
+        oldElement.appendTo(form);  
+        
+        
         //set attributes
         $(form).css('position', 'absolute');
         $(form).css('top', '-1200px');

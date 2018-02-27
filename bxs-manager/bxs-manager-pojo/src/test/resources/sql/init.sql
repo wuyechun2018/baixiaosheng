@@ -92,3 +92,6 @@ CREATE TABLE `t_sign` (
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE t_link ADD link_image_url VARCHAR(1000); 

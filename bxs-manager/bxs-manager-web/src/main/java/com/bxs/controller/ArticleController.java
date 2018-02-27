@@ -341,6 +341,7 @@ public class ArticleController extends BaseController{
 			e.printStackTrace();
 		}
 		response.setContentType("text/html;charset=UTF-8");
+		//response.setHeader("content-type", "text/html;charset=UTF-8");
 		Writer writer = response.getWriter();
 		writer.write("{\"success\": \""+true+"\",\"msg\":\'"+realPath+fileName+"\'}");
 	}
