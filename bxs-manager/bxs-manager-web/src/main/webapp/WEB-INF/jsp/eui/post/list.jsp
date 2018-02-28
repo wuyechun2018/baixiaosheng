@@ -119,7 +119,7 @@ $(function(){
 	
 	//中间表格
 	var dgTableHeight=$(window).height()-$('.searchBox').height()-58;
-    dgTable=$('#dgTable').datagrid({  
+    $('#dgTable').datagrid({  
 		url:ctx+'/post/pagerList',
 		method:'post',
 	    queryParams: {

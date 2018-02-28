@@ -174,7 +174,7 @@ function doQuery(){
 	
 	 //中间表格
 	var dgTableHeight=$(window).height()-$('.searchBox').height()-28;
-    dgTable=$('#dgTable').datagrid({  
+    $('#dgTable').datagrid({  
 		url:ctx+'/user/pagerList',
 		method:'post',
 	    queryParams: {
