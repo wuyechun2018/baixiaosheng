@@ -127,14 +127,19 @@ $(function(){
             <legend>信息查询</legend>
             <table style="width:100%;">
 				<tr>
-					<td style="width:100px;text-align: right;margin-right: 5px;">开始时间:</td>
+					<td style="width:100px;text-align: right;margin-right: 5px;">统计周期:</td>
 					<td style="width:200px;text-align: left;">
+						<%--
 						<input class="easyui-datebox" type="text" ID="weatherDateStart" name="weatherDateStart" style="width:150px" />
+						 --%>
+						<input id="Ddl_Year" type="text"   onfocus="WdatePicker({skin:'default',dateFmt:'yyyy'})" class="Wdate" style=" width:150px;"/>
 					</td>
+					<%--
 					<td style="width:100px;text-align: right;margin-right: 5px;">结束时间:</td>
 					<td style="width:200px;">
 						<input class="easyui-datebox" type="text" ID="weatherDateEnd" name="weatherDateEnd" style="width:150px" />
 					</td>
+					 --%>
 					<td>&nbsp;</td>
 					<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" iconCls="Zoom">查询</a></td>
 				</tr>
@@ -150,7 +155,8 @@ $(function(){
 	<div id="tb">
 	    <a href="javascript:void(0)" onclick="saveFun()" id="add" class="easyui-linkbutton" plain="true"  iconCls="icon-save">保存</a>
 	</div>
-	
+
+<script type="text/javascript" src="${ctx}/resources/js-lib/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js-lib/jquery-easyui-1.4.3/jquery.edatagrid.js"></script>
 	
 
