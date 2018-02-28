@@ -434,6 +434,8 @@ $(document).ready(function() {
   //通知
   var tzData=loadArticleByTopic("TZ",'1','3','');
   showArticle('TZ',tzData);
+  jQuery(".tzgg").slide({mainCell:".tzggCon ul",autoPage:true,effect:"top",autoPlay:true,vis:1});
+
   //公告
   var ggData=loadArticleByTopic("GG",'1','3','');
   showArticle('GG',ggData);
@@ -584,9 +586,11 @@ $(document).ready(function() {
 
       		</div>
        </div>
+       <%--
        <script type="text/javascript">
 		jQuery(".tzgg").slide({mainCell:".tzggCon ul",autoPage:true,effect:"top",autoPlay:true,vis:1});
-		</script>
+		</script> 
+		--%>
         <div class="index_day">
         	<div class="bd">
 				<ul class="infoList" id="DAYINFO">
