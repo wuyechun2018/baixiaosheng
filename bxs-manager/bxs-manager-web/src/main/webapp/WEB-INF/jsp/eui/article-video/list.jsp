@@ -133,7 +133,7 @@ $(function(){
 	    	publishDeptId:'',
 	    	checkState:''
 		},
-		fit:false,
+		fit:true,
 		pageSize: 20,
 		height: dgTableHeight,
 		fitColumns:true,

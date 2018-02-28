@@ -10,6 +10,14 @@
 //当前选中的左边树的节点ID,即单位ID，它是一个全局变量
 var SELECT_NODE_Id="";
 
+function leftCollapse(){
+   // $("#dgTable").datagrid('resize',{width:parent.$('.layout-panel-center').width()-50});
+}
+
+function leftExpand(){
+   // $("#dgTable").datagrid('resize',{width:parent.$('.layout-panel-center').width()-50});
+}
+
 function doQuery(){
     var options = $("#dgTable").datagrid("options");
     //设置参数
@@ -155,7 +163,7 @@ $(function(){
 	    	publishDeptId:'',
 	    	checkState:''
 		},
-		fit:false,
+		fit:true,
 		pageSize: 10,
 		height: dgTableHeight,
 		fitColumns:true,
@@ -205,7 +213,7 @@ $(function(){
 </head>
 <body>
 <div class="easyui-layout"  fit="true">
-    <div data-options="region:'west',split:false,border:true,title:'文章栏目'" style="width: 240px; padding: 1px;">
+    <div data-options="onCollapse:function(){leftCollapse()},onExpand:function(){leftExpand()},region:'west',split:false,border:true,title:'文章栏目'" style="width: 240px; padding: 1px;">
         <div>
             <ul id="leftTree"></ul>
         </div>

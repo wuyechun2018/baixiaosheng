@@ -29,7 +29,7 @@ var ctx = "${ctx}";
 				  {title: '序号',width:80,templet: '#indexTpl',align:'center'}       
 			      //,{field:'id', width:10, title: 'ID', sort: true}
 			      ,{field:'topicName', width:110, title: '所属分类',align:'center'}
-			      ,{field:'articleTitle', width:280, title: '标题' ,templet: function(d){
+			      ,{field:'articleTitle', width:260, title: '标题' ,templet: function(d){
 			    	 	 return "<sapn title='"+d.articleTitle+"'>"+d.articleTitle+"</span>";
 		    		 }}
 			      ,{field:'publishUserName', width:80, title: '作者', sort: false}

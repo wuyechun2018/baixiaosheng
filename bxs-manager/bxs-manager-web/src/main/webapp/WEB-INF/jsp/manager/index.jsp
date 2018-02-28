@@ -185,9 +185,10 @@ $(function(){
                 <div data-options="region: 'north', split: false, border: false" style="height: 220px;">
                     <div class="easyui-calendar" data-options="fit: true, border: false"></div>
                 </div>
+                
                 <div id="linkPanel" data-options="region: 'center', border: false, title: '通知', iconCls: 'icon-hamburg-link', tools: [{ iconCls: 'icon-hamburg-refresh', handler: function () { window.link.reload(); } }]">
-                    <ul class="easyui-tree" data-options="url:'${ctx}/resources/data/tree_data.json',method:'get',animate:true,dnd:true"></ul>
-                </div>
+                    <%--<ul class="easyui-tree" data-options="url:'${ctx}/resources/data/tree_data.json',method:'get',animate:true,dnd:true"></ul>--%>
+                </div> 
             </div>
 		</div>
 		
