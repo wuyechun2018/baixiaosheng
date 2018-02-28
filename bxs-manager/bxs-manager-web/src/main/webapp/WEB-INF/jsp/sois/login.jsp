@@ -15,7 +15,8 @@
 <link rel="stylesheet" href="https://think.ctolog.com/static/theme/default/css/animate.css?ver=180209">
 <link rel="stylesheet" href="https://think.ctolog.com/static/theme/default/css/login.css">
  --%>
-
+<LINK href="${ctx}/resources/images/msg24.ico" type="image/x-icon" rel="icon">                        
+<LINK href="${ctx}/resources/images/msg24.ico" type="image/x-icon" rel="shortcut icon">
 <link rel="stylesheet" href="${ctx}/resources/sois/ncss/bootstrap.min.css"/>
 <link rel="stylesheet" href="${ctx}/resources/sois/ncss/layui.css"/>
 <link rel="stylesheet" href="${ctx}/resources/sois/ncss/console.css">

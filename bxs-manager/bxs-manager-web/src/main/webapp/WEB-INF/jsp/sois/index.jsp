@@ -7,6 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>信息报送</title>
+<LINK href="${ctx}/resources/images/msg24.ico" type="image/x-icon" rel="icon">                        
+<LINK href="${ctx}/resources/images/msg24.ico" type="image/x-icon" rel="shortcut icon">
 <link rel="stylesheet" href="${ctx}/resources/js-lib/layui/css/layui.css">
 <link rel="stylesheet" href="${ctx}/resources/sois/css/index.css" media="all" />
 <link rel="stylesheet" href="${ctx}/resources/sois/css/global.css" media="all" />
