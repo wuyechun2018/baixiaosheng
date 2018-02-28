@@ -213,7 +213,7 @@ $(function() {
         <div id="tb" data-options="region:'center',title:'字典项'" style="padding:5px;height:auto">                
             <div style="padding:10px 60px 20px 60px">
 		    <form id="rightForm" method="post">
-		    	<table cellpadding="5" width="360px;">
+		    	<table cellpadding="5" width="360px;" style="table-layout: fixed;">
 		    		<tr>
 		    			<td class="form-label-right-align">栏目名称：</td>
 		    			<td>
