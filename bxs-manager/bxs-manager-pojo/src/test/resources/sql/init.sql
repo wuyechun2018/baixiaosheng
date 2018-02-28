@@ -94,3 +94,10 @@ CREATE TABLE `t_sign` (
 
 
 ALTER TABLE t_link ADD link_image_url VARCHAR(1000); 
+
+--2018/02/28 21:15
+INSERT  INTO `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`,`display_order`)
+ VALUES ('16','0','信息排名','#','1','1',16);
+ 
+ INSERT  INTO `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`,`display_order`)
+ VALUES ('17','16','信息填报','/eui/rank/list','2','1',17);
