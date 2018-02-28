@@ -117,10 +117,11 @@ var topicData=null;
 		          
 		        }
 		        ,done: function(res){
-		        	articleImageUrl.value=res.msg;
+		        	//articleImageUrl.value=res.msg;
+		        	$('#articleImageUrl').val(res.msg);
 		        }
-		        ,error: function(){
-		          
+		        ,error: function(res){
+		          debugger;
 		        }
 		      });	
 		  var ue = UE.getEditor('editor');	

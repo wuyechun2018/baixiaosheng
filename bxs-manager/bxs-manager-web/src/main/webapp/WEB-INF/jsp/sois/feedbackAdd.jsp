@@ -148,7 +148,8 @@ var deptData=null;
 		          
 		        }
 		        ,done: function(res){
-		        	articleImageUrl.value=res.msg;
+		        	//articleImageUrl.value=res.msg;
+		        	$('#articleImageUrl').val(res.msg);
 		        	//$('#viewImg').attr('src', res.msg);
 		        }
 		        ,error: function(){

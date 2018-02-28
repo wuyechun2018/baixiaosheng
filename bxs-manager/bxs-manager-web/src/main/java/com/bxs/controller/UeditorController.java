@@ -17,7 +17,9 @@ public class UeditorController {
 
 	@RequestMapping(value = "/config")
 	public void config(HttpServletRequest request, HttpServletResponse response) {
-		response.setContentType("application/json");
+		//response.setContentType("application/json");
+		//重要调整，解决IE下上传图片下载Json文件的问题
+		response.setContentType("text/html");  
 		String rootPath = request.getSession().getServletContext().getRealPath("/");
 		
 		//String tPath = request.getSession().getServletContext().getRealPath("/static"); 

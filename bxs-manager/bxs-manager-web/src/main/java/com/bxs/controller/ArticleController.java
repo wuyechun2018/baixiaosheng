@@ -295,7 +295,7 @@ public class ArticleController extends BaseController{
 	 * @history:
 	 * @return Object
 	 */
-	@RequestMapping("/preView")
+	@RequestMapping(value="/preView")
 	@ResponseBody
 	public Object preView(MultipartFile preimage){
 		String fileName=new DateTime().toString("yyyyMMddHHmmss")+"/"+preimage.getOriginalFilename();
