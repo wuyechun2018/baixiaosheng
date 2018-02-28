@@ -7,60 +7,71 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="${ctx}/resources/login/login.css" rel="stylesheet" >
-<link href="${ctx}/resources/login/style.css" rel="stylesheet" >
+<link href="${ctx}/resources/login-v2/login.css" rel="stylesheet" >
+<link href="${ctx}/resources/login-v2/reset.css" rel="stylesheet" >
 <script type="text/javascript" src="${ctx}/resources/js-lib/jquery/jquery-1.9.1.min.js"></script>
 <title>登录</title>
 <script type="text/javascript">
+
+function loginSubmit(){
+	 $("#loginForm").submit();
+}
+
+
 </script>
 </head>
-<body>
-	<div class="container">
-		<div class="codrops-top" style="height: 24px;">
-				<%--
-                <a href="">
-                    <strong>« Previous Demo: </strong>Responsive Content Navigator
-                </a>
-                <span class="right">
-                    <a href="">
-                        <strong>Back to the Codrops Article</strong>
-                    </a>
-                </span>
-                <div class="clr"></div> --%>
-         </div>
-         
-         <header>
-              
-         </header>
-	
-	
-		<div id="wrapper">
-			<div id="login" class="animate form">
-				<form action="${ctx}/user/doLogin" method="post" >
-					<h1>系统登录</h1>
-					<p> <label for="username" class="uname" data-icon="u"> 
-						登录名</label> 
-						<input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com">
-					</p>
+<body onkeydown="javascript:if(event.keyCode==13)loginSubmit();">
+	<input id="idInput" type="hidden" value="company" />
+	<div class="container clearfix">
+		<!-----------------页面左侧文字------------------>
+		<div class="secL">
+			<%--
+			<h2>后台登录</h2>
+			<p>
+				文章发布、审核<br> 
+			</p>
+			 --%>
+		</div>
+		<!-----------------页面右侧表单------------------>
+		<div class="secR">
+			<!-----页面右侧透明背景----->
+			<div class="box-bg"></div>
+			<!--------表单内容------------>
+			<form action="${ctx}/user/doLogin" method="post" name="frmLogin" id="loginForm">
+				<div class="form">
+					<h1>登录平台</h1>
+					<%----%>
 					<p>
-						<label for="password" class="youpasswd" data-icon="p"> 密码</label> 
-						<input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO">
-					</p>
-					<p class="keeplogin">
-						<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping"/>
-						<label for="loginkeeping">记住我</label>
-						<div style="color: red;">${SYSTEM_ERROR_MSG}</div>
-					</p>
-					<p class="login button">
-						<input type="submit" value="Login">
-					</p>
-					<p class="change_link"> 
-						还没有账号 ? 
-						<a href="javascript:void(0)" class="to_register">去注册</a>
-					</p>
-				</form>
-			</div>
+						${SYSTEM_ERROR_MSG}
+					</p> 
+					<div class="item clearfix">
+						<label for="userNameIpt"></label> 
+						<input type="text" tabindex="1" id="username" name="username"
+							notnull="true" info="用户名" placeholder="zhangsan"/>
+					</div>
+					<div class="item itempass clearfix">
+						<label for="password"></label> 
+						<input type="password" tabindex="2" id="password" name="password" notnull="true" info="密码"
+							autocomplete="off" placeholder="请输入密码" />
+					</div>
+					<div class="item itemRadio clearfix">
+					<!--[if !IE]><!--> <input  type="checkbox" style="float: left;width:13px;height: 25px" id="radioPass"  onclick="checkbox();">&nbsp;记住密码</input> <!--<![endif]-->
+						<!--[if IE]> 
+											<input  type="checkbox" style="float: left;width:13px;height: 13px" id="radioPass"  onclick="checkbox();">&nbsp;记住密码</input>
+						<![endif]--> 
+						<a href="javascript:void(0)" style="float: right;">忘记密码?</a>
+					</div>
+
+					<div class="item">
+					   <button  type="button" tabindex="5" id="btnSubmit" onclick="loginSubmit();" >登&nbsp;&nbsp;录</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div style="position: relative; top:250px;left:150px;text-align: center;float:left;padding-left: 200px;">
+		 
 		</div>
 	</div>
+
 </body>
 </html>
