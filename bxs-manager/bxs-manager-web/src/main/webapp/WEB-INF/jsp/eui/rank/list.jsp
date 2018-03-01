@@ -16,24 +16,19 @@
   height: 40px;  
   text-align:center; 
 }
-
-
 </style>
 
 
 <script type="text/javascript">
 var dgTable;
 $(function(){
-	
-	 $('#weatherDateStart').datebox('setValue',myDateFormatter(new Date()));
-	 $('#weatherDateEnd').datebox('setValue',myDateFormatter(myAddDate(6)));
-	
+	//页面打开时初始化数据	
 	$.ajax({
 		cache: true,
 		type: "POST",
-		url:'${ctx}/weatherForecast/initData',
+		url:'${ctx}/infoRank/initData',
 		data:{
-			
+			statYear:$('#statYear').val()
 		},
 		async: false,
 	    error: function(request) {
@@ -44,16 +39,14 @@ $(function(){
 	    }
 	})
 	
-	
-	
 	var searchHeight=$('.searchBox').height();
 	var dgTableHeight=$(window).height()-searchHeight-30;
 	dgTable=$('#dgTable').edatagrid({  
-		url:ctx+'/weatherForecast/pagerList',
+		url:ctx+'/infoRank/pagerList',
 		method:'post',
 	    queryParams: {
-	    	weatherDateStart:myDateFormatter(new Date()),
-	    	weatherDateEnd:myDateFormatter(myAddDate(6))
+	    	//weatherDateStart:myDateFormatter(new Date()),
+	    	//weatherDateEnd:myDateFormatter(myAddDate(6))
 		},
 		fit:false,
 		pageSize: 20,
@@ -65,15 +58,20 @@ $(function(){
 		pagination: true,  
 		rownumbers: true,  
 		columns:[[
-				   {field:'id',title: '主键',align: 'left',width: 100,hidden:true},
-		           {field:'weatherDate',title: '日期',width: 60,align: 'center'},
-		           {field:'weatherConditions',title: '天气',align: 'center',editor:'text',width: 300}
-		           //{field:'weatherConditions',title: '天气',align: 'center',editor:'text',width: 300,options:{init:initCell}}
+				   {field:'id',title: '主键',align: 'left',width: 10,hidden:true},
+				   {field:'showSate',title: '显示状态',align: 'left',width: 10,hidden:true},
+				   {field:'dataState',title: '数据状态',align: 'left',width: 10,hidden:true},
+				   {field:'statYear',title: '统计周期',width: 40,align: 'center',hidden:true},
+				   {field:'deptId',title: '部门主键',width: 40,align: 'center',hidden:true},
+				   {field:'deptName',title: '部门',width: 40,align: 'center'},
+		           {field:'zhidui',title: '支队',align: 'center',width: 40},
+		           {field:'shiju',title: '市局',align: 'center',editor:'text',width: 40},
+		           {field:'zongdui',title: '总队',align: 'center',editor:'text',width: 40},
+		           {field:'shengdui',title: '省队',align: 'center',editor:'text',width: 40},
+		           {field:'buju',title: '部局',align: 'center',editor:'text',width: 40}
 		]]
 		,toolbar:$('#tb')
 		})
-		
-		//$('.datagrid-editable-input').height(40);
 		
 		doQuery();
 	})
@@ -83,10 +81,18 @@ $(function(){
 		$.ajax({
 			cache: true,
 			type: "POST",
-			url:'${ctx}/weatherForecast/save',
+			url:'${ctx}/infoRank/save',
 			data:{
 				id:row.id,
-				weatherConditions:row.weatherConditions
+				showSate:row.showSate,
+				dataState:row.dataState,
+				statYear:row.statYear,
+				deptId:row.deptId,
+				zhidui:row.zhidui,
+				shiju:row.shiju,
+				zongdui:row.zongdui,
+				shengdui:row.shengdui,
+				buju:row.buju
 			},
 			async: false,
 		    error: function(request) {
@@ -106,8 +112,8 @@ $(function(){
 	
 	function doQuery(){
 		var options = $("#dgTable").datagrid("options");
-		options.queryParams.weatherDateStart= $('#weatherDateStart').datebox('getValue');
-		options.queryParams.weatherDateEnd= $('#weatherDateEnd').datebox('getValue');
+		//options.queryParams.weatherDateStart= $('#weatherDateStart').datebox('getValue');
+		//options.queryParams.weatherDateEnd= $('#weatherDateEnd').datebox('getValue');
 	    $("#dgTable").datagrid(options);
 	}
 	
@@ -132,7 +138,7 @@ $(function(){
 						<%--
 						<input class="easyui-datebox" type="text" ID="weatherDateStart" name="weatherDateStart" style="width:150px" />
 						 --%>
-						<input id="Ddl_Year" type="text"   onfocus="WdatePicker({skin:'default',dateFmt:'yyyy'})" class="Wdate" style=" width:150px;"/>
+						<input id="statYear" type="text" value="2018"   onfocus="WdatePicker({skin:'default',dateFmt:'yyyy'})" class="Wdate" style="width:150px;"/>
 					</td>
 					<%--
 					<td style="width:100px;text-align: right;margin-right: 5px;">结束时间:</td>

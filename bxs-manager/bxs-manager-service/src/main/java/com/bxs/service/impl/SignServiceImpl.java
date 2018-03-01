@@ -2,18 +2,15 @@ package com.bxs.service.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.bxs.common.dict.DataState;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.SignDao;
 import com.bxs.pojo.Sign;
 import com.bxs.pojo.SignInfoVo;
-import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.SignService;
 
 @Service

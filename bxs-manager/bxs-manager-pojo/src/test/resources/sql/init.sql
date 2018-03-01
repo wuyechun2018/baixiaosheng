@@ -101,3 +101,31 @@ INSERT  INTO `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`
  
  INSERT  INTO `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`,`display_order`)
  VALUES ('17','16','信息填报','/eui/rank/list','2','1',17);
+ 
+
+ --2018/03/01 20:45
+ 
+CREATE TABLE `t_info_rank` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `stat_year` varchar(10) DEFAULT NULL COMMENT '统计年份',
+  `dept_id` varchar(36) DEFAULT NULL COMMENT '部门主键',
+  `bumen` bigint(20) DEFAULT NULL COMMENT '部门',
+  `zhidui` bigint(20) DEFAULT NULL COMMENT '支队',
+  `shiju` bigint(20) DEFAULT NULL COMMENT '市局',
+  `zongdui` bigint(20) DEFAULT NULL COMMENT '总队',
+  `shengdui` bigint(20) DEFAULT NULL COMMENT '省队',
+  `buju` bigint(20) DEFAULT NULL COMMENT '部局',
+  `create_user_id` varchar(36) DEFAULT NULL COMMENT '创建人主键',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_user_id` varchar(36) DEFAULT NULL COMMENT '更新人主键',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `show_state` varchar(10) DEFAULT NULL COMMENT '展示状态',
+  `data_state` varchar(10) DEFAULT NULL COMMENT '数据状态',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
+ 
+ CREATE OR REPLACE VIEW V_INFO_RANK
+AS 
+SELECT t.*,s.dept_name FROM t_info_rank t LEFT JOIN t_dept s  ON  t.dept_id=s.id ORDER BY s.display_order;
+ 
+ 

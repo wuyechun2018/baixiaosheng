@@ -2,16 +2,13 @@ package com.bxs.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.WeatherForecastDao;
-import com.bxs.pojo.SysUser;
 import com.bxs.pojo.WeatherForecast;
 import com.bxs.service.WeatherForecastService;
 
