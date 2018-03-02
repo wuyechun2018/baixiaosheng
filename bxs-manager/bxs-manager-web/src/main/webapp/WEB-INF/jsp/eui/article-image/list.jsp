@@ -123,6 +123,7 @@ $(function(){
 	
 	 //中间表格
 	var dgTableHeight=$(window).height()-$('.searchBox').height()-51;
+	$('#dgTableContainer').height(dgTableHeight); 
     $('#dgTable').datagrid({  
 		url:ctx+'/article/pagerList',
 		method:'post',
@@ -136,7 +137,7 @@ $(function(){
 		},
 		fit:true,
 		pageSize: 20,
-		height: dgTableHeight,
+		//height: dgTableHeight,
 		fitColumns:true,
 		striped: true,
 		singleSelect:true,
@@ -228,8 +229,10 @@ $(function(){
 			</table>
             
         </fieldset>
-        <table id="dgTable">
-        </table>
+        <div style="height:85%" id="dgTableContainer">
+	        <table id="dgTable">
+	        </table>
+	     </div>   
     </div>
  </div> 
  
