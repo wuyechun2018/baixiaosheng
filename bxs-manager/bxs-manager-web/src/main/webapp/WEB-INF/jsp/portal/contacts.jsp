@@ -34,10 +34,18 @@
 		    	$('#userData').html('');
 		    	for(var i=0;i<data.rows.length;i++){
 		    		var userObj=data.rows[i];
+		    		var postName=userObj.postName==null?'&nbsp;':userObj.postName;
+		    		var officeTelephone="&nbsp;";
+		    		if(userObj.officeTelephone!=null&&userObj.officeTelephone!=''){
+		    			officeTelephone=userObj.officeTelephone;
+		    		}
+		    		
+		    		
 		    		var dtHtml='<dl class="xx_dd clearfix">'+
 			                	'<dt class="xx_bumen">'+userObj.deptName+'<i class="xx1"></i></dt>'+
+			                    '<dt class="dt">'+postName+'</dt>'+
 			                	'<dt class="dt name">'+userObj.userName+'</dt>'+
-			                    '<dt class="dt">'+userObj.officeTelephone+'</dt>'+
+			                    '<dt class="dt">'+officeTelephone+'</dt>'+
 			                    '<dt class="dt">'+userObj.mobilePhone+'</dt>'+
                 			   '</dl>';
 		    	 $('#userData').append(dtHtml);
@@ -163,6 +171,7 @@
         	    <dl class="xx_h">
             		
                 	<dt class="xx_bumen">部门</dt>
+                	<dt class="dt">职位</dt>
                 	<dt class="dt name">姓名</dt>
                     <dt class="dt">固定电话</dt>
                     <dt class="dt">手机号码</dt>

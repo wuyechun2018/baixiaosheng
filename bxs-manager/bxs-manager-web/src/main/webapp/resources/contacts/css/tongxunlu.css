@@ -60,9 +60,9 @@ em{font-style:normal;}
 
 .txlRight-list-box dl.xx_h{ background-color:#e7e7e7; height:45px; margin-top:9px;}
 .txlRight-list-box dl.xx_h dt{ font-size:16px; color:#454545; font-weight:bold; float:left;  text-align:center; line-height:45px;}
-.txlRight-list-box  dt.xx_bumen{ width:30%; overflow:hidden; position:relative;}
+.txlRight-list-box  dt.xx_bumen{ width:26%; overflow:hidden; position:relative;}
 
-.txlRight-list-box  dt.dt{width:25%;}
+.txlRight-list-box  dt.dt{width:18%;}
 .txlRight-list-box  dt.dt.name{width:20%;}
 .txlRight-list-box dl.xx_dd dt{ font-size:14px; color:#454545; float:left;  text-align:center; line-height:45px; }
 .txlRight-list-box dl.xx_dd dt.xx_bumen{ font-weight:bold;}
