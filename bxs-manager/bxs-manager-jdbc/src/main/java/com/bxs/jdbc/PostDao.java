@@ -83,6 +83,7 @@ public class PostDao {
 		if(param.get("postCode")!=null&&StringUtils.isNotBlank(param.get("postCode").toString())){
 			sqlBuff.append(" AND  T.post_code LIKE '%"+param.get("postCode").toString()+"%' \n");
 		}
+		sqlBuff.append(" ORDER BY display_order ASC");
 		
 		//注意MySQL的分页参数
 		String sql="SELECT * FROM ("+sqlBuff.toString()+")S limit ?,?";

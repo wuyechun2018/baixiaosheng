@@ -196,7 +196,7 @@ $(function(){
 </div>
 
 <%--点击"添加"弹出的窗口 --%>
-<div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:460px;height:315px;padding:10px;">
+<div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:460px;height:345px;padding:10px;">
    <form id="addForm" method="post">
    	<table  class="isingelTable">
    		<tr>
@@ -204,7 +204,9 @@ $(function(){
    			<td>
    				<input type="hidden"  id="form_deptId"  name="deptId" ></input>
    				<input type="hidden" id="form_dataState"  name="dataState" value="1"></input>
+   				<%--
    				<input type="hidden" id="form_displayOrder"  name="displayOrder" value="1"></input>
+   				 --%>
    				<input style="width:250px;"  class="easyui-textbox" type="text" id="form_deptName" name="deptName" data-options="required:false"></input>
    			</td>
    		<tr>
@@ -221,6 +223,13 @@ $(function(){
    			<th>职位编码：</th>
    			<td>
    				<input style="width:250px;"  class="easyui-textbox" type="text"  name="postCode" data-options="required:false"></input>
+   			</td>
+   		<tr>
+   		
+   		<tr>
+   			<th>排序：</th>
+   			<td>
+   				<input style="width:250px;"  class="easyui-textbox" type="text" id="form_displayOrder"  name="displayOrder" data-options="required:false"></input>
    			</td>
    		<tr>
    		
