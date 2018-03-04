@@ -126,6 +126,6 @@ CREATE TABLE `t_info_rank` (
  
  CREATE OR REPLACE VIEW V_INFO_RANK
 AS 
-SELECT t.*,s.dept_name FROM t_info_rank t LEFT JOIN t_dept s  ON  t.dept_id=s.id ORDER BY s.display_order;
+SELECT t.*,s.dept_name FROM t_info_rank t LEFT JOIN t_dept s  ON  t.dept_id=s.id ;
  
  

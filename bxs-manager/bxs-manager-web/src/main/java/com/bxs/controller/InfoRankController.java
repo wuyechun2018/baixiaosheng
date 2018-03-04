@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +35,9 @@ public class InfoRankController extends BaseController{
 	@Autowired
 	private InfoRankService infoRankService;
 	
+	@Value("${stat.article.topic}")
+	private String statArticleTopic;
+	
 	/**
 	 * 
 	 * 保存
@@ -45,10 +49,10 @@ public class InfoRankController extends BaseController{
 	 */
 	@RequestMapping("/save")
 	@ResponseBody
-	public JsonMsg save(InfoRank InfoRank,HttpSession session) {
-		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
-		if(info!=null){
-			infoRankService.save(InfoRank,info);
+	public JsonMsg save(InfoRank infoRank,HttpSession session) {
+		UserInfoVo userInfo=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(userInfo!=null){
+			infoRankService.save(infoRank,userInfo);
 			return new JsonMsg();
 	    }else{
 	    	return new JsonMsg(false,"请登录系统");
@@ -66,9 +70,9 @@ public class InfoRankController extends BaseController{
 	@RequestMapping("/initData")
 	@ResponseBody
 	public JsonMsg initData(String statYear,HttpSession session) {
-	    UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
-	    if(info!=null){
-	    	infoRankService.initData(statYear,info);
+	    UserInfoVo userInfo=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+	    if(userInfo!=null){
+	    	infoRankService.initData(statYear,statArticleTopic,userInfo);
 	    	return new JsonMsg();
 	    }else{
 	    	return new JsonMsg(false,"请登录系统");

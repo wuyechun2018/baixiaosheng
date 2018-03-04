@@ -22,6 +22,10 @@
 <script type="text/javascript">
 var dgTable;
 $(function(){
+	
+	var today=new Date().getFullYear();
+	$('#statYear').val(today);	
+	
 	//页面打开时初始化数据	
 	$.ajax({
 		cache: true,
@@ -45,11 +49,10 @@ $(function(){
 		url:ctx+'/infoRank/pagerList',
 		method:'post',
 	    queryParams: {
-	    	//weatherDateStart:myDateFormatter(new Date()),
-	    	//weatherDateEnd:myDateFormatter(myAddDate(6))
+	    	statYear:$('#statYear').val()
 		},
 		fit:false,
-		pageSize: 20,
+		pageSize: 50,
 		height: dgTableHeight,
 		onEndEdit:onAfterEdit,  
 		fitColumns:true,
@@ -61,7 +64,7 @@ $(function(){
 				   {field:'id',title: '主键',align: 'left',width: 10,hidden:true},
 				   {field:'showSate',title: '显示状态',align: 'left',width: 10,hidden:true},
 				   {field:'dataState',title: '数据状态',align: 'left',width: 10,hidden:true},
-				   {field:'statYear',title: '统计周期',width: 40,align: 'center',hidden:true},
+				   {field:'statYear',title: '统计周期',width: 40,align: 'center',hidden:false},
 				   {field:'deptId',title: '部门主键',width: 40,align: 'center',hidden:true},
 				   {field:'deptName',title: '部门',width: 40,align: 'center'},
 		           {field:'zhidui',title: '支队',align: 'center',width: 40},
@@ -112,8 +115,7 @@ $(function(){
 	
 	function doQuery(){
 		var options = $("#dgTable").datagrid("options");
-		//options.queryParams.weatherDateStart= $('#weatherDateStart').datebox('getValue');
-		//options.queryParams.weatherDateEnd= $('#weatherDateEnd').datebox('getValue');
+		options.queryParams.statYear= $('#statYear').val();
 	    $("#dgTable").datagrid(options);
 	}
 	

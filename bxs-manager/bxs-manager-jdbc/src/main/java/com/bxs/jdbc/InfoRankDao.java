@@ -135,11 +135,10 @@ public class InfoRankDao {
 	private String getParamSql(Map<String, Object> param) {
 		StringBuffer sqlBuff=new StringBuffer();
 		//开始时间
-		//if(param.get("weatherDateStart")!=null&&StringUtils.isNotBlank(param.get("weatherDateStart").toString())){
-		//	sqlBuff.append(" AND weather_date >= '" + param.get("weatherDateStart").toString() + "'\n");
-		//}
-		//sqlBuff.append(" ORDER BY weather_date");
-		
+		if(param.get("statYear")!=null&&StringUtils.isNotBlank(param.get("statYear").toString())){
+			sqlBuff.append(" AND stat_year = '" + param.get("statYear").toString() + "'\n");
+		}
+		sqlBuff.append(" ORDER BY zhidui DESC");
 		return sqlBuff.toString();
 	}
 

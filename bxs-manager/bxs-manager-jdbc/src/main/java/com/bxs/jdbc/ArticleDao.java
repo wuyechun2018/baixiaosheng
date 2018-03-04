@@ -441,4 +441,29 @@ public class ArticleDao {
 						" WHERE T.id=?";
 	   jdbcTemplate.update(sql,new Object[]{article.getNewsfrom(),article.getAuthor(),article.getPublishDate(),article.getId()});
 	}
+
+	/**
+	 * 
+	 * 根据创建时间和文章类型获取文章数量
+	 * @author: wyc
+	 * @createTime: 2018年3月4日 下午9:58:23
+	 * @history:
+	 * @param statYear
+	 * @param statArticleType
+	 * @return int
+	 */
+	public int getCountByPublishDateAndTopic(String publishDate, String topicCode,String publishDeptId) {
+		String topicQueryParam="";
+		String[] topciCodeArray=topicCode.split(",");
+		for (String tcode : topciCodeArray) {
+			topicQueryParam=topicQueryParam+"'"+tcode+"',";
+		}
+		topicQueryParam=topicQueryParam.substring(0, topicQueryParam.lastIndexOf(","));
+		
+		String sql="SELECT COUNT(1) FROM v_article_mini_info T WHERE T.data_state='1'\n"+
+				"AND T.publish_dept_id=?\n"+
+				"AND DATE_FORMAT(T.publish_date,'%Y')=?\n"+
+				"AND T.topic_code IN("+topicQueryParam+")";
+		return jdbcTemplate.queryForObject(sql,new Object[]{publishDeptId,publishDate},Integer.class);
+	}
 }

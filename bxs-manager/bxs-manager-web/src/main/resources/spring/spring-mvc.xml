@@ -65,4 +65,15 @@
 		<property name="maxUploadSize" value="104857600" />
 		<property name="maxInMemorySize" value="4096" />
 	</bean>
+	
+	 <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+		    <list>
+				<value>classpath*:global.properties</value>
+		    </list>
+		</property>
+	</bean>
+	
 </beans>

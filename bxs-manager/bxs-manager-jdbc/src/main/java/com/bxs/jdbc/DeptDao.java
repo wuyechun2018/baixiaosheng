@@ -101,5 +101,4 @@ public class DeptDao {
 		String sql = "UPDATE t_dept SET DATA_STATE=? WHERE ID=?";
 		jdbcTemplate.update(sql,new Object[]{DataState.Delete.getCode(),id});
 	}
-
 }

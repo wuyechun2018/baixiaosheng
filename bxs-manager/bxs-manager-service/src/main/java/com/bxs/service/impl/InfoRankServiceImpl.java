@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.bxs.common.dict.DataState;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
+import com.bxs.jdbc.ArticleDao;
 import com.bxs.jdbc.DeptDao;
 import com.bxs.jdbc.InfoRankDao;
 import com.bxs.pojo.Dept;
@@ -24,9 +25,12 @@ public class InfoRankServiceImpl implements InfoRankService {
 
 	@Autowired
 	private DeptDao deptDao;
+	
+	@Autowired
+	private ArticleDao articleDao;
 
 	@Override
-	public void initData(String statYear, UserInfoVo info) {
+	public void initData(String statYear,String statArticleType,UserInfoVo info) {
 		// 获取部门数据
 		List<Dept> deptList = deptDao.getListByPid("1");
 		for (Dept dept : deptList) {
@@ -46,7 +50,7 @@ public class InfoRankServiceImpl implements InfoRankService {
 				// 部门
 				rank.setBumen(0);
 				// 支队
-				rank.setZhidui(0);
+				rank.setZhidui(articleDao.getCountByPublishDateAndTopic(statYear,statArticleType,dept.getId()));
 				// 市局
 				rank.setShiju(0);
 				// 总队

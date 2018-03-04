@@ -9,7 +9,7 @@ import com.bxs.pojo.UserInfoVo;
 
 public interface InfoRankService {
 
-	void initData(String statYear,UserInfoVo info);
+	void initData(String statYear,String statArticleType,UserInfoVo info);
 
 	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 
