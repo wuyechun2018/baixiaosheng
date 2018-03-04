@@ -150,7 +150,8 @@ $(function(){
 		          }},
 		          {field:'publishDeptName',title: '发布部门',align: 'center',width: 80},
 		          {field:'publishUserName',title: '发布人',align: 'center',width: 80}, 
-		          {field:'createDate',title: '发布时间',align: 'center',width: 120}, 
+		          //{field:'createDate',title: '发布时间',align: 'center',width: 120}, 
+		          {field:'publishDate',title: '发布时间',align: 'center',width: 120}, 
 		          {field:'checkState',title: '状态',align: 'center',width: 100,formatter:function(val,rec){
 		        	  if(val=='1'){
 		        		  return "<span style='color:green'><a title='请审核' class='slink' onclick=checkFun('"+rec.id+"')>正常</a></span>";
