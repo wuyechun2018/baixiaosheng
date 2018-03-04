@@ -319,7 +319,7 @@ public class ArticleDao {
 		}
 		
 		//发布部门,1代表全部部门
-		if(param.get("publishDeptId")!=null&&StringUtils.isNotBlank(param.get("publishDeptId").toString())){
+		if(param.get("publishDeptId")!=null&&StringUtils.isNotBlank(param.get("publishDeptId").toString())&&!"1".equals(param.get("publishDeptId").toString())){
 			sqlBuff.append(" AND PUBLISH_DEPT_ID = '" + param.get("publishDeptId").toString() + "'\n");
 		}
 		
