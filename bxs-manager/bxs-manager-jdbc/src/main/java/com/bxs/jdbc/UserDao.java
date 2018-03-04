@@ -292,6 +292,8 @@ public class UserDao {
 		if(param.get("birthday")!=null&&StringUtils.isNotBlank(param.get("birthday").toString())){
 			sqlBuff.append(" AND  T.birthday LIKE '%"+param.get("birthday").toString()+"%' \n");
 		}
+		//根据职务进行排序
+		sqlBuff.append(" ORDER BY post_display_order ASC");
 		
 		//注意MySQL的分页参数
 		String sql="SELECT * FROM ("+sqlBuff.toString()+")S limit ?,?";
