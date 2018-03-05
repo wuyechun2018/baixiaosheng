@@ -1469,10 +1469,33 @@ $(document).ready(function() {
 </div>
 <script type="text/JavaScript">
 var isShow=$.cookie('isShow');
-if(isShow=='1'){
+if(isShow=='0'){
 	//doNothing
 }else{
-	window.open ('${ctx}/portal/pop','公告名称','height=500,width=700,top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no');
+	$.ajax({
+			cache: true,
+			type: "POST",
+			url:'${ctx}/article/loadArticle',
+			data:{
+				topicCode:'GG',
+				popState:'1',
+				page:1,
+				rows:3
+			},
+			async: false,
+		    error: function(request) {
+		       
+		    },
+		    success: function(data) {
+		    	for(var i=0;i<data.rows.length;i++){
+		    		var dataObj=data.rows[i];
+		    		var top=i*100;
+		    		var left=i*20;
+			    	window.open ('${ctx}/portal/popmsg?id='+dataObj.id,'公告'+i,'height=500,width=700,top='+top+',left='+left+',toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no');
+		    	}
+		    }
+		})
+	
 	var now = new Date();
 	//10秒 10*1000
 	//暂时定制为15秒

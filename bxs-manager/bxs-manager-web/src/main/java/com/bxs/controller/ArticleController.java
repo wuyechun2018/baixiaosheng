@@ -391,6 +391,7 @@ public class ArticleController extends BaseController{
 	
 	
 	
+	
 	/**
 	 * 
 	 *  Portal页面查询-根据文章类型编码获取文章(去除首页不展示的字段，提升首页加载速度)

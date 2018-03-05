@@ -351,6 +351,10 @@ public class ArticleDao {
 		if(param.get("publishUserName")!=null&&StringUtils.isNotBlank(param.get("publishUserName").toString())){
 			sqlBuff.append(" AND  T.PUBLISH_USER_NAME LIKE '%"+param.get("publishUserName").toString()+"%' \n");
 		}
+		//是否弹窗
+		if(param.get("popState")!=null&&StringUtils.isNotBlank(param.get("popState").toString())){
+			sqlBuff.append(" AND  T.POP_STATE = '"+param.get("popState").toString()+"' \n");
+		}
 		sqlBuff.append(" ORDER BY top_count DESC,UPDATE_DATE DESC");
 		
 		return sqlBuff.toString();

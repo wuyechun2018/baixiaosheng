@@ -78,6 +78,24 @@ public class PortalController {
 	
 	/**
 	 * 
+	 * 公告弹出框
+	 * @author: wyc
+	 * @createTime: 2018年2月6日 下午10:33:59
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping(value = "/popmsg")
+	public ModelAndView popmsg(String id) {
+		ModelAndView mv=new ModelAndView("/portal/popmsg");
+		ArticleInfoVo articleInfoVo=articleService.getArticleInfoById(id);
+		articleService.addViewCount(id);
+		mv.addObject("articleInfoVo",articleInfoVo);
+		return mv;
+	}
+	
+	
+	/**
+	 * 
 	 * 通列表
 	 * @author: wyc
 	 * @createTime: 2018年2月6日 下午10:33:59
