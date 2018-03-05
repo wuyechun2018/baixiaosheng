@@ -121,3 +121,45 @@ table.gridtable td {
 }
 
 
+.ibtn-top{
+	color:orange;
+	width:50px;
+	background-color: #FFF;
+	background-image:none;
+	border: 1px solid orange;
+	margin: 0 2px;
+	text-align: center;
+}
+
+.ibtn-top:hover{
+	cursor: pointer;
+}
+
+.ibtn-front{
+	color:blue;
+	width:50px;
+	background-color: #FFF;
+	background-image:none;
+	border: 1px solid blue;
+	margin: 0 2px;
+	text-align: center;
+}
+
+.ibtn-front:hover{
+	cursor: pointer;
+}
+
+.ibtn-edit{
+	color:green;
+	width:50px;
+	background-color: #FFF;
+	background-image:none;
+	border: 1px solid green;
+	margin: 0 2px;
+	text-align: center;
+}
+
+.ibtn-edit:hover{
+	cursor: pointer;
+}
+

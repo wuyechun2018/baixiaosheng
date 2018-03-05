@@ -162,6 +162,27 @@ public class ArticleController extends BaseController{
 	
 	/**
 	 * 
+	 * EasyUI 页面批量删除
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午3:19:45
+	 * @history:
+	 * @param request
+	 * @return String
+	 */
+	@RequestMapping("/batchEuiDelete")
+	@ResponseBody
+	public Object batchEuiDelete(HttpServletRequest request) {
+		String ids=request.getParameter("ids");
+		String[] idArray=ids.split(",");
+		for(int i=0;i<idArray.length;i++){
+			articleService.delete(idArray[i]);
+		}
+		return new JsonMsg();
+	}
+	
+	
+	/**
+	 * 
 	 * 文章预览
 	 * @author: wyc
 	 * @createTime: 2018年1月17日 下午5:05:37

@@ -128,6 +128,43 @@ function deleteFun(id){
       })
 }
 
+//点击“删除按钮”
+function clickDelBtn(){
+	var rows = $("#dgTable").datagrid('getSelections');
+	if (rows.length > 0) {
+		 //提示是否删除
+		 $.messager.confirm("确认", "您确认删除该文章吗？", function (action) {
+	            if (action) {
+	            	var idArray=new Array();
+                    for (var i = 0; i < rows.length; i++) {
+                    	idArray.push(rows[i].id);
+                    }
+                    $.ajax({
+            			cache: true,
+            			type: "POST",
+            			url:'${ctx}/article/batchEuiDelete',
+            			data:{
+            				ids:idArray.join(',')
+            			},
+            			async: false,
+            		    error: function(request) {
+            		    	$.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+            		    },
+            		    success: function(data) {
+            		    	$.messager.alert('提示信息',data.msg);
+            		    	$("#dgTable").datagrid('reload');
+            		    }
+            		
+            		})
+                    
+	            }
+	            })
+		
+	}else{
+		 $.messager.alert("操作提示", "请选择要删除的记录！","warning");  
+	}
+}
+
 //页面初始化
 $(function(){
 	 $('#leftTree').tree({
@@ -173,15 +210,16 @@ $(function(){
 		pagination: true,  
 		rownumbers: true,  
 		columns:[[
-		          {field:'topicName',title: '栏目',align: 'center',width: 80},
-		          {field:'articleTitle',title: '标题',align: 'center',width: 120,hidden:false,formatter:function(val,rec){
-		        	  	return "<a title='[预览]"+val+"' onclick=viewFun('"+rec.id+"') class='preview_link' href='javascript:void(0)'>"+val+"</a>";
+				  {field: 'ck', checkbox: true, width: '30' },
+		          {field:'topicName',title: '栏目',align: 'center',width: 60},
+		          {field:'articleTitle',title: '标题',align: 'center',width: 125,hidden:false,formatter:function(val,rec){
+		        	  	return "<a title='[预览]"+val+"' onclick=viewFun('"+rec.id+"') class='preview_link' href='javascript:void(0)'><span >"+val+"<span></a>";
 		          }},
-		          {field:'publishDeptName',title: '发布部门',align: 'center',width: 80},
-		          {field:'publishUserName',title: '发布人',align: 'center',width: 80}, 
+		          {field:'publishDeptName',title: '发布部门',align: 'center',width: 65},
+		          {field:'publishUserName',title: '发布人',align: 'center',width: 65}, 
 		          //{field:'createDate',title: '发布时间',align: 'center',width: 120}, 
-		          {field:'publishDate',title: '发布时间',align: 'center',width: 120}, 
-		          {field:'checkState',title: '状态',align: 'center',width: 80,formatter:function(val,rec){
+		          {field:'publishDate',title: '发布时间',align: 'center',width: 60}, 
+		          {field:'checkState',title: '状态',align: 'center',width: 50,formatter:function(val,rec){
 		        	  if(val=='1'){
 		        		  return "<span style='color:green'><a title='请审核' class='slink' onclick=checkFun('"+rec.id+"')>正常</a></span>";
 		        	  }else{
@@ -190,7 +228,14 @@ $(function(){
 		          }}, 
 		          {field:'viewCount',title: '查看次数',align: 'center',width: 50},
 		          {field:'id',title: '操作',align: 'center',width: 120, formatter:function(val,rec){
-		        	  return "<span class='btn_a_top'><a href='javascript:void(0)' onclick=topFun('"+val+"') >置顶</a></span><span class='btn_a_front'><a href='javascript:void(0)' onclick=toFront('"+val+"') >首推</a></span><span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span><span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
+		        	  var frontSliderStateTxt="首&nbsp;&nbsp;推";
+		        	  if(rec.frontSliderState=='1'){
+		        		  frontSliderStateTxt="已推荐";
+		        	  }
+		        	  //<a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a>
+		        	  //return "<span class='ibtn-top'><a href='javascript:void(0)' onclick=topFun('"+val+"') >置顶</a></span><span class='btn_a_front'><a href='javascript:void(0)' onclick=toFront('"+val+"') >"+frontSliderStateTxt+"</a></span><span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span><span class='btn_a_delete'></span>";
+		        	  return "<button class='ibtn-top' onclick=topFun('"+val+"')>置顶</button><button class='ibtn-front' onclick=toFront('"+val+"')>"+frontSliderStateTxt+"</button><button class='ibtn-edit' onclick=editFun('"+val+"')>编辑</button>";
+		          
 		          }}
 		]]
 		,toolbar:$('#tb')
@@ -267,6 +312,7 @@ $(function(){
 <%--TBar 添加按钮 --%>
 <div id="tb">
     <a href="javascript:void(0)" onclick="addFun()" id="add" class="easyui-linkbutton" plain="true"  iconCls="Applicationadd">添加</a>
+    <a href="javascript:void(0)" onclick="clickDelBtn()" id="add" class="easyui-linkbutton" plain="true"  iconCls="Applicationdelete">删除</a>
 </div>
 
 <%--点击"首推"弹出的窗口 --%>
