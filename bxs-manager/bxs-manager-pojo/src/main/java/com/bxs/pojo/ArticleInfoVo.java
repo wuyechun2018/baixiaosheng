@@ -55,6 +55,11 @@ public class ArticleInfoVo {
 	private String author;
 	//发布时间
 	private Date publishDate;
+	
+	//置顶状态
+	private String topState;
+	//是否弹窗
+	private String popState;
 
 	public String getId() {
 		return id;
@@ -249,6 +254,22 @@ public class ArticleInfoVo {
 
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
+	}
+
+	public String getTopState() {
+		return topState;
+	}
+
+	public void setTopState(String topState) {
+		this.topState = topState;
+	}
+
+	public String getPopState() {
+		return popState;
+	}
+
+	public void setPopState(String popState) {
+		this.popState = popState;
 	}
 	
 }

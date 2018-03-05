@@ -78,6 +78,7 @@ $(function(){
 			 	<th>文章标题：</th>	 		
 	 			<td>
 	 			  <input type="hidden"  value="${article.id}" name="id"  />
+	 			  <input type="hidden"  value="0" name="topState"  />
 	 			  <%--普通类型 --%>
 	 			  <input type="hidden"  value="1" name="articleType"  />
 	 			  <input value="${article.articleTitle}" type="text" name="articleTitle" style="width:300px;" />
@@ -144,6 +145,16 @@ $(function(){
 			 	<th>发布时间：</th>	 		
 	 			<td>
 	 				<input class="easyui-datebox" type="text" value="${article.publishDate}" ID="publishDate" name="publishDate" style="width:300px" />
+	 			</td>
+	 		</tr>
+	 		
+	 		<tr>
+	 			<th>是否弹窗：</th>	 		
+	 			<td>
+ 					<input  type="radio" id="popState_y" name="popState" value="1"  <c:out value="${article.popState=='1'?'checked':'' }"/>  />
+					<label for="popState_y" >是</label>
+					<input  type="radio" id="popState_n" name="popState" value="0"  <c:out value="${article.popState=='0'?'checked':'' }"/> />
+					<label for="popState_n">否</label>
 	 			</td>
 	 		</tr>
 	 		

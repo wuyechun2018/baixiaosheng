@@ -134,3 +134,33 @@ CREATE OR REPLACE VIEW V_USER_INFO
 AS 
 SELECT M.*,N.POST_NAME,N.DISPLAY_ORDER AS POST_DISPLAY_ORDER FROM (SELECT T.*,S.DEPT_NAME FROM t_user T LEFT JOIN T_DEPT S  ON  T.DEPT_ID=S.ID)M LEFT JOIN T_POST N ON M.POST_ID=N.ID;
 
+--添加字段
+ ALTER TABLE t_article ADD top_state VARCHAR(10) COMMENT '置顶状态';
+ ALTER TABLE t_article ADD pop_state VARCHAR(10) COMMENT '是否弹窗';
+--初始化状态
+UPDATE t_article T SET T.top_state='0',T.pop_state='0';
+UPDATE t_article t SET t.top_state='1' WHERE t.top_count<>'0';
+
+--重建视图
+CREATE OR REPLACE VIEW v_article_info AS 
+SELECT 
+  J.*,
+  K.user_name AS publish_user_name 
+FROM
+  (SELECT 
+    M.*,
+    N.dept_name AS publish_dept_name 
+  FROM
+    (SELECT 
+      T.*,
+      S.topic_name,
+      S.topic_code,
+      SUBSTRING(t.article_content,LOCATE('src="',t.article_content)+5,58) AS content_image_url 
+    FROM
+      t_article T 
+      LEFT JOIN t_topic S 
+        ON T.topic_id = S.id) M 
+    LEFT JOIN T_DEPT N 
+      ON M.PUBLISH_DEPT_ID = N.id) J 
+  LEFT JOIN T_USER K 
+    ON J.PUBLISH_USER_ID = K.id ;

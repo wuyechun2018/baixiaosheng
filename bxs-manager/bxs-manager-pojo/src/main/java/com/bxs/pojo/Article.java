@@ -62,6 +62,10 @@ public class Article implements java.io.Serializable {
 	private String author;
 	//发布时间
 	private Date publishDate;
+	//置顶状态(0 未置顶 1已置顶)
+	private String topState;
+	//是否弹窗
+	private String popState;
 	
 
 	public String getId() {
@@ -218,6 +222,22 @@ public class Article implements java.io.Serializable {
 
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
+	}
+
+	public String getTopState() {
+		return topState;
+	}
+
+	public void setTopState(String topState) {
+		this.topState = topState;
+	}
+
+	public String getPopState() {
+		return popState;
+	}
+
+	public void setPopState(String popState) {
+		this.popState = popState;
 	}
 	
 }

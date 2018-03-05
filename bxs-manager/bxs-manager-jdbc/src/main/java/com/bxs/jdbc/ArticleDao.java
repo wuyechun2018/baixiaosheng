@@ -74,7 +74,9 @@ public class ArticleDao {
 						"  front_slider_state,\n" + 
 						"  newsfrom,\n" + 
 						"  author,\n" + 
-						"  publish_date\n" + 
+						"  publish_date,\n" + 
+						"  top_state,\n" + 
+						"  pop_state\n" +
 						")\n" + 
 						"VALUES\n" + 
 						"  (\n" + 
@@ -95,6 +97,8 @@ public class ArticleDao {
 						"    ?,\n" + 
 						"    ?,\n" +
 						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" +
 						"    ?,\n" + 
 						"    ?\n" +
 						"  )";
@@ -121,6 +125,8 @@ public class ArticleDao {
 			         ps.setString(17, article.getNewsfrom());
 			         ps.setString(18, article.getAuthor());
 			         ps.setDate(19, new java.sql.Date(article.getPublishDate().getTime()));
+			         ps.setString(20, article.getTopState());
+			         ps.setString(21, article.getPopState());
 			       }
 			     }
 			 );
@@ -163,7 +169,9 @@ public class ArticleDao {
 						"  front_slider_state = ?,\n" + 
 						"  newsfrom = ?,\n" + 
 						"  author = ?,\n" + 
-						"  publish_date = ?\n" + 
+						"  publish_date = ?,\n" + 
+						"  top_state = ?,\n" + 
+						"  pop_state = ?\n" + 
 						"WHERE id = ?";
 
 		jdbcTemplate.execute(sql,
@@ -187,7 +195,9 @@ public class ArticleDao {
 			         ps.setString(16, article.getNewsfrom());
 			         ps.setString(17, article.getAuthor());
 			         ps.setDate(18, new java.sql.Date(article.getPublishDate().getTime()));
-			         ps.setString(19, article.getId());
+			         ps.setString(19, article.getTopState());
+			         ps.setString(20, article.getPopState());
+			         ps.setString(21, article.getId());
 			       }
 			     }
 			 );

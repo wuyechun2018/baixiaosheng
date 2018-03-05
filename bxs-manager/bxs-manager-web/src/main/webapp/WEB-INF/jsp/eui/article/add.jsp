@@ -82,6 +82,7 @@ $(function(){
 	 			  <input type="text" name="articleTitle" style="width:300px;" />
 	 			   <%--普通类型 --%>
 	 			  <input type="hidden"  value="1" name="articleType"  />
+	 			  <input type="hidden"  value="0" name="topState"  />
 	 			</td>
 	 			
 	 			<td rowspan="3">
@@ -135,6 +136,16 @@ $(function(){
 			 	<th>发布时间：</th>	 		
 	 			<td>
 	 				<input class="easyui-datebox" type="text" ID="publishDate" name="publishDate" style="width:300px" />
+	 			</td>
+	 		</tr>
+	 		
+	 		<tr>
+	 			<th>是否弹窗：</th>	 		
+	 			<td>
+ 					<input  type="radio" id="popState_y" name="popState" value="1"  />
+					<label for="popState_y" >是</label>
+					<input  type="radio" id="popState_n" name="popState" value="0" checked="checked"/>
+					<label for="popState_n">否</label>
 	 			</td>
 	 		</tr>
 	 	</table>
