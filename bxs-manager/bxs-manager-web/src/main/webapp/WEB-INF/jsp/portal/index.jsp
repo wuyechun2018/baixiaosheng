@@ -748,7 +748,12 @@ $(document).ready(function() {
     </div>
     <!--通知模块开始-->
     <div class="zhongzhiBox fr">
-    	<div class="h_titleBox"><h1>公告</h1></div>
+    	<div class="h_titleBox">
+    		<h1 >
+    			公告
+    			<a target="_blank" style="color:#f1efef" href="${ctx}/portal/list?topicCode=GG" class="imore">更多>></a>
+    		</h1>
+    	</div>
         <div class="ggBox">
         	<marquee id="GG" direction="up" scrollamount="2" loop="-1" height="75px">
         	<%--
@@ -757,7 +762,12 @@ $(document).ready(function() {
         	 --%>
             </marquee>
         </div>
-        <div class="h_titleBox"><h1>会议通知</h1></div>
+        <div class="h_titleBox">
+           <h1>
+           		会议通知
+           	 <a target="_blank" style="color:#f1efef" href="${ctx}/portal/list?topicCode=HYTZ" class="imore">更多>></a>
+           </h1>
+        </div>
         <div class="hyBox">
         	<ul id="HYTZ">
         	   <%--
