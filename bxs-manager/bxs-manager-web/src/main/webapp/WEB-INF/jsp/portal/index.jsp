@@ -382,6 +382,51 @@ function loadZD(){
 	}
 }
 
+//信息排名
+function loadXxpm(){
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/infoRank/pagerList',
+		data:{
+			statYear:new Date().getFullYear(),
+	    	page:1,
+	    	rows:6
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	var infoTitleHTML=
+	    		"<dl class=\"xx_h\">\n" +
+	    		"            \t<dt class=\"xx_bumen\">部门</dt>\n" + 
+	    		"            \t<dt class=\"dt\">支队</dt>\n" + 
+	    		"                <dt class=\"dt\">市局</dt>\n" + 
+	    		"                <dt class=\"dt\">总队</dt>\n" + 
+	    		"                <dt class=\"dt\">省厅</dt>\n" + 
+	    		"                <dt class=\"dt\">部局</dt>\n" + 
+	    		"            </dl>\n" + 
+	    		"            <div class=\"clear_f\"></div>";
+
+    		$('#XXPM').append(infoTitleHTML);
+    		
+    		for(var i=0;i<data.rows.length;i++){
+       		 var rowData=data.rows[i];
+       		 var infoHTML="<dl class=\"xx_dd\">\n" +
+				    		"                  <dt class=\"xx_bumen\">"+rowData.deptName+"</dt>\n" + 
+				    		"                  <dt class=\"dt\">"+rowData.zhidui+"</dt>\n" + 
+				    		"                    <dt class=\"dt\">"+rowData.shiju+"</dt>\n" + 
+				    		"                    <dt class=\"dt\">"+rowData.zongdui+"</dt>\n" + 
+				    		"                    <dt class=\"dt\">"+rowData.shengdui+"</dt>\n" + 
+				    		"                    <dt class=\"dt\">"+rowData.buju+"</dt>\n" + 
+				    		" </dl>";
+       		$('#XXPM').append(infoHTML);
+    		}
+	    }
+	})
+}
+
 
 //展示首页推荐轮播图
 function showSytjArticle(articleData){
@@ -519,6 +564,9 @@ $(document).ready(function() {
   
   //专题导航
   loadZtdh();
+  
+  //信息排名
+  loadXxpm();
   
   //直达
   //loadZD();
@@ -1152,7 +1200,8 @@ $(document).ready(function() {
             	<h1>信息排名</h1>
                 <a href="${ctx}/portal/info-list" target="_blank" class="fr more">更多排名>></a>
             </div>
-            <div class="xx_bg">
+            <div class="xx_bg" id="XXPM">
+            	<%--
             	<dl class="xx_h">
                 	<dt class="xx_bumen">部门</dt>
                 	<dt class="dt">支队</dt>
@@ -1194,8 +1243,9 @@ $(document).ready(function() {
                     <dt class="dt">4</dt>
                     <dt class="dt">5</dt>
                 </dl>
+                --%>
+                
             </div>
-            
         </div>
         <div class="clear_f"></div>
     </div>
