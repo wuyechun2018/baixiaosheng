@@ -71,6 +71,40 @@ function checkFun(id){
 	location.href=ctx+"/article/check?id="+id;
 }
 
+
+//点击"置顶"按钮
+function toTop(id){
+	var rowIndex=getSelectRowIndex(id);
+    //获取操作列
+    var record=$('#dgTable').datagrid('getData').rows[rowIndex];
+    $('#topStateWin').window('open');
+    $("#topStateForm").form("load", record); 
+}
+
+
+//关闭"置顶"窗口
+function clearTopForm(){
+	$('#topStateForm').form('clear');
+	$('#topStateWin').window('close');
+}
+
+//提交"置顶"表单
+function submitTopForm(){
+	$.ajax({
+        type: "POST",
+        url:'${ctx}/article/toTop',
+        data: $('#topStateForm').serialize(),
+        success: function (data) {
+       	    $('#topStateWin').window('close');
+		    //刷新列表
+		    $("#dgTable").datagrid('reload');
+        },
+        error: function(data) {
+            alert("error:"+data.responseText);
+         }
+  		});
+}
+
 //首页推荐
 function toFront(id){
 	var rowIndex=getSelectRowIndex(id);
@@ -229,12 +263,16 @@ $(function(){
 		          {field:'viewCount',title: '查看次数',align: 'center',width: 50},
 		          {field:'id',title: '操作',align: 'center',width: 120, formatter:function(val,rec){
 		        	  var frontSliderStateTxt="首&nbsp;&nbsp;推";
+		        	  var topStateTxt="置&nbsp;&nbsp;顶";
 		        	  if(rec.frontSliderState=='1'){
 		        		  frontSliderStateTxt="已推荐";
 		        	  }
+		        	  if(rec.topState=='1'){
+		        		  topStateTxt="已置顶";
+		        	  }
 		        	  //<a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a>
 		        	  //return "<span class='ibtn-top'><a href='javascript:void(0)' onclick=topFun('"+val+"') >置顶</a></span><span class='btn_a_front'><a href='javascript:void(0)' onclick=toFront('"+val+"') >"+frontSliderStateTxt+"</a></span><span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span><span class='btn_a_delete'></span>";
-		        	  return "<button class='ibtn-top' onclick=topFun('"+val+"')>置顶</button><button class='ibtn-front' onclick=toFront('"+val+"')>"+frontSliderStateTxt+"</button><button class='ibtn-edit' onclick=editFun('"+val+"')>编辑</button>";
+		        	  return "<button class='ibtn-top' onclick=toTop('"+val+"')>"+topStateTxt+"</button><button class='ibtn-front' onclick=toFront('"+val+"')>"+frontSliderStateTxt+"</button><button class='ibtn-edit' onclick=editFun('"+val+"')>编辑</button>";
 		          
 		          }}
 		]]
@@ -341,5 +379,35 @@ $(function(){
 		 </table>
     </div>
 </div>
+
+
+<%--点击"置顶"弹出的窗口 --%>
+<div id="topStateWin" class="easyui-window" title="&nbsp;置顶" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:460px;height:215px;padding:10px;">
+   <form id="topStateForm" method="post">
+   	<table  class="isingelTable">
+   		<tr>
+   			<th>是否置顶：</th>
+   			<td>
+   				<input type="hidden" id="id"  name="id" value="1"></input>
+   				
+   				<input  type="radio" id="radio_topState_n" name="topState" value="0" checked="checked" />
+			    <label for="radio_topState_n" >否</label>
+				<input  type="radio" id="radio_topState_y" name="topState" value="1" />
+				<label for="radio_topState_y">是</label>
+   			</td>
+   		<tr>
+   	</table>
+   </form>
+    <div style="text-align:center;padding:25px 5px 5px 5px;">
+    	<table style="width:100%;">
+    		<tr>
+    			<td style="width:50%;text-align: right;padding-right: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="submitTopForm()">保存</a></td>
+    			<td style="width:50%;text-align: left;padding-left: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearTopForm()">取消</a></td>
+    		</tr>
+		 </table>
+    </div>
+</div>
+
+
 </body>
 </html>

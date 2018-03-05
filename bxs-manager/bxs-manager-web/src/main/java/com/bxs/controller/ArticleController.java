@@ -490,6 +490,24 @@ public class ArticleController extends BaseController{
 		articleService.saveTopCount(article);
 		return new JsonMsg();
 	}
+	
+	/**
+	 * 
+	 * 置顶操作，该文章置于本栏目第一条
+	 * @author: wyc
+	 * @createTime: 2018年2月7日 下午3:37:06
+	 * @history:
+	 * @param id
+	 * @return Object
+	 */
+	@RequestMapping("/toTop")
+	@ResponseBody
+	public Object toTop(String id,String topState){
+		Article article=articleService.getArticleById(id);
+		article.setTopState(topState);
+		articleService.toTop(article);
+		return new JsonMsg();
+	}
 
 	
 	/**

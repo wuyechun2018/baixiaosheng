@@ -133,6 +133,11 @@ public class ArticleServiceImpl implements ArticleService {
 		articleDao.savePlusInfo(article);
 	}
 
+	@Override
+	public void toTop(Article article) {
+		articleDao.toTop(article);
+	}
+
 	
 	
 }

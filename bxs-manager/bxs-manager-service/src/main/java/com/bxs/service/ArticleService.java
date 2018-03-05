@@ -33,4 +33,6 @@ public interface ArticleService {
 	void saveTopCount(Article article);
 
 	void savePlusInfo(ArticleInfoVo article);
+
+	void toTop(Article article);
 }

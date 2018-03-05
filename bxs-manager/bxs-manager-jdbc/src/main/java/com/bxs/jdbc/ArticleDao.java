@@ -476,4 +476,50 @@ public class ArticleDao {
 				"AND T.topic_code IN("+topicQueryParam+")";
 		return jdbcTemplate.queryForObject(sql,new Object[]{publishDeptId,publishDate},Integer.class);
 	}
+
+	/**
+	 * 
+	 * 设置"置顶"操作
+	 * @author: wyc
+	 * @createTime: 2018年3月5日 下午7:54:36
+	 * @history:
+	 * @param article void
+	 */
+	public void toTop(Article article) {
+		if("1".equals(article.getTopState())){
+			//置顶，原置顶值保存到“display_order”字段中
+			String sql="UPDATE\n" +
+					"  t_article\n" + 
+					"SET\n" + 
+					"TOP_STATE=?,\n"+
+					"DISPLAY_ORDER=?,\n"+
+					"  top_count =\n" + 
+					"  (\n" + 
+					"\n" + 
+					"  SELECT M.TOP_COUNT FROM (\n" + 
+					"SELECT\n" + 
+					"  (MAX(TOP_COUNT) + 10) AS TOP_COUNT\n" + 
+					"FROM\n" + 
+					"  t_article t\n" + 
+					"WHERE T.topic_id =\n" + 
+					"  (SELECT\n" + 
+					"    topic_id\n" + 
+					"  FROM\n" + 
+					"    t_article\n" + 
+					"  WHERE id =?)\n" + 
+					")M)\n" + 
+					"WHERE ID = ?";
+			jdbcTemplate.update(sql,new Object[]{article.getTopState(),article.getTopCount(),article.getId(),article.getId()});
+		}else{
+			//取消置顶，从“display_order”字段中恢复置顶值
+			String sql="UPDATE\n" +
+					"  t_article\n" + 
+					"SET\n" + 
+					"TOP_STATE=?,\n"+
+					"top_count =? \n" + 
+					"WHERE ID = ?";
+			jdbcTemplate.update(sql,new Object[]{article.getTopState(),article.getDisplayOrder(),article.getId()});
+		}
+		
+	}
 }
