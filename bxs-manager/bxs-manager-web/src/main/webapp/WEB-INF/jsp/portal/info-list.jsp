@@ -56,6 +56,64 @@
     	return articleData;
     }
    
+   
+   //根据栏目编码加载文章
+    function loadRankInfo(statYear){
+    	var articleData=null;
+    	$.ajax({
+    		cache: true,
+    		type: "POST",
+    		url:'${ctx}/infoRank/pagerList',
+    		data:{
+    			statYear:statYear,
+    	    	page:1,
+    	    	rows:100
+    		},
+    		async: false,
+    	    error: function(request) {
+    	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+    	    },
+    	    success: function(data) {
+    	    	articleData=data;
+    	    }
+    	})
+    	return articleData;
+    }
+   
+   
+   
+    //加载信息排名
+    function showRankInfo(rankData){
+    	var infoTitleHTML="<dl class=\"xx_h\">\n" +
+    		"                <dt class=\"xx_pm\">排名</dt>\n" + 
+    		"                  <dt class=\"xx_bumen\">部门</dt>\n" + 
+    		"                  <dt class=\"dt\">支队</dt>\n" + 
+    		"                    <dt class=\"dt\">市局</dt>\n" + 
+    		"                    <dt class=\"dt\">总队</dt>\n" + 
+    		"                    <dt class=\"dt\">省厅</dt>\n" + 
+    		"                    <dt class=\"dt\">部局</dt>\n" + 
+    		"                </dl>\n" + 
+    		"                <div class=\"clear_f\" id=\"rank-list\"></div>";
+
+    	$('#rank-list').append(infoTitleHTML);
+    	
+    	for(var i=0;i<rankData.rows.length;i++){
+    		 var rowData=rankData.rows[i];
+    		 var xhClass="xx"+(i+1);
+	    	 var infoHTML= "<dl class=\"xx_dd\">\n" +
+	    		 "               <dt class=\"xx_pm\"><i class=\"red\">"+(i+1)+"</i></dt>\n" + 
+	    		 "               <dt class=\"xx_bumen\">"+rowData.deptName+"<i class=\""+xhClass+"\"></i></dt>\n" + 
+	    		 "               <dt class=\"dt\">"+rowData.zhidui+"</dt>\n" + 
+	    		 "                 <dt class=\"dt\">"+rowData.shiju+"</dt>\n" + 
+	    		 "                 <dt class=\"dt\">"+rowData.zongdui+"</dt>\n" + 
+	    		 "                 <dt class=\"dt\">"+rowData.shengdui+"</dt>\n" + 
+	    		 "                 <dt class=\"dt\">"+rowData.buju+"</dt>\n" + 
+	    		 "             </dl>";
+	   		 $('#rank-list').append(infoHTML);
+      }
+   }
+   
+   
    function showArticle(dispDivId,articleData){
     	for(var i=0;i<articleData.total;i++){
    		  var articleObj=articleData.rows[i];
@@ -94,8 +152,10 @@ $(document).ready(function() {
   });
   
   var topicCode=$('#topicCode').val();
-  var tpzsData=loadArticleByTopic(topicCode,'1','12','');
-  showArticle('TPZS',tpzsData);
+  //2018
+  var today=new Date().getFullYear();
+  var rankData=loadRankInfo(today);
+  showRankInfo(rankData);
   
   
 });
@@ -147,10 +207,11 @@ $(document).ready(function() {
     </div>
     
      <div class="nav-path">
-        <div class="dqwz">当前网站位置：<a href="#"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="#"  title="信息排名" class="CurrChnlCls">信息排名</a></div>
+        <div class="dqwz">当前网站位置：<a href="${ctx}/portal/index"  title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="#"  title="信息排名" class="CurrChnlCls">信息排名</a></div>
     </div>
 	
-     <div class="pmbox clearfix">
+     <div class="pmbox clearfix" id="rank-list">
+			<%--
 			<dl class="xx_h">
             		<dt class="xx_pm">排名</dt>
                 	<dt class="xx_bumen">部门</dt>
@@ -160,7 +221,7 @@ $(document).ready(function() {
                     <dt class="dt">省厅</dt>
                     <dt class="dt">部局</dt>
                 </dl>
-                <div class="clear_f"></div>
+                <div class="clear_f" ></div>
                 <dl class="xx_dd">
                 	<dt class="xx_pm"><i class="red">1</i></dt>
                 	<dt class="xx_bumen">科技科<i class="xx1"></i></dt>
@@ -216,6 +277,7 @@ $(document).ready(function() {
                     <dt class="dt">4</dt>
                     <dt class="dt">5</dt>
                 </dl>
+                 --%>
         </div>
     
     
