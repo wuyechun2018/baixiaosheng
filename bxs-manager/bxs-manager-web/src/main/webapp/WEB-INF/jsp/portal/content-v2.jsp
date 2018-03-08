@@ -11,9 +11,7 @@
 <link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
 <link href="${ctx}/resources/portal/css/nei.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="${ctx}/resources/portal/js/jquery.SuperSlide.2.1.1.js"></script>
-<script type="text/javascript" src="${ctx}/resources/portal/js/common.js"></script>
-<script src="${ctx}/resources/portal/js/html5media.js"></script>
+<script type="text/javascript" src="${ctx}/resources/portal/js/jquery.bcat.bgswitcher.js"></script>
 <style type="text/css">
 input:-webkit-autofill, 
 textarea:-webkit-autofill, 
@@ -28,33 +26,29 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 
 </head>
 
+<!--[if lt IE 9]>
+  <script src="${ctx}/resources/portal/js/html5.min.js"></script>
+  <script src="${ctx}/resources/portal/jsrespond.min.js"></script>
+<![endif]-->
 <!--[if lt IE 10]>
-    <script type="text/javascript"src="${ctx}/resources/portal/js/jquery.placeholder.min.js" charset="utf-8"></script>
-    <script type="text/javascript">
-			$(function(){
-				$('input, textarea').placeholder();
-			});
-	</script>
+    <script type="text/javascript"src="${ctx}/resources/portal/js/placeholder.min.js" charset="utf-8"></script>
 <![endif]-->
 
 
+
+
 <div class=" top_body">
-	<div id="bg-body">
-    	<ul>
-			<li style="background:url(${ctx}/resources/portal/images/banner1.jpg) center center no-repeat;background-size:100% 100%;"></li>
-			<li style="background:url(${ctx}/resources/portal/images/banner2.jpg) center center no-repeat;background-size:100% 100%;"></li>
-			<li style="background:url(${ctx}/resources/portal/images/banner3.jpg) center center no-repeat;background-size:100% 100%;"></li>
-		</ul>
-	</div>
-
-    <script type="text/javascript">
-			
-		jQuery("#bg-body").slide({ mainCell:"ul", effect:"fold",  autoPlay:true, mouseOverStop:false });
-
-	</script>
+	<div id="bg-body"></div>
     <script type="text/javascript">
     var ctx = "${ctx}";    
+    var srcBgArray = [ctx+"/resources/portal/images/banner1.jpg",ctx+"/resources/portal/images/banner2.jpg",ctx+"/resources/portal/images/banner3.jpg"];
 
+$(document).ready(function() {
+  $('#bg-body').bcatBGSwitcher({
+    urls: srcBgArray,
+    alt: 'Full screen background image'
+  });
+});
 
 //签收操作
 function doSign(){
@@ -151,37 +145,37 @@ function submitFeedback(){
         	<li>
             	<dl>
             		<dt class="n_1"><a href="${ctx}/portal/index"><span>首页</span></a></dt>
-                	<dd><a href="${ctx}/portal/list?topicCode=ZHYW" target="_blank">综合要闻</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=LDDT" target="_blank">领导动态</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=TZ" target="_blank">通知公告</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=HYTZ" target="_blank">会议通知</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=ZHYW">综合要闻</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=LDDT">领导动态</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=TZ">通知公告</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=HYTZ">会议通知</a></dd>
                 </dl>
             </li>
             <li>
             	<dl>
             		<dt class="n_2"><a href="#"><span>动态</span></a></dt>
-                	<dd><a href="${ctx}/portal/list?topicCode=GZDT" target="_blank">工作动态</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=XWGC" target="_blank">新闻观察</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=YJYP" target="_blank">预警研判</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=JWGC" target="_blank">警务观察</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=GZDT">工作动态</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=XWGC">新闻观察</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=YJYP">预警研判</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=JWGC">警务观察</a></dd>
                 </dl>
             </li>
             <li>
             	<dl>
             		<dt class="n_3"><a href="#"><span>阅览</span></a></dt>
-                	<dd><a href="${ctx}/portal/list?topicCode=ZDWJ" target="_blank">支队文件</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=ZDBB" target="_blank">值带班表</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=SJWJ" target="_blank">上级文件</a></dd>
-                    <dd><a href="${ctx}/portal/sois/index" target="_blank">信息报送</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=ZDWJ">支队文件</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=ZDBB">值带班表</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=SJWJ">上级文件</a></dd>
+                    <dd><a href="${ctx}/portal/sois/index">信息报送</a></dd>
                 </dl>
             </li>
             <li>
             	<dl>
             		<dt class="n_4"><a href="#"><span>警务</span></a></dt>
-                	<dd><a href="${ctx}/portal/list?topicCode=JWSP" target="_blank">警务视频</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=DCYJ" target="_blank">调查研究</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=YQDT" target="_blank">舆情动态</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=GZJB" target="_blank">工作简报</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=JWSP">警务视频</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=DCYJ">调查研究</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=YQDT">舆情动态</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=GZJB">工作简报</a></dd>
                 </dl>
             </li>
         </ul>

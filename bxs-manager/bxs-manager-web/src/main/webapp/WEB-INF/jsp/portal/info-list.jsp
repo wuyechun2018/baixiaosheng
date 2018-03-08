@@ -11,24 +11,36 @@
 <link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
 <link href="${ctx}/resources/portal/css/nei.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="${ctx}/resources/portal/js/jquery.bcat.bgswitcher.js"></script>
+<script type="text/javascript" src="${ctx}/resources/portal/js/jquery.SuperSlide.2.1.1.js"></script>
 </head>
 
-<!--[if lt IE 9]>
-  <script src="${ctx}/resources/portal/js/html5.min.js"></script>
-  <script src="${ctx}/resources/portal/jsrespond.min.js"></script>
-<![endif]-->
 <!--[if lt IE 10]>
-    <script type="text/javascript"src="${ctx}/resources/portal/js/placeholder.min.js" charset="utf-8"></script>
+    <script type="text/javascript"src="${ctx}/resources/portal/js/jquery.placeholder.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+			$(function(){
+				$('input, textarea').placeholder();
+			});
+	</script>
 <![endif]-->
-
 
 
 <div class=" top_body">
-	<div id="bg-body"></div>
+	<div id="bg-body">
+    	<ul>
+			<li style="background:url(${ctx}/resources/portal/images/banner1.jpg) center center no-repeat;background-size:100% 100%;"></li>
+			<li style="background:url(${ctx}/resources/portal/images/banner2.jpg) center center no-repeat;background-size:100% 100%;"></li>
+			<li style="background:url(${ctx}/resources/portal/images/banner3.jpg) center center no-repeat;background-size:100% 100%;"></li>
+		</ul>
+	</div>
+
+    <script type="text/javascript">
+			
+		jQuery("#bg-body").slide({ mainCell:"ul", effect:"fold",  autoPlay:true, mouseOverStop:false });
+
+	</script>
     <script type="text/javascript">
     var ctx = "${ctx}";    
-    var srcBgArray = [ctx+"/resources/portal/images/banner1.jpg",ctx+"/resources/portal/images/banner2.jpg",ctx+"/resources/portal/images/banner3.jpg"];
+    
 
     
    //根据栏目编码加载文章
@@ -146,10 +158,10 @@
    }
     
 $(document).ready(function() {
-  $('#bg-body').bcatBGSwitcher({
-    urls: srcBgArray,
-    alt: 'Full screen background image'
-  });
+ //$('#bg-body').bcatBGSwitcher({
+ //   urls: srcBgArray,
+ //   alt: 'Full screen background image'
+ // });
   
   var topicCode=$('#topicCode').val();
   //2018

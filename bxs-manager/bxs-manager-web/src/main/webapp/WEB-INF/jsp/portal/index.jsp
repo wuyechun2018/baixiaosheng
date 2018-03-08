@@ -13,15 +13,11 @@
 <link href="${ctx}/resources/portal/css/index.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.cookie-1.4.1.js"></script>
-<script type="text/javascript" src="${ctx}/resources/portal/js/jquery.bcat.bgswitcher.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.SuperSlide.2.1.1.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/common.js"></script>
 </head>
 
-<!--[if lt IE 9]>
-  <script src="${ctx}/resources/portal/js/html5.min.js"></script>
-  <script src="${ctx}/resources/portal/jsrespond.min.js"></script>
-<![endif]-->
+
 <!--[if lt IE 10]>
      <script type="text/javascript"src="${ctx}/resources/portal/js/jquery.placeholder.min.js" charset="utf-8"></script>
     <script type="text/javascript">
@@ -33,10 +29,26 @@
 
 <body>
 <div class=" top_body">
-<div id="bg-body"></div>
+	<div id="bg-body">
+    	<ul>
+			<li style="background:url(${ctx}/resources/portal/images/banner1.jpg) center center no-repeat;background-size:100% 100%;"></li>
+			<li style="background:url(${ctx}/resources/portal/images/banner2.jpg) center center no-repeat;background-size:100% 100%;"></li>
+			<li style="background:url(${ctx}/resources/portal/images/banner3.jpg) center center no-repeat;background-size:100% 100%;"></li>
+		</ul>
+	</div>
+
+    <script type="text/javascript">
+			
+		jQuery("#bg-body").slide({ mainCell:"ul", effect:"fold",  autoPlay:true, mouseOverStop:false });
+
+	</script>
+
+
+<!--<div id="bg-body"></div>-->
+
 <script type="text/javascript">
 var ctx = "${ctx}";    
-var srcBgArray = [ctx+"/resources/portal/images/banner1.jpg",ctx+"/resources/portal/images/banner2.jpg",ctx+"/resources/portal/images/banner3.jpg"];
+<!--var srcBgArray = [ctx+"/resources/portal/images/banner1.jpg",ctx+"/resources/portal/images/banner2.jpg",ctx+"/resources/portal/images/banner3.jpg"];-->
 
 //根据类型编码查询链接
 function loadLinkByTypeCode(linkTypeCode,page,rows){
@@ -179,8 +191,12 @@ function showArticle(dispDivId,articleData){
 				  $('#'+dispDivId).append(html);
 			  }else if(dispDivId=='GG'){
 			  //公告	  
-				  //$('#'+dispDivId).append(articleObj.articleContent);
-				  $('#'+dispDivId).append('<a href="'+articleUrl+'">'+articleObj.articleTitle+'</a>');
+				   //$('#'+dispDivId).append(articleObj.articleContent);
+				  //$('#'+dispDivId).append('<a href="'+articleUrl+'">'+articleObj.articleTitle+'</a>');
+				 
+			      var html='<li><span>></span><a title="'+articleTitle+'" href="'+articleUrl+'">'+articleObj.articleTitle+'</a></li>';
+				  $('#'+dispDivId).append(html);
+					jQuery(".ggBox").slide({mainCell:"ul",autoPlay:true,effect:"topMarquee",vis:3,interTime:80});
 			  } else if(dispDivId=='ZHYW'||dispDivId=='LDDT'){
 			  //综合要闻&&领导动态	  
 				  if(articleTitle.length>=15){
@@ -463,10 +479,10 @@ function showSytjArticle(articleData){
 
 
 $(document).ready(function() {
-  $('#bg-body').bcatBGSwitcher({
-    urls: srcBgArray,
-    alt: 'Full screen background image'
-  });
+  //$('#bg-body').bcatBGSwitcher({
+  //  urls: srcBgArray,
+  //  alt: 'Full screen background image'
+  // });
   
   //加载天气情况
   loadWeekDayInfo();
@@ -760,12 +776,13 @@ $(document).ready(function() {
     		</h1>
     	</div>
         <div class="ggBox">
+       	 <%--
         	<marquee id="GG" direction="up" scrollamount="2" loop="-1" height="75px">
-        	<%--
         		公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告
             公告公告公告公告公告公告公告
-        	 --%>
-            </marquee>
+        	 
+            </marquee>--%>
+            <ul id="GG"></ul>
         </div>
         <div class="h_titleBox">
            <h1>
@@ -1454,7 +1471,7 @@ $(document).ready(function() {
   </div>
 </div>
 </div>
-
+<div class="clear_f"></div>
 <!--底部-->
 <div class="footer mar10">
 	<div class="container">
