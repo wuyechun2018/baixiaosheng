@@ -49,6 +49,8 @@ body{}
 .h_titleBox{ height:30px; background-color:#e62021; padding:0px 10px;}
 .h_titleBox h1{ line-height:30px; font-size:16px; color:#fff; font-weight:bold;}
 .ggBox{ height:75px; padding:10px; border:1px solid #ddd; line-height:25px; overflow:hidden;}
+.ggBox ul li{line-height:25px; height:25px; overflow:hidden; }
+.ggBox ul li span{ font-size:12px; color:#e62021; margin-right:5px;}
 
 .hyBox{padding:10px; border:1px solid #ddd;}
 .hyBox ul li{ line-height:25px; height:25px; overflow:hidden;}
@@ -77,13 +79,13 @@ body{}
 .ksrk_more a{ color:#fff;}
 
 .index_searchBox{ background:url(../images/s_bg.jpg) left center; height:55px;}
-.seachBox{ width:560px; padding-left:40px;}
+.seachBox{ width:560px; padding-left:30px;}
 .s_tit{ font-size:22px; color:#0045a4; font-weight:bold; line-height:55px; }
 .seachBox .s1{ padding-top:12px;}
-.seachBox .s1 .index_s{ width:305px; height:30px; border:1px solid #c7e3fe; margin-left:20px; background-color:#fff; padding-left:10px;}
-.seachBox .s1 .index_submit{ padding:5px 25px; background-color:#f4721e; border:0px; margin-left:20px; font-size:16px; color:#fff; font-weight:bold; cursor:pointer;}
-.index_searchBox .s_link { padding-top:20px;}
-.index_searchBox .s_link a{ padding:8px 15px; font-size:14px; background-color:#0e5fd2; color:#fff; }
+.seachBox .s1 .index_s{  width:305px; height:30px; border:1px solid #c7e3fe; margin-left:15px; background-color:#fff; padding-left:10px; line-height:30px;}
+.seachBox .s1 .index_submit{padding:0px 25px; line-height:32px; height:32px; background-color:#f4721e; border:0px; margin-left:15px; font-size:14px; color:#fff; font-weight:bold; cursor:pointer;}
+.index_searchBox .s_link { margin-top:14px;}
+.index_searchBox .s_link a{ padding:6px 15px; font-size:14px; background-color:#e62021; color:#fff; display:inline-block;}
 .index_searchBox .s_link a:hover{ background-color:#f4721e;}
 
 .kstdBox{ border:1px solid #ddd; padding-bottom:18px; padding-top:3px;}
@@ -129,12 +131,3 @@ body{}
 .i_daohang_title .hd li.on{ font-size:12px; color:#fff;   background:url(../images/titles4aon.gif) right top no-repeat #356bd5; font-weight:bold;}
 .index_daohang .dh_db{ padding-left:32px; height:88px;}
 .index_daohang .dh_db a{ display:block; float:left; width:118px;  height:22px; line-height:22px; overflow:hidden; color:#787878; font-size:12px;}
-
-.imore{
-	float: right;
-    font-size: 12px;
-    color: #f5dcdc;
-}
-	
-	
-}

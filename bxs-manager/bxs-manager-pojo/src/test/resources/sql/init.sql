@@ -104,7 +104,7 @@ INSERT  INTO `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`
  
 
  --2018/03/01 20:45
---创建表
+-- 创建表
 CREATE TABLE `t_info_rank` (
   `id` varchar(36) NOT NULL COMMENT '主键',
   `stat_year` varchar(10) DEFAULT NULL COMMENT '统计年份',
@@ -124,24 +124,24 @@ CREATE TABLE `t_info_rank` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 
---创建视图
+-- 创建视图
  CREATE OR REPLACE VIEW V_INFO_RANK
 AS 
 SELECT t.*,s.dept_name FROM t_info_rank t LEFT JOIN t_dept s  ON  t.dept_id=s.id ;
  
---调整视图 2018/03/04
+-- 调整视图 2018/03/04
 CREATE OR REPLACE VIEW V_USER_INFO
 AS 
 SELECT M.*,N.POST_NAME,N.DISPLAY_ORDER AS POST_DISPLAY_ORDER FROM (SELECT T.*,S.DEPT_NAME FROM t_user T LEFT JOIN T_DEPT S  ON  T.DEPT_ID=S.ID)M LEFT JOIN T_POST N ON M.POST_ID=N.ID;
 
---添加字段
+-- 添加字段
  ALTER TABLE t_article ADD top_state VARCHAR(10) COMMENT '置顶状态';
  ALTER TABLE t_article ADD pop_state VARCHAR(10) COMMENT '是否弹窗';
---初始化状态
+-- 初始化状态
 UPDATE t_article T SET T.top_state='0',T.pop_state='0';
 UPDATE t_article t SET t.top_state='1' WHERE t.top_count<>'0';
 
---重建视图
+-- 重建视图
 CREATE OR REPLACE VIEW v_article_info AS 
 SELECT 
   J.*,

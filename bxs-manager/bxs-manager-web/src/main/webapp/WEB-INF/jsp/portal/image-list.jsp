@@ -126,37 +126,37 @@ $(document).ready(function() {
         	<li>
             	<dl>
             		<dt class="n_1"><a href="${ctx}/portal/index"><span>首页</span></a></dt>
-                	<dd><a href="${ctx}/portal/list?topicCode=ZHYW">综合要闻</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=LDDT">领导动态</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=TZ">通知公告</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=HYTZ">会议通知</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=ZHYW" target="_blank">综合要闻</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=LDDT" target="_blank">领导动态</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=TZ" target="_blank">通知公告</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=HYTZ" target="_blank">会议通知</a></dd>
                 </dl>
             </li>
             <li>
             	<dl>
             		<dt class="n_2"><a href="#"><span>动态</span></a></dt>
-                	<dd><a href="${ctx}/portal/list?topicCode=GZDT">工作动态</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=XWGC">新闻观察</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=YJYP">预警研判</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=JWGC">警务观察</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=GZDT" target="_blank">工作动态</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=XWGC" target="_blank">新闻观察</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=YJYP" target="_blank">预警研判</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=JWGC" target="_blank">警务观察</a></dd>
                 </dl>
             </li>
             <li>
             	<dl>
             		<dt class="n_3"><a href="#"><span>阅览</span></a></dt>
-                	<dd><a href="${ctx}/portal/list?topicCode=ZDWJ">支队文件</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=ZDBB">值带班表</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=SJWJ">上级文件</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=XXBS">信息报送</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=ZDWJ" target="_blank">支队文件</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=ZDBB" target="_blank">值带班表</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=SJWJ" target="_blank">上级文件</a></dd>
+                    <dd><a href="${ctx}/portal/sois/index" target="_blank">信息报送</a></dd>
                 </dl>
             </li>
             <li>
             	<dl>
             		<dt class="n_4"><a href="#"><span>警务</span></a></dt>
-                	<dd><a href="${ctx}/portal/list?topicCode=JWSP">警务视频</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=DCYJ">调查研究</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=YQDT">舆情动态</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=GZJB">工作简报</a></dd>
+                	<dd><a href="${ctx}/portal/list?topicCode=JWSP" target="_blank">警务视频</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=DCYJ" target="_blank">调查研究</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=YQDT" target="_blank">舆情动态</a></dd>
+                    <dd><a href="${ctx}/portal/list?topicCode=GZJB" target="_blank">工作简报</a></dd>
                 </dl>
             </li>
         </ul>

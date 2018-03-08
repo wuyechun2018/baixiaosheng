@@ -166,7 +166,7 @@ function submitFeedback(){
                 	<dd><a href="${ctx}/portal/list?topicCode=ZDWJ">支队文件</a></dd>
                     <dd><a href="${ctx}/portal/list?topicCode=ZDBB">值带班表</a></dd>
                     <dd><a href="${ctx}/portal/list?topicCode=SJWJ">上级文件</a></dd>
-                    <dd><a href="${ctx}/portal/list?topicCode=XXBS">信息报送</a></dd>
+                    <dd><a href="${ctx}/portal/sois/index">信息报送</a></dd>
                 </dl>
             </li>
             <li>
