@@ -69,6 +69,14 @@ public class SignServiceImpl implements SignService {
 		grid.setRows(signDao.pagerSignList(ePager,param));
 		return grid;
 	}
+	
+	@Override
+	public EUIGrid pagerSignArticleList(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(signDao.getSignArticleTotalCount(param));
+		grid.setRows(signDao.pagerSignArticleList(ePager,param));
+		return grid;
+	}
 
 	@Override
 	public void submitFeedback(Sign sign) {

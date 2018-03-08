@@ -164,3 +164,9 @@ FROM
       ON M.PUBLISH_DEPT_ID = N.id) J 
   LEFT JOIN T_USER K 
     ON J.PUBLISH_USER_ID = K.id ;
+    
+-- 创建视图 2018-03-08    
+CREATE VIEW v_sign_article_info AS 
+SELECT t.*,s.article_title,s.topic_name,s.publish_dept_name,s.publish_user_name FROM v_sign_info t LEFT JOIN v_article_info s ON t.article_id=s.id;
+    
+    

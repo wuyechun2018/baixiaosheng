@@ -18,6 +18,7 @@ import com.bxs.common.dict.DataState;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.ArticleInfoVo;
 import com.bxs.pojo.Sign;
+import com.bxs.pojo.SignArticleInfoVo;
 import com.bxs.pojo.SignInfoVo;
 import com.bxs.pojo.UserInfoVo;
 
@@ -254,6 +255,14 @@ public class SignDao {
 		if(param.get("articleId")!=null&&StringUtils.isNotBlank(param.get("articleId").toString())){
 			sqlBuff.append(" AND ARTICLE_ID = '" + param.get("articleId").toString() + "'\n");
 		}
+		//文章类型
+		if(param.get("articleType")!=null&&StringUtils.isNotBlank(param.get("articleType").toString())){
+			sqlBuff.append(" AND article_type = '" + param.get("articleType").toString() + "'\n");
+		}
+		//反馈人用户ID
+		if(param.get("signUserId")!=null&&StringUtils.isNotBlank(param.get("signUserId").toString())){
+			sqlBuff.append(" AND sign_user_id = '" + param.get("signUserId").toString() + "'\n");
+		}
 		return sqlBuff.toString();
 	}
 
@@ -300,6 +309,20 @@ public class SignDao {
 	       }
 	     }
 	   );
+	}
+
+	
+	public Long getSignArticleTotalCount(Map<String, Object> param) {
+		String sql="SELECT COUNT(1) FROM v_sign_article_info T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		return  jdbcTemplate.queryForObject(sql,Long.class);
+	}
+
+
+	public List<?> pagerSignArticleList(EUIPager ePager, Map<String, Object> param) {
+		String  querySql="SELECT * FROM v_sign_article_info T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<SignArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(SignArticleInfoVo.class));
+		return list;
 	}
 
 }

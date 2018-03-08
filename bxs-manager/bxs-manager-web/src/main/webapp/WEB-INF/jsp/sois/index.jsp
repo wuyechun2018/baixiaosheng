@@ -58,7 +58,7 @@ var ctx = "${ctx}";
 			    <!-- 顶部右侧菜单 -->
 			    <ul class="layui-nav top_menu">
 					<li class="layui-nav-item" pc>
-						<a href="javascript:;" class="clearCache"><i class="layui-icon" data-icon="&#xe611;">&#xe611;</i><cite>我的反馈</cite><span class="layui-badge-dot"></span></a>
+						<a href="javascript:;" data-url="${ctx}/sois/showFeedbackList" target="_blank" class="clearCache"><i class="layui-icon" data-icon="&#xe611;">&#xe611;</i><cite>我的反馈</cite><span class="layui-badge-dot"></span></a>
 					</li>
 					<%--
 					<li class="layui-nav-item lockcms" pc>
