@@ -62,7 +62,41 @@ $(function(){
 		rownumbers: true,  
 		columns:[[
 				   {field:'id',title: '主键',align: 'left',width: 10,hidden:true},
-				   {field:'showSate',title: '显示状态',align: 'left',width: 10,hidden:true},
+				   {field:'showState',align: 'center', title:'显示状态', width:30 ,
+                       formatter:function(val,rec){
+                              if(rec.showState == '1'){
+                                  return '<span style=color:green;>显示</span>' ;
+                              } else{
+                                  return '<span style=color:red; >不显示</span>' ; 
+                              }
+                       } , 
+                       editor:{
+                           type:'combobox' ,
+                           options:{
+                               data:[{id:'0' , val:'不显示'},{id:'1' , val:'显示'}] ,
+                               valueField:'id' , 
+                               textField:'val' ,
+                               required:true , 
+                               missingMessage:'显示状态必填'
+                           }
+                       }
+                   },
+                   /*{field:'showState',title:'显示状态',width:30,align:'center',  
+					   formatter:function(val,rec){
+                           if(rec.showState == '1'){
+                               return '<span style=color:green;>显示</span>' ;
+                           } else{
+                               return '<span style=color:red; >不显示</span>' ; 
+                           }
+                    	} ,
+                	   editor:{  
+                           type:'checkbox',  
+                           options:{  
+                               on: '1',  
+                               off: '0'  
+                           }  
+                       }  
+                   },*/
 				   {field:'dataState',title: '数据状态',align: 'left',width: 10,hidden:true},
 				   {field:'statYear',title: '统计周期',width: 40,align: 'center',hidden:false},
 				   {field:'deptId',title: '部门主键',width: 40,align: 'center',hidden:true},
@@ -87,7 +121,7 @@ $(function(){
 			url:'${ctx}/infoRank/save',
 			data:{
 				id:row.id,
-				showSate:row.showSate,
+				showState:row.showState,
 				dataState:row.dataState,
 				statYear:row.statYear,
 				deptId:row.deptId,

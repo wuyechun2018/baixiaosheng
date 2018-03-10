@@ -127,6 +127,7 @@ var ctx = "${ctx}";
 	<div class="site-mobile-shade"></div>
 
 	<script type="text/javascript" src="${ctx}/resources/js-lib/layui/layui.js"></script>
+	<script type="text/javascript" src="${ctx}/resources/js-lib/base.js"></script>
 	<script type="text/javascript" src="${ctx}/resources/sois/index.js"></script>
 </body>
 </html>

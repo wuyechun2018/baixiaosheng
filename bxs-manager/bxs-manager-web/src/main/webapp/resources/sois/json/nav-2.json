@@ -1,0 +1,26 @@
+[
+    {
+        "id": "32", 
+        "text": "签收信息列表", 
+        "state": "open", 
+        "checked": null, 
+        "attributes": {
+            "menuPid": "1", 
+            "menuAddr": "/sois/signList"
+        }, 
+        "children": null, 
+        "iconCls": null
+    }, 
+    {
+        "id": "33", 
+        "text": "签收信息报送", 
+        "state": "open", 
+        "checked": null, 
+        "attributes": {
+            "menuPid": "1", 
+            "menuAddr": "/sois/signAdd"
+        }, 
+        "children": null, 
+        "iconCls": null
+    }
+]

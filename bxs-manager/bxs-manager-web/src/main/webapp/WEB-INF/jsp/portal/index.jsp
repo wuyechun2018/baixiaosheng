@@ -411,6 +411,7 @@ function loadXxpm(){
 		url:'${ctx}/infoRank/pagerList',
 		data:{
 			statYear:new Date().getFullYear(),
+			showState:'1',
 	    	page:1,
 	    	rows:6
 		},

@@ -1,0 +1,14 @@
+[
+    {
+        "id": "52", 
+        "text": "修改密码", 
+        "state": "open", 
+        "checked": null, 
+        "attributes": {
+            "menuPid": "1", 
+            "menuAddr": "/sois/pwd"
+        }, 
+        "children": null, 
+        "iconCls": null
+    }
+]

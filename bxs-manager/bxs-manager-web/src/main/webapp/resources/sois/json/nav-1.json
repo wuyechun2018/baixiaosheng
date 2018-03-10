@@ -1,0 +1,26 @@
+[
+    {
+        "id": "2", 
+        "text": "信息报送列表", 
+        "state": "open", 
+        "checked": null, 
+        "attributes": {
+            "menuPid": "1", 
+            "menuAddr": "/sois/list"
+        }, 
+        "children": null, 
+        "iconCls": null
+    }, 
+    {
+        "id": "3", 
+        "text": "信息报送", 
+        "state": "open", 
+        "checked": null, 
+        "attributes": {
+            "menuPid": "1", 
+            "menuAddr": "/sois/add"
+        }, 
+        "children": null, 
+        "iconCls": null
+    }
+]

@@ -138,6 +138,9 @@ public class InfoRankDao {
 		if(param.get("statYear")!=null&&StringUtils.isNotBlank(param.get("statYear").toString())){
 			sqlBuff.append(" AND stat_year = '" + param.get("statYear").toString() + "'\n");
 		}
+		if(param.get("showState")!=null&&StringUtils.isNotBlank(param.get("showState").toString())){
+			sqlBuff.append(" AND show_state = '" + param.get("showState").toString() + "'\n");
+		}
 		sqlBuff.append(" ORDER BY zhidui DESC");
 		return sqlBuff.toString();
 	}

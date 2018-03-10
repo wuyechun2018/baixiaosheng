@@ -442,6 +442,19 @@ public class SoisController {
 		return "/sois/index";
 	}
 	
+	/**
+	 *  
+	 * 首页-采用EasyUI作为主框架,解决IE8兼容问题
+	 * @author: wyc
+	 * @createTime: 2018年2月7日 下午11:34:34
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/indexs")
+	public Object indexs() {
+		return "/sois/indexs";
+	}
+	
 
 	/**
 	 * 

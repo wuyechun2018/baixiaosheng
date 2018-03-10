@@ -1,0 +1,26 @@
+[
+    {
+        "id": "32", 
+        "text": "反馈信息列表", 
+        "state": "open", 
+        "checked": null, 
+        "attributes": {
+            "menuPid": "1", 
+            "menuAddr": "/sois/feedbackList"
+        }, 
+        "children": null, 
+        "iconCls": null
+    }, 
+    {
+        "id": "33", 
+        "text": "反馈信息报送", 
+        "state": "open", 
+        "checked": null, 
+        "attributes": {
+            "menuPid": "1", 
+            "menuAddr": "/sois/feedbackAdd"
+        }, 
+        "children": null, 
+        "iconCls": null
+    }
+]

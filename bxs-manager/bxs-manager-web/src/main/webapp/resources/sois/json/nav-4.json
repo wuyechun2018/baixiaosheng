@@ -1,0 +1,26 @@
+[
+    {
+        "id": "52", 
+        "text": "警务视频列表", 
+        "state": "open", 
+        "checked": null, 
+        "attributes": {
+            "menuPid": "1", 
+            "menuAddr": "/sois/videoList"
+        }, 
+        "children": null, 
+        "iconCls": null
+    }, 
+    {
+        "id": "53", 
+        "text": "添加警务视频", 
+        "state": "open", 
+        "checked": null, 
+        "attributes": {
+            "menuPid": "1", 
+            "menuAddr": "/sois/videoAdd"
+        }, 
+        "children": null, 
+        "iconCls": null
+    }
+]
