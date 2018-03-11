@@ -10,12 +10,13 @@
 		<jdk.version>1.7</jdk.version>
 		<jetty.version>7.6.7.v20120910</jetty.version>
 		<junit.version>4.12</junit.version>
+		<slf4j.version>1.6.4</slf4j.version>
+		<log4j.version>1.2.14</log4j.version>
 		<spring.version>4.1.3.RELEASE</spring.version>
 		<mybatis.version>3.2.8</mybatis.version>
 		<mybatis.spring.version>1.2.2</mybatis.spring.version>
 		<mybatis.paginator.version>1.2.15</mybatis.paginator.version>
 		<mysql.version>5.1.32</mysql.version>
-		<slf4j.version>1.6.4</slf4j.version>
 		<jackson.version>2.4.2</jackson.version>
 		<druid.version>1.0.9</druid.version>
 		<httpclient.version>4.3.5</httpclient.version>
@@ -79,9 +80,21 @@
 			<!-- 日志处理 -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
 				<version>${slf4j.version}</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			
 			<!-- Mybatis -->
 			<dependency>
 				<groupId>org.mybatis</groupId>
@@ -177,6 +190,48 @@
 				<artifactId>solr-solrj</artifactId>
 				<version>${solrj.version}</version>
 			</dependency>
+			
+			<!-- Hibernate 对JPA的实现 -->
+			<dependency>
+				<groupId>org.hibernate.java-persistence</groupId>
+				<artifactId>jpa-api</artifactId>
+				<version>2.0-cr-1</version>
+				<scope>compile</scope>
+			</dependency>
+			
+			<!-- freeMarker相关 -->
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>2.3.20</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+			<!--中文转拼音  -->
+			<dependency>
+			    <groupId>com.belerweb</groupId>
+			    <artifactId>pinyin4j</artifactId>
+			    <version>2.5.0</version>
+			</dependency>
+			
+			<!--以下是ueditor中依赖的一些包  -->
+			<dependency>
+			    <groupId>org.json</groupId>
+			    <artifactId>json</artifactId>
+		    	<version>20160212</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>commons-io</groupId>
+			    <artifactId>commons-io</artifactId>
+			    <version>2.4</version>
+			</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 	<build>

@@ -46,6 +46,19 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!--中文转拼音  -->
+		<dependency>
+			    <groupId>com.belerweb</groupId>
+			    <artifactId>pinyin4j</artifactId>
+		</dependency>
+		
 	</dependencies>
   
   
