@@ -3,7 +3,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,10 +10,8 @@ import org.springframework.jdbc.core.support.AbstractLobCreatingPreparedStatemen
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.stereotype.Repository;
-
 import com.bxs.common.dict.DataState;
 import com.bxs.pojo.ConfigType;
-import com.bxs.pojo.LinkType;
 
 @Repository
 public class ConfigTypeDao {
@@ -22,6 +19,15 @@ public class ConfigTypeDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	/**
+	 * 
+	 * 根据父主键获取配置类型
+	 * @author: wyc
+	 * @createTime: 2018年3月12日 上午8:57:11
+	 * @history:
+	 * @param pid
+	 * @return List<ConfigType>
+	 */
 	public List<ConfigType> getListByPid(String pid) {
 		String sql="SELECT * FROM t_config_type T WHERE T.DATA_STATE='1' AND T.pid=? ";
 		List<ConfigType> list = jdbcTemplate.query(sql,new Object[]{pid},new BeanPropertyRowMapper(ConfigType.class));
@@ -39,12 +45,13 @@ public class ConfigTypeDao {
 	 */
 	public void update(final ConfigType linkType) {
 		String sql=	"UPDATE\n" +
-						" t_link_type\n" + 
+						"  t_config_type\n" + 
 						"SET\n" + 
 						"  pid = ?,\n" + 
-						"  link_type_code = ?,\n" + 
-						"  link_type_name =?,\n" + 
-						"  link_type_desc = ?,\n" + 
+						"  config_type_code = ?,\n" + 
+						"  config_type_name = ?,\n" + 
+						"  config_value_type = ?,\n" + 
+						"  config_type_desc = ?,\n" + 
 						"  data_state = ?,\n" + 
 						"  display_order = ?\n" + 
 						"WHERE id = ?";
@@ -52,12 +59,13 @@ public class ConfigTypeDao {
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
 			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
 			         ps.setString(1, linkType.getPid());
-			         //ps.setString(2, linkType.getLinkTypeCode());
-			         //ps.setString(3, linkType.getLinkTypeName());
-			         //ps.setString(4, linkType.getLinkTypeDesc());
-			         ps.setString(5, linkType.getDataState());
-			         ps.setInt(6, linkType.getDisplayOrder());
-			         ps.setString(7, linkType.getId());
+			         ps.setString(2, linkType.getConfigTypeCode());
+			         ps.setString(3, linkType.getConfigTypeName());
+			         ps.setString(4, linkType.getConfigValueType());
+			         ps.setString(5, linkType.getConfigTypeDesc());
+			         ps.setString(6, linkType.getDataState());
+			         ps.setInt(7, linkType.getDisplayOrder());
+			         ps.setString(8, linkType.getId());
 			       }
 			     }
 			 );
@@ -73,17 +81,19 @@ public class ConfigTypeDao {
 	 * @param linkType void
 	 */
 	public void save(final ConfigType configType) {
-		String sql="INSERT INTO t_link_type (\n" +
+		String sql="INSERT INTO t_config_type (\n" +
 						"  id,\n" + 
 						"  pid,\n" + 
-						"  link_type_code,\n" + 
-						"  link_type_name,\n" + 
-						"  link_type_desc,\n" + 
+						"  config_type_code,\n" + 
+						"  config_type_name,\n" + 
+						"  config_value_type,\n" + 
+						"  config_type_desc,\n" + 
 						"  data_state,\n" + 
 						"  display_order\n" + 
 						")\n" + 
 						"VALUES\n" + 
 						"  (\n" + 
+						"    ?,\n" + 
 						"    ?,\n" + 
 						"    ?,\n" + 
 						"    ?,\n" + 
@@ -96,12 +106,13 @@ public class ConfigTypeDao {
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
 			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
 			         ps.setString(1, UUID.randomUUID().toString());
-			         //ps.setString(2, linkType.getPid());
-			         //ps.setString(3, linkType.getLinkTypeCode());
-			        // ps.setString(4, linkType.getLinkTypeName());
-			        // ps.setString(5, linkType.getLinkTypeDesc());
-			        // ps.setString(6, linkType.getDataState());
-			        // ps.setInt(7, linkType.getDisplayOrder());
+			         ps.setString(2, configType.getPid());
+			         ps.setString(3, configType.getConfigTypeCode());
+			         ps.setString(4, configType.getConfigTypeName());
+			         ps.setString(5, configType.getConfigValueType());
+			         ps.setString(6, configType.getConfigTypeDesc());
+			         ps.setString(7, configType.getDataState());
+			         ps.setInt(8, configType.getDisplayOrder());
 			       }
 			     }
 			 );
@@ -117,7 +128,7 @@ public class ConfigTypeDao {
 	 * @param id void
 	 */
 	public void delete(String id) {
-		String sql = "UPDATE t_link_type SET DATA_STATE=? WHERE ID=?";
+		String sql = "UPDATE t_config_type SET DATA_STATE=? WHERE ID=?";
 		jdbcTemplate.update(sql,new Object[]{DataState.Delete.getCode(),id});
 	}
 

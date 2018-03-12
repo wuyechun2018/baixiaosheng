@@ -12,7 +12,6 @@ import com.bxs.common.dict.DataState;
 import com.bxs.common.vo.EUITree;
 import com.bxs.jdbc.ConfigTypeDao;
 import com.bxs.pojo.ConfigType;
-import com.bxs.pojo.LinkType;
 import com.bxs.service.ConfigTypeService;
 
 @Service
@@ -25,15 +24,16 @@ public class ConfigTypeServiceImpl implements ConfigTypeService {
 	public List<EUITree> getListByPid(String pid) {
 		List<EUITree> list=new ArrayList<EUITree>();
 		List<ConfigType> linkTypeList=configTypeDao.getListByPid(pid);
-		for (ConfigType linkType : linkTypeList) {
+		for (ConfigType configType : linkTypeList) {
 			EUITree easyTree=new EUITree();
-			easyTree.setId(linkType.getId());
-			//easyTree.setText(linkType.getLinkTypeName());
-			easyTree.setState(hasChild(linkType.getId())?"closed":"open");
+			easyTree.setId(configType.getId());
+			easyTree.setText(configType.getConfigTypeName());
+			easyTree.setState(hasChild(configType.getId())?"closed":"open");
 			Map<String, String> attr=new HashMap<String, String>();
-			attr.put("pid", linkType.getPid());
-			//attr.put("linkTypeCode", linkType.getLinkTypeCode());
-			//attr.put("linkTypeDesc", linkType.getLinkTypeDesc());
+			attr.put("pid", configType.getPid());
+			attr.put("configTypeCode", configType.getConfigTypeCode());
+			attr.put("configTypeDesc", configType.getConfigTypeDesc());
+			attr.put("configValueType", configType.getConfigValueType());
 			easyTree.setAttributes(attr);
 			list.add(easyTree);
 		}

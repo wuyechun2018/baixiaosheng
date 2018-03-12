@@ -168,5 +168,16 @@ FROM
 -- 创建视图 2018-03-08    
 CREATE VIEW v_sign_article_info AS 
 SELECT t.*,s.article_title,s.topic_name,s.publish_dept_name,s.publish_user_name FROM v_sign_info t LEFT JOIN v_article_info s ON t.article_id=s.id;
-    
-    
+
+-- 添加菜单 2018-03-12
+INSERT  INTO `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`,`display_order`)
+ VALUES ('18','0','系统配置','#','1','1',18);
+ 
+ INSERT  INTO `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`,`display_order`)
+ VALUES ('19','18','配置项','/eui/config/list','2','1',19);
+
+-- 创建视图
+CREATE OR REPLACE VIEW v_config_info AS
+SELECT t.*,s.config_type_name,s.config_type_code FROM t_config t LEFT JOIN t_config_type s ON t.config_type_id=s.id; 
+ 
+ 

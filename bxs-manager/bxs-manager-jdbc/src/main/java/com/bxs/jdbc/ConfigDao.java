@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import com.bxs.common.dict.DataState;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.Config;
+import com.bxs.pojo.ConfigInfoVo;
 
 @Repository
 public class ConfigDao {
@@ -52,10 +53,10 @@ public class ConfigDao {
 	 * @param param
 	 * @return List<?>
 	 */
-	public List<?> pagerconfigList(EUIPager ePager,Map<String, Object> param) {
+	public List<?> pagerConfigList(EUIPager ePager,Map<String, Object> param) {
 		String  querySql="SELECT * FROM V_config_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
 		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
-		List<Config> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(Config.class));
+		List<ConfigInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ConfigInfoVo.class));
 		return list;
 	}
 
@@ -70,30 +71,35 @@ public class ConfigDao {
 	 */
 	public void update(final Config config) {
 		String sql=	"UPDATE\n" +
-						"  t_config\n" + 
+						"   t_config\n" + 
 						"SET\n" + 
-						"config_type_id = ?,\n" + 
-						"  config_name =  ?,\n" + 
-						"  config_desc =  ?,\n" + 
-						"  config_url =  ?,\n" + 
-						"  config_image_url =  ?,\n" + 
-						"  config_target_type =  ?,\n" + 
-						"  data_state =  ?,\n" + 
-						"  display_order =  ?\n" + 
-						"WHERE id = ?";
+						" config_type_id= ?,\n" + 
+						"  config_name= ?,\n" + 
+						"  config_code= ?,\n" + 
+						"  config_value= ?,\n" + 
+						"  link_url= ?,\n" + 
+						"  link_target_type= ?,\n" + 
+						"  config_image_url= ?,\n" + 
+						"  data_state= ?,\n" + 
+						"  config_desc= ?,\n" + 
+						"  display_order= ?\n" + 
+						"WHERE id= ?";
+
 
 		 jdbcTemplate.execute(sql,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
 			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
-			         /*ps.setString(1, config.getconfigTypeId());
-			         ps.setString(2, config.getconfigName());
-			         ps.setString(3, config.getconfigDesc());
-			         ps.setString(4, config.getconfigUrl());
-			         ps.setString(5, config.getconfigImageUrl());
-			         ps.setString(6, config.getconfigTargetType());*/
-			         ps.setString(7, config.getDataState());
-			         ps.setInt(8, config.getDisplayOrder());
-			         ps.setString(9, config.getId());
+				         ps.setString(1, config.getConfigTypeId());
+				         ps.setString(2, config.getConfigName());
+				         ps.setString(3, config.getConfigCode());
+				         ps.setString(4, config.getConfigValue());
+				         ps.setString(5, config.getLinkUrl());
+				         ps.setString(6, config.getLinkTargetType());
+				         ps.setString(7, config.getConfigImageUrl());
+				         ps.setString(8, config.getDataState());
+				         ps.setString(9, config.getConfigDesc());
+				         ps.setInt(10, config.getDisplayOrder());
+				         ps.setString(11, config.getId());
 			       }
 			     }
 			 );
@@ -113,11 +119,13 @@ public class ConfigDao {
 						"  id,\n" + 
 						"  config_type_id,\n" + 
 						"  config_name,\n" + 
-						"  config_desc,\n" + 
-						"  config_url,\n" + 
+						"  config_code,\n" + 
+						"  config_value,\n" + 
+						"  link_url,\n" + 
+						"  link_target_type,\n" + 
 						"  config_image_url,\n" + 
-						"  config_target_type,\n" + 
 						"  data_state,\n" + 
+						"  config_desc,\n" + 
 						"  display_order\n" + 
 						")\n" + 
 						"VALUES\n" + 
@@ -129,8 +137,10 @@ public class ConfigDao {
 						"    ?,\n" + 
 						"    ?,\n" + 
 						"    ?,\n" + 
+						"    ?,\n" +  
 						"    ?,\n" + 
-						"    ?\n" + 
+						"    ?,\n" + 
+						"    ? \n" + 
 						"  )";
 
 		 jdbcTemplate.execute(sql,
@@ -139,19 +149,28 @@ public class ConfigDao {
 			         ps.setString(1, UUID.randomUUID().toString());
 			         ps.setString(2, config.getConfigTypeId());
 			         ps.setString(3, config.getConfigName());
-			        // ps.setString(4, config.getConfigDesc());
-			        // ps.setString(5, config.getConfigUrl());
-			       //  ps.setString(6, config.getConfigImageUrl());
-			       //  ps.setString(7, config.getConfigTargetType());
-			         ps.setString(8, config.getDataState());
-			         ps.setInt(9, config.getDisplayOrder());
+			         ps.setString(4, config.getConfigCode());
+			         ps.setString(5, config.getConfigValue());
+			         ps.setString(6, config.getLinkUrl());
+			         ps.setString(7, config.getLinkTargetType());
+			         ps.setString(8, config.getConfigImageUrl());
+			         ps.setString(9, config.getDataState());
+			         ps.setString(10, config.getConfigDesc());
+			         ps.setInt(11, config.getDisplayOrder());
 			       }
 			     }
 			 );
 	}
 
 
-
+	/**
+	 * 
+	 * 删除操作-逻辑删除
+	 * @author: wyc
+	 * @createTime: 2018年3月12日 下午2:19:28
+	 * @history:
+	 * @param id void
+	 */
 	public void delete(String id) {
 		String sql = "UPDATE t_config SET DATA_STATE=? WHERE ID=?";
 		jdbcTemplate.update(sql,new Object[]{DataState.Delete.getCode(),id});
@@ -183,11 +202,6 @@ public class ConfigDao {
 		//链接名称
 		if(param.get("configName")!=null&&StringUtils.isNotBlank(param.get("configName").toString())){
 			sqlBuff.append(" AND  T.config_NAME LIKE '%"+param.get("configName").toString()+"%' \n");
-		}
-		
-		//链接地址
-		if(param.get("configUrl")!=null&&StringUtils.isNotBlank(param.get("configUrl").toString())){
-			sqlBuff.append(" AND  T.config_URL LIKE '%"+param.get("configUrl").toString()+"%' \n");
 		}
 		sqlBuff.append(" ORDER BY DISPLAY_ORDER");
 		
