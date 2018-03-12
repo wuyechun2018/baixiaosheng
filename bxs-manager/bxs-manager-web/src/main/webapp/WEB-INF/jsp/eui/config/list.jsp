@@ -335,7 +335,7 @@ function loadLeftTree(){
 		pagination: true,  
 		rownumbers: true,  
 		columns:[[
-		          {field:'configName',title: '配置名称',align: 'center',width: 100},
+		          {field:'configName',title: '配置名称',align: 'center',width: 280},
 		          {field:'configTypeId',title: '链接类型ID',align: 'center',width: 100,hidden:true},
 		          {field:'configTypeName',title: '类型名称',align: 'center',width: 100},
 		          {field:'linkUrl',title: '链接地址',align: 'center',width: 100}, 
@@ -421,7 +421,7 @@ function loadLeftTree(){
 				      <tr>
 				        <th>配置值：</th>
 				        <td>
-				          <input style="width:250px;" class="easyui-textbox" type="text" name="configValue" data-options="required:true"></input>
+				          <input style="width:250px;" class="easyui-textbox" type="text" name="configValue" data-options="required:false"></input>
 				        </td>
 				      </tr>
 				      <tr>

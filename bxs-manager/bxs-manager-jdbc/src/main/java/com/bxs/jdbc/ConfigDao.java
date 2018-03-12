@@ -208,4 +208,20 @@ public class ConfigDao {
 		return sqlBuff.toString();
 	}
 
+
+	/**
+	 * 
+	 * 根据配置类型编码
+	 * @author: wyc
+	 * @createTime: 2018年3月12日 下午4:24:44
+	 * @history:
+	 * @param configTypeCode
+	 * @return List<ConfigInfoVo>
+	 */
+	public List<ConfigInfoVo> getConfigByTypeCode(String configTypeCode) {
+		String  querySql="SELECT * FROM V_config_INFO T WHERE 1=1 AND T.DATA_STATE='1' AND config_type_code=?\n";
+		List<ConfigInfoVo> list = jdbcTemplate.query(querySql,new Object[]{configTypeCode},new BeanPropertyRowMapper(ConfigInfoVo.class));
+		return list;
+	}
+
 }

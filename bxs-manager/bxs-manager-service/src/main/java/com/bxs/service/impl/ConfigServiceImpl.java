@@ -1,5 +1,6 @@
 package com.bxs.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,7 @@ import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.ConfigDao;
 import com.bxs.pojo.Config;
+import com.bxs.pojo.ConfigInfoVo;
 import com.bxs.service.ConfigService;
 
 @Service
@@ -45,5 +47,11 @@ public class ConfigServiceImpl implements ConfigService {
 	@Override
 	public void delete(String id) {
 		configDao.delete(id);
+	}
+
+
+	@Override
+	public List<ConfigInfoVo> getConfigByTypeCode(String configTypeCode) {
+		return configDao.getConfigByTypeCode(configTypeCode);
 	}
 }

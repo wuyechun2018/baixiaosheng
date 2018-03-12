@@ -22,6 +22,7 @@ import com.bxs.pojo.Topic;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.pojo.WeatherForecast;
 import com.bxs.service.ArticleService;
+import com.bxs.service.ConfigService;
 import com.bxs.service.SignService;
 import com.bxs.service.TopicService;
 import com.bxs.service.UserService;
@@ -45,6 +46,9 @@ public class PortalController {
 	
 	@Autowired
 	private SignService signService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	/**
 	 * 
@@ -57,8 +61,23 @@ public class PortalController {
 	 * @return String
 	 */
 	@RequestMapping(value = "/index")
-	public String index() {
-		return "/portal/index";
+	public ModelAndView index() {
+		ModelAndView mv=new ModelAndView("/portal/index");
+		
+		//背景图片-轮换图
+		if(!configService.getConfigByTypeCode("BJT").isEmpty()){
+			mv.addObject("backGroudImgList", configService.getConfigByTypeCode("BJT"));
+		}
+		
+		//专题图1
+		if(!configService.getConfigByTypeCode("GGTP").isEmpty()){
+			mv.addObject("topicImageUrlF", configService.getConfigByTypeCode("GGTP").get(0));
+		}
+		//专题图2
+		if(!configService.getConfigByTypeCode("ZTT").isEmpty()){
+			mv.addObject("topicImageUrlS", configService.getConfigByTypeCode("ZTT").get(0));
+		}
+		return mv;
 	}
 	
 	

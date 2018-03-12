@@ -1,9 +1,11 @@
 package com.bxs.service;
+import java.util.List;
 import java.util.Map;
 
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.Config;
+import com.bxs.pojo.ConfigInfoVo;
 
 public interface ConfigService {
 	
@@ -12,4 +14,6 @@ public interface ConfigService {
 	public void save(Config config);
 
 	void delete(String id);
+
+	public List<ConfigInfoVo> getConfigByTypeCode(String configTypeCode);
 }
