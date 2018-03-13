@@ -57,6 +57,22 @@ public class ConfigTypeController {
 		return configTypeService.getListByPid(pid);
 	}
 	
+	
+	/**
+	 * 
+	 * 根据父主键获取导航类型
+	 * @author: wyc
+	 * @createTime: 2018年2月1日 下午3:28:08
+	 * @history:
+	 * @param pid
+	 * @return Object
+	 */
+	@RequestMapping("/getListByPidAndValueType")
+	@ResponseBody
+	public Object getListByPidAndValueType(String pid,String configValueType){
+		return configTypeService.getListByPidAndValueType(pid,configValueType);
+	}
+	
 	/**
 	 * 
 	 * 删除操作

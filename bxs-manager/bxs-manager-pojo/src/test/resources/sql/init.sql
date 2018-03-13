@@ -180,4 +180,44 @@ INSERT  INTO `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`
 CREATE OR REPLACE VIEW v_config_info AS
 SELECT t.*,s.config_type_name,s.config_type_code FROM t_config t LEFT JOIN t_config_type s ON t.config_type_id=s.id; 
  
+
+CREATE TABLE `t_config` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `config_type_id` varchar(36) DEFAULT NULL COMMENT '配置类型ID',
+  `config_name` varchar(50) DEFAULT NULL COMMENT '配置名称',
+  `config_code` varchar(50) DEFAULT NULL COMMENT '配置编码',
+  `config_value` varchar(5000) DEFAULT NULL COMMENT '配置项的值',
+  `link_url` varchar(500) DEFAULT NULL COMMENT '链接地址',
+  `link_target_type` varchar(100) DEFAULT NULL COMMENT '链接打开方式',
+  `config_image_url` varchar(1000) DEFAULT NULL COMMENT '配图地址',
+  `data_state` varchar(10) DEFAULT NULL COMMENT '数据状态',
+  `display_order` bigint(10) DEFAULT NULL COMMENT '排序',
+  `config_desc` varchar(500) DEFAULT NULL COMMENT '备注描述',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `t_config_type` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `pid` varchar(36) DEFAULT NULL COMMENT '父主键',
+  `config_type_code` varchar(50) DEFAULT NULL COMMENT '系统配置类型编码',
+  `config_type_name` varchar(100) DEFAULT NULL COMMENT '系统配置类型名称',
+  `config_value_type` varchar(10) DEFAULT NULL COMMENT '配置项类型',
+  `config_type_desc` varchar(500) DEFAULT NULL COMMENT '系统配置类型描述',
+  `data_state` varchar(10) DEFAULT NULL COMMENT '数据状态',
+  `display_order` bigint(10) DEFAULT NULL COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置类型表';
+
+-- 初始化数据
+insert  into `t_config`(`id`,`config_type_id`,`config_name`,`config_code`,`config_value`,`link_url`,`link_target_type`,`config_image_url`,`data_state`,`display_order`,`config_desc`) values ('004fbeaf-4070-461e-9fb8-9f370dd7a7b6','4df01362-bb18-40ff-98b5-e309112dde38','学习贯彻党的十九大',NULL,'','','','/media-data/image/20180312155252/zt2.jpg','1',4,'学习贯彻党的十九大'),('0456d5e3-fb74-42c0-aa22-d90d0d50ac52','2','背景图2',NULL,'','','','/media-data/image/20180312154147/banner2.jpg','1',2,'背景图2'),('a47c50e3-1667-44c7-ab85-a1d43612a205',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0',0,NULL),('afb2384c-dfc9-42e1-86ba-5c4b9af25f77','2','背景图1',NULL,'','','','/media-data/image/20180312154121/banner1.jpg','1',1,'背景图1'),('c13adaf8-7cce-422a-8379-cdf0e0e2e54a','7aa7468c-6efe-4bd4-a389-23dfc3e69f6b','对党忠诚，服务人民，执法公正，纪律严明',NULL,'','','','/media-data/image/20180312154617/zt1.jpg','1',4,'对党忠诚，服务人民，执法公正，纪律严明'),('d5598e6a-4fef-4f9f-8d0c-04a96a82ddeb','2','背景图3',NULL,'','','','/media-data/image/20180312154203/banner3.jpg','1',3,'背景图3');
+
+insert  into `t_config_type`(`id`,`pid`,`config_type_code`,`config_type_name`,`config_value_type`,`config_type_desc`,`data_state`,`display_order`) values ('1','0','PZLX','配置类型','0','系统配置','1',1),('2','1','BJT','背景图','2','网站首页背景轮播图','1',0),('4df01362-bb18-40ff-98b5-e309112dde38','1','ZTT','专题配图2','2','专题配图2（网站第二个配图）','1',0),('7aa7468c-6efe-4bd4-a389-23dfc3e69f6b','1','GGTP','专题配图1','2','对党忠诚，服务人民，执法公正，纪律严明','1',0);
+
+-- 创建视图
+CREATE OR REPLACE VIEW v_config_info AS
+SELECT t.*,s.config_type_name,s.config_type_code,s.config_value_type FROM t_config t LEFT JOIN t_config_type s ON t.config_type_id=s.id; 
+
+-- 配置专题
+INSERT  INTO `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`,`display_order`)
+ VALUES ('20','18','配置专题','/eui/subject/list','2','1',20);
  

@@ -7,10 +7,32 @@
 <%@ include file="/WEB-INF/jsp/base/easyui.jsp" %>
 <script type="text/javascript" src="${ctx}/resources/js-lib/jquery/ajaxfileupload.js"></script>
 
-<title>系统配置</title>
+<title>专题配置</title>
 <script type="text/javascript">
 //当前选中的左边树的节点ID,即单位ID，它是一个全局变量
 var SELECT_NODE_Id="";
+
+
+//初始化专题数据
+function initTopicData(){
+	var topicData=null;
+	$.ajax({
+	    type: "POST",
+	    url:'${ctx}/topic/getListByPid?pid=1',
+	    data: {
+	    	
+	    },
+	    //非常重要
+	    async: false,
+	    success: function (data) {
+	    	topicData=data;
+	    },
+	    error: function(data) {
+	        
+	     }
+	});
+	return topicData;
+}
 
 /***************************以下是 导航类型 管理相关方法***************************/
 //点击"添加类型弹出框"
@@ -30,9 +52,10 @@ function addTypeFun(){
 //点击添加类型按钮，弹出框前加载下拉框树
 function loadTypeTree(){
 	$('#addConfigTypeComboTree').combotree({
-		url : '${ctx}/configType/getListByPid?pid=0',
+		url : '${ctx}/configType/getListByPidAndValueType?pid=0',
+		queryParams:{configValueType:'3'},
 		onBeforeExpand : function(node, param) {
-			   $('#addConfigTypeComboTree').combotree("tree").tree("options").url =ctx+ "/configType/getListByPid?pid=" + node.id;
+			   $('#addConfigTypeComboTree').combotree("tree").tree("options").url =ctx+ "/configType/getListByPidAndValueType?pid=" + node.id;
 			},
 		width:'250',
 	    required: true,
@@ -44,14 +67,31 @@ function loadTypeTree(){
 
 function loadAddLinkTree(){
 	$('#addConfigComboTree').combotree({
-		url : '${ctx}/configType/getListByPid?pid=0',
+		url : '${ctx}/configType/getListByPidAndValueType?pid=0',
+		queryParams:{configValueType:'3'},		
 		onBeforeExpand : function(node, param) {
-			   $('#addConfigComboTree').combotree("tree").tree("options").url =ctx+ "/configType/getListByPid?pid=" + node.id;
+			   $('#addConfigComboTree').combotree("tree").tree("options").url =ctx+ "/configType/getListByPidAndValueType?pid=" + node.id;
 			},
 		width:'250',
 	    required: true,
 	    onLoadSuccess : function(node, data) {
 	    	$('#addConfigComboTree').combotree("tree").tree('expandAll');
+		}
+	});
+}
+
+//展示栏目
+function loadTopicTree(){
+	$('#topicCheckTree').combotree({
+		url : '${ctx}/topic/getListByPid?pid=0',
+		multiple:true,		
+		onBeforeExpand : function(node, param) {
+			   $('#topicCheckTree').combotree("tree").tree("options").url =ctx+ "/topic/getListByPid?pid=" + node.id;
+			},
+		width:'250',
+	    required: true,
+	    onLoadSuccess : function(node, data) {
+	    	$('#topicCheckTree').combotree("tree").tree('expandAll');
 		}
 	});
 }
@@ -200,6 +240,7 @@ function addFun(){
 		node=$("#leftTree").tree('getRoot');
 	}
 	loadAddLinkTree();
+	loadTopicTree();
 	if(node){
 		$('#addConfigComboTree').combotree('setValue', node.id);
 	}
@@ -221,6 +262,8 @@ function editFun(id) {
     var record=$('#dgTable').datagrid('getData').rows[rowIndex];
   	//加载部门下拉框树
 	loadAddLinkTree();
+  	//加载展示栏目复选框树
+	loadTopicTree();
     $('#addWin').window('open');
     $('#addWin').panel({
 		title : '编辑',
@@ -280,9 +323,10 @@ function doQuery(){
 //重新加载左侧树
 function loadLeftTree(){
 	$('#leftTree').tree({
-		url : '${ctx}/configType/getListByPid?pid=0',
+		url : '${ctx}/configType/getListByPidAndValueType?pid=0',
+		queryParams:{configValueType:'3'},		
 		onBeforeExpand : function(node, param) {
-			 $('#leftTree').tree('options').url = ctx+ "/configType/getListByPid?pid=" + node.id;
+			 $('#leftTree').tree('options').url = ctx+ "/configType/getListByPidAndValueType?pid=" + node.id;
 			},
 		width:'250',
 	    required: true,
@@ -292,14 +336,37 @@ function loadLeftTree(){
 	});
 }
 
+//获取专题名称
+function getTopicNameById(topicData,topicId){
+	for(var j=0;j<topicData.length;j++){
+		var topicObj=topicData[j];
+		if(topicId==topicObj.id){
+			return topicObj.text;
+			break;
+		}
+	}
+	
+}
+
+//获取栏目名称
+function getTopicName(topicData,topicIdArray){
+	var topicNames=new Array();
+	for(var i=0;i<topicIdArray.length;i++){
+		topicNames.push(getTopicNameById(topicData,topicIdArray[i]));
+	}
+	return topicNames.join(",");
+}
+
 
  $(function(){
+	 var topicData=initTopicData();
 	 $('#leftTree').tree({
 			checkbox : false,
-			url : '${ctx}/configType/getListByPid?pid=0',
+			url : '${ctx}/configType/getListByPidAndValueType?pid=0',
+			queryParams:{configValueType:'3'},		
 			method : 'post',
 			onBeforeExpand : function(node, param) {
-			   $('#leftTree').tree('options').url = ctx+ "/configType/getListByPid?pid=" + node.id;
+			   $('#leftTree').tree('options').url = ctx+ "/configType/getListByPidAndValueType?pid=" + node.id;
 			},
 			onClick : function(node) {
 				//此处给全局变量赋值
@@ -322,6 +389,8 @@ function loadLeftTree(){
 		url:ctx+'/config/pagerList',
 		method:'post',
 	    queryParams: {
+	    	//专题
+	    	configValueType:'3',
 	    	configTypeId:'',
 	      	configName:'',
 	      	configCode:''
@@ -338,8 +407,24 @@ function loadLeftTree(){
 		          {field:'configName',title: '配置名称',align: 'center',width: 280},
 		          {field:'configTypeId',title: '链接类型ID',align: 'center',width: 100,hidden:true},
 		          {field:'configTypeName',title: '类型名称',align: 'center',width: 100},
-		          {field:'linkUrl',title: '链接地址',align: 'center',width: 100}, 
-		          {field:'linkTargetType',title: '链接打开方式',align: 'center',width: 100}, 
+		          {field:'configValue',title: '展示栏目',align: 'center',width: 100,formatter:function(val,rec){
+		        	 if(val!=null&&val!=''){
+		        		  var topicIdArray=val.split(",");
+			        	  return getTopicName(topicData,topicIdArray);
+		        	 }else{
+		        		 return "";
+		        	 }
+		          }}, 
+		          {field:'linkTargetType',title: '主题样式',align: 'center',width: 100,formatter:function(val,rec){
+		        	  if(val=='red'){
+		        		   return "红色";
+		        	   }else if(val=='blue'){
+		        		   return "蓝色";
+		        	   }else{
+		        		   return val;
+		        	   }
+		        	 }
+		          }, 
 		          {field:'configDesc',title: '备注',align: 'center',width: 100,hidden:true},
 		          {field:'id',title: '操作',align: 'center',width: 100, formatter:function(val,rec){
 		        	  return "<span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span>|<span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
@@ -347,6 +432,7 @@ function loadLeftTree(){
 		]]
 		,toolbar:$('#tb')
 	  });
+    
  })
 	
 </script>
@@ -398,7 +484,7 @@ function loadLeftTree(){
 </div>
  
  <%--点击"添加"弹出的窗口 --%>
- <div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:680px;height:430px;padding:10px;">
+ <div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:680px;height:460px;padding:10px;">
 	    <form id="addForm" method="post">
 		   	<table class="isingelTable">
 				  <tr>
@@ -407,41 +493,40 @@ function loadLeftTree(){
 					      <input type="hidden" name="id"></input>
 					      <input style="width:250px;" class="easyui-textbox" type="text" id="addConfigComboTree" name="configTypeId" data-options="required:false"></input>
 					    </td>
-					    <td rowspan="8" style="border: 1px solid;width:258px;text-align: center;">
+					    <td rowspan="9" style="border: 1px solid;width:258px;text-align: center;">
 					    	<img id="view_image" src="${ctx}/resources/images/image.png" alt="配图预览"  noresize="true" style="max-width:270px;max-height:270px;background-color:#ccc;border:1px solid #333">
 					    	<input type="hidden" id="config_image_url" name="configImageUrl" style="width:300px;" />
 					    </td>
 				    </tr>
-				      <tr>
+				    <tr>
 				        <th>配置名称：</th>
 				        <td>
 				          <input style="width:250px;" class="easyui-textbox" type="text" name="configName" data-options="required:true"></input>
 				        </td>
 				      </tr>
-				      <tr>
-				        <th>配置值：</th>
+				     <tr>
+				        <th>配置编码：</th>
 				        <td>
-				          <input style="width:250px;" class="easyui-textbox" type="text" name="configValue" data-options="required:false"></input>
+				          <input style="width:250px;" class="easyui-textbox" type="text" name="configCode" data-options="required:true"></input>
 				        </td>
 				      </tr>
 				      <tr>
-				        <th>链接地址：</th>
+				        <th>展示栏目：</th>
 				        <td>
-				          <input style="width:250px;" class="easyui-textbox" type="text" name="linkUrl"></input>
+				          <input style="width:250px;" class="easyui-textbox" type="text" id="topicCheckTree" name="configValue" data-options="required:false"></input>
 				        </td>
 				      </tr>
 				      <tr>
-				        <th>打开方式：</th>
+				        <th>主题样式：</th>
 				        <td>
 				          <select data-options="panelHeight:'auto'" class="easyui-combobox" name="linkTargetType" style="width:250px">
-				            <option value="_blank" selected="selected">_blank(新窗口)</option>
-				            <option value="_self">_self(当前窗口)</option>
-				            <option value="_parent">_parent(父窗口)</option>
-				            <option value="_top">_top(顶级窗口)</option></select>
+				            <option value="red" selected="selected">红色(red)</option>
+				            <option value="blue">蓝色(blue)</option>
+				           </select> 
 				        </td>
 				      </tr>
 				      <tr>
-				        <th>配图：</th>
+				        <th>背景图片：</th>
 				        <td>
 				         	<input name="preimage" id="preimage"  class="easyui-filebox"  style="width:250px;" data-options="onChange:function(){preView()},buttonText:'选择文件', accept:'image/jpeg', prompt : '请选择一个图片类型的文件'"/>
 				        </td>
@@ -503,6 +588,7 @@ function loadLeftTree(){
    				<select data-options="panelHeight:'auto'" class="easyui-combobox" id="configValueType" name="configValueType"  style="width:250px">
 							<option value="1" selected="selected">文字</option>
 							<option value="2">图片</option>
+							<option value="3">专题</option>
 				</select>
    			</td>
    		</tr>

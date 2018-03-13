@@ -132,4 +132,11 @@ public class ConfigTypeDao {
 		jdbcTemplate.update(sql,new Object[]{DataState.Delete.getCode(),id});
 	}
 
+
+	public List<ConfigType> getListByPidAndValueType(String pid, String valueType) {
+		String sql="SELECT * FROM t_config_type T WHERE T.DATA_STATE='1' AND T.pid=? AND (t.id=1 OR T.config_value_type= ? )";
+		List<ConfigType> list = jdbcTemplate.query(sql,new Object[]{pid,valueType},new BeanPropertyRowMapper(ConfigType.class));
+		return list;
+	}
+
 }

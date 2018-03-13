@@ -203,6 +203,11 @@ public class ConfigDao {
 		if(param.get("configName")!=null&&StringUtils.isNotBlank(param.get("configName").toString())){
 			sqlBuff.append(" AND  T.config_NAME LIKE '%"+param.get("configName").toString()+"%' \n");
 		}
+		//配置项值的类型
+		if(param.get("configValueType")!=null&&StringUtils.isNotBlank(param.get("configValueType").toString())){
+			sqlBuff.append(" AND  T.config_value_type = '"+param.get("configValueType").toString()+"' \n");
+		}
+		
 		sqlBuff.append(" ORDER BY DISPLAY_ORDER");
 		
 		return sqlBuff.toString();

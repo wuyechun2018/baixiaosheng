@@ -38,6 +38,8 @@ public class ConfigInfoVo {
 	private String configTypeName;
 	//配置描述
 	private String configDesc;
+	//配置项值的类型
+	private String configValueType;
 
 	public String getId() {
 		return id;
@@ -142,5 +144,14 @@ public class ConfigInfoVo {
 	public void setConfigDesc(String configDesc) {
 		this.configDesc = configDesc;
 	}
+
+	public String getConfigValueType() {
+		return configValueType;
+	}
+
+	public void setConfigValueType(String configValueType) {
+		this.configValueType = configValueType;
+	}
+	
 	
 }

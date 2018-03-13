@@ -13,4 +13,6 @@ public interface ConfigTypeService {
 
 	void delete(String id);
 
+	List<EUITree> getListByPidAndValueType(String pid, String valueType);
+
 }

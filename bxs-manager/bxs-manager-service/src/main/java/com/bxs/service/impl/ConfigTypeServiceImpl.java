@@ -39,6 +39,29 @@ public class ConfigTypeServiceImpl implements ConfigTypeService {
 		}
 		return list;
 	}
+	
+	
+	
+	@Override
+	public List<EUITree> getListByPidAndValueType(String pid, String valueType) {
+		List<EUITree> list=new ArrayList<EUITree>();
+		List<ConfigType> linkTypeList=configTypeDao.getListByPidAndValueType(pid,valueType);
+		for (ConfigType configType : linkTypeList) {
+			EUITree easyTree=new EUITree();
+			easyTree.setId(configType.getId());
+			easyTree.setText(configType.getConfigTypeName());
+			easyTree.setState(hasChild(configType.getId())?"closed":"open");
+			Map<String, String> attr=new HashMap<String, String>();
+			attr.put("pid", configType.getPid());
+			attr.put("configTypeCode", configType.getConfigTypeCode());
+			attr.put("configTypeDesc", configType.getConfigTypeDesc());
+			attr.put("configValueType", configType.getConfigValueType());
+			easyTree.setAttributes(attr);
+			list.add(easyTree);
+		}
+		return list;
+	}
+
 
 	private boolean hasChild(String id) {
 		List<ConfigType> list=configTypeDao.getListByPid(id);
@@ -67,4 +90,5 @@ public class ConfigTypeServiceImpl implements ConfigTypeService {
 		configTypeDao.delete(id);
 	}
 
+	
 }
