@@ -55,6 +55,18 @@ public interface TopicService {
 	 */
 	Topic getTopicByCode(String topicCode);
 
+	/**
+	 * 
+	 * 根据专题Ids查询专题列表,Ids以逗号分隔,
+	 * 如 5a04f14f-4d6f-435a-a6ac-393a2f6e8d11,17e4c20a-1e6d-43bd-bc4b-11fa36a81df7
+	 * @author: wyc
+	 * @createTime: 2018年3月14日 上午8:59:37
+	 * @history:
+	 * @param configValue
+	 * @return List<Topic>
+	 */
+	List<Topic> getListByIds(String configValue);
+
 
 	
 

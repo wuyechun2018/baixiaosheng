@@ -82,7 +82,7 @@ em{font-style:normal;}
 .menu ul ul li a:hover{border:0;background:#444548;border-bottom:1px solid #fff; color: #fff; *z-index: 99999!important z-index: 99999!important} 
 .menu .cur{ background-color: #c0130d;}
 
-.box{ width: 461px; float: left; padding:10px 10px 0px 10px; background-color:#fff; margin-right:15px; margin-top:15px;}
+.box{ width: 461px; float: left; padding:10px 10px 0px 10px; background-color:#fff; margin-right:15px; margin-top:15px;min-height: 305px;}
 .box{ padding-bottom: 10px!important; }
 .box span.more{ float: right; font-size: 14px; line-height: 25px; margin-top:5px;}
 .box h2{ font-size:18px; font-weight: normal; color: #c0130d; line-height: 40px; border-bottom: 1px solid #e4e8eb; margin:0 10px;}

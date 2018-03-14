@@ -18,21 +18,18 @@
     <div class="nav">
         <div class="menu">
             <ul>
-            <li><a href="/"  class="cur">首页</a></li>
-            <li><a href="#" target="_blank">栏目1</a></li>
-            <li><a href="#" target="_blank">栏目2</a></li>
-            <li><a href="#" target="_blank">栏目3</a></li>
-            <li><a href="#" target="_blank">栏目4</a></li>
-            <li><a href="#" target="_blank">栏目5</a></li>
-            <li><a href="#" target="_blank">栏目6</a></li>
+            	  <li><a href="${ctx}/subject/index?code=${configInfoVo.configTypeCode}"  class="cur">首页</a></li>
+            <c:forEach items="${topicList}" var="topic" begin="0" end="5">
+            	  <li><a href="${ctx}/subject/list?code=${configInfoVo.configTypeCode}&topicCode=${topic.topicCode}" target="_blank">${topic.topicName}</a></li>
+            </c:forEach>
             </ul>
         </div>
     </div>
     <div class="layout m-crumb">
-        <a href="/" target="_blank">首页</a><span>&gt;</span><em>栏目1</em>
+        <a href="${ctx}/subject/index?code=${configInfoVo.configTypeCode}" >首页</a><span>&gt;</span><em>${topic.topicName}</em>
     </div>
     <div class="container clearfix nei_bg">
-    	<div class="Ctitle clearfix"><div class="cur">栏目1</div></div>
+    	<div class="Ctitle clearfix"><div class="cur">${topic.topicName}</div></div>
         <ul class="listc clearfix">
         	<li><span>[2018-1-24]</span><a href="#" target="_blank" title="新闻标题">新闻标题</a></li>
             <li><span>[2018-1-24]</span><a href="#" target="_blank" title="新闻标题">新闻标题</a></li>

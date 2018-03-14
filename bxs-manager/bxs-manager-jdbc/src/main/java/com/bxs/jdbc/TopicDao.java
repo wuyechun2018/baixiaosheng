@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -155,6 +156,30 @@ public class TopicDao {
 		return list;
 	}
 
-	
+	/**
+	 * 
+	 * 根据专题Ids查询专题列表,Ids以逗号分隔,
+	 * 如 5a04f14f-4d6f-435a-a6ac-393a2f6e8d11,17e4c20a-1e6d-43bd-bc4b-11fa36a81df7
+	 * @author: wyc
+	 * @createTime: 2018年3月14日 上午8:59:37
+	 * @history:
+	 * @param Ids
+	 * @return List<Topic>
+	 */
+	public List<Topic> getListByIds(String ids) {
+		if (StringUtils.isBlank(ids)) {
+			return null;
+		} else {
+			String[] idArray = ids.split(",");
+			String querySql = "";
+			for (int i = 0; i < idArray.length; i++) {
+				querySql = querySql + "'" + idArray[i] + "',";
+			}
+			querySql = querySql.substring(0, querySql.lastIndexOf(","));
+			String sql = "SELECT * FROM t_topic t WHERE data_state='1' AND t.id in (" + querySql + ") ORDER BY T.DISPLAY_ORDER ";
+			List<Topic> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper(Topic.class));
+			return list;
+		}
+	}
 
 }
