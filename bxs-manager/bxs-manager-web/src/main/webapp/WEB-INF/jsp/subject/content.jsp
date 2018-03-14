@@ -6,9 +6,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="${ctx}/resources/subject/css/css.css" rel="stylesheet" />
+<link href="${ctx}/resources/subject/themes/${configInfoVo.linkTargetType }/css/css.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/subject/js/common.js"></script>
-<title>栏目页</title>
+<script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/portal/js/jqpaginator.min.js"></script>
+<title>${articleInfoVo.articleTitle}-${articleInfoVo.topicName}</title>
 </head>
 <body>
 	<div class="header">

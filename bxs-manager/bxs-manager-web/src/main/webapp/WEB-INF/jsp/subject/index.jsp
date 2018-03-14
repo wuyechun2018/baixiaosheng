@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="${ctx}/resources/subject/themes/${configInfoVo.linkTargetType }/css/css.css" rel="stylesheet" />
-<title>首页</title>
+<title>${configInfoVo.configTypeName}-首页</title>
 </head>
 <body>
 	<div class="header">
