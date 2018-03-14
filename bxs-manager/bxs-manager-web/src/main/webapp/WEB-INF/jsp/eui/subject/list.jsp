@@ -315,7 +315,6 @@ function doQuery(){
     options.queryParams.configTypeId=SELECT_NODE_Id;
     options.queryParams.configName=$('#configName').val();
     options.queryParams.configCode=$('#configCode').val();
-
    
     $("#dgTable").datagrid(options);
 }
@@ -372,6 +371,10 @@ function getTopicName(topicData,topicIdArray){
 				//此处给全局变量赋值
 				SELECT_NODE_Id=node.id;
 				doQuery();
+				var subjectUrl=ctx+"/subject/index?code="+node.attributes.configTypeCode;
+				subjectUrl="<a  target='_blank' href='"+subjectUrl+"'>"+subjectUrl+"</a>";
+				var urlHTML="&nbsp;&nbsp;<span style='color:red;font-weight:bold;'>访问地址：</span>"+subjectUrl;
+				$('#subjectUrl').html(urlHTML);
 			},
 			onLoadSuccess : function(node, data) {
 				//默认展开根节点
@@ -473,6 +476,7 @@ function getTopicName(topicData,topicIdArray){
  <%--TBar 添加按钮 --%>
  <div id="tb">
 	   <a href="javascript:void(0)" id="addBtn" onclick="addFun()" class="easyui-linkbutton" plain="true"  iconCls="Applicationadd">添加</a>
+	   <span id="subjectUrl"></span>
  </div>
  
 <%--TBar 左边链接类型按钮 --%>
