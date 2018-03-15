@@ -29,7 +29,7 @@ public class ConfigTypeDao {
 	 * @return List<ConfigType>
 	 */
 	public List<ConfigType> getListByPid(String pid) {
-		String sql="SELECT * FROM t_config_type T WHERE T.DATA_STATE='1' AND T.pid=? ";
+		String sql="SELECT * FROM t_config_type T WHERE T.DATA_STATE='1' AND T.CONFIG_VALUE_TYPE<>'3' AND T.pid=? ";
 		List<ConfigType> list = jdbcTemplate.query(sql,new Object[]{pid},new BeanPropertyRowMapper(ConfigType.class));
 		return list;
 	}

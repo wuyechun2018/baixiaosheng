@@ -679,7 +679,7 @@ public class SoisController {
 				//携带用户信息
 				mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO, info);
 				//跳转到后台管理主页面
-				mv.setViewName("/sois/index");
+				mv.setViewName("/sois/indexs");
 			}else{
 				mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
 				//登录失败，跳转到登录页面

@@ -31,6 +31,7 @@ function addTypeFun(){
 function loadTypeTree(){
 	$('#addConfigTypeComboTree').combotree({
 		url : '${ctx}/configType/getListByPid?pid=0',
+		queryParams:{isConfig:'1'},		
 		onBeforeExpand : function(node, param) {
 			   $('#addConfigTypeComboTree').combotree("tree").tree("options").url =ctx+ "/configType/getListByPid?pid=" + node.id;
 			},
@@ -45,6 +46,7 @@ function loadTypeTree(){
 function loadAddLinkTree(){
 	$('#addConfigComboTree').combotree({
 		url : '${ctx}/configType/getListByPid?pid=0',
+		queryParams:{isConfig:'1'},		
 		onBeforeExpand : function(node, param) {
 			   $('#addConfigComboTree').combotree("tree").tree("options").url =ctx+ "/configType/getListByPid?pid=" + node.id;
 			},
@@ -133,12 +135,12 @@ function editTypeFun(id) {
 function delTypeFun(){
 	var node=$('#leftTree').tree('getSelected');
 	if(node){
-	 $.messager.confirm("删除确认", "您确认删除导航类型吗？", function (action) {
+	 $.messager.confirm("删除确认", "您确认删除配置类型吗？", function (action) {
         if (action) {
         	$.ajax({
     			cache: true,
     			type: "POST",
-    			url:'${ctx}/linkType/delete',
+    			url:'${ctx}/configType/delete',
     			data:{
     				id:node.id
     			},
@@ -242,7 +244,7 @@ function editFun(id) {
 
 //点击“操作列-删除”
 function deleteFun(id){
-	$.messager.confirm("删除确认", "您确认删除该用户吗？", function (action) {
+	$.messager.confirm("删除确认", "您确认删除该配置项吗？", function (action) {
         if (action) {
         	$.ajax({
     			cache: true,
@@ -281,6 +283,7 @@ function doQuery(){
 function loadLeftTree(){
 	$('#leftTree').tree({
 		url : '${ctx}/configType/getListByPid?pid=0',
+		queryParams:{isConfig:'1'},		
 		onBeforeExpand : function(node, param) {
 			 $('#leftTree').tree('options').url = ctx+ "/configType/getListByPid?pid=" + node.id;
 			},
@@ -297,6 +300,7 @@ function loadLeftTree(){
 	 $('#leftTree').tree({
 			checkbox : false,
 			url : '${ctx}/configType/getListByPid?pid=0',
+			queryParams:{isConfig:'1'},		
 			method : 'post',
 			onBeforeExpand : function(node, param) {
 			   $('#leftTree').tree('options').url = ctx+ "/configType/getListByPid?pid=" + node.id;

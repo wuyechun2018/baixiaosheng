@@ -110,7 +110,7 @@ function preView(){
              $('#config_image_url').val(dataObj.msg);
           },
           error: function (data, status, e){
-        	  debugger;
+        	  
           }
       });
     return false;
@@ -173,12 +173,12 @@ function editTypeFun(id) {
 function delTypeFun(){
 	var node=$('#leftTree').tree('getSelected');
 	if(node){
-	 $.messager.confirm("删除确认", "您确认删除导航类型吗？", function (action) {
+	 $.messager.confirm("删除确认", "您确认删除该专题吗？", function (action) {
         if (action) {
         	$.ajax({
     			cache: true,
     			type: "POST",
-    			url:'${ctx}/linkType/delete',
+    			url:'${ctx}/configType/delete',
     			data:{
     				id:node.id
     			},
@@ -285,7 +285,7 @@ function editFun(id) {
 
 //点击“操作列-删除”
 function deleteFun(id){
-	$.messager.confirm("删除确认", "您确认删除该用户吗？", function (action) {
+	$.messager.confirm("删除确认", "您确认删除该配置项吗？", function (action) {
         if (action) {
         	$.ajax({
     			cache: true,
@@ -442,7 +442,7 @@ function getTopicName(topicData,topicIdArray){
 </head>
 <body>
 <div class="easyui-layout"  fit="true">
-    <div data-options="region:'west',split:false,border:true,title:'配置类型',footer:$('#footerbar')" style="width: 240px; padding: 1px;">
+    <div data-options="region:'west',split:false,border:true,title:'专题',footer:$('#footerbar')" style="width: 240px; padding: 1px;">
         <div>
             <ul id="leftTree"></ul>
         </div>
@@ -574,28 +574,28 @@ function getTopicName(topicData,topicIdArray){
    		<tr>
    		
    		<tr>
-   			<th>类型名称：</th>
+   			<th>专题名称：</th>
    			<td>
    				<input style="width:250px;"  class="easyui-textbox" type="text"  name="configTypeName" data-options="required:true"></input>
    			</td>
    		</tr>
    	
    		<tr>
-   			<th>类型编码：</th>
+   			<th>专题编码：</th>
    			<td>
    				<input style="width:250px;"  class="easyui-textbox" type="text"  name="configTypeCode" ></input>
    			</td>
    		</tr>
+   		<%-- --%>
    		<tr>
    			<th>配置模式：</th>
    			<td>
    				<select data-options="panelHeight:'auto'" class="easyui-combobox" id="configValueType" name="configValueType"  style="width:250px">
-							<option value="1" selected="selected">文字</option>
-							<option value="2">图片</option>
-							<option value="3">专题</option>
+							<option value="3" selected="selected">专题</option>
 				</select>
    			</td>
    		</tr>
+   		
    		<tr>
    		      <th>备注：</th>
    		      <td colspan="6" align="center" style="padding:1px;">
