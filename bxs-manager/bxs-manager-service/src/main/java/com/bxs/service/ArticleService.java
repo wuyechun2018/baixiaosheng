@@ -20,6 +20,8 @@ public interface ArticleService {
 
 	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 	
+	EUIGrid loadSytjArticle(EUIPager ePager, Map<String, Object> param);
+	
 	EUIGrid pagerMiniList(EUIPager ePager, Map<String, Object> param);
 
 	ArticleInfoVo getArticleInfoById(String id);

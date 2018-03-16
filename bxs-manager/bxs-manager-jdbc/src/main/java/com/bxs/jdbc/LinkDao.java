@@ -36,7 +36,7 @@ public class LinkDao {
 	 * @return Long
 	 */
 	public Long getTotalCount(Map<String, Object> param) {
-		String sql="SELECT COUNT(1) FROM V_LINK_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		String sql="SELECT COUNT(1) FROM V_LINK_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param,true);
 		return  jdbcTemplate.queryForObject(sql,Long.class);
 	}
 
@@ -53,7 +53,7 @@ public class LinkDao {
 	 * @return List<?>
 	 */
 	public List<?> pagerLinkList(EUIPager ePager,Map<String, Object> param) {
-		String  querySql="SELECT * FROM V_LINK_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		String  querySql="SELECT * FROM V_LINK_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param,false);
 		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
 		List<LinkInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(LinkInfoVo.class));
 		return list;
@@ -168,7 +168,7 @@ public class LinkDao {
 	 * @param param
 	 * @return String
 	 */
-	private String getParamSql(Map<String, Object> param) {
+	private String getParamSql(Map<String, Object> param,boolean isCount) {
 		StringBuffer sqlBuff=new StringBuffer();
 
 		//导航类型,1 代表全部
@@ -189,8 +189,9 @@ public class LinkDao {
 		if(param.get("linkUrl")!=null&&StringUtils.isNotBlank(param.get("linkUrl").toString())){
 			sqlBuff.append(" AND  T.LINK_URL LIKE '%"+param.get("linkUrl").toString()+"%' \n");
 		}
-		sqlBuff.append(" ORDER BY DISPLAY_ORDER");
-		
+		if(!isCount){
+			sqlBuff.append(" ORDER BY DISPLAY_ORDER");
+		}
 		return sqlBuff.toString();
 	}
 

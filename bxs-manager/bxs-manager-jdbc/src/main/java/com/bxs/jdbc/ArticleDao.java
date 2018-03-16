@@ -259,7 +259,7 @@ public class ArticleDao {
 	 * @return Long
 	 */
 	public Long getTotalCount(Map<String, Object> param) {
-		String sql="SELECT COUNT(1) FROM V_ARTICLE_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		String sql="SELECT COUNT(1) FROM V_ARTICLE_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param,true);
 		return  jdbcTemplate.queryForObject(sql,Long.class);
 	}
 
@@ -275,7 +275,7 @@ public class ArticleDao {
 	 * @return List<?>
 	 */
 	public List<?> pagerArticleList(EUIPager ePager, Map<String, Object> param) {
-		String  querySql="SELECT * FROM V_ARTICLE_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		String  querySql="SELECT * FROM V_ARTICLE_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param,false);
 		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
 		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
 		return list;
@@ -292,13 +292,139 @@ public class ArticleDao {
 	 * @return List<?>
 	 */
 	public List<?>  pagerMiniArticleList(EUIPager ePager, Map<String, Object> param){
-		String  querySql="SELECT * FROM V_ARTICLE_MINI_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		String  querySql="SELECT * FROM V_ARTICLE_MINI_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param,false);
 		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
 		List<ArticleMiniInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleMiniInfoVo.class));
 		return list;
 	}
 	
 	
+	/**
+	 * 
+	 * 分页、条件 筛选列表(去除首页不展示的字段，提升首页加载速度)-优化SQL
+	 * @author: wyc
+	 * @createTime: 2018年3月16日 上午8:51:35
+	 * @history:
+	 * @param ePager
+	 * @param param
+	 * @return List<?>
+	 */
+	public List<?>  pagerMiniArticleListForOpt(EUIPager ePager, Map<String, Object> param){
+		String  querySql=getBaseSql(param);
+		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<ArticleMiniInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleMiniInfoVo.class));
+		return list;
+	}
+	
+	
+	
+	/**
+	 * 
+	 * 获取条件筛选后的记录总数
+	 * @author: wyc
+	 * @createTime: 2018年1月31日 下午3:03:39
+	 * @history:
+	 * @param param
+	 * @return Long
+	 */
+	public Long getTotalCountForOpt(Map<String, Object> param) {
+		//String sql=getBaseSqlForCount(param);
+		//return  jdbcTemplate.queryForObject(sql,Long.class);
+		
+		String sql="SELECT t.article_count FROM t_opt_article_count T WHERE 1=1 \n";
+		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())&&!"1".equals(param.get("topicCode").toString())){
+			sql=sql+"AND T.topic_code='" + param.get("topicCode").toString() + "'";
+		}
+		List<Map<String, Object>>  list=jdbcTemplate.queryForList(sql);
+		if(list.isEmpty()){
+			return 0L;
+		}else{
+			Map<String, Object> obj=list.get(0);
+			return Long.valueOf(obj.get("ARTICLE_COUNT").toString());
+		}
+	}
+	
+	/**
+	 * 
+	 * 获取基础查询语句
+	 * @author: wyc
+	 * @createTime: 2018年3月16日 上午9:13:25
+	 * @history:
+	 * @param param
+	 * @return String
+	 */
+	private String getBaseSql(Map<String, Object> param) {
+		String sql="SELECT W.*,s.topic_code,s.topic_name FROM(\n" +
+						"  SELECT\n" + 
+						"      T.id,\n" + 
+						"      t.article_type,\n" + 
+						"      t.article_title,\n" + 
+						"      t.publish_dept_id,\n" + 
+						"      t.publish_user_id,\n" + 
+						"      t.check_state,\n" + 
+						"      t.front_slider_state,\n" + 
+						"      t.create_date,\n" + 
+						"      t.update_date,\n" + 
+						"      t.top_count,\n" + 
+						"      t.publish_date,\n" + 
+						"      t.data_state,\n" + 
+						"      t.topic_id\n" + 
+						"   FROM\n" + 
+						"      t_article T WHERE 1=1 AND T.DATA_STATE='1' AND T.CHECK_STATE='1' \n" + 
+						"      AND T.topic_id IN(\n" + 
+						"  SELECT m.ID FROM t_topic m WHERE 1=1 "+getBaseParamSql(param)+
+						"    ) ORDER BY TOP_COUNT DESC,UPDATE_DATE DESC \n" + 
+						")W LEFT JOIN t_topic s ON w.topic_id=s.ID";
+		return sql;
+	}
+	
+	
+	
+	
+	/**
+	 * 
+	 * 获取基础查询语句
+	 * @author: wyc
+	 * @createTime: 2018年3月16日 上午9:13:25
+	 * @history:
+	 * @param param
+	 * @return String
+	 */
+	private String getBaseSqlForCount(Map<String, Object> param) {
+		String sql="SELECT COUNT(1) FROM(\n" +
+						"  SELECT\n" + 
+						"      T.id,\n" + 
+						"      t.topic_id\n" + 
+						"   FROM\n" + 
+						"      t_article T WHERE 1=1 AND T.DATA_STATE='1' \n" + 
+						"      AND T.topic_id IN(\n" + 
+						"  SELECT m.ID FROM t_topic m WHERE 1=1 "+getBaseParamSql(param)+
+						"    ) \n" + 
+						")W LEFT JOIN t_topic s ON w.topic_id=s.ID";
+		return sql;
+	}
+	
+	
+	/**
+	 * 
+	 * 获取基础SQL
+	 * @author: wyc
+	 * @createTime: 2018年3月16日 上午9:19:55
+	 * @history:
+	 * @param param
+	 * @return String
+	 */
+	private String getBaseParamSql(Map<String, Object> param){
+		String sql="";
+		//栏目编码
+		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())&&!"1".equals(param.get("topicCode").toString())){
+			sql="AND m.TOPIC_CODE ='" + param.get("topicCode").toString() + "'";
+		}
+		return sql;
+	}
+	
+	
+
 	/**
 	 * 
 	 * 根据查询参数生成查询语句
@@ -308,7 +434,7 @@ public class ArticleDao {
 	 * @param param
 	 * @return String
 	 */
-	private String getParamSql(Map<String, Object> param) {
+	private String getParamSql(Map<String, Object> param,boolean isCount) {
 		StringBuffer sqlBuff=new StringBuffer();
 		
 		if(param.get("articleType")!=null&&StringUtils.isNotBlank(param.get("articleType").toString())){
@@ -355,7 +481,12 @@ public class ArticleDao {
 		if(param.get("popState")!=null&&StringUtils.isNotBlank(param.get("popState").toString())){
 			sqlBuff.append(" AND  T.POP_STATE = '"+param.get("popState").toString()+"' \n");
 		}
-		sqlBuff.append(" ORDER BY top_count DESC,UPDATE_DATE DESC");
+		
+		//性能优化，如果是Count操作，则不加排序字段
+		if(!isCount){
+			//sqlBuff.append(" ORDER BY top_count DESC,UPDATE_DATE DESC");
+			sqlBuff.append(" ORDER BY top_count DESC");
+		}
 		
 		return sqlBuff.toString();
 	}
@@ -525,5 +656,17 @@ public class ArticleDao {
 			jdbcTemplate.update(sql,new Object[]{article.getTopState(),article.getDisplayOrder(),article.getId()});
 		}
 		
+	}
+
+	public Long getSytjTotalCount(Map<String, Object> param) {
+		String sql="SELECT COUNT(1) FROM V_ARTICLE_INFO_SYTJ T" ;
+		return  jdbcTemplate.queryForObject(sql,Long.class);
+	}
+
+	public List<?> pagerSytjArticleList(EUIPager ePager, Map<String, Object> param) {
+		String  querySql="SELECT * FROM V_ARTICLE_INFO_SYTJ T" ;
+		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
+		return list;
 	}
 }

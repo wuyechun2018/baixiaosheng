@@ -221,3 +221,38 @@ SELECT t.*,s.config_type_name,s.config_type_code,s.config_value_type FROM t_conf
 INSERT  INTO `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`,`display_order`)
  VALUES ('20','18','配置专题','/eui/subject/list','2','1',20);
  
+-- 性能优化
+CREATE OR REPLACE VIEW v_opt_article_count AS
+SELECT UUID() AS ID,m.topic_code,s.article_count,SYSDATE() AS update_date FROM (SELECT COUNT(1) AS article_count,topic_id FROM t_article 
+WHERE data_state='1' and check_state='1'
+GROUP BY topic_id)S LEFT JOIN T_TOPIC m
+ON S.TOPIC_id=m.id; 
+
+
+CREATE OR REPLACE VIEW V_ARTICLE_INFO_SYTJ AS
+SELECT 
+  J.*,
+  K.user_name AS publish_user_name 
+FROM
+  (SELECT 
+    M.*,
+    N.dept_name AS publish_dept_name 
+  FROM
+    (SELECT 
+      T.*,
+      S.topic_name,
+      S.topic_code,
+      SUBSTRING(t.article_content,LOCATE('src="',t.article_content)+5,58) AS content_image_url 
+    FROM
+      (SELECT * FROM t_article WHERE TOPIC_ID=(SELECT ID FROM T_TOPIC WHERE TOPIC_CODE='ZHYW') AND DATA_STATE='1' AND check_state='1' 
+	AND front_slider_state='1'
+       )T
+      LEFT JOIN t_topic S 
+        ON T.topic_id = S.id) M 
+    LEFT JOIN T_DEPT N 
+      ON M.PUBLISH_DEPT_ID = N.id) J 
+  LEFT JOIN T_USER K 
+    ON J.PUBLISH_USER_ID = K.id; 
+ 
+ 
+ 

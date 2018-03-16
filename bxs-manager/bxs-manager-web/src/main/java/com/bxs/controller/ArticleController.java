@@ -389,6 +389,28 @@ public class ArticleController extends BaseController{
 		return articleService.pagerList(ePager,param);
 	}
 	
+	/**
+	 * 
+	 *  Portal页面查询-首页推荐
+	 * @author: wyc
+	 * @createTime: 2018年2月3日 下午10:52:55
+	 * @history:
+	 * @param topicCode
+	 * @return Object
+	 */
+	@RequestMapping("/loadSytjArticle")
+	@ResponseBody
+	public Object loadSytjArticle(String articleType,String topicCode,String frontSliderState,int page,int rows){
+		EUIPager ePager=new EUIPager(page,rows);
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("articleType", articleType);
+		param.put("topicCode", topicCode);
+		param.put("frontSliderState", frontSliderState);
+		//首页展示审核通过的文章
+		param.put("checkState", "1");
+		return articleService.loadSytjArticle(ePager,param);
+	}
+	
 	
 	
 	

@@ -286,8 +286,8 @@ public class PortalController {
 	@ResponseBody
 	public Object getWeekDayInfo() {
 		List<String> resultList=new ArrayList<String>();
+		DateTime now = new DateTime();
 		for(int i=0;i<7;i++){
-			DateTime now = new DateTime();
 			DateTime tomorrow = now.plusDays(i);
 			String dayStr=tomorrow.toString("yyyy-MM-dd");
 			String showStr=tomorrow.toString("yyyy年MM月dd日")+" "+tomorrow.dayOfWeek().getAsShortText(Locale.CHINESE);

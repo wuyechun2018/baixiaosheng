@@ -91,12 +91,22 @@ public class ArticleServiceImpl implements ArticleService {
 		return grid;
 	}
 	
+	@Override
+	public EUIGrid loadSytjArticle(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(articleDao.getSytjTotalCount(param));
+		grid.setRows(articleDao.pagerSytjArticleList(ePager,param));
+		return grid;
+	}
+	
 	
 	@Override
 	public EUIGrid pagerMiniList(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
-		grid.setTotal(articleDao.getTotalCount(param));
-		grid.setRows(articleDao.pagerMiniArticleList(ePager,param));
+		//grid.setTotal(articleDao.getTotalCount(param));
+		//grid.setRows(articleDao.pagerMiniArticleList(ePager,param));
+		grid.setTotal(articleDao.getTotalCountForOpt(param));
+		grid.setRows(articleDao.pagerMiniArticleListForOpt(ePager,param));
 		return grid;
 	}
 	

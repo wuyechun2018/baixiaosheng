@@ -121,7 +121,7 @@ function loadArticleAllInfoByTopic(topicCode,page,rows,isSytj){
 	$.ajax({
 		cache: true,
 		type: "POST",
-		url:'${ctx}/article/loadArticleByTopic',
+		url:'${ctx}/article/loadSytjArticle',
 		data:{
 			topicCode:topicCode,
 			//首页推荐
