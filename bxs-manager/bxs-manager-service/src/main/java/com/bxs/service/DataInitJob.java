@@ -68,12 +68,21 @@ public class DataInitJob {
 		
 		//更新总数
 		List<ArticleCount> totalList=articleCountDao.getListByTopicCode("TOTAL");
-		ArticleCount totalCount=totalList.get(0);
 		Long sCount=articleCountDao.getTotalCount();
-		totalCount.setArticleCount(sCount.intValue());
-		totalCount.setUpdateDate(new Date());
-		articleCountDao.update(totalCount);
-		System.out.println("更新-----文章总数,数量："+sCount);
+		if(!totalList.isEmpty()){
+			ArticleCount totalCount=totalList.get(0);
+			totalCount.setArticleCount(sCount.intValue());
+			totalCount.setUpdateDate(new Date());
+			articleCountDao.update(totalCount);
+			System.out.println("更新-----文章总数,数量："+sCount);
+		}else{
+			ArticleCount articleCount=new ArticleCount();
+			articleCount.setArticleCount(sCount.intValue());
+			articleCount.setTopicCode("TOTAL");
+			articleCount.setUpdateDate(new Date());
+			articleCountDao.save(articleCount);
+			System.out.println("插入-----文章总数,数量："+sCount);
+		}
 		
 	}
 
