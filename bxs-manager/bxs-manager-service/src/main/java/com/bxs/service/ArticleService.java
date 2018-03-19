@@ -37,4 +37,6 @@ public interface ArticleService {
 	void savePlusInfo(ArticleInfoVo article);
 
 	void toTop(Article article);
+	
+	Long getTotalCountForOpt(Map<String, Object> param);
 }

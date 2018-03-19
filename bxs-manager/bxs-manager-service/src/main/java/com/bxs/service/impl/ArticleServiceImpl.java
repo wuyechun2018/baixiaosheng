@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bxs.common.dict.DataState;
+import com.bxs.common.utils.CommonUtil;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
+import com.bxs.jdbc.ArticleCountDao;
 import com.bxs.jdbc.ArticleDao;
 import com.bxs.pojo.Article;
+import com.bxs.pojo.ArticleCount;
 import com.bxs.pojo.ArticleInfoVo;
 import com.bxs.service.ArticleService;
 
@@ -20,6 +23,8 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Autowired
     private ArticleDao articleDao;
+	@Autowired
+	private ArticleCountDao articleCountDao;
 	
 	public String save(Article article){
 		//设置为在用
@@ -86,7 +91,18 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public EUIGrid pagerList(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
-		grid.setTotal(articleDao.getTotalCount(param));
+		//只有 page 和 rows 两个参数,无其它筛选条件
+		if(CommonUtil.getEffectParamCount(param)==2){
+			List<ArticleCount> list=articleCountDao.getListByTopicCode("TOTAL");
+			if(!list.isEmpty()){
+				ArticleCount articleCount=list.get(0);
+				grid.setTotal(Long.valueOf(articleCount.getArticleCount()));
+			}else{
+				grid.setTotal(articleDao.getTotalCount(param));
+			}
+		}else{
+			grid.setTotal(articleDao.getTotalCount(param));
+		}
 		grid.setRows(articleDao.pagerArticleList(ePager,param));
 		return grid;
 	}
@@ -146,6 +162,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public void toTop(Article article) {
 		articleDao.toTop(article);
+	}
+
+	@Override
+	public Long getTotalCountForOpt(Map<String, Object> param) {
+		return articleDao.getTotalCountForOpt(param);
 	}
 
 	

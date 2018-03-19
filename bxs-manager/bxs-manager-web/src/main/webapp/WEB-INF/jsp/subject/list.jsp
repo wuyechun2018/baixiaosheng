@@ -5,11 +5,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<LINK href="${ctx}/resources/portal/images/logo.ico" type="image/x-icon" rel="icon">                        
+<LINK href="${ctx}/resources/portal/images/logo.ico" type="image/x-icon" rel="shortcut icon">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="${ctx}/resources/subject/themes/${configInfoVo.linkTargetType }/css/css.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jqpaginator.min.js"></script>
-<title>${configInfoVo.configTypeName}-${topic.topicName}</title>
+<title>${configInfoVo.configTypeName}-${currentTopic.topicName}</title>
 <script type="text/javascript">
 var ctx = "${ctx}";
 $(function(){
@@ -41,7 +43,7 @@ function loadArticleByTopic(topicCode,page,rows){
 	$.ajax({
 		cache: true,
 		type: "POST",
-		url:'${ctx}/article/loadArticle',
+		url:'${ctx}/article/loadArticleForOpt',
 		data:{
 			topicCode:topicCode,
 			page:page,
@@ -97,18 +99,23 @@ function loadList(){
     <div class="nav">
         <div class="menu">
             <ul>
-            	  <li><a href="${ctx}/subject/index?code=${configInfoVo.configTypeCode}"  class="cur">首页</a></li>
+            	  <li><a href="${ctx}/subject/index?code=${configInfoVo.configTypeCode}"  >首页</a></li>
             <c:forEach items="${topicList}" var="topic" begin="0" end="5">
-            	  <li><a href="${ctx}/subject/list?code=${configInfoVo.configTypeCode}&topicCode=${topic.topicCode}" >${topic.topicName}</a></li>
+            		<c:if test="${currentTopic.topicCode==topic.topicCode}">
+            	  		<li><a target="_self" class="cur" href="${ctx}/subject/list?code=${configInfoVo.configTypeCode}&topicCode=${topic.topicCode}" >${topic.topicName}</a></li>
+            		</c:if>
+            		<c:if test="${currentTopic.topicCode!=topic.topicCode}">
+            	  		<li><a target="_self" href="${ctx}/subject/list?code=${configInfoVo.configTypeCode}&topicCode=${topic.topicCode}"  >${topic.topicName}</a></li>
+            		</c:if>
             </c:forEach>
             </ul>
         </div>
     </div>
     <div class="layout m-crumb">
-    	<input id="topicCode" value="${topic.topicCode}" type="hidden"/>
+    	<input id="topicCode" value="${currentTopic.topicCode}" type="hidden"/>
     	<input id="configTypeCode" value="${configInfoVo.configTypeCode}" type="hidden"/>
     	
-        <a href="${ctx}/subject/index?code=${configInfoVo.configTypeCode}" >首页</a><span>&gt;</span><em>${topic.topicName}</em>
+        <a href="${ctx}/subject/index?code=${configInfoVo.configTypeCode}" >首页</a><span>&gt;</span><em>${currentTopic.topicName}</em>
     </div>
     <div class="container clearfix nei_bg">
     	<div class="Ctitle clearfix"><div class="cur">${topic.topicName}</div></div>

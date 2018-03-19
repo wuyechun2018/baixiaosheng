@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -453,6 +454,37 @@ public class ArticleController extends BaseController{
 		//首页展示审核通过的文章
 		param.put("checkState", "1");
 		return articleService.pagerList(ePager,param);
+	}
+	
+	/**
+	 * 
+	 *  Portal页面查询-根据文章类型编码获取文章
+	 * @author: wyc
+	 * @createTime: 2018年2月3日 下午10:52:55
+	 * @history:
+	 * @param topicCode
+	 * @return Object
+	 */
+	@RequestMapping("/loadArticleForOpt")
+	@ResponseBody
+	public Object loadArticleForOpt(int page,int rows,HttpServletRequest request){
+		EUIPager ePager=new EUIPager(page,rows);
+		Map<String,Object> param=getParamMap(request);
+		//首页展示审核通过的文章
+		param.put("checkState", "1");
+		//如果没有关键字搜索
+		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
+			return articleService.pagerList(ePager,param);
+		}else{
+			if(rows==10000){
+				//如果只是列表初始化的时候，用来获取数量的
+				EUIGrid grid = new EUIGrid();
+				grid.setTotal(articleService.getTotalCountForOpt(param));
+				return grid;
+			}else{
+				return articleService.pagerMiniList(ePager,param);
+			}
+		}
 	}
 	
 	

@@ -82,7 +82,7 @@ color:#E00;
     	$.ajax({
     		cache: true,
     		type: "POST",
-    		url:'${ctx}/article/loadArticle',
+    		url:'${ctx}/article/loadArticleForOpt',
     		data:{
     			articleTitle:keys,
     			topicCode:topicCode,
@@ -205,7 +205,7 @@ function loadTopic(){
 function loadList(keys){
 	 var topicCode=$('#topicCode').val();
 	 var articleData=loadArticleByTopic(topicCode,'1','10000','',keys);
-	 showArticle('ATICLE_LIST',articleData,1);
+	 //showArticle('ATICLE_LIST',articleData,1);
 	 var sumcount=articleData.total;
 	 if(sumcount==0){
 		 sumcount=18;

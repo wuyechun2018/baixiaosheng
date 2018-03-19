@@ -71,7 +71,8 @@ public class SubjectController {
 				EUIPager ePager=new EUIPager(1,8);
 				param.put("checkState", "1");
 				param.put("topicCode", topic.getTopicCode());
-				EUIGrid articleGrid=articleService.pagerList(ePager,param);
+				//EUIGrid articleGrid=articleService.pagerList(ePager,param);
+				EUIGrid articleGrid=articleService.pagerMiniList(ePager,param);
 				
 				TopicArticleVo topicArticleVo=new TopicArticleVo(topic,articleGrid);
 				articleList.add(topicArticleVo);
@@ -131,8 +132,9 @@ public class SubjectController {
 			List<Topic> topicList=topicService.getListByIds(vo.getConfigValue());
 			mv.addObject("topicList", topicList);
 		}
-		Topic topic=topicService.getTopicByCode(topicCode);
-		mv.addObject("topic", topic);
+		//当前所在的栏目
+		Topic currentTopic=topicService.getTopicByCode(topicCode);
+		mv.addObject("currentTopic", currentTopic);
 		return mv;
 	}
 	
