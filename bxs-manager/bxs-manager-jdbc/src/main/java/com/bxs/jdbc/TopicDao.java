@@ -139,6 +139,24 @@ public class TopicDao {
 			return null;
 		}
 	}
+	
+	/**
+	 * 
+	 * 根据主键获取栏目
+	 * @author: wyc
+	 * @createTime: 2018年3月19日 下午9:59:06
+	 * @history:
+	 * @param id
+	 * @return Topic
+	 */
+	public Topic getTopicById(String id) {
+		List<Topic> list = jdbcTemplate.query("SELECT * FROM t_topic T WHERE T.id=?",new Object[]{id},new BeanPropertyRowMapper(Topic.class));
+		if(!list.isEmpty()){
+			return list.get(0);
+		}else{
+			return null;
+		}
+	}
 
 	/**
 	 * 

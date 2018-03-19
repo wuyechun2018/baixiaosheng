@@ -315,7 +315,7 @@ $(function(){
 					<td style="width:100px;text-align: right;margin-right: 5px;">审核状态:</td>
 					<td style="width:200px;">
 						<select data-options="panelHeight:'auto'" class="easyui-combobox" id="checkState" name="checkState"  style="width:150px">
-							<option value="2" selected="selected">全部</option>
+							<option value="" selected="selected">全部</option>
 							<option value="0">未审核</option>
 							<option value="1">正常</option>
 						</select>

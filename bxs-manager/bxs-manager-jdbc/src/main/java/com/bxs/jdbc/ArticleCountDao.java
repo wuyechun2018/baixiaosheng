@@ -31,8 +31,14 @@ public class ArticleCountDao {
 	
 	
 	public Long getArticleTotalCount(String topicCode) {
-		String sql="SELECT COUNT(1) FROM v_article_mini_info t WHERE data_state='1' AND check_state='1' AND T.topic_code=?";
+		//String sql="SELECT COUNT(1) FROM v_article_mini_info t WHERE data_state='1' AND check_state='1' AND T.topic_code=?";
+		String sql="SELECT COUNT(1) FROM v_article_mini_info t WHERE data_state='1' AND T.topic_code=?";
 		return  jdbcTemplate.queryForObject(sql,new Object[]{topicCode},Long.class);
+	}
+	
+	public Long getTotalCount() {
+		String sql="SELECT COUNT(1) FROM v_article_mini_info t WHERE data_state='1'";
+		return  jdbcTemplate.queryForObject(sql,Long.class);
 	}
 
 

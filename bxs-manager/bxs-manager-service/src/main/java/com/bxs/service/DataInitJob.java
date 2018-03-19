@@ -66,6 +66,14 @@ public class DataInitJob {
 			}
 		}
 		
+		//更新总数
+		List<ArticleCount> totalList=articleCountDao.getListByTopicCode("TOTAL");
+		ArticleCount totalCount=totalList.get(0);
+		Long sCount=articleCountDao.getTotalCount();
+		totalCount.setArticleCount(sCount.intValue());
+		totalCount.setUpdateDate(new Date());
+		articleCountDao.update(totalCount);
+		System.out.println("更新-----文章总数,数量："+sCount);
 		
 	}
 
