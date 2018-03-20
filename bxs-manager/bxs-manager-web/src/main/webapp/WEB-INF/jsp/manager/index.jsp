@@ -6,6 +6,7 @@
 <%--放置的位置要特别注意,不能放在第三行,否则会有一些样式问题 --%>
 <%@ include file="/WEB-INF/jsp/base/easyui.jsp" %>
 <link href="${ctx}/resources/css/base.css" rel="stylesheet" media="screen">
+<link href="${ctx}/resources/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" media="screen">
 <title>后台管理</title>
 
 <script type="text/javascript">
@@ -163,10 +164,15 @@ $(function(){
                 </div>
                 
                 <div class="top-bar-right">
+                	<span class="top-bar-info" >
+                		<i class="fa fa-th-large" aria-hidden="true"></i>
+                  		<a style="vertical-align:middle;color:#fff;font-size:14px;text-decoration: none;"  target="_blank" href="${ctx}/portal/index" >网站首页</a>
+                  	</span>
                   	<span class="top-bar-exit">
                   		<%--
                   		<img style="vertical-align:middle;" alt="退出" src="${ctx}/resources/images/exit.png">
                   		 --%>
+                  		 <i class="fa fa-sign-out" aria-hidden="true"></i>
                   		<a style="vertical-align:middle;color:#fff;font-size:14px;text-decoration: none;"  href="${ctx}/user/loginout" >安全退出</a>
                   	</span>
                 </div>

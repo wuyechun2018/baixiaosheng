@@ -163,3 +163,11 @@ table.gridtable td {
 	cursor: pointer;
 }
 
+.top-bar-info {
+    position: absolute;
+    width: 90px;
+    top: 20px;
+    height: 52px;
+    color: #fff;
+    margin-left: 230px;
+}
