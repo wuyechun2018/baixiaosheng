@@ -327,6 +327,37 @@ public class ArticleDao {
 	 * @param param
 	 * @return List<?>
 	 */
+	public List<?>  pagerMiniListByDate(EUIPager ePager, Map<String, Object> param){
+		String sql=	"SELECT W.*,s.topic_code,s.topic_name FROM(\n" +
+						"             SELECT * FROM (\n" + 
+						"              SELECT\n" + 
+						"                  T.id,\n" + 
+						"                  t.article_type,\n" + 
+						"                  t.article_title,\n" + 
+						"                  t.publish_dept_id,\n" + 
+						"                  t.publish_user_id,\n" + 
+						"                  t.check_state,\n" + 
+						"                  t.front_slider_state,\n" + 
+						"                  t.create_date,\n" + 
+						"                  t.update_date,\n" + 
+						"                  t.top_count,\n" + 
+						"                  t.publish_date,\n" + 
+						"                  t.data_state,\n" + 
+						"                  t.topic_id\n" + 
+						"               FROM\n" + 
+						"                  t_article T WHERE 1=1 AND T.DATA_STATE='1' AND T.CHECK_STATE='1'\n" + 
+						"                  AND T.topic_id IN(\n" + 
+						"              SELECT m.ID FROM t_topic m WHERE 1=1 "+getBaseParamSql(param)+"\n" + 
+						" 			  AND (T.publish_date>'2017-12-25')\n"+
+						"                ) ORDER BY TOP_COUNT DESC,publish_date DESC\n" + 
+						"    )W LIMIT ?,?\n" + 
+						"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";
+
+		List<ArticleMiniInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleMiniInfoVo.class));
+		return list;
+	}
+	
+	
 	public List<?>  pagerMiniArticleListFast(EUIPager ePager, Map<String, Object> param){
 		String sql=	"SELECT W.*,s.topic_code,s.topic_name FROM(\n" +
 						"             SELECT * FROM (\n" + 

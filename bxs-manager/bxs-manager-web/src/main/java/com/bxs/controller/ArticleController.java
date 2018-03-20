@@ -435,7 +435,8 @@ public class ArticleController extends BaseController{
 		param.put("frontSliderState", frontSliderState);
 		//首页展示审核通过的文章
 		param.put("checkState", "1");
-		return articleService.pagerMiniList(ePager,param);
+		//return articleService.pagerMiniList(ePager,param);
+		return articleService.pagerMiniListByDate(ePager,param);
 	}
 	
 	/**

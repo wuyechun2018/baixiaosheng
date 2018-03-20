@@ -142,6 +142,15 @@ public class ArticleServiceImpl implements ArticleService {
 		return grid;
 	}
 	
+	
+	@Override
+	public EUIGrid pagerMiniListByDate(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(articleDao.getTotalCountForOpt(param));
+		grid.setRows(articleDao.pagerMiniListByDate(ePager,param));
+		return grid;
+	}
+	
 
 	@Override
 	public ArticleInfoVo getArticleInfoById(String id) {
@@ -198,6 +207,8 @@ public class ArticleServiceImpl implements ArticleService {
 		System.out.println("list--time:"+(end.getTime()-center.getTime())/1000);
 		return grid;
 	}
+
+
 
 	
 	
