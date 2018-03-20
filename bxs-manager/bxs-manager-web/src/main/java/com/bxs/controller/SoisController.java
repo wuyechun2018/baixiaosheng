@@ -360,6 +360,8 @@ public class SoisController {
 		EUIPager ePager=new EUIPager(page,limit);
 		Map<String,Object> param=new HashMap<String,Object>();
 		param.put("articleType", articleType);
+		param.put("page", page);
+		param.put("limit", limit);
 		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
 		if(info!=null){
 			//此处需要注意，如果能要看到部门上报，则只加publishDeptId参数，不加publishUserId

@@ -52,6 +52,27 @@ function resetPwd(){
 	}) 
 }
 
+//初始化登录名
+function initLoginName(){
+	$.messager.confirm("删除确认", "您确认初始化登录名操作吗？(有登录名的不进行初始化)", function (action) {
+        if (action) {
+			$.ajax({
+		        type: "POST",
+		        url:'${ctx}/user/initLoginName',
+		        data: {
+		        	
+		        },
+		        success: function (data) {
+		        	$.messager.alert('提示信息',data.msg);
+		        },
+		        error: function(data) {
+		            alert("error:"+data.responseText);
+		         }
+		  		});
+        }
+	})
+}
+
 
 //点击"添加按钮"
 function addFun(){
@@ -261,6 +282,7 @@ function doQuery(){
  <%--TBar 添加按钮 --%>
  <div id="tb">
 	   <a href="javascript:void(0)" id="addBtn" onclick="addFun()" class="easyui-linkbutton" plain="true"  iconCls="Applicationadd">添加</a>
+	   <a href="javascript:void(0)" id="initBtn" onclick="initLoginName()" class="easyui-linkbutton" plain="true"  iconCls="Userkey">初始化登录名</a>
  </div>
  
  <%--点击"添加"弹出的窗口 --%>
