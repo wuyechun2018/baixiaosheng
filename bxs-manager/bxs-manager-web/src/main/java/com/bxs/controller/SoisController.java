@@ -368,7 +368,7 @@ public class SoisController {
 			//param.put("publishUserId", info.getId());
 			param.put("publishDeptId", info.getDeptId());
 		}
-		EUIGrid grid=articleService.pagerList(ePager,param);
+		EUIGrid grid=articleService.pagerListFast(ePager,param);
 		return DataPipeUtil.toLayUIGrid(grid);
 	}
 	

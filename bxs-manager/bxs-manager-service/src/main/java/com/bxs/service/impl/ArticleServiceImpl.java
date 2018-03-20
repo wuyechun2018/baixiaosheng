@@ -137,7 +137,8 @@ public class ArticleServiceImpl implements ArticleService {
 		//grid.setTotal(articleDao.getTotalCount(param));
 		//grid.setRows(articleDao.pagerMiniArticleList(ePager,param));
 		grid.setTotal(articleDao.getTotalCountForOpt(param));
-		grid.setRows(articleDao.pagerMiniArticleListForOpt(ePager,param));
+		//grid.setRows(articleDao.pagerMiniArticleListForOpt(ePager,param));
+		grid.setRows(articleDao.pagerMiniArticleListFast(ePager,param));
 		return grid;
 	}
 	
@@ -182,6 +183,20 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public Long getTotalCountForOpt(Map<String, Object> param) {
 		return articleDao.getTotalCountForOpt(param);
+	}
+
+	
+	@Override
+	public EUIGrid pagerListFast(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		Date start=new Date();
+		grid.setTotal(articleDao.getTotalCountFast(param));
+		Date center=new Date();
+		grid.setRows(articleDao.pagerArticleListFast(ePager,param));
+		Date end=new Date();
+		System.out.println("count--time:"+(center.getTime()-start.getTime())/1000);
+		System.out.println("list--time:"+(end.getTime()-center.getTime())/1000);
+		return grid;
 	}
 
 	

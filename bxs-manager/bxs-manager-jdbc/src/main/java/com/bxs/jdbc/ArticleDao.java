@@ -317,6 +317,46 @@ public class ArticleDao {
 	}
 	
 	
+	/**
+	 * 
+	 * 分页、条件 筛选列表(去除首页不展示的字段，提升首页加载速度)-优化SQL
+	 * @author: wyc
+	 * @createTime: 2018年3月16日 上午8:51:35
+	 * @history:
+	 * @param ePager
+	 * @param param
+	 * @return List<?>
+	 */
+	public List<?>  pagerMiniArticleListFast(EUIPager ePager, Map<String, Object> param){
+		String sql=	"SELECT W.*,s.topic_code,s.topic_name FROM(\n" +
+						"             SELECT * FROM (\n" + 
+						"              SELECT\n" + 
+						"                  T.id,\n" + 
+						"                  t.article_type,\n" + 
+						"                  t.article_title,\n" + 
+						"                  t.publish_dept_id,\n" + 
+						"                  t.publish_user_id,\n" + 
+						"                  t.check_state,\n" + 
+						"                  t.front_slider_state,\n" + 
+						"                  t.create_date,\n" + 
+						"                  t.update_date,\n" + 
+						"                  t.top_count,\n" + 
+						"                  t.publish_date,\n" + 
+						"                  t.data_state,\n" + 
+						"                  t.topic_id\n" + 
+						"               FROM\n" + 
+						"                  t_article T WHERE 1=1 AND T.DATA_STATE='1' AND T.CHECK_STATE='1'\n" + 
+						"                  AND T.topic_id IN(\n" + 
+						"              SELECT m.ID FROM t_topic m WHERE 1=1 "+getBaseParamSql(param)+"\n" + 
+						"                ) ORDER BY TOP_COUNT DESC,publish_date DESC\n" + 
+						"    )W LIMIT ?,?\n" + 
+						"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";
+
+		List<ArticleMiniInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleMiniInfoVo.class));
+		return list;
+	}
+	
+	
 	
 	/**
 	 * 
@@ -669,4 +709,128 @@ public class ArticleDao {
 		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
 		return list;
 	}
+
+	public Long getTotalCountFast(Map<String, Object> param) {
+		String sql="SELECT COUNT(1) FROM (SELECT J.id\n" +
+						"  FROM (SELECT M.*\n" + 
+						"          FROM (SELECT T.*\n" + 
+						"                  FROM (SELECT id, publish_dept_id, publish_user_id, topic_id\n" + 
+						"                          FROM t_article\n" + 
+						"                         WHERE 1 = 1 AND DATA_STATE = '1' \n" +getParamSqlFast(param) +") T\n" + 
+						"                  LEFT JOIN (SELECT id FROM t_topic) S\n" + 
+						"                    ON T.topic_id = S.id) M\n" + 
+						"          LEFT JOIN (SELECT ID FROM T_DEPT) N\n" + 
+						"            ON M.PUBLISH_DEPT_ID = N.id) J\n" + 
+						"  LEFT JOIN (SELECT id FROM T_USER) K\n" + 
+						"    ON J.PUBLISH_USER_ID = K.id)w";
+		return  jdbcTemplate.queryForObject(sql,Long.class);
+	}
+	
+	/**
+	 * 
+	 * 根据参数获取查询语句-优化
+	 * @author: wyc
+	 * @createTime: 2018年3月20日 下午11:17:44
+	 * @history:
+	 * @param param
+	 * @return String
+	 */
+	private String getParamSqlFast(Map<String, Object> param) {
+		StringBuffer sqlBuff=new StringBuffer();
+		if(param.get("articleType")!=null&&StringUtils.isNotBlank(param.get("articleType").toString())){
+			sqlBuff.append(" AND ARTICLE_TYPE = '" + param.get("articleType").toString() + "'\n");
+		}
+		//栏目ID,1代表全部栏目
+		if(param.get("topicId")!=null&&StringUtils.isNotBlank(param.get("topicId").toString())&&!"1".equals(param.get("topicId").toString())){
+			sqlBuff.append(" AND TOPIC_ID = '" + param.get("topicId").toString() + "'\n");
+		}
+		//首页推荐
+		if(param.get("frontSliderState")!=null&&StringUtils.isNotBlank(param.get("frontSliderState").toString())){
+			sqlBuff.append(" AND front_slider_state = '" + param.get("frontSliderState").toString() + "'\n");
+		}
+		//栏目编码
+		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())&&!"1".equals(param.get("topicCode").toString())){
+			//sqlBuff.append(" AND TOPIC_CODE = '" + param.get("topicCode").toString() + "'\n");
+			sqlBuff.append("AND topic_id IN(SELECT id FROM t_topic WHERE topic_code='" + param.get("topicCode").toString() + "')\n");
+		}
+		//发布部门,1代表全部部门
+		if(param.get("publishDeptId")!=null&&StringUtils.isNotBlank(param.get("publishDeptId").toString())&&!"1".equals(param.get("publishDeptId").toString())){
+			sqlBuff.append(" AND PUBLISH_DEPT_ID = '" + param.get("publishDeptId").toString() + "'\n");
+		}
+		//发布人
+		if(param.get("publishUserId")!=null&&StringUtils.isNotBlank(param.get("publishUserId").toString())){
+			sqlBuff.append(" AND PUBLISH_USER_ID = '" + param.get("publishUserId").toString() + "'\n");
+		}
+		//审核状态,2代表全部状态,0 未审核 1 已审核
+		if(param.get("checkState")!=null&&StringUtils.isNotBlank(param.get("checkState").toString())&&!"2".equals(param.get("checkState").toString())){
+			sqlBuff.append(" AND CHECK_STATE = '" + param.get("checkState").toString() + "'\n");
+		}
+		//文章标题
+		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
+			sqlBuff.append(" AND  ARTICLE_TITLE LIKE '%"+param.get("articleTitle").toString()+"%' \n");
+		}
+		if(param.get("publishUserName")!=null&&StringUtils.isNotBlank(param.get("publishUserName").toString())){
+			//sqlBuff.append(" AND  T.PUBLISH_USER_NAME LIKE '%"+param.get("publishUserName").toString()+"%' \n");
+			sqlBuff.append("AND PUBLISH_USER_ID IN(SELECT id FROM t_user WHERE user_name LIKE '%" +param.get("publishUserName").toString()+ "%')\n");
+		}
+		//是否弹窗
+		if(param.get("popState")!=null&&StringUtils.isNotBlank(param.get("popState").toString())){
+			sqlBuff.append(" AND  POP_STATE = '"+param.get("popState").toString()+"' \n");
+		}
+		return sqlBuff.toString();
+	}
+
+	public List<?> pagerArticleListFast(EUIPager ePager, Map<String, Object> param) {
+		String  querySql=	"SELECT * FROM(SELECT J.*, K.user_name AS publish_user_name\n" +
+						"  FROM (SELECT M.*, N.dept_name AS publish_dept_name\n" + 
+						"          FROM (SELECT T.*,\n" + 
+						"                       S.topic_name,\n" + 
+						"                       S.topic_code,\n" + 
+						"                       SUBSTRING(t.article_content,\n" + 
+						"                                 LOCATE('src=\"', t.article_content) + 5,\n" + 
+						"                                 58) AS content_image_url\n" + 
+						"                  FROM (SELECT *\n" + 
+						"                          FROM t_article\n" + 
+						"                         WHERE 1 = 1\n" + 
+						"                           AND DATA_STATE = '1'\n" + 
+													 getParamSqlFast(param) +
+						"                        ) T\n" + 
+						"                  LEFT JOIN (SELECT id, topic_name, topic_code FROM t_topic) S\n" + 
+						"                    ON T.topic_id = S.id) M\n" + 
+						"          LEFT JOIN (SELECT ID, DEPT_NAME FROM T_DEPT) N\n" + 
+						"            ON M.PUBLISH_DEPT_ID = N.id) J\n" + 
+						"  LEFT JOIN (SELECT id, user_name FROM T_USER) K\n" + 
+						"    ON J.PUBLISH_USER_ID = K.id) ORDER BY top_count DESC, publish_date desc";
+		
+		String sql="SELECT J.*, K.user_name AS publish_user_name\n" +
+						"  FROM (SELECT M.*, N.dept_name AS publish_dept_name\n" + 
+						"          FROM (SELECT T.*,\n" + 
+						"                       S.topic_name,\n" + 
+						"                       S.topic_code,\n" + 
+						"                       SUBSTRING(t.article_content,\n" + 
+						"                                 LOCATE('src=\"', t.article_content) + 5,\n" + 
+						"                                 58) AS content_image_url\n" + 
+						"                  FROM (\n" + 
+						"\n" + 
+						"                        SELECT *\n" + 
+						"                          FROM (SELECT *\n" + 
+						"                                   FROM t_article\n" + 
+						"                                  WHERE 1 = 1\n" + 
+						"                                    AND DATA_STATE = '1'\n" + 
+															getParamSqlFast(param) +
+						"                                  ORDER BY top_count DESC, publish_date DESC) U LIMIT ?,\n" + 
+						"                                ?) T\n" + 
+						"                  LEFT JOIN (SELECT id, topic_name, topic_code FROM t_topic) S\n" + 
+						"                    ON T.topic_id = S.id) M\n" + 
+						"          LEFT JOIN (SELECT ID, DEPT_NAME FROM T_DEPT) N\n" + 
+						"            ON M.PUBLISH_DEPT_ID = N.id) J\n" + 
+						"  LEFT JOIN (SELECT id, user_name FROM T_USER) K\n" + 
+						"    ON J.PUBLISH_USER_ID = K.id\n " ;
+						// "ORDER BY top_count DESC, publish_date desc";
+
+		//String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
+		return list;
+	}
+	
 }

@@ -87,7 +87,8 @@ public class ArticleController extends BaseController{
 	public  EUIGrid pagerList(HttpServletRequest request){
 		EUIPager ePager=getPager(request);
 		Map<String,Object> param=getParamMap(request);
-		return articleService.pagerList(ePager,param);
+		//return articleService.pagerList(ePager,param);
+		return articleService.pagerListFast(ePager,param);
 	}
 	
 	
@@ -474,7 +475,8 @@ public class ArticleController extends BaseController{
 		param.put("checkState", "1");
 		//如果没有关键字搜索
 		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
-			return articleService.pagerList(ePager,param);
+			//return articleService.pagerList(ePager,param);
+			return articleService.pagerListFast(ePager,param);
 		}else{
 			if(rows==10000){
 				//如果只是列表初始化的时候，用来获取数量的
@@ -483,6 +485,7 @@ public class ArticleController extends BaseController{
 				return grid;
 			}else{
 				return articleService.pagerMiniList(ePager,param);
+				//return articleService.pagerListFast(ePager,param);
 			}
 		}
 	}

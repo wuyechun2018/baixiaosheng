@@ -20,6 +20,18 @@ public interface ArticleService {
 
 	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 	
+	/**
+	 * 
+	 * 分页列表，用于多处，是对"pagerList"方法的优化
+	 * @author: wyc
+	 * @createTime: 2018年3月20日 下午8:45:54
+	 * @history:
+	 * @param ePager
+	 * @param param
+	 * @return EUIGrid
+	 */
+	EUIGrid pagerListFast(EUIPager ePager, Map<String, Object> param);
+	
 	EUIGrid loadSytjArticle(EUIPager ePager, Map<String, Object> param);
 	
 	EUIGrid pagerMiniList(EUIPager ePager, Map<String, Object> param);
