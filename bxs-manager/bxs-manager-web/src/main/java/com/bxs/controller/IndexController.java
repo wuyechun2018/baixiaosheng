@@ -4,15 +4,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.bxs.service.ConfigService;
 
 
 @Controller
 public class IndexController{
 	
 	final static Logger logger = LoggerFactory.getLogger(IndexController.class);
+	
+	@Autowired
+	private ConfigService configService;
 	
 	/**
 	 * 
@@ -52,6 +58,20 @@ public class IndexController{
 	public ModelAndView index(HttpServletRequest request){
 		logger.info("跳转到:{},访问时间是:{}", "login",new DateTime().toString("yyyy/MM/dd HH:mm:ss") );
 		ModelAndView mv=new ModelAndView("/portal/index");
+		
+		//背景图片-轮换图
+		if(!configService.getConfigByTypeCode("BJT").isEmpty()){
+			mv.addObject("backGroudImgList", configService.getConfigByTypeCode("BJT"));
+		}
+		
+		//专题图1
+		if(!configService.getConfigByTypeCode("GGTP").isEmpty()){
+			mv.addObject("topicImageUrlF", configService.getConfigByTypeCode("GGTP").get(0));
+		}
+		//专题图2
+		if(!configService.getConfigByTypeCode("ZTT").isEmpty()){
+			mv.addObject("topicImageUrlS", configService.getConfigByTypeCode("ZTT").get(0));
+		}
 		return mv;
 	}
 	

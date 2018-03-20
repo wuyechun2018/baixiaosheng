@@ -115,15 +115,20 @@ public class PortalController {
 	
 	/**
 	 * 
-	 * 通列表
+	 * 应用系统列表
 	 * @author: wyc
 	 * @createTime: 2018年2月6日 下午10:33:59
 	 * @history:
 	 * @return String
 	 */
 	@RequestMapping(value = "/system-list")
-	public String systemList() {
-		return "/portal/system-list";
+	public ModelAndView systemList() {
+		ModelAndView mv=new ModelAndView("/portal/system-list");
+		//背景图片-轮换图
+		if(!configService.getConfigByTypeCode("BJT").isEmpty()){
+			mv.addObject("backGroudImgList", configService.getConfigByTypeCode("BJT"));
+		}
+		return mv;
 	}
 	
 	
@@ -140,6 +145,10 @@ public class PortalController {
 		Topic topic=topicService.getTopicByCode(topicCode);
 		ModelAndView mv=new ModelAndView("/portal/list");
 		mv.addObject("topic", topic);
+		//背景图片-轮换图
+		if(!configService.getConfigByTypeCode("BJT").isEmpty()){
+			mv.addObject("backGroudImgList", configService.getConfigByTypeCode("BJT"));
+		}
 		return mv;
 	}
 	
@@ -190,6 +199,10 @@ public class PortalController {
 	@RequestMapping(value = "/info-list")
 	public ModelAndView infoList(String topicCode) {
 		ModelAndView mv=new ModelAndView("/portal/info-list");
+		//背景图片-轮换图
+		if(!configService.getConfigByTypeCode("BJT").isEmpty()){
+			mv.addObject("backGroudImgList", configService.getConfigByTypeCode("BJT"));
+		}
 		return mv;
 	}
 	
@@ -229,6 +242,11 @@ public class PortalController {
 				}
 				mv.addObject("signConent",sInfo.getSignContent()==null?"":sInfo.getSignContent());
 			}
+		}
+		
+		//背景图片-轮换图
+		if(!configService.getConfigByTypeCode("BJT").isEmpty()){
+			mv.addObject("backGroudImgList", configService.getConfigByTypeCode("BJT"));
 		}
 		return mv;
 	}

@@ -254,5 +254,14 @@ FROM
   LEFT JOIN T_USER K 
     ON J.PUBLISH_USER_ID = K.id; 
  
- 
+-- 2018-03-19
+-- 1）创建索引
+CREATE INDEX index_article_title ON t_article(article_title);
+CREATE INDEX index_publish_dept_id ON t_article(publish_dept_id);
+CREATE INDEX index_publish_user_id ON t_article(publish_user_id);
+CREATE INDEX index_topic_pid ON t_topic(pid);
+
+-- 2)初始化数据
+INSERT  INTO `t_opt_article_count`(`id`,`topic_code`,`article_count`,`update_date`) 
+VALUES ('09936cc4-ef3c-4bde-8de7-70dc4e3ea001','TOTAL',79036,'2018-03-19 21:00:00');
  

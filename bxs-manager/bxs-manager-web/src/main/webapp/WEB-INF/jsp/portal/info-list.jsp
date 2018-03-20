@@ -27,9 +27,18 @@
 <div class=" top_body">
 	<div id="bg-body">
     	<ul>
-			<li style="background:url(${ctx}/resources/portal/images/banner1.jpg) center center no-repeat;background-size:100% 100%;"></li>
-			<li style="background:url(${ctx}/resources/portal/images/banner2.jpg) center center no-repeat;background-size:100% 100%;"></li>
-			<li style="background:url(${ctx}/resources/portal/images/banner3.jpg) center center no-repeat;background-size:100% 100%;"></li>
+			<%--默认 --%>
+	    	 <c:if test="${empty backGroudImgList}">
+	    	 		<li style="background:url(${ctx}/resources/portal/images/banner1.jpg) center center no-repeat;background-size:100% 100%;"></li>
+					<li style="background:url(${ctx}/resources/portal/images/banner2.jpg) center center no-repeat;background-size:100% 100%;"></li>
+					<li style="background:url(${ctx}/resources/portal/images/banner3.jpg) center center no-repeat;background-size:100% 100%;"></li>
+			 </c:if>
+			  <%--如果有值 --%>
+			 <c:if test="${!empty backGroudImgList}">
+			 		<c:forEach items="${backGroudImgList}" var="backGroudImg">
+		    		 	<li style="background:url(${backGroudImg.configImageUrl}) center center no-repeat;background-size:100% 100%;"></li>
+					 </c:forEach>
+			 </c:if>
 		</ul>
 	</div>
 
