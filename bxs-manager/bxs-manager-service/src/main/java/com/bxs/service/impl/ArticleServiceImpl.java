@@ -136,6 +136,7 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	
 	@Override
+	@Cacheable(value="myCache", key="#param['frontSliderState'].toString()+#param['checkState'].toString()+#param['topicCode'].toString()+#param['articleTitle'].toString()+#ePager.page+''+#ePager.rows")
 	public EUIGrid pagerMiniList(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
 		//grid.setTotal(articleDao.getTotalCount(param));

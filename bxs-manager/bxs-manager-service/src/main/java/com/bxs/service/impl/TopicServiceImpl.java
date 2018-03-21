@@ -6,7 +6,10 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
 import com.bxs.common.vo.EUITree;
 import com.bxs.jdbc.TopicDao;
 import com.bxs.pojo.Topic;
@@ -19,6 +22,7 @@ public class TopicServiceImpl  implements TopicService{
     private TopicDao topicDao;
 	
 	@Override
+	@Cacheable(value="myCacheTopic", key="'Topic'+#pid")
 	public List<EUITree> getListByPid(String pid) {
 		List<EUITree> list=new ArrayList<EUITree>();
 		List<Topic> topicList=topicDao.getListByPid(pid);
@@ -109,6 +113,7 @@ public class TopicServiceImpl  implements TopicService{
 	}
 
 	@Override
+	@CacheEvict(value="myCacheTopic", allEntries=true)
 	public void save(Topic topic) {
 		// 更新操作
 		if (StringUtils.isNotBlank(topic.getId())) {
@@ -120,6 +125,7 @@ public class TopicServiceImpl  implements TopicService{
 	}
 
 	@Override
+	@CacheEvict(value="myCacheTopic", allEntries=true)
 	public void delete(String id) {
 		topicDao.delete(id);
 	}

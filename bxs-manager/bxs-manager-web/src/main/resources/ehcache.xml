@@ -28,4 +28,10 @@ LRU，最近最少使用的，缓存的元素有一个时间戳，当缓存容�
         maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
         diskSpoolBufferSizeMB="20" timeToIdleSeconds="300" timeToLiveSeconds="600"
         memoryStoreEvictionPolicy="LFU" />
+        
+     <!-- 自定义缓存-专题 -->
+    <cache name="myCacheTopic" maxElementsInMemory="200"
+        maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+        diskSpoolBufferSizeMB="20" timeToIdleSeconds="300" timeToLiveSeconds="600"
+        memoryStoreEvictionPolicy="LFU" />    
 </ehcache>
