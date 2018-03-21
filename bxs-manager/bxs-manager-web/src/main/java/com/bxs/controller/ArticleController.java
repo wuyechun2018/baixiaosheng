@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -419,6 +420,7 @@ public class ArticleController extends BaseController{
 	/**
 	 * 
 	 *  Portal页面查询-根据文章类型编码获取文章(去除首页不展示的字段，提升首页加载速度)
+	 *  @Cacheable(value="myCache", key="#topicCode+#frontSliderState+page+''+rows")
 	 * @author: wyc
 	 * @createTime: 2018年2月3日 下午10:52:55
 	 * @history:

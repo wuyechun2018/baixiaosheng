@@ -14,7 +14,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * @history:
  * @version: v1.0
  */
-public class ArticleMiniInfoVo {
+public class ArticleMiniInfoVo implements java.io.Serializable {
+	/**
+	 * TODO
+	*/
+	private static final long serialVersionUID = 2957723800727967282L;
 	// 主键
 	private String id;
 	// 文章类型(1:普通 2:图片 3：视频)

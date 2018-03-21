@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.bxs.common.dict.DataState;
@@ -30,6 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Autowired
 	private TopicDao topicDao;
 	
+	@CacheEvict(value="myCache", allEntries=true)  
 	public String save(Article article){
 		//设置为在用
 		article.setDataState(DataState.Use.getCode());
@@ -88,6 +91,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@CacheEvict(value="myCache", allEntries=true)
 	public void delete(String id) {
 		articleDao.delete(id);
 	}
@@ -144,6 +148,7 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	
 	@Override
+	@Cacheable(value="myCache", key="#param['topicCode'].toString()")
 	public EUIGrid pagerMiniListByDate(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
 		grid.setTotal(articleDao.getTotalCountForOpt(param));
@@ -170,11 +175,13 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@CacheEvict(value="myCache", allEntries=true)
 	public void saveCheckState(Article article) {
 		articleDao.saveCheckState(article);
 	}
 
 	@Override
+	@CacheEvict(value="myCache", allEntries=true)
 	public void saveTopCount(Article article) {
 		articleDao.saveTopCount(article);
 	}
@@ -185,6 +192,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@CacheEvict(value="myCache", allEntries=true)
 	public void toTop(Article article) {
 		articleDao.toTop(article);
 	}
