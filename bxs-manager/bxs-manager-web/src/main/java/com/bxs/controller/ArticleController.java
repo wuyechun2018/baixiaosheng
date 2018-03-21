@@ -476,6 +476,24 @@ public class ArticleController extends BaseController{
 		Map<String,Object> param=getParamMap(request);
 		//首页展示审核通过的文章
 		param.put("checkState", "1");
+		
+		
+		//防止缓存报错
+		if(!param.containsKey("topicId")){
+			param.put("topicId", "");
+		}
+		if(!param.containsKey("articleTitle")){
+			param.put("articleTitle", "");
+		}
+		
+		if(!param.containsKey("publishDeptId")){
+			param.put("publishDeptId", "");
+		}
+		if(!param.containsKey("checkState")){
+			param.put("checkState", "");
+		}
+		
+		
 		//如果没有关键字搜索
 		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
 			//return articleService.pagerList(ePager,param);
@@ -487,6 +505,24 @@ public class ArticleController extends BaseController{
 				grid.setTotal(articleService.getTotalCountForOpt(param));
 				return grid;
 			}else{
+				
+				//#param['topicId'].toString()+#param['articleTitle'].toString()+#param['publishDeptId'].toString()+#param['checkState'].toString()+#ePager.page+''+#ePager.rows
+				//防止缓存报错
+				/**
+				if(!param.containsKey("topicId")){
+					param.put("topicId", "");
+				}
+				if(!param.containsKey("articleTitle")){
+					param.put("articleTitle", "");
+				}
+				
+				if(!param.containsKey("publishDeptId")){
+					param.put("publishDeptId", "");
+				}
+				if(!param.containsKey("checkState")){
+					param.put("checkState", "");
+				}**/
+				
 				return articleService.pagerMiniList(ePager,param);
 				//return articleService.pagerListFast(ePager,param);
 			}

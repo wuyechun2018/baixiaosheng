@@ -137,6 +137,8 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Override
 	@Cacheable(value="myCache", key="#param['frontSliderState'].toString()+#param['checkState'].toString()+#param['topicCode'].toString()+#param['articleTitle'].toString()+#ePager.page+''+#ePager.rows")
+	//Method call: Attempted to call method toString() on null context object
+	//@Cacheable(value="myCache", key="#{param['frontSliderState']!= null?param['frontSliderState'].toString():''}+#{param['checkState']!= null?param['checkState'].toString():''}+#{param['topicCode']!= null?param['topicCode'].toString():''}+#{param['articleTitle']!= null?param['articleTitle'].toString():''}+#ePager.page+''+#ePager.rows")
 	public EUIGrid pagerMiniList(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
 		//grid.setTotal(articleDao.getTotalCount(param));
@@ -206,6 +208,9 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Override
 	@Cacheable(value="myCache", key="#param['topicId'].toString()+#param['articleTitle'].toString()+#param['publishDeptId'].toString()+#param['checkState'].toString()+#ePager.page+''+#ePager.rows")
+	//@Cacheable(value="myCache", key="#{param['topicId']!= null?param['topicId'].toString():''}+#{param['frontSliderState']!= null?param['frontSliderState'].toString():''}+#{param['checkState']!= null?param['checkState'].toString():''}+#{param['topicCode']!= null?param['topicCode'].toString():''}+#{param['articleTitle']!= null?param['articleTitle'].toString():''}+#ePager.page+''+#ePager.rows")
+	//@Cacheable(value="myCache", key="#{param['topicId']!= null?param['topicId'].toString():''}")
+	//@Cacheable(value="myCache", key="#param['topicId'].toString()")
 	public EUIGrid pagerListFast(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
 		//Date start=new Date();
