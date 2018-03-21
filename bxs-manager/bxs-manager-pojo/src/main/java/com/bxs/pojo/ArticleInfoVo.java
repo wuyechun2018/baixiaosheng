@@ -4,8 +4,12 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class ArticleInfoVo {
+public class ArticleInfoVo implements java.io.Serializable {
 
+	/**
+	 * TODO
+	*/
+	private static final long serialVersionUID = 4861820347185036214L;
 	// 主键
 	private String id;
 	//文章类型(1:普通 2:图片 3：视频)

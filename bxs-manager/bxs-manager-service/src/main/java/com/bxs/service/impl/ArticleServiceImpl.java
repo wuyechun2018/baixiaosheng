@@ -204,15 +204,16 @@ public class ArticleServiceImpl implements ArticleService {
 
 	
 	@Override
+	@Cacheable(value="myCache", key="#param['topicId'].toString()+#param['articleTitle'].toString()+#param['publishDeptId'].toString()+#param['checkState'].toString()+#ePager.page+''+#ePager.rows")
 	public EUIGrid pagerListFast(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
-		Date start=new Date();
+		//Date start=new Date();
 		grid.setTotal(articleDao.getTotalCountFast(param));
-		Date center=new Date();
+		//Date center=new Date();
 		grid.setRows(articleDao.pagerArticleListFast(ePager,param));
-		Date end=new Date();
-		System.out.println("count--time:"+(center.getTime()-start.getTime())/1000);
-		System.out.println("list--time:"+(end.getTime()-center.getTime())/1000);
+		//Date end=new Date();
+		//System.out.println("count--time:"+(center.getTime()-start.getTime())/1000);
+		//System.out.println("list--time:"+(end.getTime()-center.getTime())/1000);
 		return grid;
 	}
 
