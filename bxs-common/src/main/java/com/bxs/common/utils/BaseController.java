@@ -1,6 +1,7 @@
 package com.bxs.common.utils;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,5 +51,7 @@ public class BaseController {
 		}
 		return param;
 	}
+	
+	
 	
 }

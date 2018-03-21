@@ -2,7 +2,9 @@ package com.bxs.common.vo;
 
 import java.util.Map;
 
-public class EUITree {
+public class EUITree implements java.io.Serializable {
+	private static final long serialVersionUID = 3771924642309105240L;
+	
 	private String id;
 	private String text;
 	// 节点状态，有两个值 'open' or 'closed', 默认为'open'. 当为‘closed’,说明此节点下有子节点否则此节点为叶子节点

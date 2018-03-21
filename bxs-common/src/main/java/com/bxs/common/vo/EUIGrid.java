@@ -15,8 +15,12 @@ import java.util.List;
  * @version 1.0.0
  *
  */
-public class EUIGrid {
+public class EUIGrid implements java.io.Serializable {
 	
+	/**
+	 * TODO
+	*/
+	private static final long serialVersionUID = -2107521008668577980L;
 	//总数
 	private Long total = 0L;
 	//数据

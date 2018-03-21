@@ -1,6 +1,6 @@
 package com.bxs.common.vo;
 
-public class EUIPager {
+public class EUIPager  {
 	
 	public EUIPager(Integer page, Integer rows) {
 		super();
