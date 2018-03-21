@@ -368,6 +368,21 @@ public class SoisController {
 			//param.put("publishUserId", info.getId());
 			param.put("publishDeptId", info.getDeptId());
 		}
+		//防止缓存报错
+		if(!param.containsKey("topicId")){
+			param.put("topicId", "");
+		}
+		if(!param.containsKey("articleTitle")){
+			param.put("articleTitle", "");
+		}
+		
+		if(!param.containsKey("publishDeptId")){
+			param.put("publishDeptId", "");
+		}
+		if(!param.containsKey("checkState")){
+			param.put("checkState", "");
+		}
+		
 		EUIGrid grid=articleService.pagerListFast(ePager,param);
 		return DataPipeUtil.toLayUIGrid(grid);
 	}
