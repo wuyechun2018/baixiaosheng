@@ -348,7 +348,7 @@ public class ArticleDao {
 						"                  t_article T WHERE 1=1 AND T.DATA_STATE='1' AND T.CHECK_STATE='1'\n" + 
 						"                  AND T.topic_id IN(\n" + 
 						"              SELECT m.ID FROM t_topic m WHERE 1=1 "+getBaseParamSql(param)+"\n" + 
-						" 			  AND (T.publish_date>'2017-12-25')\n"+
+						//" 			  AND (T.publish_date>'2017-12-25')\n"+
 						"                ) ORDER BY TOP_COUNT DESC,publish_date DESC\n" + 
 						"    )W LIMIT ?,?\n" + 
 						"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";

@@ -1,8 +1,10 @@
 package com.bxs.controller;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -63,6 +65,37 @@ public class PortalController {
 	@RequestMapping(value = "/index")
 	public ModelAndView index() {
 		ModelAndView mv=new ModelAndView("/portal/index");
+		
+		//背景图片-轮换图
+		if(!configService.getConfigByTypeCode("BJT").isEmpty()){
+			mv.addObject("backGroudImgList", configService.getConfigByTypeCode("BJT"));
+		}
+		
+		//专题图1
+		if(!configService.getConfigByTypeCode("GGTP").isEmpty()){
+			mv.addObject("topicImageUrlF", configService.getConfigByTypeCode("GGTP").get(0));
+		}
+		//专题图2
+		if(!configService.getConfigByTypeCode("ZTT").isEmpty()){
+			mv.addObject("topicImageUrlS", configService.getConfigByTypeCode("ZTT").get(0));
+		}
+		return mv;
+	}
+	
+	
+	/**
+	 * 
+	 * 首页-初始化缓存
+	 * @author: wyc
+	 * @createTime: 2018年2月3日 下午4:53:37
+	 * @history:
+	 * @param module
+	 * @param page
+	 * @return String
+	 */
+	@RequestMapping(value = "/initCache")
+	public ModelAndView initCache() {
+		ModelAndView mv=new ModelAndView("/portal/initCache");
 		
 		//背景图片-轮换图
 		if(!configService.getConfigByTypeCode("BJT").isEmpty()){
@@ -163,8 +196,14 @@ public class PortalController {
 	 * @return String
 	 */
 	@RequestMapping(value = "/searchList")
-	public ModelAndView searchList(String keys) {
+	public ModelAndView searchList(HttpServletRequest request) {
 		ModelAndView mv=new ModelAndView("/portal/list");
+		String keys="";
+		try {
+			keys=java.net.URLDecoder.decode(request.getParameter("keys"),"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		mv.addObject("keys", keys);
 		return mv;
 	}

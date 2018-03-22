@@ -19,19 +19,19 @@ LRU，最近最少使用的，缓存的元素有一个时间戳，当缓存容�
     
     <!-- 默认缓存 -->
     <defaultCache maxElementsInMemory="10000" eternal="false"
-        timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+        timeToIdleSeconds="600" timeToLiveSeconds="600" overflowToDisk="true"
         maxElementsOnDisk="10000000" diskPersistent="false"
         diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
     
     <!-- 自定义缓存 -->
     <cache name="myCache" maxElementsInMemory="200"
-        maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
-        diskSpoolBufferSizeMB="20" timeToIdleSeconds="300" timeToLiveSeconds="600"
+        maxElementsOnDisk="1000" eternal="true" overflowToDisk="true"
+        diskSpoolBufferSizeMB="20" timeToIdleSeconds="0" timeToLiveSeconds="0"
         memoryStoreEvictionPolicy="LFU" />
         
      <!-- 自定义缓存-专题 -->
     <cache name="myCacheTopic" maxElementsInMemory="200"
-        maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
-        diskSpoolBufferSizeMB="20" timeToIdleSeconds="300" timeToLiveSeconds="600"
+        maxElementsOnDisk="1000" eternal="true" overflowToDisk="true"
+        diskSpoolBufferSizeMB="20" timeToIdleSeconds="0" timeToLiveSeconds="0"
         memoryStoreEvictionPolicy="LFU" />    
 </ehcache>

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,6 +72,27 @@ public class SubjectController {
 				EUIPager ePager=new EUIPager(1,8);
 				param.put("checkState", "1");
 				param.put("topicCode", topic.getTopicCode());
+				
+				//@Cacheable(value="myCache", key="#param['frontSliderState'].toString()+#param['checkState'].toString()+#param['topicCode'].toString()+#param['articleTitle'].toString()+#ePager.page+''+#ePager.rows")
+				
+				//防止缓存报错
+				if(!param.containsKey("frontSliderState")){
+					param.put("frontSliderState", "");
+				}
+				if(!param.containsKey("articleTitle")){
+					param.put("articleTitle", "");
+				}
+				
+				if(!param.containsKey("topicId")){
+					param.put("topicId", "");
+				}
+				if(!param.containsKey("articleTitle")){
+					param.put("articleTitle", "");
+				}
+				
+				if(!param.containsKey("publishDeptId")){
+					param.put("publishDeptId", "");
+				}
 				//EUIGrid articleGrid=articleService.pagerList(ePager,param);
 				EUIGrid articleGrid=articleService.pagerMiniList(ePager,param);
 				

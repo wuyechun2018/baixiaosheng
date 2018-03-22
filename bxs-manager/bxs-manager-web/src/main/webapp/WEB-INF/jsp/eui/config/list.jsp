@@ -266,6 +266,11 @@ function deleteFun(id){
       })
 }
 
+//缓存按钮
+function clickCacheBtn(){
+	var cacheUrl=ctx+"/portal/initCache";
+	window.open(cacheUrl)
+}
 
 //查询
 function doQuery(){
@@ -391,6 +396,7 @@ function loadLeftTree(){
  <%--TBar 添加按钮 --%>
  <div id="tb">
 	   <a href="javascript:void(0)" id="addBtn" onclick="addFun()" class="easyui-linkbutton" plain="true"  iconCls="Applicationadd">添加</a>
+	   <a href="javascript:void(0)" onclick="clickCacheBtn()" id="cache" class="easyui-linkbutton" plain="true"  iconCls="Applicationviewicons" title="打开一个页面即可,请不要关闭该页面">打开缓存</a>
  </div>
  
 <%--TBar 左边链接类型按钮 --%>

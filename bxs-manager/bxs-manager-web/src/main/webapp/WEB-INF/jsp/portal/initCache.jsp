@@ -8,7 +8,7 @@
 <LINK href="${ctx}/resources/portal/images/logo.ico" type="image/x-icon" rel="icon">                        
 <LINK href="${ctx}/resources/portal/images/logo.ico" type="image/x-icon" rel="shortcut icon">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>马鞍山市交警支队</title>
+<title>请勿关闭系统缓存！</title>
 <link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
 <link href="${ctx}/resources/portal/css/index.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
@@ -59,6 +59,30 @@
 var ctx = "${ctx}";    
 <!--var srcBgArray = [ctx+"/resources/portal/images/banner1.jpg",ctx+"/resources/portal/images/banner2.jpg",ctx+"/resources/portal/images/banner3.jpg"];-->
 
+function loadAllArticle(){
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/article/pagerList',
+		data:{
+			topicId:'',
+			articleTitle:'',
+			publishDeptId:'',
+			checkState:'',
+			page:'1',
+			rows:'10'
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	
+	    }
+	})
+}
+
+
 //根据类型编码查询链接
 function loadLinkByTypeCode(linkTypeCode,page,rows){
 	var linkData=null;
@@ -85,9 +109,7 @@ function loadLinkByTypeCode(linkTypeCode,page,rows){
 //站内搜索点击查询
 function doSearch(){
 	var keys=$('#keys').val();
-	keys=encodeURIComponent(encodeURIComponent(keys));
 	location.href="${ctx}/portal/searchList?keys="+keys;
-	
 }
 
 
@@ -410,7 +432,7 @@ function loadZD(){
 	var zdData=loadLinkByTypeCode('ZD',1,4);
 	for(var i=0;i<zdData.rows.length;i++){
 		var linkObj=zdData.rows[i]
-		$('#ZD').append('<a href="'+linkObj.linkUrl+'">'+linkObj.linkName+'</a>&nbsp;');
+		$('#ZD').append('<a href="'+linkObj.linkUrl+'">'+linkObj.linkName+'</a>');
 	}
 }
 
@@ -495,7 +517,7 @@ $(document).ready(function() {
   //  urls: srcBgArray,
   //  alt: 'Full screen background image'
   // });
-  
+  loadAllArticle();
   //加载天气情况
   loadWeekDayInfo();
   //加载生日祝福
@@ -602,7 +624,7 @@ $(document).ready(function() {
   loadXxpm();
   
   //直达
-  loadZD();
+  //loadZD();
   
 });
 </script><!--end of bg-body script-->
@@ -935,12 +957,12 @@ $(document).ready(function() {
         </div>
         
         <div class="s_link fl" id="ZD">
-        	<%--
+        	<%----%>
         	<a href="#">部局直达</a>
             <a href="#">总队直达</a>
             <a href="#">市局直达</a>
             <a href="#">省厅直达</a>
-             --%>
+             
         </div>
     </div>
     <!--搜索结束-->
@@ -1520,6 +1542,14 @@ $(document).ready(function() {
     </div>
 </div>
 <script type="text/JavaScript">
+//刷新页面
+function myrefresh(){ 
+	window.location.reload(); 
+} 
+//30秒
+setTimeout('myrefresh()',1000*30*1);
+
+
 var isShow=$.cookie('isShow');
 if(isShow=='1'){
 	//doNothing
