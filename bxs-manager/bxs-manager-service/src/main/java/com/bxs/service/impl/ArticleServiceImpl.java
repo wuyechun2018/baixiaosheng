@@ -154,8 +154,10 @@ public class ArticleServiceImpl implements ArticleService {
 	@Cacheable(value="myCache", key="#param['topicCode'].toString()")
 	public EUIGrid pagerMiniListByDate(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
-		grid.setTotal(articleDao.getTotalCountForOpt(param));
-		grid.setRows(articleDao.pagerMiniListByDate(ePager,param));
+		//grid.setTotal(articleDao.getTotalCountForOpt(param));
+		List<?> list=articleDao.pagerMiniListByDate(ePager,param);
+		grid.setRows(list);
+		grid.setTotal(Long.valueOf(list.size()));
 		return grid;
 	}
 	
@@ -214,12 +216,41 @@ public class ArticleServiceImpl implements ArticleService {
 	public EUIGrid pagerListFast(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
 		//Date start=new Date();
-		grid.setTotal(articleDao.getTotalCountFast(param));
+		//grid.setTotal(articleDao.getTotalCountFast(param));
+		if(CommonUtil.getEffectParamCount(param)==2){
+			List<ArticleCount> list=articleCountDao.getListByTopicCode("TOTAL");
+			if(!list.isEmpty()){
+				ArticleCount articleCount=list.get(0);
+				grid.setTotal(Long.valueOf(articleCount.getArticleCount()));
+			}else{
+				grid.setTotal(articleDao.getTotalCountFast(param));
+			}
+		}else if((CommonUtil.getEffectParamCount(param)==3&&(param.get("topicId")!=null&&StringUtils.isNotBlank(param.get("topicId").toString())&&!"1".equals(param.get("topicId").toString())))){
+			//或者 只有 page、rows和 topicId 三个参数
+			Topic topic=topicDao.getTopicById(param.get("topicId").toString());
+			List<ArticleCount> list=articleCountDao.getListByTopicCode(topic.getTopicCode());
+			if(!list.isEmpty()){
+				ArticleCount articleCount=list.get(0);
+				grid.setTotal(Long.valueOf(articleCount.getArticleCount()));
+			}else{
+				grid.setTotal(articleDao.getTotalCountFast(param));
+			}
+		}else{
+			grid.setTotal(articleDao.getTotalCountFast(param));
+		}
 		//Date center=new Date();
 		grid.setRows(articleDao.pagerArticleListFast(ePager,param));
 		//Date end=new Date();
 		//System.out.println("count--time:"+(center.getTime()-start.getTime())/1000);
 		//System.out.println("list--time:"+(end.getTime()-center.getTime())/1000);
+		return grid;
+	}
+
+	@Override
+	public EUIGrid searcheByKey(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(articleDao.getCountBySearchKey(param));
+		grid.setRows(articleDao.searchByKey(ePager,param));
 		return grid;
 	}
 

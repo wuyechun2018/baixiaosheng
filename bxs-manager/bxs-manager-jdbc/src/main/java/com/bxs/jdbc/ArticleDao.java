@@ -245,8 +245,18 @@ public class ArticleDao {
 	 * @param id
 	 */
 	public void delete(String id) {
-		String sql = "UPDATE T_ARTICLE SET DATA_STATE=? WHERE ID=?";
-		jdbcTemplate.update(sql,new Object[]{DataState.Delete.getCode(),id});
+		//String sql = "UPDATE T_ARTICLE SET DATA_STATE=? WHERE ID=?";
+		//jdbcTemplate.update(sql,new Object[]{DataState.Delete.getCode(),id});
+		
+		//删除历史
+		String sql="DELETE FROM T_ARTICLE_HISTORY  WHERE ID=?";
+		jdbcTemplate.update(sql,new Object[]{id});
+		//备份操作
+		String insertSql="INSERT INTO T_ARTICLE_HISTORY  SELECT * FROM t_article WHERE id=?";
+		jdbcTemplate.update(insertSql,new Object[]{id});
+		//删除记录
+		String delSql="DELETE FROM T_ARTICLE  WHERE ID=?";
+		jdbcTemplate.update(delSql,new Object[]{id});
 	}
 
 	/**
@@ -345,11 +355,10 @@ public class ArticleDao {
 						"                  t.data_state,\n" + 
 						"                  t.topic_id\n" + 
 						"               FROM\n" + 
-						"                  t_article T WHERE 1=1 AND T.DATA_STATE='1' AND T.CHECK_STATE='1'\n" + 
-						"                  AND T.topic_id IN(\n" + 
-						"              SELECT m.ID FROM t_topic m WHERE 1=1 "+getBaseParamSql(param)+"\n" + 
-						//" 			  AND (T.publish_date>'2017-12-25')\n"+
-						"                ) ORDER BY TOP_COUNT DESC,publish_date DESC\n" + 
+						//"                  t_article T WHERE  T.DATA_STATE='1' AND T.CHECK_STATE='1'\n" + 
+						"                  t_article T WHERE  T.CHECK_STATE='1'\n"+ 
+						 				   getTopicParamSql(param)+
+						"                 ORDER BY TOP_COUNT DESC,publish_date DESC\n" + 
 						"    )W LIMIT ?,?\n" + 
 						"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";
 
@@ -376,8 +385,9 @@ public class ArticleDao {
 						"                  t.data_state,\n" + 
 						"                  t.topic_id\n" + 
 						"               FROM\n" + 
-						"                  t_article T WHERE 1=1 AND T.DATA_STATE='1' AND T.CHECK_STATE='1'\n" + 
-						"                  AND T.topic_id IN(\n" + 
+						//"                  t_article T WHERE T.DATA_STATE='1' AND T.CHECK_STATE='1' \n" + 
+						"                  t_article T WHERE T.CHECK_STATE='1' \n" + 
+						"                  AND T.topic_id =(\n" + 
 						"              SELECT m.ID FROM t_topic m WHERE 1=1 "+getBaseParamSql(param)+"\n" + 
 						"                ) ORDER BY TOP_COUNT DESC,publish_date DESC\n" + 
 						"    )W LIMIT ?,?\n" + 
@@ -387,6 +397,39 @@ public class ArticleDao {
 		return list;
 	}
 	
+	
+	
+	public List<?>  searchByKey(EUIPager ePager, Map<String, Object> param){
+		String sql=	"SELECT W.*,s.topic_code,s.topic_name FROM(\n" +
+						"             SELECT * FROM (\n" + 
+						"              SELECT\n" + 
+						"                  T.id,\n" + 
+						"                  t.article_type,\n" + 
+						"                  t.article_title,\n" + 
+						"                  t.publish_dept_id,\n" + 
+						"                  t.publish_user_id,\n" + 
+						"                  t.check_state,\n" + 
+						"                  t.front_slider_state,\n" + 
+						"                  t.create_date,\n" + 
+						"                  t.update_date,\n" + 
+						"                  t.top_count,\n" + 
+						"                  t.publish_date,\n" + 
+						"                  t.data_state,\n" + 
+						"                  t.topic_id\n" + 
+						"               FROM\n" + 
+						//"                  t_article T WHERE  T.DATA_STATE='1' AND T.CHECK_STATE='1'\n" +getSearchKeySql(param)+ 
+						"                  t_article T WHERE  T.CHECK_STATE='1'\n" +getSearchKeySql(param)+ 
+						/*"                  AND T.topic_id IN(\n" + 
+						"              SELECT m.ID FROM t_topic m WHERE 1=1 "+getBaseParamSql(param)+"\n" + 
+						"                )\n"+ */
+						getTopicParamSql(param)+
+						" ORDER BY TOP_COUNT DESC,publish_date DESC\n" + 
+						"    )W LIMIT ?,?\n" + 
+						"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";
+
+		List<ArticleMiniInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleMiniInfoVo.class));
+		return list;
+	}
 	
 	
 	/**
@@ -490,6 +533,17 @@ public class ArticleDao {
 		//栏目编码
 		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())&&!"1".equals(param.get("topicCode").toString())){
 			sql="AND m.TOPIC_CODE ='" + param.get("topicCode").toString() + "'";
+		}
+		return sql;
+	}
+	
+	
+	private String getTopicParamSql(Map<String, Object> param){
+		String sql="";
+		//栏目编码
+		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())&&!"1".equals(param.get("topicCode").toString())){
+			sql=" AND T.topic_id =(\n" + 
+				" SELECT m.ID FROM t_topic m WHERE m.TOPIC_CODE ='" + param.get("topicCode").toString() + "' )\n";
 		}
 		return sql;
 	}
@@ -747,7 +801,8 @@ public class ArticleDao {
 						"          FROM (SELECT T.*\n" + 
 						"                  FROM (SELECT id, publish_dept_id, publish_user_id, topic_id\n" + 
 						"                          FROM t_article\n" + 
-						"                         WHERE 1 = 1 AND DATA_STATE = '1' \n" +getParamSqlFast(param) +") T\n" + 
+						//"                         WHERE 1 = 1 AND DATA_STATE = '1' \n" +getParamSqlFast(param) +") T\n" + 
+						"                         WHERE 1 = 1 \n" +getParamSqlFast(param) +") T\n" + 
 						"                  LEFT JOIN (SELECT id FROM t_topic) S\n" + 
 						"                    ON T.topic_id = S.id) M\n" + 
 						"          LEFT JOIN (SELECT ID FROM T_DEPT) N\n" + 
@@ -782,7 +837,7 @@ public class ArticleDao {
 		//栏目编码
 		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())&&!"1".equals(param.get("topicCode").toString())){
 			//sqlBuff.append(" AND TOPIC_CODE = '" + param.get("topicCode").toString() + "'\n");
-			sqlBuff.append("AND topic_id IN(SELECT id FROM t_topic WHERE topic_code='" + param.get("topicCode").toString() + "')\n");
+			sqlBuff.append("AND topic_id =(SELECT id FROM t_topic WHERE topic_code='" + param.get("topicCode").toString() + "')\n");
 		}
 		//发布部门,1代表全部部门
 		if(param.get("publishDeptId")!=null&&StringUtils.isNotBlank(param.get("publishDeptId").toString())&&!"1".equals(param.get("publishDeptId").toString())){
@@ -847,7 +902,7 @@ public class ArticleDao {
 						"                          FROM (SELECT *\n" + 
 						"                                   FROM t_article\n" + 
 						"                                  WHERE 1 = 1\n" + 
-						"                                    AND DATA_STATE = '1'\n" + 
+						//"                                    AND DATA_STATE = '1'\n" + 
 															getParamSqlFast(param) +
 						"                                  ORDER BY top_count DESC, publish_date DESC) U LIMIT ?,\n" + 
 						"                                ?) T\n" + 
@@ -862,6 +917,41 @@ public class ArticleDao {
 		//String sql="SELECT * FROM ("+querySql+")S limit ?,?";
 		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
 		return list;
+	}
+
+	/**
+	 * 
+	 * 根据关键字查询
+	 * @author: wyc
+	 * @createTime: 2018年3月24日 下午10:02:36
+	 * @history:
+	 * @param param
+	 * @return Long
+	 */
+	public Long getCountBySearchKey(Map<String, Object> param) {
+		String sql=	"SELECT COUNT(1) FROM(\n" +
+				"             SELECT * FROM (\n" + 
+				"              SELECT\n" + 
+				"                  T.id,\n" + 
+				"                  t.topic_id\n" + 
+				"               FROM\n" + 
+				//"                  t_article T WHERE  (T.DATA_STATE||T.CHECK_STATE='11') \n" +getSearchKeySql(param)+ 
+				"                  t_article T WHERE  T.CHECK_STATE='1' \n" +getSearchKeySql(param)+ getTopicParamSql(param)+
+				/*"                  AND T.topic_id IN(\n" + 
+				"              SELECT m.ID FROM t_topic m WHERE 1=1 "+getBaseParamSql(param)+"\n" + 
+				"                )\n" + */
+				"    )W\n" + 
+				"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";
+			return  jdbcTemplate.queryForObject(sql,Long.class);
+	}
+
+	private String getSearchKeySql(Map<String, Object> param) {
+		String sql="";
+		//栏目编码
+		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
+			sql="AND ARTICLE_TITLE LIKE '%" + param.get("articleTitle").toString() + "%'";
+		}
+		return sql;
 	}
 	
 }

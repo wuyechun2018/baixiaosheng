@@ -494,10 +494,11 @@ public class ArticleController extends BaseController{
 		}
 		
 		
-		//如果没有关键字搜索
+		//如果有关键字搜索
 		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
 			//return articleService.pagerList(ePager,param);
-			return articleService.pagerListFast(ePager,param);
+			//return articleService.pagerListFast(ePager,param);
+			return articleService.searcheByKey(ePager,param);
 		}else{
 			if(rows==10000){
 				//如果只是列表初始化的时候，用来获取数量的

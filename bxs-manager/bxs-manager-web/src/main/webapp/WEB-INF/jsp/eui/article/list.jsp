@@ -252,12 +252,12 @@ $(function(){
 		rownumbers: true,  
 		columns:[[
 				  {field: 'ck', checkbox: true, width: '30' },
-		          {field:'topicName',title: '栏目',align: 'center',width: 60},
+		          {field:'topicName',title: '栏目',align: 'center',width: 58},
 		          {field:'articleTitle',title: '标题',align: 'center',width: 125,hidden:false,formatter:function(val,rec){
 		        	  	return "<a title='[预览]"+val+"' onclick=viewFun('"+rec.id+"') class='preview_link' href='javascript:void(0)'><span >"+val+"<span></a>";
 		          }},
 		          {field:'publishDeptName',title: '发布部门',align: 'center',width: 65},
-		          {field:'publishUserName',title: '发布人',align: 'center',width: 65}, 
+		          {field:'publishUserName',title: '发布人',align: 'center',width: 60}, 
 		          //{field:'createDate',title: '发布时间',align: 'center',width: 120}, 
 		          {field:'publishDate',title: '发布时间',align: 'center',width: 60}, 
 		          {field:'checkState',title: '状态',align: 'center',width: 50,formatter:function(val,rec){
@@ -268,7 +268,7 @@ $(function(){
 		        	  }
 		          }}, 
 		          {field:'viewCount',title: '查看次数',align: 'center',width: 50},
-		          {field:'id',title: '操作',align: 'center',width: 120, formatter:function(val,rec){
+		          {field:'id',title: '操作',align: 'center',width: 128, formatter:function(val,rec){
 		        	  var frontSliderStateTxt="首&nbsp;&nbsp;推";
 		        	  var topStateTxt="置&nbsp;&nbsp;顶";
 		        	  if(rec.frontSliderState=='1'){

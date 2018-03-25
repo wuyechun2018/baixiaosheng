@@ -53,4 +53,6 @@ public interface ArticleService {
 	void toTop(Article article);
 	
 	Long getTotalCountForOpt(Map<String, Object> param);
+
+	EUIGrid searcheByKey(EUIPager ePager, Map<String, Object> param);
 }
