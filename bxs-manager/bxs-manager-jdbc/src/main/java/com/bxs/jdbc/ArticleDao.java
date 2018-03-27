@@ -973,7 +973,8 @@ public class ArticleDao {
 		String sql="";
 		//栏目编码
 		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
-			sql="AND ARTICLE_TITLE LIKE '%" + param.get("articleTitle").toString() + "%'";
+			//sql="AND ARTICLE_TITLE LIKE '%" + param.get("articleTitle").toString() + "%'";
+			sql="AND  MATCH(article_title) AGAINST('"+param.get("articleTitle").toString()+"')";
 		}
 		return sql;
 	}

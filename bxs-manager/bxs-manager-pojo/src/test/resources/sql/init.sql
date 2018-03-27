@@ -265,3 +265,6 @@ CREATE INDEX index_topic_pid ON t_topic(pid);
 INSERT  INTO `t_opt_article_count`(`id`,`topic_code`,`article_count`,`update_date`) 
 VALUES ('09936cc4-ef3c-4bde-8de7-70dc4e3ea001','TOTAL',79036,'2018-03-19 21:00:00');
  
+
+-- 创建全文检索索引
+CREATE FULLTEXT INDEX ft_article_title ON  t_article(`article_title`);
