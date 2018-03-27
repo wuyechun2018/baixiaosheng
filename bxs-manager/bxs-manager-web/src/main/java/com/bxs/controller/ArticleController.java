@@ -493,6 +493,10 @@ public class ArticleController extends BaseController{
 			param.put("checkState", "");
 		}
 		
+		if(!param.containsKey("frontSliderState")){
+			param.put("frontSliderState", "");
+		}
+		
 		
 		//如果有关键字搜索
 		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){

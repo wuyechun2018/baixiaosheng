@@ -102,7 +102,7 @@ var topicData=null;
 				type: "POST",
 				url:'${ctx}/topic/getListByPid?pid=1',
 				data:{
-					
+					topicType:'2'
 				},
 				async: false,
 			    error: function(request) {

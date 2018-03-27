@@ -338,7 +338,7 @@ public class ArticleDao {
 	 * @return List<?>
 	 */
 	public List<?>  pagerMiniListByDate(EUIPager ePager, Map<String, Object> param){
-		String sql=	"SELECT W.*,s.topic_code,s.topic_name FROM(\n" +
+		/**String sql=	"SELECT W.*,s.topic_code,s.topic_name FROM(\n" +
 						"             SELECT * FROM (\n" + 
 						"              SELECT\n" + 
 						"                  T.id,\n" + 
@@ -360,8 +360,32 @@ public class ArticleDao {
 						 				   getTopicParamSql(param)+
 						"                 ORDER BY TOP_COUNT DESC,publish_date DESC\n" + 
 						"    )W LIMIT ?,?\n" + 
-						"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";
+						"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";**/
 
+		
+		String sql=	"SELECT W.*,s.topic_code,s.topic_name FROM(\n" +
+				"              SELECT\n" + 
+				"                  T.id,\n" + 
+				"                  t.article_type,\n" + 
+				"                  t.article_title,\n" + 
+				"                  t.publish_dept_id,\n" + 
+				"                  t.publish_user_id,\n" + 
+				"                  t.check_state,\n" + 
+				"                  t.front_slider_state,\n" + 
+				"                  t.create_date,\n" + 
+				"                  t.update_date,\n" + 
+				"                  t.top_count,\n" + 
+				"                  t.publish_date,\n" + 
+				"                  t.data_state,\n" + 
+				"                  t.topic_id\n" + 
+				"               FROM\n" + 
+				"                  t_article T WHERE  T.CHECK_STATE='1'\n"+ 
+				 				   getTopicParamSql(param)+
+				"                 ORDER BY TOP_COUNT DESC,publish_date DESC LIMIT ?,? \n" + 
+				"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";
+		
+		
+		
 		List<ArticleMiniInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleMiniInfoVo.class));
 		return list;
 	}

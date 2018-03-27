@@ -105,7 +105,7 @@ var deptData=null;
 			$.ajax({
 				cache: true,
 				type: "POST",
-				url:'${ctx}/topic/getListByPid?pid=1',
+				url:'${ctx}/topic/getSignListByPid?pid=1',
 				data:{
 					
 				},

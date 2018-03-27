@@ -44,7 +44,7 @@ var ctx = "${ctx}";
 			    	       }
 			    	 }
 			      }
-			      ,{title: '操作',width:160, toolbar: '#opBarTpl',align:'center'}
+			      ,{title: '操作',width:230, toolbar: '#opBarTpl',align:'center'}
 			    ]]
 			    ,page: true
 			  });

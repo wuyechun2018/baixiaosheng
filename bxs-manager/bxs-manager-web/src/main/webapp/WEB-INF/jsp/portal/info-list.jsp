@@ -87,6 +87,7 @@
     		url:'${ctx}/infoRank/pagerList',
     		data:{
     			statYear:statYear,
+    			showState:'1',
     	    	page:1,
     	    	rows:100
     		},
