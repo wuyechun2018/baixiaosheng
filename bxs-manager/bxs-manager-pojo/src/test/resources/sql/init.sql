@@ -268,3 +268,31 @@ VALUES ('09936cc4-ef3c-4bde-8de7-70dc4e3ea001','TOTAL',79036,'2018-03-19 21:00:0
 
 -- 创建全文检索索引
 CREATE FULLTEXT INDEX ft_article_title ON  t_article(`article_title`);
+
+-- 创建表
+CREATE TABLE `t_role` (
+  `id` VARCHAR(36) NOT NULL COMMENT '主键',
+  `role_code` VARCHAR(50) DEFAULT NULL COMMENT '角色编码',
+  `role_name` VARCHAR(100) DEFAULT NULL COMMENT '角色名称',
+  `role_desc` VARCHAR(100) DEFAULT NULL COMMENT '角色说明',
+  `data_state` VARCHAR(10) DEFAULT NULL COMMENT '数据状态（0：删除 1：正常）',
+  `create_date` DATETIME DEFAULT NULL COMMENT '创建时间',
+  `update_date` DATETIME DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_user_role` (
+  `id` VARCHAR(36) NOT NULL COMMENT '主键',
+  `user_id` VARCHAR(50) DEFAULT NULL COMMENT '用户ID',
+  `role_id` VARCHAR(100) DEFAULT NULL COMMENT '角色ID',
+  `data_state` VARCHAR(10) DEFAULT NULL COMMENT '数据状态（0：删除 1：正常）',
+  `create_date` DATETIME DEFAULT NULL COMMENT '创建时间',
+  `update_date` DATETIME DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+-- 初始化数据
+insert  into `t_role`(`id`,`role_code`,`role_name`,`role_desc`,`data_state`,`create_date`,`update_date`) values ('000213f1-93cb-41a8-b6c6-15066d33c379','SYSADMIN','系统管理员','系统管理员,一般赋予最高权限','1','2018-03-27 23:51:08','2018-03-27 23:51:28');
+

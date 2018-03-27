@@ -282,7 +282,8 @@ function doQuery(){
  <%--TBar 添加按钮 --%>
  <div id="tb">
 	   <a href="javascript:void(0)" id="addBtn" onclick="addFun()" class="easyui-linkbutton" plain="true"  iconCls="Applicationadd">添加</a>
-	   <a href="javascript:void(0)" id="initBtn" onclick="initLoginName()" class="easyui-linkbutton" plain="true"  iconCls="Userkey">初始化登录名</a>
+	   <a href="javascript:void(0)" id="roleBtn" onclick="addRole()" class="easyui-linkbutton" plain="true"  iconCls="Userkey">角色分配</a>
+	   <a href="javascript:void(0)" id="initBtn" onclick="initLoginName()" class="easyui-linkbutton" plain="true"  iconCls="Scriptkey">初始化登录名</a>
  </div>
  
  <%--点击"添加"弹出的窗口 --%>

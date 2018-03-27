@@ -222,6 +222,12 @@ function doQuery(){
 		]]
 		,toolbar:$('#tb')
 	  });
+    
+     $('#pemissionsTab').tabs({ 
+    		width: '100%', 
+    		height: $(window).height()-5 
+    	}); 
+    
  })
 	
 </script>
@@ -246,7 +252,7 @@ function doQuery(){
         </div>
     </div>
     <div data-options="region:'center',split:false,border:false" style="padding:1px;height:auto">
-        	<div class="easyui-tabs" style="width:100%;height:auto">
+        	<div class="easyui-tabs" id="pemissionsTab" style="width:100%;height:auto">
 		        <div title="系统权限" iconCls="Groupadd" style="padding:10px;">
 	            	<div>
 	            		<ul class="easyui-tree" data-options="url:'${ctx}/resources/data/permissions.json',method:'get',animate:true,checkbox:true"></ul>
