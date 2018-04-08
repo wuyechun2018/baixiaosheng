@@ -21,4 +21,10 @@ public class SystemConstant {
 	 */
 	public static final String SYSTEM_ERROR_MSG = "SYSTEM_ERROR_MSG";
 	
+	
+	/**
+	 * 系统管理员角色编码
+	 */
+	public static final String ROLE_SYS_ADMIN = "SYSADMIN";
+	
 }

@@ -229,7 +229,7 @@ $(function(){
    		<tr>
    			<th>排序：</th>
    			<td>
-   				<input style="width:250px;"  class="easyui-textbox" type="text" id="form_displayOrder"  name="displayOrder" data-options="required:false"></input>
+   				<input style="width:250px;"  class="easyui-textbox" type="text" id="form_displayOrder"  name="displayOrder" data-options="required:true,validType:'integer'"></input>
    			</td>
    		<tr>
    		

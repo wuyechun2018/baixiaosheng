@@ -24,7 +24,7 @@ var ctx = "${ctx}";
 			   var tableIns =  table.render({
 			    elem: '#newsList'
 			    ,url:'${ctx}/sois/getArticleList/'
-			    ,where: {articleType: '6'}
+			    ,where: {articleType: '6',articleTitle: $("#keyword").val()}
 			    ,cols: [[
 				  {title: '序号',width:80,templet: '#indexTpl',align:'center'}       
 			      //,{field:'id', width:10, title: 'ID', sort: true}
@@ -112,6 +112,19 @@ var ctx = "${ctx}";
 			        }
 			    });
 			  
+				//查询按钮
+		        $(".search_btn").click(function () {
+		            table.reload('newsList', {
+		                where: {
+		                	articleType: '6',
+		                	articleTitle: $("#keyword").val()
+		                }
+		                , page: {
+		                    curr: 1
+		                }
+		            });
+		        });
+			  
 			});
 </script>
 	<div class="admin-main">
@@ -122,12 +135,10 @@ var ctx = "${ctx}";
 				</a>
 				<div class="layui-form-item" style="float: right;">
 					<div class="layui-input-inline">
-						<input type="text" name="keyword" value="" class="layui-input">
+						<input type="text" id="keyword" name="keyword" value="" class="layui-input">
 					</div>
 					<div class="layui-input-inline">
-						<button class="layui-btn" lay-submit="">
-							<i class="layui-icon">&#xe615;</i> 搜索
-						</button>
+						<a class="layui-btn search_btn"><i class="layui-icon">&#xe615;</i>查询</a>
 					</div>
 				</div>
 			</blockquote>

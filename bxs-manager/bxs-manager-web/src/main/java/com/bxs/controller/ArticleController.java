@@ -89,6 +89,13 @@ public class ArticleController extends BaseController{
 		EUIPager ePager=getPager(request);
 		Map<String,Object> param=getParamMap(request);
 		//return articleService.pagerList(ePager,param);
+		//[page=1, articleTitle=, topicId=, publishDeptId=, checkState=, rows=10]
+		if(!param.containsKey("articleType")){
+			param.put("articleType", "");
+		}
+		if(!param.containsKey("articleTitle")){
+			param.put("articleTitle", "");
+		}
 		return articleService.pagerListFast(ePager,param);
 	}
 	

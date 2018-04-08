@@ -295,4 +295,4 @@ CREATE TABLE `t_user_role` (
 
 -- 初始化数据
 insert  into `t_role`(`id`,`role_code`,`role_name`,`role_desc`,`data_state`,`create_date`,`update_date`) values ('000213f1-93cb-41a8-b6c6-15066d33c379','SYSADMIN','系统管理员','系统管理员,一般赋予最高权限','1','2018-03-27 23:51:08','2018-03-27 23:51:28');
-
+INSERT INTO t_user_role(id,user_id,role_id,data_state,create_date,update_date)VALUE(UUID(),'d579e129-e328-46f7-880f-4e029264367c','000213f1-93cb-41a8-b6c6-15066d33c379','1','2018-03-28 09:45:28','2018-03-28 09:50:28');

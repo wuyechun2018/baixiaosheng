@@ -356,10 +356,11 @@ public class SoisController {
 	 */
 	@RequestMapping("/getArticleList")
 	@ResponseBody
-	public Object getArticleList(int page,int limit,String articleType,HttpSession session){
+	public Object getArticleList(int page,int limit,String articleType,String articleTitle,HttpSession session){
 		EUIPager ePager=new EUIPager(page,limit);
 		Map<String,Object> param=new HashMap<String,Object>();
 		param.put("articleType", articleType);
+		param.put("articleTitle", articleTitle);
 		param.put("page", page);
 		param.put("limit", limit);
 		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);

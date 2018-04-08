@@ -539,7 +539,7 @@ function getTopicName(topicData,topicIdArray){
 				      <tr>
 				        <th>排序：</th>
 				        <td>
-				          <input style="width:250px;" class="easyui-textbox" type="text" name="displayOrder"></input>
+				          <input style="width:250px;" data-options="required:true,validType:'integer'" class="easyui-textbox" type="text" name="displayOrder"></input>
 				        </td>
 				      </tr>
 				      <tr>

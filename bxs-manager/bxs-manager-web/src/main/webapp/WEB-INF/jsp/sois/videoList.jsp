@@ -33,7 +33,7 @@ var pageConfig = {
 			   var tableIns =  table.render({
 			    elem: '#newsList'
 			    ,url:pageConfig.listUrl
-			    ,where: {articleType: pageConfig.articleType}
+			    ,where: {articleType: pageConfig.articleType,articleTitle: $("#keyword").val()}
 			    ,cols: [[
 				  {title: '序号',width:80,templet: '#indexTpl',align:'center'}       
 			      ,{field:'topicName', width:120, title: '所属分类',align:'center'}
@@ -102,6 +102,20 @@ var pageConfig = {
 			        }
 			    });
 			  
+			  
+				//查询按钮
+		        $(".search_btn").click(function () {
+		            table.reload('newsList', {
+		                where: {
+		                	articleType: '7',
+		                	articleTitle: $("#keyword").val()
+		                }
+		                , page: {
+		                    curr: 1
+		                }
+		            });
+		        });
+			  
 			});
 </script>
 	<div class="admin-main">
@@ -112,12 +126,10 @@ var pageConfig = {
 				</a>
 				<div class="layui-form-item" style="float: right;">
 					<div class="layui-input-inline">
-						<input type="text" name="keyword" value="" class="layui-input">
+						<input type="text" id="keyword" name="keyword" value="" class="layui-input">
 					</div>
 					<div class="layui-input-inline">
-						<button class="layui-btn" lay-submit="">
-							<i class="layui-icon">&#xe615;</i> 搜索
-						</button>
+						<a class="layui-btn search_btn"><i class="layui-icon">&#xe615;</i>查询</a>
 					</div>
 				</div>
 			</blockquote>

@@ -5,7 +5,44 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%--放置的位置要特别注意,不能放在第三行,否则会有一些样式问题 --%>
 <%@ include file="/WEB-INF/jsp/base/easyui.jsp" %>
-<title>角色管理</title>
+<title>用户角色</title>
+<style type="text/css">
+
+.add-div{
+	position: absolute;
+	top:45%;
+	min-width: 50px;
+	text-align: center;
+}
+
+.remove-div{
+	position: absolute;
+	top:55%;
+	min-width: 50px;
+	text-align: center;
+}
+
+
+.add-remove-btn{
+	color:#777;
+	background:#FFF;
+	font-size:14px;
+	font-weight:bold;
+	border: 1px solid #dddddd;
+	text-decoration: none;
+	min-width: 40px;
+	padding:2px 3px;
+}
+
+
+.add-remove-btn:hover{
+	background:#E6E6E6;
+}
+
+
+</style>
+
+
 <script type="text/javascript">
 //当前选中的左边树的节点ID,即单位ID，它是一个全局变量
 var SELECT_NODE_Id="";
@@ -220,13 +257,36 @@ function doQuery(){
 		          {field:'deptId',title: '部门ID',align: 'center',width: 100,hidden:true}, 
 		          {field:'deptName',title: '角色编码',align: 'center',width: 100}
 		]]
-		,toolbar:$('#tb')
 	  });
     
-     $('#pemissionsTab').tabs({ 
-    		width: '100%', 
-    		height: $(window).height()-5 
-    	}); 
+    
+    $('#hasDgTable').datagrid({  
+		url:ctx+'/user/pagerList',
+		method:'post',
+	    queryParams: {
+	    	deptId:'',
+	    	loginOrUserName:'',
+	    	postName:'',
+	    	telephone:'',
+	    	birthday:''
+		},
+		fit:false,
+		pageSize: 20,
+		height: dgTableHeight,
+		fitColumns:true,
+		striped: true,
+		singleSelect:true,
+		pagination: true,  
+		rownumbers: true,  
+		columns:[[
+		          {field:'loginName',title: '登录名',align: 'left',width: 100,hidden:true},
+		          {field:'userName',title: '角色名称',align: 'center',width: 100},
+		          {field:'deptId',title: '部门ID',align: 'center',width: 100,hidden:true}, 
+		          {field:'deptName',title: '角色编码',align: 'center',width: 100}
+		]]
+	  });
+    
+   
     
  })
 	
@@ -234,42 +294,57 @@ function doQuery(){
 </head>
 <body>
 <div class="easyui-layout"  fit="true">
-    <div data-options="region:'west',split:false,border:false" style="width: 500px; padding: 1px;">
+    <div data-options="region:'west',split:false,border:false" style="width: 48%; padding: 1px;">
         <div>
         	<table style="width:100%;padding:8px 0" class="searchBox">
 				<tr>
-					<td style="width:100px;text-align: right;margin-right: 5px;">角色名称:</td>
+					<td style="width:100px;text-align: right;margin-right: 5px;">名称:</td>
 					<td style="width:200px;text-align: left;">
 						<input id="telephone" name="telephone" style="width:150px">
 					</td>
 					
 					<td>&nbsp;</td>
-					<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" iconCls="Zoom">查询</a></td>
+					<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" style="min-width: 54px;" iconCls="Zoom">查询</a></td>
 				</tr>
 			</table>
             <table id="dgTable">
         	</table>
         </div>
     </div>
-    <div data-options="region:'center',split:false,border:false" style="padding:1px;height:auto">
-        	<div class="easyui-tabs" id="pemissionsTab" style="width:100%;height:auto">
-		        <div title="系统权限" iconCls="Groupadd" style="padding:10px;">
-	            	<div>
-	            		<ul class="easyui-tree" data-options="url:'${ctx}/resources/data/permissions.json',method:'get',animate:true,checkbox:true"></ul>
-	        		</div>
-		        </div>
-		        <div title="菜单权限" iconCls="Applicationsidelist" closable="true" style="padding:10px;">
-		           <div>
-             			<ul id="menuTree"></ul>
-            		</div>
-		        </div>
-    		</div>
-        
+    <div data-options="region:'center',split:false,border:false" style="width: 4%;min-width:60px; padding:1px;height:auto">
+        <div class="add-div">
+        	<a href="javascript:void(0)" title="添加" class="add-remove-btn" >&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</a>
+        </div>
+        <div class="remove-div">
+        	<a href="javascript:void(0)" title="移除" class="add-remove-btn">&nbsp;&nbsp;&lt;&lt;&nbsp;&nbsp;</a>
+        </div>
+    </div>
+    
+    <div data-options="region:'east',split:false,border:false" style="width: 48%; padding:1px;height:auto">
+        	<div>
+	        	<table style="width:100%;padding:8px 0" class="searchBox">
+					<tr>
+						<td style="width:100px;text-align: right;margin-right: 5px;">名称:</td>
+						<td style="width:200px;text-align: left;">
+							<input id="telephone" name="telephone" style="width:150px">
+						</td>
+						
+						<td>&nbsp;</td>
+						<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" style="min-width: 54px;" iconCls="Zoom">查询</a></td>
+					</tr>
+				</table>
+	            <table id="hasDgTable">
+	        	</table>
+        </div>
     </div>
  </div>  
  
  <%--TBar 添加按钮 --%>
  <div id="tb">
+	   <a href="javascript:void(0)" id="addBtn" onclick="addFun()" class="easyui-linkbutton" plain="true"  iconCls="Applicationadd">添加</a>
+ </div>
+ 
+  <div id="hasTb">
 	   <a href="javascript:void(0)" id="addBtn" onclick="addFun()" class="easyui-linkbutton" plain="true"  iconCls="Applicationadd">添加</a>
  </div>
  

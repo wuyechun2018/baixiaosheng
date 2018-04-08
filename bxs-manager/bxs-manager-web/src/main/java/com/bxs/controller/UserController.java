@@ -28,6 +28,8 @@ import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.SysUser;
 import com.bxs.pojo.UserInfoVo;
+import com.bxs.pojo.UserRole;
+import com.bxs.service.UserRoleService;
 import com.bxs.service.UserService;
 
 /**
@@ -46,6 +48,9 @@ public class UserController extends BaseController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private UserRoleService userRoleService;
+	
 	/**
 	 * 
 	 * 系统用户登录
@@ -62,18 +67,26 @@ public class UserController extends BaseController {
 			UserInfoVo info=list.get(0);
 			//密码相等
 			if(info.getLoginPassword().equals(EncryptionUtil.getMd5String(password))){
-				//用户信息存入Session
-				session.setAttribute(SystemConstant.CURRENT_SESSION_USER_INFO, info);
-				//携带用户信息
-				mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO, info);
-				//跳转到后台管理主页面
-				mv.setViewName("/manager/index");
+				//判断是否为系统管理员
+				List<UserRole> userRoleList=userRoleService.findByUserIdAndRoleCode(info.getId(), SystemConstant.ROLE_SYS_ADMIN);
+				if(!userRoleList.isEmpty()){
+					//用户信息存入Session
+					session.setAttribute(SystemConstant.CURRENT_SESSION_USER_INFO, info);
+					//携带用户信息
+					mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO, info);
+					//跳转到后台管理主页面
+					mv.setViewName("/manager/index");
+				}else{
+					mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "非管理员,无权登录");
+				}
 			}else{
 				mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
 				//登录失败，跳转到登录页面
 				mv.setViewName("login");
 			}
 			
+		}else{
+			mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
 		}
 		return mv;
 	}

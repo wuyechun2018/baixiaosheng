@@ -209,7 +209,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	
 	@Override
-	@Cacheable(value="myCache", key="#param['topicId'].toString()+#param['articleTitle'].toString()+#param['publishDeptId'].toString()+#param['checkState'].toString()+#ePager.page+''+#ePager.rows")
+	@Cacheable(value="myCache", key="#param['articleTitle'].toString()+#param['articleType'].toString()+#param['topicId'].toString()+#param['articleTitle'].toString()+#param['publishDeptId'].toString()+#param['checkState'].toString()+#ePager.page+''+#ePager.rows")
 	//@Cacheable(value="myCache", key="#{param['topicId']!= null?param['topicId'].toString():''}+#{param['frontSliderState']!= null?param['frontSliderState'].toString():''}+#{param['checkState']!= null?param['checkState'].toString():''}+#{param['topicCode']!= null?param['topicCode'].toString():''}+#{param['articleTitle']!= null?param['articleTitle'].toString():''}+#ePager.page+''+#ePager.rows")
 	//@Cacheable(value="myCache", key="#{param['topicId']!= null?param['topicId'].toString():''}")
 	//@Cacheable(value="myCache", key="#param['topicId'].toString()")
@@ -247,10 +247,27 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@Cacheable(value="myCache", key="#param['topicId'].toString()+#param['articleTitle'].toString()+#param['publishDeptId'].toString()+#param['checkState'].toString()+#ePager.page+''+#ePager.rows")
 	public EUIGrid searcheByKey(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
-		grid.setTotal(articleDao.getCountBySearchKey(param));
-		grid.setRows(articleDao.searchByKey(ePager,param));
+		if(articleDao.getCountBySearchKey(param,true)>0){
+			grid.setTotal(articleDao.getCountBySearchKey(param,true));
+			grid.setRows(articleDao.searchByKey(ePager,param,true));
+		}else{
+			Date start=new Date();
+			//grid.setTotal(articleDao.getCountBySearchKey(param,false));
+			if(ePager.getRows()!=18){
+				grid.setTotal(Long.valueOf(articleDao.getCountBySearchKeyFromList(param,false)));
+			}
+			Date center=new Date();
+			System.out.println("getCountBySearchKey--time:"+(center.getTime()-start.getTime())/1000);
+			if(ePager.getRows()!=10000){
+				grid.setRows(articleDao.searchByKey(ePager,param,false));
+			}
+			Date end=new Date();
+			System.out.println("searchByKey--time:"+(end.getTime()-center.getTime())/1000);
+			
+		}
 		return grid;
 	}
 

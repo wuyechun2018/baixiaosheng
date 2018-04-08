@@ -2,6 +2,7 @@ package com.bxs.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -15,7 +16,6 @@ import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.stereotype.Repository;
 
-import com.bxs.common.dict.DataState;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.Article;
 import com.bxs.pojo.ArticleInfoVo;
@@ -423,7 +423,7 @@ public class ArticleDao {
 	
 	
 	
-	public List<?>  searchByKey(EUIPager ePager, Map<String, Object> param){
+	public List<?>  searchByKey(EUIPager ePager, Map<String, Object> param,boolean isFullText){
 		String sql=	"SELECT W.*,s.topic_code,s.topic_name FROM(\n" +
 						"             SELECT * FROM (\n" + 
 						"              SELECT\n" + 
@@ -442,17 +442,34 @@ public class ArticleDao {
 						"                  t.topic_id\n" + 
 						"               FROM\n" + 
 						//"                  t_article T WHERE  T.DATA_STATE='1' AND T.CHECK_STATE='1'\n" +getSearchKeySql(param)+ 
-						"                  t_article T WHERE  T.CHECK_STATE='1'\n" +getSearchKeySql(param)+ 
+						"                  t_article T WHERE  T.CHECK_STATE='1'\n" +getSearchKeySql(param,isFullText)+ 
 						/*"                  AND T.topic_id IN(\n" + 
 						"              SELECT m.ID FROM t_topic m WHERE 1=1 "+getBaseParamSql(param)+"\n" + 
 						"                )\n"+ */
 						getTopicParamSql(param)+
-						" ORDER BY TOP_COUNT DESC,publish_date DESC\n" + 
+						//" ORDER BY TOP_COUNT DESC,publish_date DESC\n" + 
 						"    )W LIMIT ?,?\n" + 
 						"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";
 
 		List<ArticleMiniInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleMiniInfoVo.class));
 		return list;
+	}
+	
+	
+	
+	public int getCountBySearchKeyFromList(Map<String, Object> param,boolean isFullText){
+		String sql=	"SELECT W.* FROM(\n" +
+						"             SELECT * FROM (\n" + 
+						"              SELECT\n" + 
+						"                  t.topic_id\n" + 
+						"               FROM\n" + 
+						"                  t_article T WHERE  T.CHECK_STATE='1'\n" +getSearchKeySql(param,isFullText)+ 
+						getTopicParamSql(param)+
+						"    )W\n" + 
+						"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";
+
+		List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
+		return list.size();
 	}
 	
 	
@@ -952,7 +969,7 @@ public class ArticleDao {
 	 * @param param
 	 * @return Long
 	 */
-	public Long getCountBySearchKey(Map<String, Object> param) {
+	public Long getCountBySearchKey(Map<String, Object> param,boolean isFullText) {
 		String sql=	"SELECT COUNT(1) FROM(\n" +
 				"             SELECT * FROM (\n" + 
 				"              SELECT\n" + 
@@ -960,7 +977,7 @@ public class ArticleDao {
 				"                  t.topic_id\n" + 
 				"               FROM\n" + 
 				//"                  t_article T WHERE  (T.DATA_STATE||T.CHECK_STATE='11') \n" +getSearchKeySql(param)+ 
-				"                  t_article T WHERE  T.CHECK_STATE='1' \n" +getSearchKeySql(param)+ getTopicParamSql(param)+
+				"                  t_article T WHERE  T.CHECK_STATE='1' \n" +getSearchKeySql(param,isFullText)+ getTopicParamSql(param)+
 				/*"                  AND T.topic_id IN(\n" + 
 				"              SELECT m.ID FROM t_topic m WHERE 1=1 "+getBaseParamSql(param)+"\n" + 
 				"                )\n" + */
@@ -969,12 +986,17 @@ public class ArticleDao {
 			return  jdbcTemplate.queryForObject(sql,Long.class);
 	}
 
-	private String getSearchKeySql(Map<String, Object> param) {
+	private String getSearchKeySql(Map<String, Object> param,boolean isFullText) {
 		String sql="";
 		//栏目编码
 		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
 			//sql="AND ARTICLE_TITLE LIKE '%" + param.get("articleTitle").toString() + "%'";
-			sql="AND  MATCH(article_title) AGAINST('"+param.get("articleTitle").toString()+"')";
+			if(isFullText){
+				sql="AND  MATCH(article_title) AGAINST('"+param.get("articleTitle").toString()+"')";
+			}else{
+				sql="AND ARTICLE_TITLE LIKE '%" + param.get("articleTitle").toString() + "%'";
+			}
+			
 		}
 		return sql;
 	}

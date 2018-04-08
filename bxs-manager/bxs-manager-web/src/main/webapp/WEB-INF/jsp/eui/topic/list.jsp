@@ -252,7 +252,7 @@ $(function() {
 		    		
 		    		<tr>
 		    			<td class="form-label-right-align">排序：</td>
-		    			<td><input class="easyui-numberbox" type="text" id="displayOrder" name="displayOrder"  data-options="required:true" style="width:100%;"></input></td>
+		    			<td><input class="easyui-numberbox" type="text" id="displayOrder" name="displayOrder"  data-options="required:true,validType:'integer'" style="width:100%;"></input></td>
 		    		</tr>
 		    		<tr>
 		    			<td class="form-label-right-align">备注：</td>

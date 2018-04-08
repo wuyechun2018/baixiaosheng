@@ -24,12 +24,12 @@ var ctx = "${ctx}";
 			   var tableIns =  table.render({
 			    elem: '#newsList'
 			    ,url:'${ctx}/sois/getArticleList/'
-			    ,where: {articleType: '5'}
+			    ,where: {articleType: '5',articleTitle: $("#keyword").val()}
 			    ,cols: [[
 				  {title: '序号',width:80,templet: '#indexTpl',align:'center'}       
 			      //,{field:'id', width:10, title: 'ID', sort: true}
-			      ,{field:'topicName', width:110, title: '所属分类',align:'center'}
-			      ,{field:'articleTitle', width:260, title: '标题' ,templet: function(d){
+			      ,{field:'topicName', width:105, title: '所属分类',align:'center'}
+			      ,{field:'articleTitle', width:250, title: '标题' ,templet: function(d){
 			    	 	 return "<sapn title='"+d.articleTitle+"'>"+d.articleTitle+"</span>";
 		    		 }}
 			      ,{field:'publishUserName', width:80, title: '作者', sort: false}
@@ -114,6 +114,20 @@ var ctx = "${ctx}";
 			        
 			    });
 			  
+				//查询按钮
+		        $(".search_btn").click(function () {
+		            table.reload('newsList', {
+		                where: {
+		                	articleType: '5',
+		                	articleTitle: $("#keyword").val()
+		                }
+		                , page: {
+		                    curr: 1
+		                }
+		            });
+		        });
+			  
+			  
 			});
 </script>
 	<div class="admin-main">
@@ -124,12 +138,15 @@ var ctx = "${ctx}";
 				</a>
 				<div class="layui-form-item" style="float: right;">
 					<div class="layui-input-inline">
-						<input type="text" name="keyword" value="" class="layui-input">
+						<input type="text" name="keyword" id="keyword" value="" class="layui-input">
 					</div>
 					<div class="layui-input-inline">
+						<a class="layui-btn search_btn"><i class="layui-icon">&#xe615;</i>查询</a>
+						<%--
 						<button class="layui-btn" lay-submit="">
 							<i class="layui-icon">&#xe615;</i> 搜索
 						</button>
+						 --%>
 					</div>
 				</div>
 			</blockquote>

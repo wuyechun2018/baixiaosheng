@@ -44,7 +44,7 @@ function loadMenu(){
 	    		    	  param.title=node.text;
 	    		    	  addTab(param);
 	    		    	  //折叠右边内容
-	    		    	  $('#ilayout').layout('collapse','east');
+	    		    	  //$('#ilayout').layout('collapse','east');
 	    		      }
 	    				      
 	    			}); 
@@ -121,10 +121,10 @@ $(function(){
 		    	  if(index==0){
 		    		  addDefault();
 		    	  }
-		    	  if(index==2){
+		    	  //if(index==2){
 		    		//展开右边
-		    		 $('#ilayout').layout('expand','east');
-		    	  }
+		    		// $('#ilayout').layout('expand','east');
+		    	  //}
 		    	  
 		      },
 		      onContextMenu: function(e, title, index){

@@ -172,6 +172,63 @@ function doQuery(){
     $("#dgTable").datagrid(options);
 }
 
+
+//点击"角色分配"按钮
+function addRole(){
+	var rows = $("#dgTable").datagrid('getSelections');
+	if (rows.length > 0) {
+		 $('#roleWin').window('open');
+		 var userId=rows[0].id;
+		 $('#userId').val(rows[0].id);
+		 $.ajax({
+		        type: "POST",
+		        url:'${ctx}/userRole/isSysAdmin',
+		        data: {
+		        	userId:userId
+		        },
+		        success: function (data) {
+		       	  	if(data.success){
+		       	  	 	 $('#radio_sysadmin_y').prop('checked', 'checked');
+		       	  	}else{
+		       	  		 $('#radio_sysadmin_n').prop('checked', 'checked');
+		       	  	}
+		        },
+		        error: function(data) {
+		            alert("error:"+data.responseText);
+		         }
+		  		});
+		
+	}else{
+		 $.messager.alert("操作提示", "请选择一个用户！","warning");  
+	}
+}
+
+
+//关闭"角色分配"窗口
+function clearRoleForm(){
+	$('#roleForm').form('clear');
+	$('#roleWin').window('close');
+}
+
+
+//提交"角色分配"表单
+function submitRoleForm(){
+	$.ajax({
+        type: "POST",
+        url:'${ctx}/userRole/save',
+        data: $('#roleForm').serialize(),
+        success: function (data) {
+       	    $('#roleWin').window('close');
+		    //刷新列表
+		    $("#dgTable").datagrid('reload');
+        },
+        error: function(data) {
+            alert("error:"+data.responseText);
+         }
+  		});
+}
+
+
  $(function(){
 	 $('#leftTree').tree({
 			checkbox : false,
@@ -214,6 +271,7 @@ function doQuery(){
 		pagination: true,  
 		rownumbers: true,  
 		columns:[[
+		          {field: 'ck', checkbox: true, width: '30' },
 		          {field:'loginName',title: '登录名',align: 'left',width: 100,hidden:true},
 		          {field:'userName',title: '姓名',align: 'center',width: 100},
 		          {field:'deptId',title: '部门ID',align: 'center',width: 100,hidden:true}, 
@@ -358,7 +416,33 @@ function doQuery(){
 	   
 		
 	</div>
- 
+
+<%--点击"角色分配"弹出的窗口 --%>
+<div id="roleWin" class="easyui-window" title="&nbsp;角色分配" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:460px;height:215px;padding:10px;">
+   <form id="roleForm" method="post">
+   	<table  class="isingelTable">
+   		<tr>
+   			<th>设为管理员：</th>
+   			<td>
+   				<input type="hidden" id="userId"  name="userId" value="1"></input>
+   				
+   				<input  type="radio" id="radio_sysadmin_n" name="sysadmin" value="0" checked="checked" />
+			    <label for="radio_sysadmin_n" >否</label>
+				<input  type="radio" id="radio_sysadmin_y" name="sysadmin" value="1" />
+				<label for="radio_sysadmin_y">是</label>
+   			</td>
+   		<tr>
+   	</table>
+   </form>
+    <div style="text-align:center;padding:25px 5px 5px 5px;">
+    	<table style="width:100%;">
+    		<tr>
+    			<td style="width:50%;text-align: right;padding-right: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="submitRoleForm()">保存</a></td>
+    			<td style="width:50%;text-align: left;padding-left: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearRoleForm()">取消</a></td>
+    		</tr>
+		 </table>
+    </div>
+</div> 
  
 </body>
 </html>
