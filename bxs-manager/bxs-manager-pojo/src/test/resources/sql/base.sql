@@ -1,3 +1,17 @@
+CREATE TABLE `t_float_win` (
+  `id` VARCHAR(36) NOT NULL COMMENT '主键',
+  `win_name` VARCHAR(500) DEFAULT NULL COMMENT '飘窗名称',
+  `win_desc` VARCHAR(500) DEFAULT NULL COMMENT '飘窗描述',
+  `link_url` VARCHAR(500) DEFAULT NULL COMMENT '链接地址',
+  `link_target_type` VARCHAR(100) DEFAULT NULL COMMENT '链接打开窗口方式',
+  `link_image_url` VARCHAR(1000) DEFAULT NULL,
+  `display_order` BIGINT(10) DEFAULT NULL COMMENT '排序',
+  `show_state` VARCHAR(10) DEFAULT NULL COMMENT '显示状态（0：不显示 1：显示）',
+  `data_state` VARCHAR(10) DEFAULT NULL COMMENT '数据状态（0：删除 1：正常）',
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='飘窗配置表';
+
+
 CREATE TABLE `t_article` (
   `id` varchar(36) NOT NULL COMMENT '主键',
   `article_type` varchar(10) DEFAULT NULL COMMENT '文章类型(1:普通 2:图片 3：视频)',

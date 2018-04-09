@@ -384,7 +384,7 @@ public class SoisController {
 			param.put("checkState", "");
 		}
 		
-		EUIGrid grid=articleService.pagerListFast(ePager,param);
+		EUIGrid grid=articleService.pagerListForSois(ePager,param);
 		return DataPipeUtil.toLayUIGrid(grid);
 	}
 	

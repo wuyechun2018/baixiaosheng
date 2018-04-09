@@ -23,6 +23,7 @@ var ctx = "${ctx}";
 			 
 			   var tableIns =  table.render({
 			    elem: '#newsList'
+			    ,method:'post'
 			    ,url:'${ctx}/sois/getArticleList/'
 			    ,where: {articleType: '4',articleTitle: $("#keyword").val()}
 			    ,cols: [[

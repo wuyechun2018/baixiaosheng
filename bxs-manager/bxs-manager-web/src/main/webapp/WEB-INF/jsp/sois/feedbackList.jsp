@@ -23,18 +23,19 @@ var ctx = "${ctx}";
 			 
 			   var tableIns =  table.render({
 			    elem: '#newsList'
+			    ,method:'post'
 			    ,url:'${ctx}/sois/getArticleList/'
 			    ,where: {articleType: '6',articleTitle: $("#keyword").val()}
 			    ,cols: [[
 				  {title: '序号',width:80,templet: '#indexTpl',align:'center'}       
 			      //,{field:'id', width:10, title: 'ID', sort: true}
-			      ,{field:'topicName', width:120, title: '所属分类',align:'center'}
-			      ,{field:'articleTitle', width:280, title: '标题' ,templet: function(d){
+			      ,{field:'topicName', width:115, title: '所属分类',align:'center'}
+			      ,{field:'articleTitle', width:250, title: '标题' ,templet: function(d){
 			    	 	 return "<sapn title='"+d.articleTitle+"'>"+d.articleTitle+"</span>";
 		    		 }}
 			      ,{field:'publishUserName', width:80, title: '作者', sort: false}
-			      ,{field:'createDate', title: '创建时间', width: 180,align:'center'}
-			      ,{field:'viewCount', width:80, title: '浏览量', sort: false,align:'center'}
+			      ,{field:'createDate', title: '创建时间', width: 178,align:'center'}
+			      ,{field:'viewCount', width:78, title: '浏览量', sort: false,align:'center'}
 			      ,{field:'checkState', width:80, title: '状态', sort: false,align:'center'
 			    	 ,templet: function(d){
 			    		 	if(d.checkState=='1'){

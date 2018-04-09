@@ -55,4 +55,6 @@ public interface ArticleService {
 	Long getTotalCountForOpt(Map<String, Object> param);
 
 	EUIGrid searcheByKey(EUIPager ePager, Map<String, Object> param);
+	
+	public EUIGrid pagerListForSois(EUIPager ePager, Map<String, Object> param);
 }

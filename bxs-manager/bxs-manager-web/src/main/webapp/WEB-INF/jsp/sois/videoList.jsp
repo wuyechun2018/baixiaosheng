@@ -32,6 +32,7 @@ var pageConfig = {
 			 
 			   var tableIns =  table.render({
 			    elem: '#newsList'
+			    ,method:'post'
 			    ,url:pageConfig.listUrl
 			    ,where: {articleType: pageConfig.articleType,articleTitle: $("#keyword").val()}
 			    ,cols: [[
