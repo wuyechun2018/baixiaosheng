@@ -945,7 +945,7 @@ public class ArticleDao {
 						"                                  WHERE 1 = 1\n" + 
 						//"                                    AND DATA_STATE = '1'\n" + 
 															getParamSqlFast(param) +
-						"                                  ORDER BY top_count DESC, publish_date DESC) U LIMIT ?,\n" + 
+						"                                  ORDER BY top_count DESC, publish_date DESC,create_date DESC) U LIMIT ?,\n" + 
 						"                                ?) T\n" + 
 						"                  LEFT JOIN (SELECT id, topic_name, topic_code FROM t_topic) S\n" + 
 						"                    ON T.topic_id = S.id) M\n" + 
