@@ -11,10 +11,12 @@
 <title>马鞍山市交警支队</title>
 <link href="${ctx}/resources/portal/css/css.css" rel="stylesheet" />
 <link href="${ctx}/resources/portal/css/index.css" rel="stylesheet" />
+<link href="${ctx}/resources/portal/css/floatwin.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.cookie-1.4.1.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.SuperSlide.2.1.1.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/common.js"></script>
+<script type="text/javascript" src="${ctx}/resources/portal/js/piaofu.js"></script>
 </head>
 
 
@@ -489,6 +491,39 @@ function showSytjArticle(articleData){
 	});
 }
 
+//加载飘窗
+function loadFloatWin(){
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/floatWin/pagerList',
+		data:{
+			showState:'1'
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	if(data.rows.length>0){
+	    		var floatWinHTML=
+		    		"<div class=\"automv\">\n" +
+		    		"  <a href=\"javascript:void(0)\" id=\"close_float_ad\" >\n" + 
+		    		"    <img src='${ctx}/resources/portal/images/close.gif' title='"+data.rows[0].winName+"'>\n" + 
+		    		"  </a>\n" + 
+		    		"  <a href='"+data.rows[0].linkUrl+"' target='"+data.rows[0].linkTargetType+"' ><img src='"+data.rows[0].linkImageUrl+"' class=\"fpimg\"></a>\n" + 
+		    		"</div>";
+
+		    	$('body').append(floatWinHTML);
+		        $('.automv').autoMove({angle:-Math.PI/4, speed:100});
+		    	$('#close_float_ad').bind('click',function(){
+		    		$('.automv').hide();
+		    	});
+	    	}
+	    }
+	    });
+}
+
 
 $(document).ready(function() {
   //$('#bg-body').bcatBGSwitcher({
@@ -603,6 +638,9 @@ $(document).ready(function() {
   
   //直达
   loadZD();
+  
+  //加载飘窗
+  loadFloatWin();
   
 });
 </script><!--end of bg-body script-->
@@ -1555,6 +1593,16 @@ if(isShow=='1'){
 	$.cookie('isShow', '1', { expires: now});
 }
 </script>
+
+<!-- 飘窗元素 -->
+<%--
+<div class="automv">
+	<a href="javascript:void(0)" id="close_float_ad" >
+		<img src="${ctx}/resources/portal/images/close.gif">
+	</a>
+	<a href="#"><img src="${ctx}/resources/portal/images/pf1.jpg" class="fpimg"></a>
+</div>
+ --%>
 
 </body>
 </html>

@@ -35,7 +35,7 @@ function submitForm(){
   if($("#addForm").form('validate')){
 	$.ajax({
          type: "POST",
-         url:'${ctx}/link/save',
+         url:'${ctx}/floatWin/save',
          data: $('#addForm').serialize(),
          success: function (data) {
         	 $('#addWin').window('close');
@@ -61,14 +61,10 @@ function addFun(){
 	});
 	$('#addWin').window('open');
 	$('#addForm').form('clear');
-	var node=$('#leftTree').tree('getSelected');
-	if(!node){
-		node=$("#leftTree").tree('getRoot');
-	}
-	loadAddLinkTree();
-	if(node){
-		$('#addlinkComboTree').combotree('setValue', node.id);
-	}
+	//默认不展示飘窗
+	$("#radio_showState_n" ).prop("checked",true);
+	$('#displayOrder').val('1');
+	$('#linkTargetType').val('_blank');
 }
 
 //点击"添加弹出框-取消按钮",提交表单
@@ -101,12 +97,12 @@ function editFun(id) {
 
 //点击“操作列-删除”
 function deleteFun(id){
-	$.messager.confirm("删除确认", "您确认删除该用户吗？", function (action) {
+	$.messager.confirm("删除确认", "您确认删除该条记录吗？", function (action) {
         if (action) {
         	$.ajax({
     			cache: true,
     			type: "POST",
-    			url:'${ctx}/link/delete',
+    			url:'${ctx}/floatWin/delete',
     			data:{
     				id:id
     			},
@@ -128,7 +124,7 @@ function deleteFun(id){
 function doQuery(){
     var options = $("#dgTable").datagrid("options");
     //设置参数
-    options.queryParams.linkName=$('#linkName').val();
+    options.queryParams.winName=$('#winName').val();
     options.queryParams.linkUrl=$('#linkUrl').val();
     $("#dgTable").datagrid(options);
 }
@@ -139,11 +135,10 @@ function doQuery(){
 	 //中间表格
 	var dgTableHeight=$(window).height()-$('.searchBox').height()-28;
     $('#dgTable').datagrid({  
-		url:ctx+'/link/pagerList',
+		url:ctx+'/floatWin/pagerList',
 		method:'post',
 	    queryParams: {
-	    	linkTypeId:'',
-	      	linkName:'',
+	      	winName:'',
 	      	linkUrl:''
 		},
 		fit:false,
@@ -155,11 +150,17 @@ function doQuery(){
 		pagination: true,  
 		rownumbers: true,  
 		columns:[[
-		          {field:'linkName',title: '飘窗名称',align: 'center',width: 100},
-		          {field:'linkTypeName',title: '类型名称',align: 'center',width: 100},
+		          {field:'winName',title: '飘窗名称',align: 'center',width: 100},
 		          {field:'linkUrl',title: '链接地址',align: 'center',width: 100}, 
-		          {field:'linkTargetType',title: '链接打开方式',align: 'center',width: 100}, 
-		          {field:'linkDesc',title: '备注',align: 'center',width: 100,hidden:true},
+		          {field:'showState',title: '是否显示',align: 'center',width: 100, formatter:function(val,rec){
+		        	  if(val=='1'){
+		        		  return '<span style="color:green;">显示</span>';
+		        	  }else{
+		        		  return '<span style="color:red;">不显示</span>';
+		        	  }
+		          }}, 
+		          {field:'linkTargetType',title: '链接打开方式',align: 'center',width: 100,hidden:true}, 
+		          {field:'winDesc',title: '备注',align: 'center',width: 100,hidden:true},
 		          {field:'id',title: '操作',align: 'center',width: 100, formatter:function(val,rec){
 		        	  return "<span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span>|<span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
 		          }}
@@ -177,9 +178,9 @@ function doQuery(){
             <legend>信息查询</legend>
             <table style="width:100%;">
 				<tr>
-					<td style="width:100px;text-align: right;margin-right: 5px;">链接名称:</td>
+					<td style="width:100px;text-align: right;margin-right: 5px;">飘窗名称:</td>
 					<td style="width:200px;text-align: left;">
-						<input id="linkName" name="linkName" style="width:150px">
+						<input id="winName" name="winName" style="width:150px">
 					</td>
 					<td style="width:100px;text-align: right;margin-right: 5px;">链接地址:</td>
 					<td style="width:200px;">
@@ -188,10 +189,7 @@ function doQuery(){
 					<td>&nbsp;</td>
 					<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" iconCls="Zoom">查询</a></td>
 				</tr>
-				
-				
 			</table>
-            
         </fieldset>
         <table id="dgTable">
         </table>
@@ -208,56 +206,49 @@ function doQuery(){
  <div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:680px;height:390px;padding:10px;">
 	    <form id="addForm" method="post">
 		   	<table class="isingelTable">
-				  <tr>
-					    <th>导航类型：</th>
-					    <td>
-					      <input type="hidden" name="id"></input>
-					      <input style="width:250px;" class="easyui-textbox" type="text" id="addlinkComboTree" name="linkTypeId" data-options="required:false"></input>
-					    </td>
-					    <td rowspan="7" style="border: 1px solid;width:258px;text-align: center;">
+				      <tr>
+				        <th>飘窗名称：</th>
+				        <td>
+				          <input type="hidden" name="id"></input>
+				          <input style="width:250px;" class="easyui-textbox" type="text" name="winName" data-options="required:true"></input>
+				        </td>
+				        
+				         <td rowspan="7" style="border: 1px solid;width:258px;text-align: center;">
 					    	<img id="view_image" src="${ctx}/resources/images/image.png" alt="配图预览"  noresize="true" style="max-width:270px;max-height:270px;background-color:#ccc;border:1px solid #333">
 					    	<input type="hidden" id="link_image_url" name="linkImageUrl" style="width:300px;" />
 					    </td>
-				    </tr>
-				      <tr>
-				        <th>导航名称：</th>
-				        <td>
-				          <input style="width:250px;" class="easyui-textbox" type="text" name="linkName" data-options="required:true"></input>
-				        </td>
+				        
 				      </tr>
 				      <tr>
-				        <th>导航地址：</th>
+				        <th>链接地址：</th>
 				        <td>
 				          <input style="width:250px;" class="easyui-textbox" type="text" name="linkUrl"></input>
-				        </td>
-				      </tr>
-				      <tr>
-				        <th>打开方式：</th>
-				        <td>
-				          <select data-options="panelHeight:'auto'" class="easyui-combobox" name="linkTargetType" style="width:250px">
-				            <option value="_blank" selected="selected">_blank(新窗口)</option>
-				            <option value="_self">_self(当前窗口)</option>
-				            <option value="_parent">_parent(父窗口)</option>
-				            <option value="_top">_top(顶级窗口)</option></select>
-				        </td>
-				      </tr>
-				      <tr>
-				        <th>链接配图：</th>
-				        <td>
-				         	<input name="preimage" id="preimage"  class="easyui-filebox"  style="width:250px;" data-options="onChange:function(){preView()},buttonText:'选择文件', accept:'image/jpeg', prompt : '请选择一个图片类型的文件'"/>
+				          <input type="hidden" id="linkTargetType" name="linkTargetType" value="_blank"  />
 				        </td>
 				      </tr>
 				      
 				      <tr>
-				        <th>排序：</th>
+				        <th>配图：</th>
 				        <td>
-				          <input style="width:250px;"  data-options="required:true,validType:'integer'" class="easyui-textbox" type="text" name="displayOrder"></input>
+				         	<input name="preimage" id="preimage"  class="easyui-filebox"  style="width:250px;" data-options="onChange:function(){preView()},buttonText:'选择文件', accept:'image/jpeg', prompt : '请选择一个图片类型的文件'"/>
+				       		<input type="hidden"  id="displayOrder" name="displayOrder"  value="1"></input>
 				        </td>
 				      </tr>
+				      
+				      <tr>
+				        <th>是否显示：</th>
+				        <td>
+				         	<input  type="radio" id="radio_showState_n" name="showState" value="0" checked="checked" />
+						    <label for="radio_showState_n" >否</label>
+							<input  type="radio" id="radio_showState_y" name="showState" value="1" />
+							<label for="radio_showState_y">是</label>
+				        </td>
+				      </tr>
+				      
 				      <tr>
 				        <th>备注：</th>
 				        <td align="center" style="padding:1px;">
-				          <textarea name="linkDesc" style="width:248px;height:80px;"></textarea>
+				          <textarea name="winDesc" style="width:248px;height:80px;"></textarea>
 				        </td>
 				      </tr>
 			</table>

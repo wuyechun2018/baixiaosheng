@@ -1,0 +1,4 @@
+/* 给飘窗添加一些基础样式，如宽度，高度和背景颜色等等 */
+.automv{width: 280px;height: 220px;z-index:100;}
+.automv .fpimg{width: 280px; height:200px;z-index:100;}
+#close_float_ad{ float:right; }

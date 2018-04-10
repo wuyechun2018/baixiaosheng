@@ -1,3 +1,4 @@
+--创建表
 CREATE TABLE `t_float_win` (
   `id` VARCHAR(36) NOT NULL COMMENT '主键',
   `win_name` VARCHAR(500) DEFAULT NULL COMMENT '飘窗名称',
@@ -10,6 +11,12 @@ CREATE TABLE `t_float_win` (
   `data_state` VARCHAR(10) DEFAULT NULL COMMENT '数据状态（0：删除 1：正常）',
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='飘窗配置表';
+
+--初始化数据
+insert  into `t_float_win`(`id`,`win_name`,`win_desc`,`link_url`,`link_target_type`,`link_image_url`,`display_order`,`show_state`,`data_state`) values ('a896f914-0fcd-4a18-9c2b-352b0e0bc832','飘窗','飘窗','http://www.baidu.com','_blank','/media-data/image/20180409201012/pf1.jpg',1,'1','1');
+--添加菜单
+INSERT  INTO `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`,`display_order`)
+ VALUES ('21','6','浮窗链接','/eui/floatwin/list','2','1',21);
 
 
 CREATE TABLE `t_article` (
