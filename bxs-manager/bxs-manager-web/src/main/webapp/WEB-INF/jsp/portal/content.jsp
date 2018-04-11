@@ -13,6 +13,7 @@
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/jquery.SuperSlide.2.1.1.js"></script>
 <script type="text/javascript" src="${ctx}/resources/portal/js/common.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js-lib/ckplayer/ckplayer.js"></script>
 <script src="${ctx}/resources/portal/js/html5media.js"></script>
 <style type="text/css">
 input:-webkit-autofill, 
@@ -212,7 +213,22 @@ function submitFeedback(){
 		 <span>【字体：<a href="javascript:doZoom(20)">大</a><a href="javascript:doZoom(16)">中</a><a href="javascript:doZoom(12)">小</a>】</span>
 		</div>
         <div class="content" id="zoom">
-			${articleInfoVo.articleContent}
+			<c:if test="${articleInfoVo.articleType!='3'&&articleInfoVo.articleType!='7'}">
+        	 	${articleInfoVo.articleContent}
+        	 </c:if>	
+        	
+        	 <c:if test="${articleInfoVo.articleType=='3'||articleInfoVo.articleType=='7'}">
+	        	<div id="video" style="width: 600px; height: 400px; margin:0px auto;"></div>
+				<script type="text/javascript">
+	                var videoObject = {
+	                    container: '#video',
+	                    variable: 'player',
+	                    flashplayer:true,
+	            		video:'${articleInfoVo.contentImageUrl}'
+	                };
+	                var player = new ckplayer(videoObject);
+	            </script>
+            </c:if>
 		</div>
 		<div class="content" style="text-align: center;">
 			<img src="${articleInfoVo.articleImageUrl }" />

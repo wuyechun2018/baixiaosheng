@@ -33,7 +33,7 @@
     "videoFieldName": "upfile",
     "videoPathFormat": "/media-data/ueditor/video/{yyyy}{mm}{dd}/{time}{rand:6}", 
     "videoUrlPrefix": "", 
-    "videoMaxSize": 102400000, 
+    "videoMaxSize": 1024000000, 
     "videoAllowFiles": [
         ".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg",
         ".ogg", ".ogv", ".mov", ".wmv", ".mp4", ".webm", ".mp3", ".wav", ".mid"], 
@@ -42,7 +42,7 @@
     "fileFieldName": "upfile", 
     "filePathFormat": "/media-data/ueditor/file/{yyyy}{mm}{dd}/{time}{rand:6}", 
     "fileUrlPrefix": "", 
-    "fileMaxSize": 51200000, 
+    "fileMaxSize": 1024000000, 
     "fileAllowFiles": [
         ".png", ".jpg", ".jpeg", ".gif", ".bmp",
         ".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg",

@@ -4,6 +4,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
+<script type="text/javascript" src="${ctx}/resources/js-lib/ckplayer/ckplayer.js"></script>
 <script type="text/javascript">
 var ctx = "${ctx}";
 
@@ -19,7 +20,7 @@ function goback(){
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/ueditor.all.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/lang/zh-cn/zh-cn.js"></script>
-
+<script type="text/javascript" src="${ctx}/resources/js-lib/ckplayer/ckplayer.js"></script>
 <title>文章预览</title>
 <body>
 <table>
@@ -39,7 +40,22 @@ function goback(){
 		 <span>【字体：<a href="javascript:doZoom(20)">大</a><a href="javascript:doZoom(16)">中</a><a href="javascript:doZoom(12)">小</a>】</span>
 		</div>
         <div class="content" id="zoom">
-			${articleInfoVo.articleContent}
+			<c:if test="${articleInfoVo.articleType!='3'&&articleInfoVo.articleType!='7'}">
+        	 	${articleInfoVo.articleContent}
+        	 </c:if>	
+        	
+        	 <c:if test="${articleInfoVo.articleType=='3'||articleInfoVo.articleType=='7'}">
+	        	<div id="video" style="width: 600px; height: 400px; margin:0px auto;"></div>
+				<script type="text/javascript">
+	                var videoObject = {
+	                    container: '#video',
+	                    variable: 'player',
+	                    flashplayer:true,
+	            		video:'${articleInfoVo.contentImageUrl}'
+	                };
+	                var player = new ckplayer(videoObject);
+	            </script>
+            </c:if>
 		</div>
 		<div class="content" style="text-align: center;">
 			<img src="${articleInfoVo.articleImageUrl }" />

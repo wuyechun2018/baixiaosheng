@@ -944,8 +944,8 @@ public class ArticleDao {
 						"                                   FROM t_article\n" + 
 						"                                  WHERE 1 = 1\n" + 
 						//"                                    AND DATA_STATE = '1'\n" + 
-															getParamSqlFast(param) +
-						"                                  ORDER BY top_count DESC, publish_date DESC,create_date DESC) U LIMIT ?,\n" + 
+															getParamSqlFast(param) +getOrderBySql(param)+
+						"                                  ) U LIMIT ?,\n" + 
 						"                                ?) T\n" + 
 						"                  LEFT JOIN (SELECT id, topic_name, topic_code FROM t_topic) S\n" + 
 						"                    ON T.topic_id = S.id) M\n" + 
@@ -958,6 +958,24 @@ public class ArticleDao {
 		//String sql="SELECT * FROM ("+querySql+")S limit ?,?";
 		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
 		return list;
+	}
+
+	/**
+	 * 
+	 * 排序语句
+	 * @author: wyc
+	 * @createTime: 2018年4月11日 下午2:32:03
+	 * @history:
+	 * @param param
+	 * @return String
+	 */
+	private String getOrderBySql(Map<String, Object> param) {
+		String sql="\n ORDER BY top_count DESC, publish_date DESC,create_date DESC";
+		//如果有关键字搜索，则不进行排序
+		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
+			sql="";
+		}
+		return sql;
 	}
 
 	/**
