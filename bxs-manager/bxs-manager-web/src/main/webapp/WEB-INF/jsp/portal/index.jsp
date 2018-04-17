@@ -170,6 +170,29 @@ function loadImageArticleByTopic(topicCode,page,rows,isSytj){
 	return articleData;
 }
 
+//处理是否签收状态
+function handleSignedStatus(articleId){
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/portal/isAllSigned',
+		data:{
+			articleId:articleId
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	if(data.success){
+	    		$('#'+articleId).append('<span style="color:green;font-weight:bold;">&nbsp;&nbsp;已签收</span>');
+	    	}else{
+	    		$('#'+articleId).append('<span style="color:red;font-weight:bold;">&nbsp;&nbsp;签收</span>');
+	    	}
+	    }
+	})
+}
+
 
 
 //加载文章（参数1：要显示的DIV的ID,参数2：要显示的文章数据）
@@ -177,6 +200,10 @@ function showArticle(dispDivId,articleData){
 	for(var i=0;i<articleData.rows.length;i++){
 		  if(i<8){
 			  var articleObj=articleData.rows[i];
+			  var titleLength=15;
+			  if(articleObj.articleType=='5'||articleObj.articleType=='6'){
+				  titleLength=12;
+			  }
 			  var createDate=articleObj.createDate.substr(0,10);
 			  var articleTitle=articleObj.articleTitle;
 			  var articleUrl=ctx+"/portal/content?id="+articleObj.id;
@@ -195,8 +222,8 @@ function showArticle(dispDivId,articleData){
 				  $('#'+dispDivId).append('<li><a target="_blank" href="'+articleUrl+'"><img src="'+imageUrl+'" /></a></li>');
 			  }else if(dispDivId=='HYTZ'){
 			  //会议通知 
-				  if(articleTitle.length>=12){
-					  articleTitlePart=articleTitle.substr(0,12);
+				  if(articleTitle.length>=titleLength){
+					  articleTitlePart=articleTitle.substr(0,titleLength);
 				  }else{
 					  articleTitlePart=articleTitle;
 				  }
@@ -212,22 +239,28 @@ function showArticle(dispDivId,articleData){
 					jQuery(".ggBox").slide({mainCell:"ul",autoPlay:true,effect:"topMarquee",vis:3,interTime:80});
 			  } else if(dispDivId=='ZHYW'||dispDivId=='LDDT'){
 			  //综合要闻&&领导动态	  
-				  if(articleTitle.length>=15){
-					  articleTitlePart=articleTitle.substr(0,15);
+				  if(articleTitle.length>=titleLength){
+					  articleTitlePart=articleTitle.substr(0,titleLength);
 				  }else{
 					  articleTitlePart=articleTitle;
 				  }
-				  $('#'+dispDivId).append('<li><span class="date">'+createDate+'</span><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'" >'+articleTitlePart+'</a></li>');
+				  $('#'+dispDivId).append('<li><span class="date">'+createDate+'</span><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'" >'+articleTitlePart+'</a></li>');
 			  }else{
 				//上级文件
 			  	  var cDate=articleObj.createDate.substr(5,5);
-				  if(articleTitle.length>=15){
-					  articleTitlePart=articleTitle.substr(0,15);
+				  if(articleTitle.length>=titleLength){
+					  articleTitlePart=articleTitle.substr(0,titleLength);
 				  }else{
 					  articleTitlePart=articleTitle;
 				  }
-				  $('#'+dispDivId).append('<li><span class="date">'+cDate+'</span><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'" >'+articleTitlePart+'</a></li>');
+				  $('#'+dispDivId).append('<li><span class="date">'+cDate+'</span><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'" >'+articleTitlePart+'</a></li>');
 			  }
+			  
+			  //处理是否签收状态
+			  if(articleObj.articleType=='5'||articleObj.articleType=='6'){
+				  handleSignedStatus(articleObj.id);
+			  }
+			  
 		  }
 	  }
 }

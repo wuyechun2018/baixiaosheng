@@ -117,6 +117,29 @@ color:#E00;
   	   return tarStr;
    }
    
+ //处理是否签收状态
+   function handleSignedStatus(articleId){
+   	$.ajax({
+   		cache: true,
+   		type: "POST",
+   		url:'${ctx}/portal/isAllSigned',
+   		data:{
+   			articleId:articleId
+   		},
+   		async: false,
+   	    error: function(request) {
+   	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+   	    },
+   	    success: function(data) {
+   	    	if(data.success){
+   	    		$('#'+articleId).append('<span style="color:green;font-weight:bold;">&nbsp;&nbsp;&nbsp;&nbsp;已签收</span>');
+   	    	}else{
+   	    		$('#'+articleId).append('<span style="color:red;font-weight:bold;">&nbsp;&nbsp;&nbsp;&nbsp;签收</span>');
+   	    	}
+   	    }
+   	})
+   }
+   
    function showArticle(dispDivId,articleData,nowpage){
 	   $('#'+dispDivId).html('');
 	    var ulId="";
@@ -145,19 +168,24 @@ color:#E00;
 		   		    count++;
 		   			ulId=dispDivId+"-"+count
 		   			if(count==sumCount){
-		   				$('#'+dispDivId).append('<ul  style="border-bottom: inherit;" id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span class="cdateSpan">'+createDate+'</span></li>');	
+		   				$('#'+dispDivId).append('<ul  style="border-bottom: inherit;" id='+ulId+'><li><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span class="cdateSpan">'+createDate+'</span></li>');	
 		   			}else{
-		   				$('#'+dispDivId).append('<ul  id='+ulId+'><li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li>');	
+		   				$('#'+dispDivId).append('<ul  id='+ulId+'><li><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li>');	
 		   			}
 	   
 	   			
 	   		}else if(i%6==5){
-	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li><ul/>');
+	   			$('#'+ulId).append('<li><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li><ul/>');
 	   			
 	   			$('#'+dispDivId).append('<DIV style="BORDER-TOP: #e4e6eb 1px dashed; OVERFLOW: hidden; HEIGHT: 1px"></DIV>');
 	   		}else{
-	   			$('#'+ulId).append('<li><a target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li>');
+	   			$('#'+ulId).append('<li><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li>');
 	   		}
+	   	  
+		   	//处理是否签收状态
+			  if(articleObj.articleType=='5'||articleObj.articleType=='6'){
+				  handleSignedStatus(articleObj.id);
+			  }
       }
     	
    }

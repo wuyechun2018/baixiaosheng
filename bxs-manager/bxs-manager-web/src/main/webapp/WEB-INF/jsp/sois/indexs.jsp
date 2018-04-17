@@ -173,6 +173,12 @@ $(function(){
                 </div>
                 
                 <div class="top-bar-right">
+                
+                	<span class="top-bar-info-s" >
+                		<i class="fa fa-check-square" aria-hidden="true"></i>
+                  		<a style="vertical-align:middle;color:#fff;font-size:14px;text-decoration: none;"  target="_blank" href="${ctx}/sois/showSignList" >我的签收</a>
+                  		<span class="layui-badge-dot-s"></span>
+                  	</span>
                 	<span class="top-bar-info" >
                 		<i class="fa fa-gift" aria-hidden="true"></i>
                   		<a style="vertical-align:middle;color:#fff;font-size:14px;text-decoration: none;"  target="_blank" href="${ctx}/sois/showFeedbackList" >我的反馈</a>

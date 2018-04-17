@@ -1018,5 +1018,20 @@ public class ArticleDao {
 		}
 		return sql;
 	}
+
+
+	/**
+	 * 
+	 * 获取未签收数
+	 * @author: wyc
+	 * @createTime: 2018年4月16日 下午8:18:51
+	 * @history:
+	 * @param articleId
+	 * @return Long
+	 */
+	public Long getNoSignedCount(String articleId) {
+		String sql="SELECT COUNT(1) FROM t_sign T WHERE T.data_state='1' AND T.sign_state='0' AND t.article_id=?;";
+		return  jdbcTemplate.queryForObject(sql,new Object[]{articleId},Long.class);
+	}
 	
 }

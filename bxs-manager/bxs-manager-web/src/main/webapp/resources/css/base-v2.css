@@ -176,6 +176,15 @@ table.gridtable td {
     margin-left:230px;
 }
 
+.top-bar-info-s {
+    position: absolute;
+    width: 90px;
+    top: 20px;
+    height: 52px;
+    color: #fff;
+    margin-left:140px;
+}
+
 .layui-badge-dot {
     width: 8px;
     height: 8px;
@@ -189,6 +198,24 @@ table.gridtable td {
     font-size: 12px;
     text-align: center;
     background-color: #FF5722;
+    color: #fff;
+    border-radius: 2px;
+}
+
+
+.layui-badge-dot-s {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.layui-badge-dot-s{
+    position: relative;
+    display: inline-block;
+    font-size: 12px;
+    text-align: center;
+    background-color: #5fb878;
     color: #fff;
     border-radius: 2px;
 }

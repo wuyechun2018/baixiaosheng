@@ -333,6 +333,23 @@ public class PortalController {
 	
 	/**
 	 * 
+	 * 是否都已经签收
+	 * @author: wyc
+	 * @createTime: 2018年2月7日 下午5:26:25
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/isAllSigned")
+	@ResponseBody
+	public Object isAllSigned(String articleId) {
+		boolean isAllSigned=articleService.isAllSigned(articleId);
+		return new JsonMsg(isAllSigned,"是否都已经签收");
+	}
+	
+	
+	
+	/**
+	 * 
 	 * 获取一周的天气字符串
 	 * @author: wyc
 	 * @createTime: 2018年2月7日 下午4:34:18

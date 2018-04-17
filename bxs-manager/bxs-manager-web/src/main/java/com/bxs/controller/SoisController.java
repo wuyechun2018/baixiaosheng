@@ -431,6 +431,30 @@ public class SoisController {
 		return DataPipeUtil.toLayUIGrid(grid);
 	}
 	
+	
+	
+	/**
+	 * 
+	 * 我的签收列表
+	 * @author: wyc
+	 * @createTime: 2018年2月8日 下午4:26:01
+	 * @history:
+	 * @param page
+	 * @param limit
+	 * @return Object
+	 */
+	@RequestMapping("/getMySignList")
+	@ResponseBody
+	public Object getMySignList(int page,int limit,HttpSession session){
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		EUIPager ePager=new EUIPager(page,limit);
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("articleType", "5");
+		param.put("signUserId", info.getId());
+		EUIGrid grid=signService.pagerSignArticleList(ePager,param);
+		return DataPipeUtil.toLayUIGrid(grid);
+	}
+	
 	/**
 	 * 
 	 * 跳转到反馈列表
@@ -446,6 +470,24 @@ public class SoisController {
 	public Object showFeedbackList(){
 		return "/sois/showFeedbackList";
 	}
+	
+	
+	/**
+	 * 
+	 * 跳转到签收列表
+	 * @author: wyc
+	 * @createTime: 2018年3月8日 下午7:49:09
+	 * @history:
+	 * @param page
+	 * @param limit
+	 * @param session
+	 * @return Object
+	 */
+	@RequestMapping("/showSignList")
+	public Object showSignList(){
+		return "/sois/showSignList";
+	}
+	
 	
 	/**
 	 *  

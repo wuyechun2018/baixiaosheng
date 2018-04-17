@@ -168,6 +168,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@CacheEvict(value="myCache", allEntries=true)
 	public void saveFrontSliderState(Article article) {
 		articleDao.saveFrontSliderState(article);
 	}
@@ -278,6 +279,16 @@ public class ArticleServiceImpl implements ArticleService {
 		grid.setTotal(articleDao.getTotalCountFast(param));
 		grid.setRows(articleDao.pagerArticleListFast(ePager,param));
 		return grid;
+	}
+
+	@Override
+	public boolean isAllSigned(String articleId) {
+		Long count = articleDao.getNoSignedCount(articleId);
+		if (count > 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 
