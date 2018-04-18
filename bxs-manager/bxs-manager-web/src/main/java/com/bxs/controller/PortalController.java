@@ -186,6 +186,27 @@ public class PortalController {
 	}
 	
 	
+	/**
+	 * 
+	 * 文章列表
+	 * @author: wyc
+	 * @createTime: 2018年2月6日 上午10:01:48
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping(value = "/video-list")
+	public ModelAndView videoList(String topicCode) {
+		Topic topic=topicService.getTopicByCode(topicCode);
+		ModelAndView mv=new ModelAndView("/portal/video-list");
+		mv.addObject("topic", topic);
+		//背景图片-轮换图
+		if(!configService.getConfigByTypeCode("BJT").isEmpty()){
+			mv.addObject("backGroudImgList", configService.getConfigByTypeCode("BJT"));
+		}
+		return mv;
+	}
+	
+	
 	
 	/**
 	 * 
@@ -222,6 +243,11 @@ public class PortalController {
 		Topic topic=topicService.getTopicByCode(topicCode);
 		ModelAndView mv=new ModelAndView("/portal/image-list");
 		mv.addObject("topic", topic);
+		//背景图片-轮换图
+		if(!configService.getConfigByTypeCode("BJT").isEmpty()){
+			mv.addObject("backGroudImgList", configService.getConfigByTypeCode("BJT"));
+		}
+		
 		return mv;
 	}
 	

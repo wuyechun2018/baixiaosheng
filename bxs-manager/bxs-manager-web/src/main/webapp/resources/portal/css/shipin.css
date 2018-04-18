@@ -1,0 +1,32 @@
+.shipinbox{
+	width: 1002px;
+	overflow: hidden;
+	
+}
+.shipinbox ul{
+	overflow: hidden;
+	padding:  25px 0;
+	border-bottom: 1px dashed #e4e6eb;
+	
+}
+
+.shipinbox  ul li{
+	float: left;
+	width: 225px;
+	
+	margin-left: 20px;
+	margin-top: 15px;
+	
+	
+}
+
+.shipinbox  ul li .sp_img img{
+	width: 217px;
+	height: 165px;	
+	padding:4px;
+	background-color:#1061bc;
+}
+.shipinbox  ul li .sp_txt{ }
+.shipinbox  ul li .sp_txt p{ color:#aaa; font-size:12px; line-height:16px;}
+.shipinbox  ul li .sp_txt .sp1_title{padding-top:5px;padding-bottom:5px;}
+.shipinbox  ul li .sp_txt .sp1_title a{ color:#1061bc; font-size:14px;}

@@ -30,9 +30,18 @@
 <div class=" top_body">
 	<div id="bg-body">
     	<ul>
-			<li style="background:url(${ctx}/resources/portal/images/banner1.jpg) center center no-repeat;background-size:100% 100%;"></li>
-			<li style="background:url(${ctx}/resources/portal/images/banner2.jpg) center center no-repeat;background-size:100% 100%;"></li>
-			<li style="background:url(${ctx}/resources/portal/images/banner3.jpg) center center no-repeat;background-size:100% 100%;"></li>
+			<%--默认 --%>
+	    	 <c:if test="${empty backGroudImgList}">
+	    	 		<li style="background:url(${ctx}/resources/portal/images/banner1.jpg) center center no-repeat;background-size:100% 100%;"></li>
+					<li style="background:url(${ctx}/resources/portal/images/banner2.jpg) center center no-repeat;background-size:100% 100%;"></li>
+					<li style="background:url(${ctx}/resources/portal/images/banner3.jpg) center center no-repeat;background-size:100% 100%;"></li>
+			 </c:if>
+			  <%--如果有值 --%>
+			 <c:if test="${!empty backGroudImgList}">
+			 		<c:forEach items="${backGroudImgList}" var="backGroudImg">
+		    		 	<li style="background:url(${backGroudImg.configImageUrl}) center center no-repeat;background-size:100% 100%;"></li>
+					 </c:forEach>
+			 </c:if>
 		</ul>
 	</div>
 
@@ -110,12 +119,15 @@ $(document).ready(function() {
   var topicCode=$('#topicCode').val();
   var tpzsData=loadArticleByTopic(topicCode,'1','10000','');
   showArticle(topicCode,tpzsData);
-  var sumcount=tpzsData.total;
+  var sumcount=tpzsData.rows.length;
+  if(sumcount<21){
+	  sumcount=21;
+  }
   
   $("#lpage").jqPaginator({
-	    totalCounts:sumcount,
+	  	totalCounts:sumcount,
 	    pageSize:21,
-	    visiblePages: 8,
+	    visiblePages: Math.ceil(sumcount/21),
 	    currentPage: 1,
 	    prev: '<a class="first" href="javascript:void(0);">&lt;上一页<\/a>',
 	    next: '<a class="end" href="javascript:void(0);">下一页&gt;<\/a>',
