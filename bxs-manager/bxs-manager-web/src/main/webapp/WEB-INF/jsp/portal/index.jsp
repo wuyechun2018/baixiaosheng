@@ -715,7 +715,7 @@ $(document).ready(function() {
             <li>
             	<dl>
             		<dt class="n_4"><a href="#"><span>警务</span></a></dt>
-                	<dd><a href="${ctx}/portal/list?topicCode=JWSP" target="_blank">警务视频</a></dd>
+                	<dd><a href="${ctx}/portal/video-list?topicCode=JWSP" target="_blank">警务视频</a></dd>
                     <dd><a href="${ctx}/portal/list?topicCode=DCYJ" target="_blank">调查研究</a></dd>
                     <dd><a href="${ctx}/portal/list?topicCode=YQDT" target="_blank">舆情动态</a></dd>
                     <dd><a href="${ctx}/portal/list?topicCode=GZJB" target="_blank">工作简报</a></dd>
@@ -1022,7 +1022,7 @@ $(document).ready(function() {
     	<div class="index_news fl ">
         	<div class="titBox">
             	<h1>警务视频</h1>
-                <a target="_blank" href="${ctx}/portal/list?topicCode=JWSP" class="fr more">更多>></a>
+                <a target="_blank" href="${ctx}/portal/video-list?topicCode=JWSP" class="fr more">更多>></a>
             </div>
             <ul id="JWSP">
             	<%--
