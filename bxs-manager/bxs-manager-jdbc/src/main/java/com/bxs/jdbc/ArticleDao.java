@@ -865,7 +865,19 @@ public class ArticleDao {
 	private String getParamSqlFast(Map<String, Object> param) {
 		StringBuffer sqlBuff=new StringBuffer();
 		if(param.get("articleType")!=null&&StringUtils.isNotBlank(param.get("articleType").toString())){
-			sqlBuff.append(" AND ARTICLE_TYPE = '" + param.get("articleType").toString() + "'\n");
+		    String articleType=param.get("articleType").toString();
+			if(articleType.indexOf(",")>-1){
+				String[] articleTypeArray=articleType.split(",");
+				String articleTypeStr="";
+				for(int i=0;i<articleTypeArray.length;i++){
+					articleTypeStr=articleTypeStr+"'"+articleTypeArray[i]+"',";
+				}
+				articleTypeStr=articleTypeStr.substring(0, articleTypeStr.lastIndexOf(","));
+				sqlBuff.append(" AND ARTICLE_TYPE in (" + articleTypeStr + ")\n");
+			}else{
+				sqlBuff.append(" AND ARTICLE_TYPE = '" + param.get("articleType").toString() + "'\n");
+			}
+			
 		}
 		//栏目ID,1代表全部栏目
 		if(param.get("topicId")!=null&&StringUtils.isNotBlank(param.get("topicId").toString())&&!"1".equals(param.get("topicId").toString())){

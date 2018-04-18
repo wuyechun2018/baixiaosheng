@@ -128,7 +128,7 @@ $(function(){
 		method:'post',
 	    queryParams: {
 	    	//普通类型
-	    	articleType:'3',
+	    	articleType:'3,7',
 	    	topicId:'',
 	    	articleTitle:'',
 	    	publishDeptId:'',
