@@ -83,16 +83,28 @@ $(function(){
 	 			   <%--普通类型 --%>
 	 			  <input type="hidden"  value="3" name="articleType"  />
 	 			</td>
-	 			<td>&nbsp;</td>
+	 			<td rowspan="3">
+	 				<input type="hidden" id="article_image_url" name="articleImageUrl" style="width:300px;" />
+	 				<img id="view_image" src="${ctx}/resources/images/image.png" alt="配图预览"  noresize="true" style="width:100px;height:70px;background-color:#ccc;border:1px solid #333">
+	 			</td>
 	 		</tr>
 	 		<tr>
 			 	<th>栏目：</th>	 		
 	 			<td>
 	 			 	<input name="topicId" id="topicComboTree" />
 	 			</td>
-	 			<td>&nbsp;</td>
+	 		</tr>
+	 		
+	 		<tr>
+				<th>文章配图：</th>	
+				<td style="width:360px;">
+	 				<input name="preimage"  class="easyui-filebox" style="width:310px;" data-options="onChange:function(){preView()},buttonText:'选择文件', accept:'image/jpeg', prompt : '请选择一个图片类型的文件'"/>
+	 				<%--
+	 				&nbsp;<a href="javascript:void(0)" onclick="preView()" style="font-size:15px;">预览</a> --%>
+	 			</td>
 	 			
 	 		</tr>
+	 		
 	 		<tr>
 			 	<th>说明：</th>	 		
 	 			<td>
