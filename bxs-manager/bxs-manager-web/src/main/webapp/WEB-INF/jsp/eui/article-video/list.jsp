@@ -15,7 +15,7 @@ function doQuery(){
     //设置参数
     options.queryParams.topicId=SELECT_NODE_Id;
     //该页面只处理普通类型
-    options.queryParams.articleType='3';
+    options.queryParams.articleType='3,7';
     options.queryParams.articleTitle=$('#articleTitle').val();
     options.queryParams.publishUserName=$('#publishUserName').val();
     options.queryParams.publishDeptId=$("#publishDeptComboTree").combotree("getValue")

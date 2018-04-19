@@ -94,7 +94,7 @@ color:#E00;
     		cache: true,
     		type: "POST",
     		//url:'${ctx}/article/loadArticleForOpt',
-    		url:'${ctx}/article/loadArticleByTopic',
+    		url:'${ctx}/article/loadArticleByTopicForVideo',
     		data:{
     			articleTitle:keys,
     			topicCode:topicCode,
@@ -152,6 +152,10 @@ color:#E00;
    		  var articleObj=articleData.rows[i];
 		  var createDate=articleObj.createDate.substr(0,10);
 		  var articleTitle=articleObj.articleTitle;
+		  var publishMedia=articleObj.publishMedia;
+		  if(publishMedia==null||publishMedia==''){
+			  publishMedia='无数据';
+		  }
 		  var articleUrl=ctx+"/portal/content?id="+articleObj.id;
 		  var articleTitlePart="";
 		  if(articleTitle.length>=30){
@@ -169,7 +173,7 @@ color:#E00;
 			  "                  <div class=\"sp_img\"><a href=\""+articleUrl+"\" target=\"_blank\"><img src=\""+articleObj.articleImageUrl+"\" /></a></div>\n" + 
 			  "                    <div class=\"sp_txt\">\n" + 
 			  "                      <p class=\"sp1_title\"><a href=\""+articleUrl+"\" target=\"_blank\">"+articleTitlePart+"</a></p>\n" + 
-			  "                        <p>发布媒体：中央电视台</p>\n" + 
+			  "                        <p>发布媒体："+publishMedia+"</p>\n" + 
 			  "                        <p>上传时间："+createDate+"</p>\n" + 
 			  "                    </div>\n" + 
 			  "                </li>";

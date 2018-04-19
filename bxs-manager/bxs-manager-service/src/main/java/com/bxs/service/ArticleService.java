@@ -20,6 +20,8 @@ public interface ArticleService {
 
 	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 	
+	EUIGrid pagerListForVideo(EUIPager ePager, Map<String, Object> param);
+	
 	/**
 	 * 
 	 * 分页列表，用于多处，是对"pagerList"方法的优化

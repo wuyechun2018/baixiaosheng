@@ -13,9 +13,26 @@
 
 <title>编辑视频文章</title>
 <script type="text/javascript">
+
+//预览配图
+function preView(){
+	$('#article_form').form('submit',{
+		url:'${ctx}/article/preViewImage',
+        onSubmit:function(op){
+        	return true;
+        },
+        success:function(data){
+        	var obj=eval('('+ data+ ')');
+        	$('#view_image').attr('src',obj.msg);
+        	$('#article_image_url').val(obj.msg);
+        }
+      });
+}
+
 //提交表单操作
 function submitForm(){
 	if($("#article_form").form('validate')){ 
+		 $("#article_form").attr('action',ctx+"/articleVideo/euiSave");
 		 $('#article_form').submit();
 	}
 }
@@ -65,7 +82,19 @@ $(function(){
 	 			  <input type="hidden"  value="3" name="articleType"  />
 	 			  <input value="${article.articleTitle}" type="text" name="articleTitle" style="width:300px;" />
 	 			</td>
-	 			<td>&nbsp;</td>
+	 			<td rowspan="3">
+	 				<input type="hidden" id="article_image_url" value="${article.articleImageUrl}" name="articleImageUrl" style="width:300px;" />
+	 				
+	 				
+	 				<c:if test="${empty article.articleImageUrl }">  
+ 						<img id="view_image" alt="无配图"  src="${ctx}/resources/images/nopic.png" noresize="true" style="width:100px;height:70px;background-color:#ccc;border:1px solid #333">
+					</c:if>  
+	 				
+	 				<c:if test="${!empty article.articleImageUrl }">  
+ 						<img id="view_image" alt="配图预览"  src="${article.articleImageUrl}" noresize="true" style="width:100px;height:70px;background-color:#ccc;border:1px solid #333">
+					</c:if>
+	 				
+	 			</td>
 	 			
 	 		</tr>
 	 		<tr>
@@ -74,7 +103,16 @@ $(function(){
 	 			 	<input name="topicId" id="topicComboTree" value="${article.topicId}" />
 	 			</td>
 	 			
-	 			<td>&nbsp;</td>
+	 		</tr>
+	 		
+	 		<tr>
+				<th>文章配图：</th>	
+				<td style="width:360px;">
+	 				<input name="preimage" value="${article.articleImageUrl}"  class="easyui-filebox" style="width:310px;" data-options="onChange:function(){preView()},buttonText:'选择文件', accept:'image/jpeg', prompt : '请选择一个图片类型的文件'"/>
+	 				<%--
+	 				&nbsp;<a href="javascript:void(0)" onclick="preView()" style="font-size:15px;">预览</a> --%>
+	 			</td>
+	 			
 	 		</tr>
 	 		
 	 		<tr>
@@ -82,7 +120,6 @@ $(function(){
 	 			<td>
 	 			 	<div style="color:red;font-size:14px;">请点击视频上传按钮上传视频</div>
 	 			</td>
-	 			<td>&nbsp;</td>
 	 		</tr>
 
 	 		<tr>
@@ -112,6 +149,13 @@ $(function(){
 			 	<th>发布时间：</th>	 		
 	 			<td>
 	 				<input class="easyui-datebox" type="text" value="${article.publishDate}" ID="publishDate" name="publishDate" style="width:300px" />
+	 			</td>
+	 		</tr>
+	 		
+	 		<tr>
+			 	<th>发布媒体：</th>	 		
+	 			<td>
+	 				<input  type="text" ID="publishMedia" value="${article.publishMedia}" name="publishMedia" style="width:300px" />
 	 			</td>
 	 		</tr>
 	 		

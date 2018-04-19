@@ -61,6 +61,14 @@ var topicData=null;
 			</div>
 			
 			<div class="layui-form-item">
+				<label class="layui-form-label">发布媒体</label>
+				<div class="layui-input-block">
+					<input type="text" class="layui-input articleTitle" name="publishMedia" required lay-verify="required"
+						placeholder="请输入发布媒体" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
 	           	 <label class="layui-form-label">视频图</label>
 	             <div class="layui-input-inline" style="width: 250px;">
 	                <input type="text" name="articleImageUrl" value="" class="layui-input" id="articleImageUrl"> 

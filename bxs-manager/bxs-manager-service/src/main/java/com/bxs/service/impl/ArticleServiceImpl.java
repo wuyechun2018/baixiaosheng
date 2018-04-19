@@ -126,6 +126,37 @@ public class ArticleServiceImpl implements ArticleService {
 		return grid;
 	}
 	
+	
+	@Override
+	public EUIGrid pagerListForVideo(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		//为了提升大数据量下的查询速度，做了以下优化调整
+		//只有 page 和 rows 两个参数,无其它筛选条件 
+		if(CommonUtil.getEffectParamCount(param)==2){
+			List<ArticleCount> list=articleCountDao.getListByTopicCode("TOTAL");
+			if(!list.isEmpty()){
+				ArticleCount articleCount=list.get(0);
+				grid.setTotal(Long.valueOf(articleCount.getArticleCount()));
+			}else{
+				grid.setTotal(articleDao.getTotalCount(param));
+			}
+		}else if((CommonUtil.getEffectParamCount(param)==3&&(param.get("topicId")!=null&&StringUtils.isNotBlank(param.get("topicId").toString())&&!"1".equals(param.get("topicId").toString())))){
+			//或者 只有 page、rows和 topicId 三个参数
+			Topic topic=topicDao.getTopicById(param.get("topicId").toString());
+			List<ArticleCount> list=articleCountDao.getListByTopicCode(topic.getTopicCode());
+			if(!list.isEmpty()){
+				ArticleCount articleCount=list.get(0);
+				grid.setTotal(Long.valueOf(articleCount.getArticleCount()));
+			}else{
+				grid.setTotal(articleDao.getTotalCount(param));
+			}
+		}else{
+			grid.setTotal(articleDao.getTotalCount(param));
+		}
+		grid.setRows(articleDao.pagerArticleListForVideo(ePager,param));
+		return grid;
+	}
+	
 	@Override
 	public EUIGrid loadSytjArticle(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();

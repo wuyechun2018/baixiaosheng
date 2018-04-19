@@ -143,6 +143,13 @@ $(function(){
 	 			</td>
 	 		</tr>
 	 		
+	 		<tr>
+			 	<th>发布媒体：</th>	 		
+	 			<td>
+	 				<input  type="text" ID="publishMedia" name="publishMedia" style="width:300px" />
+	 			</td>
+	 		</tr>
+	 		
 	 	</table>
 	 	
 	 	 <div style="text-align:center;padding-top:15px">

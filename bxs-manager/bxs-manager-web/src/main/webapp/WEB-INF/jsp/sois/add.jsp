@@ -66,7 +66,7 @@ var topicData=null;
 	                <input type="text" name="articleImageUrl" value="" class="layui-input" id="articleImageUrl"> 
 	             </div>
 	            <div class="layui-input-inline" >
-	                <button type="button" name="preimage" class="layui-btn" id="articleImageBtn">上传图片</button>
+	                <button type="button" onclick="preView()" name="preimage" class="layui-btn" id="articleImageBtn">上传图片</button>
 	            </div>
 	            <%--
 	            <div class="layui-input-inline" >
@@ -93,6 +93,21 @@ var topicData=null;
 
 
 	<script>
+		//图片上传预览
+		function preView(){
+				$('#article_form').form('submit',{
+					url:'${ctx}/article/preViewImage',
+			        onSubmit:function(op){
+			        	return true;
+			        },
+			        success:function(data){
+			        	var obj=eval('('+ data+ ')');
+			        	$('#articleImageUrl').val(res.msg);
+			        }
+			      });
+			}
+	
+	
 		//Demo
 		layui.use(['form','upload'], function(){
 			var $ = layui.jquery;
@@ -115,6 +130,7 @@ var topicData=null;
 			
 			var upload = layui.upload;
 			//创建一个上传组件
+			/**
 		    var uploadInst = upload.render({
 		        elem: '#articleImageBtn'
 		        ,field:'preimage'
@@ -123,17 +139,13 @@ var topicData=null;
 		          
 		        }
 		        ,done: function(res){
-		        	//var obj=eval('('+ res+ ')');
-		        	//$('#articleImageUrl').val(obj.msg);
-		        	//articleImageUrl.value=res.msg;
 		        	$('#articleImageUrl').val(res.msg);
-		        	//$('#viewImg').attr('src', res.msg);
 		        	
 		        }
 		        ,error: function(){
 		          
 		        }
-		      });	
+		      });**/	
 		  var ue = UE.getEditor('editor');	
 		  var form = layui.form;
 		  //监听提交

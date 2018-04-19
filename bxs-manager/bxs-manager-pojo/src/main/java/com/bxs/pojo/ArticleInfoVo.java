@@ -64,6 +64,9 @@ public class ArticleInfoVo implements java.io.Serializable {
 	private String topState;
 	//是否弹窗
 	private String popState;
+	
+	//发布媒体
+	private String publishMedia;
 
 	public String getId() {
 		return id;
@@ -275,5 +278,14 @@ public class ArticleInfoVo implements java.io.Serializable {
 	public void setPopState(String popState) {
 		this.popState = popState;
 	}
+
+	public String getPublishMedia() {
+		return publishMedia;
+	}
+
+	public void setPublishMedia(String publishMedia) {
+		this.publishMedia = publishMedia;
+	}
+	
 	
 }
