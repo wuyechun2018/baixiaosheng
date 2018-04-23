@@ -216,7 +216,8 @@ public class SoisController {
 				article.setAuthor(info.getUserName());
 			}
 			//消息来源
-			article.setNewsfrom(info.getDeptName()+"上报");
+			//article.setNewsfrom(info.getDeptName()+"上报");
+			article.setNewsfrom(info.getDeptName());
 		}
 		articleService.save(article);
 		return "redirect:/sois/list";
@@ -243,7 +244,8 @@ public class SoisController {
 				article.setAuthor(info.getUserName());
 			}
 			//消息来源
-			article.setNewsfrom(info.getDeptName()+"上报");
+			//article.setNewsfrom(info.getDeptName()+"上报");
+			article.setNewsfrom(info.getDeptName());
 		}
 		articleService.save(article);
 		return "redirect:/sois/videoList";
@@ -271,7 +273,8 @@ public class SoisController {
 				article.setAuthor(info.getUserName());
 			}
 			//消息来源
-			article.setNewsfrom(info.getDeptName()+"上报");
+			//article.setNewsfrom(info.getDeptName()+"上报");
+			article.setNewsfrom(info.getDeptName());
 		}
 		//文章主键Id
 		String keyId=articleService.save(article);
@@ -323,7 +326,8 @@ public class SoisController {
 				article.setAuthor(info.getUserName());
 			}
 			//消息来源
-			article.setNewsfrom(info.getDeptName()+"上报");
+			//article.setNewsfrom(info.getDeptName()+"上报");
+			article.setNewsfrom(info.getDeptName());
 		}
 		//文章主键Id
 		String keyId=articleService.save(article);
