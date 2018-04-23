@@ -263,8 +263,10 @@ $(function(){
 		          {field:'checkState',title: '状态',align: 'center',width: 50,formatter:function(val,rec){
 		        	  if(val=='1'){
 		        		  return "<span style='color:green'><a title='请审核' class='slink' onclick=checkFun('"+rec.id+"')>正常</a></span>";
-		        	  }else{
+		        	  }else if(val=='0'){
 		        		  return "<span style='color:red'><a title='请审核' class='slink'  onclick=checkFun('"+rec.id+"')>未审核</a></span>";
+		        	  }else{
+		        		  return "<span style='color:#ec53ca'><a title='不予通过' class='slink'  onclick=checkFun('"+rec.id+"')>不予通过</a></span>";
 		        	  }
 		          }}, 
 		          {field:'viewCount',title: '查看次数',align: 'center',width: 50},

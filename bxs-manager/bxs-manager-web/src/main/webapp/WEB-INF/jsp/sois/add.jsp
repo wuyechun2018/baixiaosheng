@@ -61,12 +61,20 @@ var topicData=null;
 			</div>
 			
 			<div class="layui-form-item">
+				<label class="layui-form-label">作者</label>
+				<div class="layui-input-block">
+					<input type="text" class="layui-input " name="author" required lay-verify="required"
+						placeholder="请输入作者" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
 	           	 <label class="layui-form-label">形象图</label>
 	             <div class="layui-input-inline" style="width: 250px;">
 	                <input type="text" name="articleImageUrl" value="" class="layui-input" id="articleImageUrl"> 
 	             </div>
 	            <div class="layui-input-inline" >
-	                <button type="button" onclick="preView()" name="preimage" class="layui-btn" id="articleImageBtn">上传图片</button>
+	                <button type="button" name="preimage" class="layui-btn" id="articleImageBtn">上传图片</button>
 	            </div>
 	            <%--
 	            <div class="layui-input-inline" >
@@ -93,21 +101,6 @@ var topicData=null;
 
 
 	<script>
-		//图片上传预览
-		function preView(){
-				$('#article_form').form('submit',{
-					url:'${ctx}/article/preViewImage',
-			        onSubmit:function(op){
-			        	return true;
-			        },
-			        success:function(data){
-			        	var obj=eval('('+ data+ ')');
-			        	$('#articleImageUrl').val(res.msg);
-			        }
-			      });
-			}
-	
-	
 		//Demo
 		layui.use(['form','upload'], function(){
 			var $ = layui.jquery;
@@ -130,11 +123,10 @@ var topicData=null;
 			
 			var upload = layui.upload;
 			//创建一个上传组件
-			/**
 		    var uploadInst = upload.render({
 		        elem: '#articleImageBtn'
 		        ,field:'preimage'
-		        ,url: '${ctx}/article/preView'
+		        ,url: '${ctx}/article/preViewImage'
 		        ,before: function(obj){
 		          
 		        }
@@ -145,7 +137,7 @@ var topicData=null;
 		        ,error: function(){
 		          
 		        }
-		      });**/	
+		      });	
 		  var ue = UE.getEditor('editor');	
 		  var form = layui.form;
 		  //监听提交

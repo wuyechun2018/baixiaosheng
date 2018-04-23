@@ -61,6 +61,14 @@ var topicData=null;
 			</div>
 			
 			<div class="layui-form-item">
+				<label class="layui-form-label">作者</label>
+				<div class="layui-input-block">
+					<input type="text" class="layui-input " name="author" required lay-verify="required"
+						placeholder="请输入作者" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
 				<label class="layui-form-label">发布媒体</label>
 				<div class="layui-input-block">
 					<input type="text" class="layui-input articleTitle" name="publishMedia" required lay-verify="required"
@@ -82,6 +90,8 @@ var topicData=null;
 	            </div>
 	             --%>
 	        </div>
+	        
+	        
 			
 			<div class="layui-form-item layui-form-text">
 				<label class="layui-form-label">视频内容</label>
@@ -126,7 +136,8 @@ var topicData=null;
 		    var uploadInst = upload.render({
 		        elem: '#articleImageBtn'
 		        ,field:'preimage'
-		        ,url: '${ctx}/article/preView'
+		       // ,url: '${ctx}/article/preView'
+		        ,url: '${ctx}/article/preViewImage' 	
 		        ,before: function(obj){
 		          
 		        }

@@ -54,6 +54,14 @@ var topicData=null;
 			</div>
 			
 			<div class="layui-form-item">
+				<label class="layui-form-label">作者</label>
+				<div class="layui-input-block">
+					<input type="text" class="layui-input "  value="${article.author}" name="author" required lay-verify="required"
+						placeholder="请输入作者" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
 	           	 <label class="layui-form-label">形象图</label>
 	             <div class="layui-input-inline" style="width: 250px;">
 	                <input type="text" value="${article.articleImageUrl}" name="articleImageUrl" value="" class="layui-input" id="articleImageUrl"> 
@@ -112,7 +120,8 @@ var topicData=null;
 		    var uploadInst = upload.render({
 		        elem: '#articleImageBtn'
 		        ,field:'preimage'
-		        ,url: '${ctx}/article/preView'
+		      //  ,url: '${ctx}/article/preView'
+		        ,url: '${ctx}/article/preViewImage'
 		        ,before: function(obj){
 		          
 		        }

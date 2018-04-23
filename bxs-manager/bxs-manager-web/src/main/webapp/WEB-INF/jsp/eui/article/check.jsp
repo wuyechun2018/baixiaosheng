@@ -112,7 +112,7 @@ function checkFun(checkState){
 </div>
 	  <div style="width: 100%;text-align: center;padding-bottom: 50px;">
        		<span><button onclick="checkFun('1')"  class="btn-green">审核通过</button></span>
-       		<span><button onclick="checkFun('0')" class="btn-red">不予通过</button></span>
+       		<span><button onclick="checkFun('2')" class="btn-red">不予通过</button></span>
        </div>
   
 </body>

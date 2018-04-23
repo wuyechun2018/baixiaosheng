@@ -1072,7 +1072,8 @@ public class ArticleDao {
 	 * @return String
 	 */
 	private String getOrderBySql(Map<String, Object> param) {
-		String sql="\n ORDER BY top_count DESC, publish_date DESC,create_date DESC";
+		//String sql="\n ORDER BY top_count DESC, publish_date DESC,create_date DESC";
+		String sql="\n ORDER BY top_count DESC, publish_date DESC,update_date DESC";
 		//如果有关键字搜索，则不进行排序
 		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
 			sql="";

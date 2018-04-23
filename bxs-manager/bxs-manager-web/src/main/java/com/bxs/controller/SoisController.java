@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -210,8 +211,10 @@ public class SoisController {
 		if(info!=null){
 			article.setPublishDeptId(info.getDeptId());
 			article.setPublishUserId(info.getId());
-			//作者默认为上报人
-			article.setAuthor(info.getUserName());
+			//如果，作者没有填写，则默认为上报人
+			if(StringUtils.isBlank(article.getAuthor())){
+				article.setAuthor(info.getUserName());
+			}
 			//消息来源
 			article.setNewsfrom(info.getDeptName()+"上报");
 		}
@@ -235,8 +238,10 @@ public class SoisController {
 		if(info!=null){
 			article.setPublishDeptId(info.getDeptId());
 			article.setPublishUserId(info.getId());
-			//作者默认为上报人
-			article.setAuthor(info.getUserName());
+			//如果，作者没有填写，则默认为上报人
+			if(StringUtils.isBlank(article.getAuthor())){
+				article.setAuthor(info.getUserName());
+			}
 			//消息来源
 			article.setNewsfrom(info.getDeptName()+"上报");
 		}
@@ -261,8 +266,10 @@ public class SoisController {
 		if(info!=null){
 			article.setPublishDeptId(info.getDeptId());
 			article.setPublishUserId(info.getId());
-			//作者默认为上报人
-			article.setAuthor(info.getUserName());
+			//如果，作者没有填写，则默认为上报人
+			if(StringUtils.isBlank(article.getAuthor())){
+				article.setAuthor(info.getUserName());
+			}
 			//消息来源
 			article.setNewsfrom(info.getDeptName()+"上报");
 		}
@@ -311,8 +318,10 @@ public class SoisController {
 		if(info!=null){
 			article.setPublishDeptId(info.getDeptId());
 			article.setPublishUserId(info.getId());
-			//作者默认为上报人
-			article.setAuthor(info.getUserName());
+			//如果，作者没有填写，则默认为上报人
+			if(StringUtils.isBlank(article.getAuthor())){
+				article.setAuthor(info.getUserName());
+			}
 			//消息来源
 			article.setNewsfrom(info.getDeptName()+"上报");
 		}
