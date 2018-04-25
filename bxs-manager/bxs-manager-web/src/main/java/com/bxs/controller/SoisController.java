@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -50,6 +53,8 @@ import com.bxs.service.UserService;
 @Controller
 @RequestMapping("/sois")
 public class SoisController {
+	
+	private static final Logger logger =LoggerFactory.getLogger(SoisController.class);
 	
 	@Autowired
 	private ArticleService articleService;
@@ -751,6 +756,7 @@ public class SoisController {
 				session.setAttribute(SystemConstant.CURRENT_SESSION_USER_INFO, info);
 				//携带用户信息
 				mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO, info);
+				logger.info("{}登录[报送系统]成功,时间为{}",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 				//跳转到后台管理主页面
 				mv.setViewName("/sois/indexs");
 			}else{

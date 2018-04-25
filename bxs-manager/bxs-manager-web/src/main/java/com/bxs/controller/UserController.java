@@ -8,6 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -45,6 +48,9 @@ import com.bxs.service.UserService;
 @RequestMapping("/user")
 public class UserController extends BaseController {
 
+	private static final Logger logger =LoggerFactory.getLogger(UserController.class);
+
+	
 	@Autowired
 	private UserService userService;
 	
@@ -74,18 +80,22 @@ public class UserController extends BaseController {
 					session.setAttribute(SystemConstant.CURRENT_SESSION_USER_INFO, info);
 					//携带用户信息
 					mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO, info);
+					logger.info("{}登录[管理系统]成功,时间为{}",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 					//跳转到后台管理主页面
 					mv.setViewName("/manager/index");
 				}else{
+					logger.info("{}登录[管理系统]失败,时间为{},该用户无[管理员]角色",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 					mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "非管理员,无权登录");
 				}
 			}else{
 				mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
+				logger.info("{}登录[管理系统]失败,时间为{},密码错误",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 				//登录失败，跳转到登录页面
 				mv.setViewName("login");
 			}
 			
 		}else{
+			logger.info("账号{}登录[管理系统]失败,时间为{},系统中无该用户",username,new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 			mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
 		}
 		return mv;
