@@ -69,6 +69,10 @@ public class Article implements java.io.Serializable {
 	
 	//发布媒体
 	private String publishMedia;
+	//标题颜色
+	private String titleColor;
+	//责任编辑
+	private String resEdtior;
 	
 
 	public String getId() {
@@ -250,5 +254,20 @@ public class Article implements java.io.Serializable {
 	public void setPublishMedia(String publishMedia) {
 		this.publishMedia = publishMedia;
 	}
-	
+
+	public String getTitleColor() {
+		return titleColor;
+	}
+
+	public void setTitleColor(String titleColor) {
+		this.titleColor = titleColor;
+	}
+
+	public String getResEdtior() {
+		return resEdtior;
+	}
+
+	public void setResEdtior(String resEdtior) {
+		this.resEdtior = resEdtior;
+	}
 }

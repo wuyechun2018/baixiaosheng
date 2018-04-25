@@ -9,6 +9,8 @@
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/ueditor.all.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/iColorPicker/js/iColorPicker.js"></script>
+
 
 
 <title>修改文章</title>
@@ -81,7 +83,8 @@ $(function(){
 	 			  <input type="hidden"  value="0" name="topState"  />
 	 			  <%--普通类型 --%>
 	 			  <input type="hidden"  value="1" name="articleType"  />
-	 			  <input value="${article.articleTitle}" type="text" name="articleTitle" style="width:300px;" />
+	 			  <input value="${article.articleTitle}" type="text" name="articleTitle" style="width:242px;" />
+	 			   <input  type="text" id="titleColor" name="titleColor"  value="${article.titleColor}" style="width: 55px"  class="iColorPicker input" />
 	 			</td>
 	 			
 	 			<td rowspan="3">

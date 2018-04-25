@@ -9,6 +9,7 @@
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/ueditor.config.image.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/ueditor.all.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/iColorPicker/js/iColorPicker.js"></script>
 
 
 <title>编辑图片文章</title>
@@ -77,9 +78,10 @@ $(function(){
 			 	<th>文章标题：</th>	 		
 	 			<td>
 	 			  <input type="hidden"  value="${article.id}" name="id"  />
+	 			  <input value="${article.articleTitle}" type="text" name="articleTitle" style="width:242px;" />
 	 			  <%--普通类型 --%>
 	 			  <input type="hidden"  value="2" name="articleType"  />
-	 			  <input value="${article.articleTitle}" type="text" name="articleTitle" style="width:300px;" />
+	 			  <input  type="text" id="titleColor" name="titleColor"  value="${article.titleColor}" style="width: 55px"  class="iColorPicker input" />
 	 			</td>
 	 			<td>&nbsp;</td>
 	 		</tr>

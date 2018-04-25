@@ -9,6 +9,7 @@
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/ueditor.all.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/ueditor-1.4.3.3/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/resources/js-lib/iColorPicker/js/iColorPicker.js"></script>
 
 
 <title>添加文章</title>
@@ -79,7 +80,8 @@ $(function(){
 	 		<tr>
 			 	<th>文章标题：</th>	 		
 	 			<td>
-	 			  <input type="text" name="articleTitle" style="width:300px;" />
+	 			  <input type="text" name="articleTitle" style="width:242px;" />
+	 			  <input  type="text" id="titleColor" name="titleColor"  value="#000000" style="width: 55px"  class="iColorPicker input" />
 	 			   <%--普通类型 --%>
 	 			  <input type="hidden"  value="1" name="articleType"  />
 	 			  <input type="hidden"  value="0" name="topState"  />

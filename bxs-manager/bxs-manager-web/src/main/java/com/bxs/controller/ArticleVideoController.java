@@ -90,6 +90,23 @@ public class ArticleVideoController {
 		return mv;
 	}
 	
+	
+	/**
+	 * 
+	 * 文章审核-视频
+	 * @author: wyc
+	 * @createTime: 2018年1月17日 下午5:05:37
+	 * @history:
+	 * @return String
+	 */
+	@RequestMapping("/check")
+	public ModelAndView check(String id) {
+		ModelAndView mv=new ModelAndView("/eui/article-video/check");
+		ArticleInfoVo articleInfoVo=articleService.getArticleInfoById(id);
+		mv.addObject("articleInfoVo",articleInfoVo);
+		return mv;
+	}
+	
 	/**
 	 * 
 	 * 处理"发布日期字段",对于日期字段,前端不传也是可以的，但是，如果传了值，必须进行格式转换

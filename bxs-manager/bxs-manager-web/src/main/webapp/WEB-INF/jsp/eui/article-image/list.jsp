@@ -61,7 +61,7 @@ function viewFun(id){
 
 //文章审核
 function checkFun(id){
-	location.href=ctx+"/article/check?id="+id;
+	location.href=ctx+"/articleImage/check?id="+id;
 }
 
 //首页推荐

@@ -598,9 +598,15 @@ public class ArticleController extends BaseController{
 	 */
 	@RequestMapping("/saveCheckState")
 	@ResponseBody
-	public Object saveCheckState(String id,String checkState){
+	public Object saveCheckState(String id,String checkState,HttpSession session){
 		Article article=articleService.getArticleById(id);
 		article.setCheckState(checkState);
+		
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			article.setResEdtior(info.getUserName());
+		}
+		
 		articleService.saveCheckState(article);
 		return new JsonMsg();
 	}

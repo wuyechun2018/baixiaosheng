@@ -33,9 +33,9 @@ function goback(){
 
 <div class="newsContent" id="newsContent">
 	<div class="c_Box">
-    	<h3 class="sp_title">${articleInfoVo.articleTitle}</h3>
+    	<h3 class="sp_title" style="color:${articleInfoVo.titleColor}">${articleInfoVo.articleTitle}</h3>
         <div class="sp_time">
-		 <span>投稿部门：${articleInfoVo.publishDeptName}</span>
+		 <span >投稿部门：${articleInfoVo.publishDeptName}</span>
 		 <span>发布时间：<fmt:formatDate value="${articleInfoVo.createDate}"  pattern="yyyy-MM-dd HH:mm"/></span>
 		 <span>【字体：<a href="javascript:doZoom(20)">大</a><a href="javascript:doZoom(16)">中</a><a href="javascript:doZoom(12)">小</a>】</span>
 		</div>
@@ -64,7 +64,7 @@ function goback(){
         <div class="clearfix" style="margin:0 38px;">
     		<div class="chare">
 				<div class="chare-left">
-				信息来源：马鞍山日报&nbsp;&nbsp;&nbsp;&nbsp;责任编辑：${articleInfoVo.publishUserName}
+				信息来源：${articleInfoVo.newsfrom}&nbsp;&nbsp;&nbsp;&nbsp;作者：${articleInfoVo.author}&nbsp;&nbsp;&nbsp;&nbsp;责任编辑：${articleInfoVo.resEdtior}
 				</div>
 
                 <div class="chare-right">	

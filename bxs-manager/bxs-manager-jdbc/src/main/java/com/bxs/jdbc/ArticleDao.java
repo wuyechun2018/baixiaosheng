@@ -77,7 +77,9 @@ public class ArticleDao {
 						"  publish_date,\n" + 
 						"  top_state,\n" + 
 						"  pop_state,\n" +
-						"  publish_media\n" +
+						"  publish_media,\n" +
+						"  title_color,\n" +
+						"  res_edtior\n" +
 						")\n" + 
 						"VALUES\n" + 
 						"  (\n" + 
@@ -101,6 +103,8 @@ public class ArticleDao {
 						"    ?,\n" + 
 						"    ?,\n" +
 						"    ?,\n" + 
+						"    ?,\n" + 
+						"    ?,\n" +
 						"    ?,\n" + 
 						"    ?\n" +
 						"  )";
@@ -130,6 +134,8 @@ public class ArticleDao {
 			         ps.setString(20, article.getTopState());
 			         ps.setString(21, article.getPopState());
 			         ps.setString(22, article.getPublishMedia());
+			         ps.setString(23, article.getTitleColor());
+			         ps.setString(24, article.getResEdtior());
 			       }
 			     }
 			 );
@@ -175,7 +181,9 @@ public class ArticleDao {
 						"  publish_date = ?,\n" + 
 						"  top_state = ?,\n" + 
 						"  pop_state = ?,\n" + 
-						"  publish_media = ?\n" + 
+						"  publish_media = ?,\n" + 
+						"  title_color = ?,\n" + 
+						"  res_edtior = ?\n" + 
 						"WHERE id = ?";
 
 		jdbcTemplate.execute(sql,
@@ -202,7 +210,9 @@ public class ArticleDao {
 			         ps.setString(19, article.getTopState());
 			         ps.setString(20, article.getPopState());
 			         ps.setString(21, article.getPublishMedia());
-			         ps.setString(22, article.getId());
+			         ps.setString(22, article.getTitleColor());
+			         ps.setString(23, article.getResEdtior());
+			         ps.setString(24, article.getId());
 			       }
 			     }
 			 );
@@ -787,8 +797,8 @@ public class ArticleDao {
 	 * @param article void
 	 */
 	public void saveCheckState(Article article) {
-		String sql = "UPDATE T_ARTICLE SET check_state=? WHERE ID=?";
-		jdbcTemplate.update(sql,new Object[]{article.getCheckState(),article.getId()});
+		String sql = "UPDATE T_ARTICLE SET check_state=?,res_edtior=? WHERE ID=?";
+		jdbcTemplate.update(sql,new Object[]{article.getCheckState(),article.getResEdtior(),article.getId()});
 		
 	}
 
