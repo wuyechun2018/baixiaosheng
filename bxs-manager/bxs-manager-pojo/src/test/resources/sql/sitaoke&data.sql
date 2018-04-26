@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.09 (64 bit)
-MySQL - 5.7.17-log : Database - bxs
+MySQL - 5.7.17-log : Database - sitaoke
 *********************************************************************
 */
 
@@ -12,9 +12,9 @@ MySQL - 5.7.17-log : Database - bxs
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`bxs` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`sitaoke` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-USE `bxs`;
+USE `sitaoke`;
 
 /*Table structure for table `t_article` */
 
@@ -66,6 +66,8 @@ CREATE TABLE `t_article` (
   FULLTEXT KEY `ft_article_title` (`article_title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章';
 
+/*Data for the table `t_article` */
+
 /*Table structure for table `t_article_history` */
 
 DROP TABLE IF EXISTS `t_article_history`;
@@ -97,6 +99,8 @@ CREATE TABLE `t_article_history` (
   `title_color` varchar(50) DEFAULT NULL COMMENT '标题颜色'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Data for the table `t_article_history` */
+
 /*Table structure for table `t_config` */
 
 DROP TABLE IF EXISTS `t_config`;
@@ -116,6 +120,8 @@ CREATE TABLE `t_config` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Data for the table `t_config` */
+
 /*Table structure for table `t_config_type` */
 
 DROP TABLE IF EXISTS `t_config_type`;
@@ -131,6 +137,10 @@ CREATE TABLE `t_config_type` (
   `display_order` bigint(10) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置类型表';
+
+/*Data for the table `t_config_type` */
+
+insert  into `t_config_type`(`id`,`pid`,`config_type_code`,`config_type_name`,`config_value_type`,`config_type_desc`,`data_state`,`display_order`) values ('1','0','PZLX','配置类型','0','系统配置','1',1);
 
 /*Table structure for table `t_dept` */
 
@@ -148,6 +158,10 @@ CREATE TABLE `t_dept` (
   PRIMARY KEY (`id`,`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Data for the table `t_dept` */
+
+insert  into `t_dept`(`id`,`pid`,`dept_code`,`dept_name`,`dept_type`,`dept_desc`,`data_state`,`display_order`) values ('1','0','0','部门','1','单位部门','1',1);
+
 /*Table structure for table `t_float_win` */
 
 DROP TABLE IF EXISTS `t_float_win`;
@@ -164,6 +178,8 @@ CREATE TABLE `t_float_win` (
   `data_state` varchar(10) DEFAULT NULL COMMENT '数据状态（0：删除 1：正常）',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='飘窗配置表';
+
+/*Data for the table `t_float_win` */
 
 /*Table structure for table `t_info_rank` */
 
@@ -188,6 +204,8 @@ CREATE TABLE `t_info_rank` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Data for the table `t_info_rank` */
+
 /*Table structure for table `t_link` */
 
 DROP TABLE IF EXISTS `t_link`;
@@ -205,6 +223,8 @@ CREATE TABLE `t_link` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Data for the table `t_link` */
+
 /*Table structure for table `t_link_type` */
 
 DROP TABLE IF EXISTS `t_link_type`;
@@ -219,6 +239,10 @@ CREATE TABLE `t_link_type` (
   `display_order` bigint(10) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `t_link_type` */
+
+insert  into `t_link_type`(`id`,`pid`,`link_type_code`,`link_type_name`,`link_type_desc`,`data_state`,`display_order`) values ('1','0','LJLX','导航类型','链接描述信息','1',1);
 
 /*Table structure for table `t_menu` */
 
@@ -235,6 +259,10 @@ CREATE TABLE `t_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Data for the table `t_menu` */
+
+insert  into `t_menu`(`id`,`pid`,`menu_name`,`menu_url`,`menu_type`,`DATA_STATE`,`display_order`) values ('1','0','文章管理','	#','1','1',1),('10','0','图片文章','#','1','1',3),('11','8','职位管理','/eui/post/list','2','1',12),('12','8','部门管理','/eui/dept/list','2','1',11),('13','10','添加文章','/eui/article-image/list','2','1',15),('14','0','天气预报','	#','1','1',14),('15','14','添加天气','/eui/weather/list','2','1',15),('16','0','信息排名','#','1','1',16),('17','16','信息填报','/eui/rank/list','2','1',17),('18','0','系统配置','#','1','1',18),('19','18','配置项','/eui/config/list','2','1',19),('2','1','栏目管理','/eui/topic/list','2','1',2),('20','18','配置专题','/eui/subject/list','2','1',20),('21','6','浮窗链接','/eui/floatwin/list','2','1',21),('3','1','内容管理','/eui/article/list','2','1',3),('4','0','视频管理','	#','1','1',4),('5','4','添加视频','/eui/article-video/list','2','1',5),('6','0','友情链接','	#','1','1',6),('7','6','添加链接','/eui/link/list','2','1',7),('8','0','用户管理','	#','2','1',8),('9','8','通讯录','/eui/user/list','2','1',13);
+
 /*Table structure for table `t_opt_article_count` */
 
 DROP TABLE IF EXISTS `t_opt_article_count`;
@@ -247,6 +275,8 @@ CREATE TABLE `t_opt_article_count` (
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `t_opt_article_count` */
 
 /*Table structure for table `t_post` */
 
@@ -264,6 +294,8 @@ CREATE TABLE `t_post` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Data for the table `t_post` */
+
 /*Table structure for table `t_role` */
 
 DROP TABLE IF EXISTS `t_role`;
@@ -278,6 +310,10 @@ CREATE TABLE `t_role` (
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `t_role` */
+
+insert  into `t_role`(`id`,`role_code`,`role_name`,`role_desc`,`data_state`,`create_date`,`update_date`) values ('000213f1-93cb-41a8-b5c6-15066d13c379','GUEST','访客','普通用户','1','2018-04-03 23:51:08','2018-04-03 23:51:28'),('000213f1-93cb-41a8-b6c6-15066d33c379','SYSADMIN','系统管理员','系统管理员,一般赋予最高权限','1','2018-03-27 23:51:08','2018-03-27 23:51:28');
 
 /*Table structure for table `t_sign` */
 
@@ -298,6 +334,8 @@ CREATE TABLE `t_sign` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Data for the table `t_sign` */
+
 /*Table structure for table `t_topic` */
 
 DROP TABLE IF EXISTS `t_topic`;
@@ -315,6 +353,10 @@ CREATE TABLE `t_topic` (
   KEY `index_article_code` (`topic_code`),
   KEY `index_topic_pid` (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `t_topic` */
+
+insert  into `t_topic`(`id`,`pid`,`topic_name`,`topic_type`,`topic_desc`,`data_state`,`display_order`,`topic_code`) values ('1','0','栏目类型','1','栏目类型','1',1,'LMLX');
 
 /*Table structure for table `t_user` */
 
@@ -337,6 +379,10 @@ CREATE TABLE `t_user` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Data for the table `t_user` */
+
+insert  into `t_user`(`id`,`login_name`,`login_password`,`login_time`,`data_state`,`office_telephone`,`mobile_phone`,`user_name`,`birthday`,`dept_id`,`post_id`,`user_desc`) values ('d579e129-e328-46f7-880f-4e029264367c','zhanghaiyang','25d55ad283aa400af464c76d713c07ad','2018-02-12 17:21:29','1','0553-5845159','15395372172','王磊','2018-02-07','7644cb53-5593-48f7-ba5b-39a99d4cc26f','3636eefb-31be-4cc2-8b1d-8169fc467ba6','');
+
 /*Table structure for table `t_user_role` */
 
 DROP TABLE IF EXISTS `t_user_role`;
@@ -351,6 +397,10 @@ CREATE TABLE `t_user_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Data for the table `t_user_role` */
+
+insert  into `t_user_role`(`id`,`user_id`,`role_id`,`data_state`,`create_date`,`update_date`) values ('a7373772-322a-11e8-a4ab-00ffb989f2ce','d579e129-e328-46f7-880f-4e029264367c','000213f1-93cb-41a8-b6c6-15066d33c379','1','2018-03-28 09:45:28','2018-03-28 09:50:28');
+
 /*Table structure for table `t_weather_forecast` */
 
 DROP TABLE IF EXISTS `t_weather_forecast`;
@@ -362,6 +412,10 @@ CREATE TABLE `t_weather_forecast` (
   `weather_desc` varchar(500) DEFAULT NULL COMMENT '说明',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `t_weather_forecast` */
+
+insert  into `t_weather_forecast`(`id`,`weather_date`,`weather_conditions`,`weather_desc`) values ('0a897d7b-ff29-41fd-b6cf-317290fe9537','2018-04-29',NULL,NULL),('1212416d-b27a-4e8b-8a4c-80cc7b9917e2','2018-05-12',NULL,NULL),('1df3f2c4-ceaa-48bf-8cd3-7a25d3694f9a','2018-04-30',NULL,NULL),('1f72f9c1-0434-4e19-8f49-958b4d5bb666','2018-05-16',NULL,NULL),('248e9c35-328c-4d23-933c-1cd6f8f80e88','2018-05-02',NULL,NULL),('2bab5adf-9632-4fc3-b5ab-5d4b1c234a84','2018-05-13',NULL,NULL),('30bb02bd-874f-4a7d-8640-82ea6cdba5c5','2018-05-09',NULL,NULL),('3f0a197c-1c06-4816-ba66-6ff552ae78f4','2018-05-23',NULL,NULL),('48384f39-37cd-490c-9769-8092f20e457e','2018-05-01',NULL,NULL),('48707152-3897-4ffa-ad49-a3b290f78357','2018-04-27',NULL,NULL),('4c156c09-d38d-401f-9b85-4edc49766cfd','2018-05-03',NULL,NULL),('4d4583fe-3672-427c-ab99-714e57bf8137','2018-05-05',NULL,NULL),('52f403d7-8317-4510-b8e1-6c600c2cd39e','2018-05-07',NULL,NULL),('761d1fa7-b6c3-45a4-ab36-90274aa39ee4','2018-05-19',NULL,NULL),('767c0dc9-e5fd-4b83-92e8-5fcb80362fea','2018-05-15',NULL,NULL),('78aa35e2-8d7a-4328-8726-2a0ab3f500aa','2018-04-28',NULL,NULL),('79833ef0-e965-4404-87ca-babde1a31816','2018-05-20',NULL,NULL),('8549437a-2378-42d9-bc8e-61eafb822bd6','2018-05-11',NULL,NULL),('95bad20d-23f3-4f41-9a94-9646726b6f42','2018-05-22',NULL,NULL),('af76d8f7-b793-49ec-9fe7-b16a846ea2a2','2018-05-25',NULL,NULL),('b20ab65d-2973-43b3-b6a8-1984a90b99bb','2018-05-14',NULL,NULL),('bf83462b-af61-444f-a384-04a880350655','2018-05-24',NULL,NULL),('c560f442-9608-480a-b237-0d8567f16f48','2018-05-06',NULL,NULL),('ca41d039-08dd-43fe-8f1e-61a32f99d307','2018-05-10',NULL,NULL),('cc62403c-4f9b-457c-b673-409c83546712','2018-05-04',NULL,NULL),('d0254fb1-144e-45e7-9df2-facec270a7b8','2018-05-17',NULL,NULL),('e02382f4-3dc9-4735-8fdd-f88934884dca','2018-05-21',NULL,NULL),('ec323c2c-9f7b-4b65-b221-801f1b33de5d','2018-04-26',NULL,NULL),('f0cc4f62-3237-45e4-927f-345bf9f24296','2018-05-18',NULL,NULL),('f9dee751-56f2-41f6-b31b-b1bef8de3f17','2018-05-08',NULL,NULL);
 
 /*Table structure for table `v_article_info` */
 
@@ -646,14 +700,14 @@ DROP TABLE IF EXISTS `v_user_info`;
 /*!50001 DROP TABLE IF EXISTS `v_article_info` */;
 /*!50001 DROP VIEW IF EXISTS `v_article_info` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_article_info` AS select `j`.`id` AS `id`,`j`.`article_type` AS `article_type`,`j`.`topic_id` AS `topic_id`,`j`.`article_title` AS `article_title`,`j`.`article_image_url` AS `article_image_url`,`j`.`article_content` AS `article_content`,`j`.`publish_dept_id` AS `publish_dept_id`,`j`.`publish_user_id` AS `publish_user_id`,`j`.`check_state` AS `check_state`,`j`.`top_count` AS `top_count`,`j`.`view_count` AS `view_count`,`j`.`display_order` AS `display_order`,`j`.`data_state` AS `data_state`,`j`.`create_date` AS `create_date`,`j`.`update_date` AS `update_date`,`j`.`front_slider_state` AS `front_slider_state`,`j`.`newsfrom` AS `newsfrom`,`j`.`author` AS `author`,`j`.`publish_date` AS `publish_date`,`j`.`top_state` AS `top_state`,`j`.`pop_state` AS `pop_state`,`j`.`publish_media` AS `publish_media`,`j`.`res_edtior` AS `res_edtior`,`j`.`title_color` AS `title_color`,`j`.`topic_name` AS `topic_name`,`j`.`topic_code` AS `topic_code`,`j`.`content_image_url` AS `content_image_url`,`j`.`publish_dept_name` AS `publish_dept_name`,`k`.`user_name` AS `publish_user_name` from (((select `m`.`id` AS `id`,`m`.`article_type` AS `article_type`,`m`.`topic_id` AS `topic_id`,`m`.`article_title` AS `article_title`,`m`.`article_image_url` AS `article_image_url`,`m`.`article_content` AS `article_content`,`m`.`publish_dept_id` AS `publish_dept_id`,`m`.`publish_user_id` AS `publish_user_id`,`m`.`check_state` AS `check_state`,`m`.`top_count` AS `top_count`,`m`.`view_count` AS `view_count`,`m`.`display_order` AS `display_order`,`m`.`data_state` AS `data_state`,`m`.`create_date` AS `create_date`,`m`.`update_date` AS `update_date`,`m`.`front_slider_state` AS `front_slider_state`,`m`.`newsfrom` AS `newsfrom`,`m`.`author` AS `author`,`m`.`publish_date` AS `publish_date`,`m`.`top_state` AS `top_state`,`m`.`pop_state` AS `pop_state`,`m`.`publish_media` AS `publish_media`,`m`.`res_edtior` AS `res_edtior`,`m`.`title_color` AS `title_color`,`m`.`topic_name` AS `topic_name`,`m`.`topic_code` AS `topic_code`,`m`.`content_image_url` AS `content_image_url`,`n`.`dept_name` AS `publish_dept_name` from (((select `t`.`id` AS `id`,`t`.`article_type` AS `article_type`,`t`.`topic_id` AS `topic_id`,`t`.`article_title` AS `article_title`,`t`.`article_image_url` AS `article_image_url`,`t`.`article_content` AS `article_content`,`t`.`publish_dept_id` AS `publish_dept_id`,`t`.`publish_user_id` AS `publish_user_id`,`t`.`check_state` AS `check_state`,`t`.`top_count` AS `top_count`,`t`.`view_count` AS `view_count`,`t`.`display_order` AS `display_order`,`t`.`data_state` AS `data_state`,`t`.`create_date` AS `create_date`,`t`.`update_date` AS `update_date`,`t`.`front_slider_state` AS `front_slider_state`,`t`.`newsfrom` AS `newsfrom`,`t`.`author` AS `author`,`t`.`publish_date` AS `publish_date`,`t`.`top_state` AS `top_state`,`t`.`pop_state` AS `pop_state`,`t`.`publish_media` AS `publish_media`,`t`.`res_edtior` AS `res_edtior`,`t`.`title_color` AS `title_color`,`s`.`topic_name` AS `topic_name`,`s`.`topic_code` AS `topic_code`,substr(`t`.`article_content`,(locate('src="',`t`.`article_content`) + 5),58) AS `content_image_url` from (`bxs`.`t_article` `t` left join `bxs`.`t_topic` `s` on((`t`.`topic_id` = `s`.`id`))))) `m` left join `bxs`.`t_dept` `n` on((`m`.`publish_dept_id` = `n`.`id`))))) `j` left join `bxs`.`t_user` `k` on((`j`.`publish_user_id` = `k`.`id`))) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_article_info` AS select `j`.`id` AS `id`,`j`.`article_type` AS `article_type`,`j`.`topic_id` AS `topic_id`,`j`.`article_title` AS `article_title`,`j`.`article_image_url` AS `article_image_url`,`j`.`article_content` AS `article_content`,`j`.`publish_dept_id` AS `publish_dept_id`,`j`.`publish_user_id` AS `publish_user_id`,`j`.`check_state` AS `check_state`,`j`.`top_count` AS `top_count`,`j`.`view_count` AS `view_count`,`j`.`display_order` AS `display_order`,`j`.`data_state` AS `data_state`,`j`.`create_date` AS `create_date`,`j`.`update_date` AS `update_date`,`j`.`front_slider_state` AS `front_slider_state`,`j`.`newsfrom` AS `newsfrom`,`j`.`author` AS `author`,`j`.`publish_date` AS `publish_date`,`j`.`top_state` AS `top_state`,`j`.`pop_state` AS `pop_state`,`j`.`publish_media` AS `publish_media`,`j`.`res_edtior` AS `res_edtior`,`j`.`title_color` AS `title_color`,`j`.`topic_name` AS `topic_name`,`j`.`topic_code` AS `topic_code`,`j`.`content_image_url` AS `content_image_url`,`j`.`publish_dept_name` AS `publish_dept_name`,`k`.`user_name` AS `publish_user_name` from (((select `m`.`id` AS `id`,`m`.`article_type` AS `article_type`,`m`.`topic_id` AS `topic_id`,`m`.`article_title` AS `article_title`,`m`.`article_image_url` AS `article_image_url`,`m`.`article_content` AS `article_content`,`m`.`publish_dept_id` AS `publish_dept_id`,`m`.`publish_user_id` AS `publish_user_id`,`m`.`check_state` AS `check_state`,`m`.`top_count` AS `top_count`,`m`.`view_count` AS `view_count`,`m`.`display_order` AS `display_order`,`m`.`data_state` AS `data_state`,`m`.`create_date` AS `create_date`,`m`.`update_date` AS `update_date`,`m`.`front_slider_state` AS `front_slider_state`,`m`.`newsfrom` AS `newsfrom`,`m`.`author` AS `author`,`m`.`publish_date` AS `publish_date`,`m`.`top_state` AS `top_state`,`m`.`pop_state` AS `pop_state`,`m`.`publish_media` AS `publish_media`,`m`.`res_edtior` AS `res_edtior`,`m`.`title_color` AS `title_color`,`m`.`topic_name` AS `topic_name`,`m`.`topic_code` AS `topic_code`,`m`.`content_image_url` AS `content_image_url`,`n`.`dept_name` AS `publish_dept_name` from (((select `t`.`id` AS `id`,`t`.`article_type` AS `article_type`,`t`.`topic_id` AS `topic_id`,`t`.`article_title` AS `article_title`,`t`.`article_image_url` AS `article_image_url`,`t`.`article_content` AS `article_content`,`t`.`publish_dept_id` AS `publish_dept_id`,`t`.`publish_user_id` AS `publish_user_id`,`t`.`check_state` AS `check_state`,`t`.`top_count` AS `top_count`,`t`.`view_count` AS `view_count`,`t`.`display_order` AS `display_order`,`t`.`data_state` AS `data_state`,`t`.`create_date` AS `create_date`,`t`.`update_date` AS `update_date`,`t`.`front_slider_state` AS `front_slider_state`,`t`.`newsfrom` AS `newsfrom`,`t`.`author` AS `author`,`t`.`publish_date` AS `publish_date`,`t`.`top_state` AS `top_state`,`t`.`pop_state` AS `pop_state`,`t`.`publish_media` AS `publish_media`,`t`.`res_edtior` AS `res_edtior`,`t`.`title_color` AS `title_color`,`s`.`topic_name` AS `topic_name`,`s`.`topic_code` AS `topic_code`,substr(`t`.`article_content`,(locate('src="',`t`.`article_content`) + 5),58) AS `content_image_url` from (`sitaoke`.`t_article` `t` left join `sitaoke`.`t_topic` `s` on((`t`.`topic_id` = `s`.`id`))))) `m` left join `sitaoke`.`t_dept` `n` on((`m`.`publish_dept_id` = `n`.`id`))))) `j` left join `sitaoke`.`t_user` `k` on((`j`.`publish_user_id` = `k`.`id`))) */;
 
 /*View structure for view v_article_info_sytj */
 
 /*!50001 DROP TABLE IF EXISTS `v_article_info_sytj` */;
 /*!50001 DROP VIEW IF EXISTS `v_article_info_sytj` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_article_info_sytj` AS select `j`.`id` AS `id`,`j`.`article_type` AS `article_type`,`j`.`topic_id` AS `topic_id`,`j`.`article_title` AS `article_title`,`j`.`article_image_url` AS `article_image_url`,`j`.`article_content` AS `article_content`,`j`.`publish_dept_id` AS `publish_dept_id`,`j`.`publish_user_id` AS `publish_user_id`,`j`.`check_state` AS `check_state`,`j`.`top_count` AS `top_count`,`j`.`view_count` AS `view_count`,`j`.`display_order` AS `display_order`,`j`.`data_state` AS `data_state`,`j`.`create_date` AS `create_date`,`j`.`update_date` AS `update_date`,`j`.`front_slider_state` AS `front_slider_state`,`j`.`newsfrom` AS `newsfrom`,`j`.`author` AS `author`,`j`.`publish_date` AS `publish_date`,`j`.`top_state` AS `top_state`,`j`.`pop_state` AS `pop_state`,`j`.`topic_name` AS `topic_name`,`j`.`topic_code` AS `topic_code`,`j`.`content_image_url` AS `content_image_url`,`j`.`publish_dept_name` AS `publish_dept_name`,`k`.`user_name` AS `publish_user_name` from (((select `m`.`id` AS `id`,`m`.`article_type` AS `article_type`,`m`.`topic_id` AS `topic_id`,`m`.`article_title` AS `article_title`,`m`.`article_image_url` AS `article_image_url`,`m`.`article_content` AS `article_content`,`m`.`publish_dept_id` AS `publish_dept_id`,`m`.`publish_user_id` AS `publish_user_id`,`m`.`check_state` AS `check_state`,`m`.`top_count` AS `top_count`,`m`.`view_count` AS `view_count`,`m`.`display_order` AS `display_order`,`m`.`data_state` AS `data_state`,`m`.`create_date` AS `create_date`,`m`.`update_date` AS `update_date`,`m`.`front_slider_state` AS `front_slider_state`,`m`.`newsfrom` AS `newsfrom`,`m`.`author` AS `author`,`m`.`publish_date` AS `publish_date`,`m`.`top_state` AS `top_state`,`m`.`pop_state` AS `pop_state`,`m`.`topic_name` AS `topic_name`,`m`.`topic_code` AS `topic_code`,`m`.`content_image_url` AS `content_image_url`,`n`.`dept_name` AS `publish_dept_name` from (((select `t`.`id` AS `id`,`t`.`article_type` AS `article_type`,`t`.`topic_id` AS `topic_id`,`t`.`article_title` AS `article_title`,`t`.`article_image_url` AS `article_image_url`,`t`.`article_content` AS `article_content`,`t`.`publish_dept_id` AS `publish_dept_id`,`t`.`publish_user_id` AS `publish_user_id`,`t`.`check_state` AS `check_state`,`t`.`top_count` AS `top_count`,`t`.`view_count` AS `view_count`,`t`.`display_order` AS `display_order`,`t`.`data_state` AS `data_state`,`t`.`create_date` AS `create_date`,`t`.`update_date` AS `update_date`,`t`.`front_slider_state` AS `front_slider_state`,`t`.`newsfrom` AS `newsfrom`,`t`.`author` AS `author`,`t`.`publish_date` AS `publish_date`,`t`.`top_state` AS `top_state`,`t`.`pop_state` AS `pop_state`,`s`.`topic_name` AS `topic_name`,`s`.`topic_code` AS `topic_code`,substr(`t`.`article_content`,(locate('src="',`t`.`article_content`) + 5),58) AS `content_image_url` from (((select `bxs`.`t_article`.`id` AS `id`,`bxs`.`t_article`.`article_type` AS `article_type`,`bxs`.`t_article`.`topic_id` AS `topic_id`,`bxs`.`t_article`.`article_title` AS `article_title`,`bxs`.`t_article`.`article_image_url` AS `article_image_url`,`bxs`.`t_article`.`article_content` AS `article_content`,`bxs`.`t_article`.`publish_dept_id` AS `publish_dept_id`,`bxs`.`t_article`.`publish_user_id` AS `publish_user_id`,`bxs`.`t_article`.`check_state` AS `check_state`,`bxs`.`t_article`.`top_count` AS `top_count`,`bxs`.`t_article`.`view_count` AS `view_count`,`bxs`.`t_article`.`display_order` AS `display_order`,`bxs`.`t_article`.`data_state` AS `data_state`,`bxs`.`t_article`.`create_date` AS `create_date`,`bxs`.`t_article`.`update_date` AS `update_date`,`bxs`.`t_article`.`front_slider_state` AS `front_slider_state`,`bxs`.`t_article`.`newsfrom` AS `newsfrom`,`bxs`.`t_article`.`author` AS `author`,`bxs`.`t_article`.`publish_date` AS `publish_date`,`bxs`.`t_article`.`top_state` AS `top_state`,`bxs`.`t_article`.`pop_state` AS `pop_state` from `bxs`.`t_article` where ((`bxs`.`t_article`.`topic_id` = (select `bxs`.`t_topic`.`id` from `bxs`.`t_topic` where (`bxs`.`t_topic`.`topic_code` = 'ZHYW'))) and (`bxs`.`t_article`.`data_state` = '1') and (`bxs`.`t_article`.`check_state` = '1') and (`bxs`.`t_article`.`front_slider_state` = '1')))) `t` left join `bxs`.`t_topic` `s` on((`t`.`topic_id` = `s`.`id`))))) `m` left join `bxs`.`t_dept` `n` on((`m`.`publish_dept_id` = `n`.`id`))))) `j` left join `bxs`.`t_user` `k` on((`j`.`publish_user_id` = `k`.`id`))) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_article_info_sytj` AS select `j`.`id` AS `id`,`j`.`article_type` AS `article_type`,`j`.`topic_id` AS `topic_id`,`j`.`article_title` AS `article_title`,`j`.`article_image_url` AS `article_image_url`,`j`.`article_content` AS `article_content`,`j`.`publish_dept_id` AS `publish_dept_id`,`j`.`publish_user_id` AS `publish_user_id`,`j`.`check_state` AS `check_state`,`j`.`top_count` AS `top_count`,`j`.`view_count` AS `view_count`,`j`.`display_order` AS `display_order`,`j`.`data_state` AS `data_state`,`j`.`create_date` AS `create_date`,`j`.`update_date` AS `update_date`,`j`.`front_slider_state` AS `front_slider_state`,`j`.`newsfrom` AS `newsfrom`,`j`.`author` AS `author`,`j`.`publish_date` AS `publish_date`,`j`.`top_state` AS `top_state`,`j`.`pop_state` AS `pop_state`,`j`.`topic_name` AS `topic_name`,`j`.`topic_code` AS `topic_code`,`j`.`content_image_url` AS `content_image_url`,`j`.`publish_dept_name` AS `publish_dept_name`,`k`.`user_name` AS `publish_user_name` from (((select `m`.`id` AS `id`,`m`.`article_type` AS `article_type`,`m`.`topic_id` AS `topic_id`,`m`.`article_title` AS `article_title`,`m`.`article_image_url` AS `article_image_url`,`m`.`article_content` AS `article_content`,`m`.`publish_dept_id` AS `publish_dept_id`,`m`.`publish_user_id` AS `publish_user_id`,`m`.`check_state` AS `check_state`,`m`.`top_count` AS `top_count`,`m`.`view_count` AS `view_count`,`m`.`display_order` AS `display_order`,`m`.`data_state` AS `data_state`,`m`.`create_date` AS `create_date`,`m`.`update_date` AS `update_date`,`m`.`front_slider_state` AS `front_slider_state`,`m`.`newsfrom` AS `newsfrom`,`m`.`author` AS `author`,`m`.`publish_date` AS `publish_date`,`m`.`top_state` AS `top_state`,`m`.`pop_state` AS `pop_state`,`m`.`topic_name` AS `topic_name`,`m`.`topic_code` AS `topic_code`,`m`.`content_image_url` AS `content_image_url`,`n`.`dept_name` AS `publish_dept_name` from (((select `t`.`id` AS `id`,`t`.`article_type` AS `article_type`,`t`.`topic_id` AS `topic_id`,`t`.`article_title` AS `article_title`,`t`.`article_image_url` AS `article_image_url`,`t`.`article_content` AS `article_content`,`t`.`publish_dept_id` AS `publish_dept_id`,`t`.`publish_user_id` AS `publish_user_id`,`t`.`check_state` AS `check_state`,`t`.`top_count` AS `top_count`,`t`.`view_count` AS `view_count`,`t`.`display_order` AS `display_order`,`t`.`data_state` AS `data_state`,`t`.`create_date` AS `create_date`,`t`.`update_date` AS `update_date`,`t`.`front_slider_state` AS `front_slider_state`,`t`.`newsfrom` AS `newsfrom`,`t`.`author` AS `author`,`t`.`publish_date` AS `publish_date`,`t`.`top_state` AS `top_state`,`t`.`pop_state` AS `pop_state`,`s`.`topic_name` AS `topic_name`,`s`.`topic_code` AS `topic_code`,substr(`t`.`article_content`,(locate('src="',`t`.`article_content`) + 5),58) AS `content_image_url` from (((select `sitaoke`.`t_article`.`id` AS `id`,`sitaoke`.`t_article`.`article_type` AS `article_type`,`sitaoke`.`t_article`.`topic_id` AS `topic_id`,`sitaoke`.`t_article`.`article_title` AS `article_title`,`sitaoke`.`t_article`.`article_image_url` AS `article_image_url`,`sitaoke`.`t_article`.`article_content` AS `article_content`,`sitaoke`.`t_article`.`publish_dept_id` AS `publish_dept_id`,`sitaoke`.`t_article`.`publish_user_id` AS `publish_user_id`,`sitaoke`.`t_article`.`check_state` AS `check_state`,`sitaoke`.`t_article`.`top_count` AS `top_count`,`sitaoke`.`t_article`.`view_count` AS `view_count`,`sitaoke`.`t_article`.`display_order` AS `display_order`,`sitaoke`.`t_article`.`data_state` AS `data_state`,`sitaoke`.`t_article`.`create_date` AS `create_date`,`sitaoke`.`t_article`.`update_date` AS `update_date`,`sitaoke`.`t_article`.`front_slider_state` AS `front_slider_state`,`sitaoke`.`t_article`.`newsfrom` AS `newsfrom`,`sitaoke`.`t_article`.`author` AS `author`,`sitaoke`.`t_article`.`publish_date` AS `publish_date`,`sitaoke`.`t_article`.`top_state` AS `top_state`,`sitaoke`.`t_article`.`pop_state` AS `pop_state` from `sitaoke`.`t_article` where ((`sitaoke`.`t_article`.`topic_id` = (select `sitaoke`.`t_topic`.`id` from `sitaoke`.`t_topic` where (`sitaoke`.`t_topic`.`topic_code` = 'ZHYW'))) and (`sitaoke`.`t_article`.`data_state` = '1') and (`sitaoke`.`t_article`.`check_state` = '1') and (`sitaoke`.`t_article`.`front_slider_state` = '1')))) `t` left join `sitaoke`.`t_topic` `s` on((`t`.`topic_id` = `s`.`id`))))) `m` left join `sitaoke`.`t_dept` `n` on((`m`.`publish_dept_id` = `n`.`id`))))) `j` left join `sitaoke`.`t_user` `k` on((`j`.`publish_user_id` = `k`.`id`))) */;
 
 /*View structure for view v_article_mini_info */
 
@@ -688,7 +742,7 @@ DROP TABLE IF EXISTS `v_user_info`;
 /*!50001 DROP TABLE IF EXISTS `v_opt_article_count` */;
 /*!50001 DROP VIEW IF EXISTS `v_opt_article_count` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_opt_article_count` AS select uuid() AS `ID`,`m`.`topic_code` AS `topic_code`,`s`.`article_count` AS `article_count`,sysdate() AS `update_date` from (((select count(1) AS `article_count`,`bxs`.`t_article`.`topic_id` AS `topic_id` from `bxs`.`t_article` where (`bxs`.`t_article`.`data_state` = '1') group by `bxs`.`t_article`.`topic_id`)) `s` left join `bxs`.`t_topic` `m` on((`s`.`topic_id` = `m`.`id`))) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_opt_article_count` AS select uuid() AS `ID`,`m`.`topic_code` AS `topic_code`,`s`.`article_count` AS `article_count`,sysdate() AS `update_date` from (((select count(1) AS `article_count`,`sitaoke`.`t_article`.`topic_id` AS `topic_id` from `sitaoke`.`t_article` where (`sitaoke`.`t_article`.`data_state` = '1') group by `sitaoke`.`t_article`.`topic_id`)) `s` left join `sitaoke`.`t_topic` `m` on((`s`.`topic_id` = `m`.`id`))) */;
 
 /*View structure for view v_post_info */
 
@@ -702,21 +756,21 @@ DROP TABLE IF EXISTS `v_user_info`;
 /*!50001 DROP TABLE IF EXISTS `v_sign_article_info` */;
 /*!50001 DROP VIEW IF EXISTS `v_sign_article_info` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_sign_article_info` AS select `t`.`id` AS `id`,`t`.`article_id` AS `article_id`,`t`.`article_type` AS `article_type`,`t`.`sign_dept_id` AS `sign_dept_id`,`t`.`sign_user_id` AS `sign_user_id`,`t`.`sign_state` AS `sign_state`,`t`.`sign_content` AS `sign_content`,`t`.`sign_date` AS `sign_date`,`t`.`data_state` AS `data_state`,`t`.`create_date` AS `create_date`,`t`.`update_date` AS `update_date`,`t`.`sign_dept_name` AS `sign_dept_name`,`t`.`sign_user_name` AS `sign_user_name`,`s`.`article_title` AS `article_title`,`s`.`topic_name` AS `topic_name`,`s`.`publish_dept_name` AS `publish_dept_name`,`s`.`publish_user_name` AS `publish_user_name` from (`bxs`.`v_sign_info` `t` left join `bxs`.`v_article_info` `s` on((`t`.`article_id` = `s`.`id`))) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_sign_article_info` AS select `t`.`id` AS `id`,`t`.`article_id` AS `article_id`,`t`.`article_type` AS `article_type`,`t`.`sign_dept_id` AS `sign_dept_id`,`t`.`sign_user_id` AS `sign_user_id`,`t`.`sign_state` AS `sign_state`,`t`.`sign_content` AS `sign_content`,`t`.`sign_date` AS `sign_date`,`t`.`data_state` AS `data_state`,`t`.`create_date` AS `create_date`,`t`.`update_date` AS `update_date`,`t`.`sign_dept_name` AS `sign_dept_name`,`t`.`sign_user_name` AS `sign_user_name`,`s`.`article_title` AS `article_title`,`s`.`topic_name` AS `topic_name`,`s`.`publish_dept_name` AS `publish_dept_name`,`s`.`publish_user_name` AS `publish_user_name` from (`sitaoke`.`v_sign_info` `t` left join `sitaoke`.`v_article_info` `s` on((`t`.`article_id` = `s`.`id`))) */;
 
 /*View structure for view v_sign_info */
 
 /*!50001 DROP TABLE IF EXISTS `v_sign_info` */;
 /*!50001 DROP VIEW IF EXISTS `v_sign_info` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_sign_info` AS select `m`.`id` AS `id`,`m`.`article_id` AS `article_id`,`m`.`article_type` AS `article_type`,`m`.`sign_dept_id` AS `sign_dept_id`,`m`.`sign_user_id` AS `sign_user_id`,`m`.`sign_state` AS `sign_state`,`m`.`sign_content` AS `sign_content`,`m`.`sign_date` AS `sign_date`,`m`.`data_state` AS `data_state`,`m`.`create_date` AS `create_date`,`m`.`update_date` AS `update_date`,`m`.`sign_dept_name` AS `sign_dept_name`,`n`.`user_name` AS `sign_user_name` from (((select `t`.`id` AS `id`,`t`.`article_id` AS `article_id`,`t`.`article_type` AS `article_type`,`t`.`sign_dept_id` AS `sign_dept_id`,`t`.`sign_user_id` AS `sign_user_id`,`t`.`sign_state` AS `sign_state`,`t`.`sign_content` AS `sign_content`,`t`.`sign_date` AS `sign_date`,`t`.`data_state` AS `data_state`,`t`.`create_date` AS `create_date`,`t`.`update_date` AS `update_date`,`s`.`dept_name` AS `sign_dept_name` from (`bxs`.`t_sign` `t` left join `bxs`.`t_dept` `s` on((`t`.`sign_dept_id` = `s`.`id`))))) `m` left join `bxs`.`t_user` `n` on((`m`.`sign_user_id` = `n`.`id`))) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_sign_info` AS select `m`.`id` AS `id`,`m`.`article_id` AS `article_id`,`m`.`article_type` AS `article_type`,`m`.`sign_dept_id` AS `sign_dept_id`,`m`.`sign_user_id` AS `sign_user_id`,`m`.`sign_state` AS `sign_state`,`m`.`sign_content` AS `sign_content`,`m`.`sign_date` AS `sign_date`,`m`.`data_state` AS `data_state`,`m`.`create_date` AS `create_date`,`m`.`update_date` AS `update_date`,`m`.`sign_dept_name` AS `sign_dept_name`,`n`.`user_name` AS `sign_user_name` from (((select `t`.`id` AS `id`,`t`.`article_id` AS `article_id`,`t`.`article_type` AS `article_type`,`t`.`sign_dept_id` AS `sign_dept_id`,`t`.`sign_user_id` AS `sign_user_id`,`t`.`sign_state` AS `sign_state`,`t`.`sign_content` AS `sign_content`,`t`.`sign_date` AS `sign_date`,`t`.`data_state` AS `data_state`,`t`.`create_date` AS `create_date`,`t`.`update_date` AS `update_date`,`s`.`dept_name` AS `sign_dept_name` from (`sitaoke`.`t_sign` `t` left join `sitaoke`.`t_dept` `s` on((`t`.`sign_dept_id` = `s`.`id`))))) `m` left join `sitaoke`.`t_user` `n` on((`m`.`sign_user_id` = `n`.`id`))) */;
 
 /*View structure for view v_user_info */
 
 /*!50001 DROP TABLE IF EXISTS `v_user_info` */;
 /*!50001 DROP VIEW IF EXISTS `v_user_info` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_user_info` AS select `m`.`id` AS `id`,`m`.`login_name` AS `login_name`,`m`.`login_password` AS `login_password`,`m`.`login_time` AS `login_time`,`m`.`data_state` AS `data_state`,`m`.`office_telephone` AS `office_telephone`,`m`.`mobile_phone` AS `mobile_phone`,`m`.`user_name` AS `user_name`,`m`.`birthday` AS `birthday`,`m`.`dept_id` AS `dept_id`,`m`.`post_id` AS `post_id`,`m`.`user_desc` AS `user_desc`,`m`.`DEPT_NAME` AS `DEPT_NAME`,`n`.`post_name` AS `POST_NAME`,`n`.`display_order` AS `POST_DISPLAY_ORDER` from (((select `t`.`id` AS `id`,`t`.`login_name` AS `login_name`,`t`.`login_password` AS `login_password`,`t`.`login_time` AS `login_time`,`t`.`data_state` AS `data_state`,`t`.`office_telephone` AS `office_telephone`,`t`.`mobile_phone` AS `mobile_phone`,`t`.`user_name` AS `user_name`,`t`.`birthday` AS `birthday`,`t`.`dept_id` AS `dept_id`,`t`.`post_id` AS `post_id`,`t`.`user_desc` AS `user_desc`,`s`.`dept_name` AS `DEPT_NAME` from (`bxs`.`t_user` `t` left join `bxs`.`t_dept` `s` on((`t`.`dept_id` = `s`.`id`))))) `m` left join `bxs`.`t_post` `n` on((`m`.`post_id` = `n`.`id`))) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_user_info` AS select `m`.`id` AS `id`,`m`.`login_name` AS `login_name`,`m`.`login_password` AS `login_password`,`m`.`login_time` AS `login_time`,`m`.`data_state` AS `data_state`,`m`.`office_telephone` AS `office_telephone`,`m`.`mobile_phone` AS `mobile_phone`,`m`.`user_name` AS `user_name`,`m`.`birthday` AS `birthday`,`m`.`dept_id` AS `dept_id`,`m`.`post_id` AS `post_id`,`m`.`user_desc` AS `user_desc`,`m`.`DEPT_NAME` AS `DEPT_NAME`,`n`.`post_name` AS `POST_NAME`,`n`.`display_order` AS `POST_DISPLAY_ORDER` from (((select `t`.`id` AS `id`,`t`.`login_name` AS `login_name`,`t`.`login_password` AS `login_password`,`t`.`login_time` AS `login_time`,`t`.`data_state` AS `data_state`,`t`.`office_telephone` AS `office_telephone`,`t`.`mobile_phone` AS `mobile_phone`,`t`.`user_name` AS `user_name`,`t`.`birthday` AS `birthday`,`t`.`dept_id` AS `dept_id`,`t`.`post_id` AS `post_id`,`t`.`user_desc` AS `user_desc`,`s`.`dept_name` AS `DEPT_NAME` from (`sitaoke`.`t_user` `t` left join `sitaoke`.`t_dept` `s` on((`t`.`dept_id` = `s`.`id`))))) `m` left join `sitaoke`.`t_post` `n` on((`m`.`post_id` = `n`.`id`))) */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
