@@ -130,7 +130,8 @@ public class ArticleDao {
 			         ps.setString(16, article.getFrontSliderState());
 			         ps.setString(17, article.getNewsfrom());
 			         ps.setString(18, article.getAuthor());
-			         ps.setDate(19, new java.sql.Date(article.getPublishDate().getTime()));
+			        // ps.setDate(19, new java.sql.Date(article.getPublishDate().getTime()));
+			         ps.setTimestamp(19, new java.sql.Timestamp(article.getPublishDate().getTime()));
 			         ps.setString(20, article.getTopState());
 			         ps.setString(21, article.getPopState());
 			         ps.setString(22, article.getPublishMedia());
@@ -206,7 +207,8 @@ public class ArticleDao {
 			         ps.setString(15, article.getFrontSliderState());
 			         ps.setString(16, article.getNewsfrom());
 			         ps.setString(17, article.getAuthor());
-			         ps.setDate(18, new java.sql.Date(article.getPublishDate().getTime()));
+			         //ps.setDate(18, new java.sql.Date(article.getPublishDate().getTime()));
+			         ps.setTimestamp(18, new java.sql.Timestamp(article.getPublishDate().getTime()));
 			         ps.setString(19, article.getTopState());
 			         ps.setString(20, article.getPopState());
 			         ps.setString(21, article.getPublishMedia());
@@ -410,7 +412,8 @@ public class ArticleDao {
 				"                  t.top_count,\n" + 
 				"                  t.publish_date,\n" + 
 				"                  t.data_state,\n" + 
-				"                  t.topic_id\n" + 
+				"                  t.topic_id,\n" + 
+				"                  t.title_color\n" + 
 				"               FROM\n" + 
 				"                  t_article T WHERE  T.CHECK_STATE='1'\n"+ 
 				 				   getTopicParamSql(param)+
@@ -440,7 +443,8 @@ public class ArticleDao {
 						"                  t.top_count,\n" + 
 						"                  t.publish_date,\n" + 
 						"                  t.data_state,\n" + 
-						"                  t.topic_id\n" + 
+						"                  t.topic_id,\n" + 
+						"                  t.title_color\n" + 
 						"               FROM\n" + 
 						//"                  t_article T WHERE T.DATA_STATE='1' AND T.CHECK_STATE='1' \n" + 
 						"                  t_article T WHERE T.CHECK_STATE='1' \n" + 
@@ -1071,6 +1075,40 @@ public class ArticleDao {
 		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
 		return list;
 	}
+	
+	
+	
+	public List<?> pagerArticleListFastForSois(EUIPager ePager, Map<String, Object> param) {
+		String sql="SELECT J.*, K.user_name AS publish_user_name\n" +
+						"  FROM (SELECT M.*, N.dept_name AS publish_dept_name\n" + 
+						"          FROM (SELECT T.*,\n" + 
+						"                       S.topic_name,\n" + 
+						"                       S.topic_code,\n" + 
+						"                       SUBSTRING(t.article_content,\n" + 
+						"                                 LOCATE('src=\"', t.article_content) + 5,\n" + 
+						"                                 58) AS content_image_url\n" + 
+						"                  FROM (\n" + 
+						"\n" + 
+						"                        SELECT *\n" + 
+						"                          FROM (SELECT *\n" + 
+						"                                   FROM t_article\n" + 
+						"                                  WHERE 1 = 1\n" + 
+						//"                                    AND DATA_STATE = '1'\n" + 
+															getParamSqlFast(param) +getOrderBySqlForSois(param)+
+						"                                  ) U LIMIT ?,\n" + 
+						"                                ?) T\n" + 
+						"                  LEFT JOIN (SELECT id, topic_name, topic_code FROM t_topic) S\n" + 
+						"                    ON T.topic_id = S.id) M\n" + 
+						"          LEFT JOIN (SELECT ID, DEPT_NAME FROM T_DEPT) N\n" + 
+						"            ON M.PUBLISH_DEPT_ID = N.id) J\n" + 
+						"  LEFT JOIN (SELECT id, user_name FROM T_USER) K\n" + 
+						"    ON J.PUBLISH_USER_ID = K.id\n " ;
+						// "ORDER BY top_count DESC, publish_date desc";
+
+		//String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
+		return list;
+	}
 
 	/**
 	 * 
@@ -1084,6 +1122,26 @@ public class ArticleDao {
 	private String getOrderBySql(Map<String, Object> param) {
 		//String sql="\n ORDER BY top_count DESC, publish_date DESC,create_date DESC";
 		String sql="\n ORDER BY top_count DESC, publish_date DESC,update_date DESC";
+		//如果有关键字搜索，则不进行排序
+		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
+			sql="";
+		}
+		return sql;
+	}
+	
+	
+	/**
+	 * 
+	 * 排序语句-给上报系统用
+	 * @author: wyc
+	 * @createTime: 2018年4月11日 下午2:32:03
+	 * @history:
+	 * @param param
+	 * @return String
+	 */
+	private String getOrderBySqlForSois(Map<String, Object> param) {
+		//String sql="\n ORDER BY top_count DESC, publish_date DESC,create_date DESC";
+		String sql="\n ORDER BY update_date DESC";
 		//如果有关键字搜索，则不进行排序
 		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
 			sql="";

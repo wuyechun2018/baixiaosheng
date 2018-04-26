@@ -42,7 +42,7 @@ var pageConfig = {
 			    	 	 return "<sapn title='"+d.articleTitle+"'>"+d.articleTitle+"</span>";
 		    		 }}
 			      ,{field:'author', width:80, title: '作者', sort: false}
-			      ,{field:'createDate', title: '创建时间', width: 180,align:'center'}
+			      ,{field:'updateDate', title: '更新时间', width: 180,align:'center'}
 			      ,{field:'viewCount', width:80, title: '浏览量', sort: false,align:'center'}
 			      ,{field:'checkState', width:90, title: '状态', sort: false,align:'center'
 			    	  ,templet: function(d){

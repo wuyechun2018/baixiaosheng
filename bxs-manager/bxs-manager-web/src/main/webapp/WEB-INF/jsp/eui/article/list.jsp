@@ -254,7 +254,7 @@ $(function(){
 				  {field: 'ck', checkbox: true, width: '30' },
 		          {field:'topicName',title: '栏目',align: 'center',width: 58},
 		          {field:'articleTitle',title: '标题',align: 'center',width: 125,hidden:false,formatter:function(val,rec){
-		        	  	return "<a title='[预览]"+val+"' onclick=viewFun('"+rec.id+"') class='preview_link' href='javascript:void(0)'><span >"+val+"<span></a>";
+		        	  	return "<a style='color:"+rec.titleColor+"' title='[预览]"+val+"' onclick=viewFun('"+rec.id+"') class='preview_link' href='javascript:void(0)'><span >"+val+"<span></a>";
 		          }},
 		          {field:'publishDeptName',title: '发布部门',align: 'center',width: 65},
 		          {field:'publishUserName',title: '发布人',align: 'center',width: 60}, 

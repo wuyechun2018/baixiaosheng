@@ -209,7 +209,7 @@ var deptData=null;
 		  form.render('checkbox');
 		  
 		  
-		  $('#publishDate').val(myDateFormatter(new Date()));
+		  $('#publishDate').val(myDateTimeFormatter(new Date()));
 		});
 </script>
 

@@ -83,7 +83,8 @@ function checkFun(checkState){
 <div class="newsContent" id="newsContent">
 	<div class="c_Box">
 		<input id="id" value="${articleInfoVo.id}" type="hidden"/>
-    	<h3 class="sp_title" style="color:${articleInfoVo.titleColor}">${articleInfoVo.articleTitle}</h3>
+    	<%--<h3 class="sp_title" style="color:${articleInfoVo.titleColor}">${articleInfoVo.articleTitle}</h3> --%>
+    	<h3 class="sp_title" >${articleInfoVo.articleTitle}</h3>
         <div class="sp_time">
 		 <span>投稿部门：${articleInfoVo.publishDeptName}</span>
 		 <span>发布时间：<fmt:formatDate value="${articleInfoVo.createDate}"  pattern="yyyy-MM-dd HH:mm"/></span>

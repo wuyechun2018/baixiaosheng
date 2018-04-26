@@ -308,7 +308,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public EUIGrid pagerListForSois(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
 		grid.setTotal(articleDao.getTotalCountFast(param));
-		grid.setRows(articleDao.pagerArticleListFast(ePager,param));
+		grid.setRows(articleDao.pagerArticleListFastForSois(ePager,param));
 		return grid;
 	}
 

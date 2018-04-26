@@ -208,6 +208,12 @@ function showArticle(dispDivId,articleData){
 			  var articleTitle=articleObj.articleTitle;
 			  var articleUrl=ctx+"/portal/content?id="+articleObj.id;
 			  var articleTitlePart="";
+			  //颜色
+			  var titleColor="";
+			  if(articleObj.titleColor){
+				  titleColor=articleObj.titleColor;
+			  }
+			  
 			  //通知
 			  if(dispDivId=='TZ'){
 				  if(articleTitle.length>=30){
@@ -215,7 +221,7 @@ function showArticle(dispDivId,articleData){
 				  }else{
 					  articleTitlePart=articleTitle;
 				  }
-				  $('#'+dispDivId).append('<li title="'+articleTitle+'"><a target="_blank" href="'+articleUrl+'" >'+articleTitlePart+'</a><span>'+createDate+'</span></li>');
+				  $('#'+dispDivId).append('<li title="'+articleTitle+'"><a style="color:'+titleColor+'" target="_blank" href="'+articleUrl+'" >'+articleTitlePart+'</a><span>'+createDate+'</span></li>');
 			  }else if(dispDivId=='TPZS'){
 			  //图片展示
 			      var imageUrl=articleObj.contentImageUrl;
@@ -227,14 +233,14 @@ function showArticle(dispDivId,articleData){
 				  }else{
 					  articleTitlePart=articleTitle;
 				  }
-			      var html='<li><span>></span><a title="'+articleTitle+'" href="'+articleUrl+'">'+articleTitlePart+'</a></li>';
+			      var html='<li><span>></span><a style="color:'+titleColor+'" title="'+articleTitle+'" href="'+articleUrl+'">'+articleTitlePart+'</a></li>';
 				  $('#'+dispDivId).append(html);
 			  }else if(dispDivId=='GG'){
 			  //公告	  
 				   //$('#'+dispDivId).append(articleObj.articleContent);
 				  //$('#'+dispDivId).append('<a href="'+articleUrl+'">'+articleObj.articleTitle+'</a>');
 				 
-			      var html='<li><span>></span><a title="'+articleTitle+'" href="'+articleUrl+'">'+articleObj.articleTitle+'</a></li>';
+			      var html='<li><span>></span><a color="'+titleColor+'" title="'+articleTitle+'" href="'+articleUrl+'">'+articleObj.articleTitle+'</a></li>';
 				  $('#'+dispDivId).append(html);
 					jQuery(".ggBox").slide({mainCell:"ul",autoPlay:true,effect:"topMarquee",vis:3,interTime:80});
 			  } else if(dispDivId=='ZHYW'||dispDivId=='LDDT'){
@@ -244,7 +250,7 @@ function showArticle(dispDivId,articleData){
 				  }else{
 					  articleTitlePart=articleTitle;
 				  }
-				  $('#'+dispDivId).append('<li><span class="date">'+createDate+'</span><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'" >'+articleTitlePart+'</a></li>');
+				  $('#'+dispDivId).append('<li><span class="date">'+createDate+'</span><a style="color:'+titleColor+'" id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'" >'+articleTitlePart+'</a></li>');
 			  }else{
 				//上级文件
 			  	  var cDate=articleObj.createDate.substr(5,5);
@@ -253,7 +259,7 @@ function showArticle(dispDivId,articleData){
 				  }else{
 					  articleTitlePart=articleTitle;
 				  }
-				  $('#'+dispDivId).append('<li><span class="date">'+cDate+'</span><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'" >'+articleTitlePart+'</a></li>');
+				  $('#'+dispDivId).append('<li><span class="date">'+cDate+'</span><a style="color:'+titleColor+'" id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'" >'+articleTitlePart+'</a></li>');
 			  }
 			  
 			  //处理是否签收状态

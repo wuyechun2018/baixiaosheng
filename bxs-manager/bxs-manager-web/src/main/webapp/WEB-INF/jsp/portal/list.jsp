@@ -156,6 +156,13 @@ color:#E00;
 		  }else{
 			  articleTitlePart=articleTitle;
 		  }
+		  
+		  //颜色
+		  var titleColor="";
+		  if(articleObj.titleColor){
+			  titleColor=articleObj.titleColor;
+		  }
+		  
 		  //var keyword='${keys}';
 		  //articleTitlePart=myHighlight(articleTitlePart,keyword);
 		  
@@ -168,18 +175,18 @@ color:#E00;
 		   		    count++;
 		   			ulId=dispDivId+"-"+count
 		   			if(count==sumCount){
-		   				$('#'+dispDivId).append('<ul  style="border-bottom: inherit;" id='+ulId+'><li><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span class="cdateSpan">'+createDate+'</span></li>');	
+		   				$('#'+dispDivId).append('<ul  style="border-bottom: inherit;" id='+ulId+'><li><a style="color:'+titleColor+'" id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span class="cdateSpan">'+createDate+'</span></li>');	
 		   			}else{
-		   				$('#'+dispDivId).append('<ul  id='+ulId+'><li><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li>');	
+		   				$('#'+dispDivId).append('<ul  id='+ulId+'><li><a style="color:'+titleColor+'" id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li>');	
 		   			}
 	   
 	   			
 	   		}else if(i%6==5){
-	   			$('#'+ulId).append('<li><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li><ul/>');
+	   			$('#'+ulId).append('<li><a style="color:'+titleColor+'" id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li><ul/>');
 	   			
 	   			$('#'+dispDivId).append('<DIV style="BORDER-TOP: #e4e6eb 1px dashed; OVERFLOW: hidden; HEIGHT: 1px"></DIV>');
 	   		}else{
-	   			$('#'+ulId).append('<li><a id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li>');
+	   			$('#'+ulId).append('<li><a  style="color:'+titleColor+'" id="'+articleObj.id+'" target="_blank" href="'+articleUrl+'" title="'+articleTitle+'"><i></i>'+articleTitlePart+'</a>'+emHtml+'<span  class="cdateSpan">'+createDate+'</span></li>');
 	   		}
 	   	  
 		   	//处理是否签收状态

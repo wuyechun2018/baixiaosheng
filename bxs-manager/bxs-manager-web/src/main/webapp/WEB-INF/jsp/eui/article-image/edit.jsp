@@ -58,6 +58,8 @@ $(function(){
 	
 	//编辑器
 	var ue = UE.getEditor('editor');
+	//发布日期默认为当天
+	$('#publishDate').datetimebox('setValue',myDateTimeFormatter(new Date()));
 	
 });
 </script>
@@ -128,7 +130,7 @@ $(function(){
 	 		<tr>
 			 	<th>发布时间：</th>	 		
 	 			<td>
-	 				<input class="easyui-datebox" type="text" value="${article.publishDate}" ID="publishDate" name="publishDate" style="width:300px" />
+	 				<input class="easyui-datetimebox" type="text" value="${article.publishDate}" ID="publishDate" name="publishDate" style="width:300px" />
 	 			</td>
 	 		</tr>
 	 		

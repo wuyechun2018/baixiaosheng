@@ -163,7 +163,7 @@ var topicData=null;
 	    	  $('#topicId').append('<option value="'+topicObj.id+'">'+topicObj.text+'</option>');
 	      }
 		  form.render('select');
-		  $('#publishDate').val(myDateFormatter(new Date()));
+		  $('#publishDate').val(myDateTimeFormatter(new Date()));
 		});
 </script>
 

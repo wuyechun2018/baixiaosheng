@@ -780,7 +780,8 @@ public class SoisController {
 	 */
 	@InitBinder  
     public void initBinder(WebDataBinder binder) {  
-       DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+       //DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
        binder.registerCustomEditor(Date.class,new CustomDateEditor(format, true)); 
    }
 

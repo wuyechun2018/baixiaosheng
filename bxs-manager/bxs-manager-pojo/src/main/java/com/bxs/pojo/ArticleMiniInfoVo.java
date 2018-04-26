@@ -37,6 +37,9 @@ public class ArticleMiniInfoVo implements java.io.Serializable {
 	private Date createDate;
 	// 发布时间
 	private Date publishDate;
+	
+	//标题颜色
+	private String titleColor;
 
 	public String getId() {
 		return id;
@@ -110,6 +113,14 @@ public class ArticleMiniInfoVo implements java.io.Serializable {
 
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
+	}
+
+	public String getTitleColor() {
+		return titleColor;
+	}
+
+	public void setTitleColor(String titleColor) {
+		this.titleColor = titleColor;
 	}
 	
 }
