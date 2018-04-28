@@ -211,7 +211,7 @@ function submitFeedback(){
         <div class="sp_time">
 		 <span>投稿部门：${articleInfoVo.publishDeptName}</span>
 		 <span>浏览次数：${articleInfoVo.viewCount}</span>
-		 <span>发布时间：<fmt:formatDate value="${articleInfoVo.createDate}"  pattern="yyyy-MM-dd HH:mm"/></span>
+		 <span>发布时间：<fmt:formatDate value="${articleInfoVo.publishDate}"  pattern="yyyy-MM-dd HH:mm"/></span>
 		 <span>【字体：<a href="javascript:doZoom(20)">大</a><a href="javascript:doZoom(16)">中</a><a href="javascript:doZoom(12)">小</a>】</span>
 		</div>
         <div class="content" id="zoom">

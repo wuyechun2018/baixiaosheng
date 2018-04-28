@@ -16,78 +16,217 @@
 <!--/手机版设置-->
 <title>思淘客</title>
 <link href="${ctx}/resources/fan/css/index.css" rel="stylesheet" />
+<script type="text/javascript" src="${ctx}/resources/fan/js/jquery-1.9.1.min.js"></script>
+
+
+
+<style type="text/css">
+.testclass{
+            width:150px;
+            height:150px;
+            border: 1px solid #666; 
+            padding: 5px; 
+            position: absolute; 
+            bottom: 0; right: 60px; 
+            background:#fff;"
+            z-index:9999;
+        }
+</style>
+
+<script type="text/javascript">
+function ChangeMyDivShow(imgObj){
+    var divObj = document.getElementById(imgObj);
+    //判断divObj的display的值
+    if(divObj.style.display=="none"){
+        divObj.style.display = "block";
+    }else{
+        divObj.style.display = "none";
+    }
+}
+
+$(function(){
+	
+	var showHTML='';
+	
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/article/pagerListNoCache',
+		data:{
+			page:1,
+			rows:5
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	var liHTML=
+	    		"<li>\n" +
+	    		"          <div class=\"left-post\">\n" + 
+	    		"            <div class=\"new-item\">产品</div>\n" + 
+	    		"            <a href=\"http://www.cfan.com.cn/2018/0411/130595.shtml\"\n" + 
+	    		"              target=\"_blank\" title=\"看完秒懂！这就是Android手机越用越卡的原因！\">\n" + 
+	    		"              <div class=\"left-post-pic\"\n" + 
+	    		"                style=\"background: url(http://upload.cfan.com.cn/2018/0411/1523409817511.jpg) no-repeat center; background-size: cover;\"></div>\n" + 
+	    		"            </a>\n" + 
+	    		"            <div class=\"left-post-info\" style=\"position: relative;\">\n" + 
+	    		"              <a href=\"http://www.cfan.com.cn/2018/0411/130595.shtml\" target=\"_blank\" title=\"看完秒懂！\">\n" + 
+	    		"                <h1 class=\"left-post-title\">\n" + 
+	    		"                  看完秒懂！这就是Android手机越用越卡的原因！\n" + 
+	    		"                </h1>\n" + 
+	    		"                <div class=\"left-post-txt\">\n" + 
+	    		"                  智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因\n" + 
+	    		"                </div>\n" + 
+	    		"              </a>\n" + 
+	    		"              <div class=\"left-post-note\" style=\"margin-left: 0;\">\n" + 
+	    		"                <div class=\"author\">作者:智趣狗</div>\n" + 
+	    		"              </div>\n" + 
+	    		"              <div class=\"bshare-custom\" style=\"float: right;height=25px;\">\n" + 
+	    		"                <img style=\"padding-bottom: 6px;\" src=\"http://img.cfan.com.cn/templates/default/css/images171225/weixin.png\" onclick=\"ChangeMyDivShow('testid130595')\">\n" + 
+	    		"                <wb:share-button\n" + 
+	    		"                  addition=\"simple\"\n" + 
+	    		"                  type=\"icon\"\n" + 
+	    		"                  url=\"http://www.cfan.com.cn/2018/0411/130595.shtml\" title=\"看完秒懂！这就是Android手机越用越卡的原因！，智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因，只是当时是以苹果降速门为切入点，并没有说透。今天，就让咱们聚焦Android手机领域，从硬件、系统和软件三个方面分析安卓手机为啥容易出现“越用越慢”的尴尬问题吧。\"\n" + 
+	    		"                  pic=\"http://upload.cfan.com.cn/2018/0411/thumb_200_145_1523409817511.jpg\">\n" + 
+	    		"                  <iframe src=\"http://widget.weibo.com/staticjs/weibosharev2.html?url=http%3A%2F%2Fwww.cfan.com.cn%2F2018%2F0411%2F130595.shtml&amp;type=icon&amp;language=zh_cn&amp;title=看完秒懂！这就是Android手机越用越卡的原因！，智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因，只是当时是以苹果降速门为切入点，并没有说透。今天，就让咱们聚焦Android手机领域，从硬件、系统和软件三个方面分析安卓手机为啥容易出现“越用越慢”的尴尬问题吧。&amp;pic=http://upload.cfan.com.cn/2018/0411/thumb_200_145_1523409817511.jpg&amp;searchPic=true&amp;style=simple\"\n" + 
+	    		"                    width=\"18\" height=\"25\" frameborder=\"0\" scrolling=\"no\"\n" + 
+	    		"                    marginheight=\"0\">\n" + 
+	    		"                  </iframe>\n" + 
+	    		"                </wb:share-button>\n" + 
+	    		"              </div>\n" + 
+	    		"              <div class=\"testclass\" id=\"testid130595\" style=\"display: none;\">\n" + 
+	    		"                <img src=\"http://upload.cfan.com.cn/qrcode/2018/0411/39373/lbazhl3mcijt-7.png\" width=\"150px\" height=\"150px/\">\n" + 
+	    		"              </div>\n" + 
+	    		"\n" + 
+	    		"            </div>\n" + 
+	    		"          </div>\n" + 
+	    		"</li>";
+	    		
+	    		//$('#dataUL').append(liHTML);
+	    		
+	    }
+	})
+	
+})
+
+
+
+
+</script>
+
+
 </head>
 <body>
 	<!--头部-->
-	<header class="header"> <a href="http://www.cfan.com.cn">
-		<div class="logo"></div>
-	</a> <nav class="navlist">
-	<ul>
-		<li class="on"><a href="http://www.cfan.com.cn">首页</a></li>
-		<li><a href="http://www.cfan.com.cn/news/">新闻</a></li>
-		<li><a href="http://www.cfan.com.cn/product/">产品</a></li>
-		<li><a href="http://www.cfan.com.cn/technic/">应用</a></li>
-		<li><a href="http://www.cfan.com.cn/special/">专题</a></li>
-		<li class="last"><a href="https://cfanbook.taobao.com" target="_blank">商城</a></li>
-	</ul>
-	</nav>
+	<header class="header"> 
+		<a href="http://www.cfan.com.cn">
+			<div class="logo"></div>
+		</a> 
+		<nav class="navlist">
+			<ul>
+				 <li class="on"><a href="${ctx}/portal/list?topicCode=''">首页</a></li>
+			 	  <c:forEach items="${topicList}" var="topic" begin="0" end="4">
+		           	  <li><a href="${ctx}/portal/list?topicCode=${topic.topicCode}" target="_blank">${topic.topicName}</a></li>
+		          </c:forEach>
+			</ul>
+		</nav>
 
-	<div class="head-right">
-		<div class="search"></div>
-	</div>
+		<div class="head-right">
+			<div class="search"></div>
+		</div>
 	</header>
+	
 	<div class="clear"></div>
 
 	<main class="main-left">
-	<div class="ui-video-list">
-		<ul>
-			<li>
-
-				<div class="left-post">
-					<div class="new-item">产品</div>
-					<a href="http://www.cfan.com.cn/2018/0411/130595.shtml"
-						target="_blank" title="看完秒懂！这就是Android手机越用越卡的原因！">
-						<div class="left-post-pic"
-							style="background: url(http://upload.cfan.com.cn/2018/0411/1523409817511.jpg) no-repeat center; background-size: cover;"></div>
-					</a>
-					<div class="left-post-info" style="position: relative;">
+		<div class="ui-video-list">
+			<ul id="dataUL">
+				<li>
+					<div class="left-post">
+						<div class="new-item">产品</div>
 						<a href="http://www.cfan.com.cn/2018/0411/130595.shtml"
 							target="_blank" title="看完秒懂！这就是Android手机越用越卡的原因！">
-							<h1 class="left-post-title">看完秒懂！这就是Android手机越用越卡的原因！</h1>
-							<div class="left-post-txt">智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因，只是当时是以苹果降速门为切入点，并没有说透。今天，就让咱们聚焦Android手机领域，从硬件、系统和软件三个方面分析...</div>
+							<div class="left-post-pic"
+								style="background: url(http://upload.cfan.com.cn/2018/0411/1523409817511.jpg) no-repeat center; background-size: cover;"></div>
 						</a>
-						<div class="left-post-note" style="margin-left: 0;">
-							<div class="author">作者:智趣狗</div>
+						<div class="left-post-info" style="position: relative;">
+							<a href="http://www.cfan.com.cn/2018/0411/130595.shtml" target="_blank" title="看完秒懂！">
+								<h1 class="left-post-title">
+									看完秒懂！这就是Android手机越用越卡的原因！
+								</h1>
+								<div class="left-post-txt">
+									智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因
+								</div>
+							</a>
+							<div class="left-post-note" style="margin-left: 0;">
+								<div class="author">作者:智趣狗</div>
+							</div>
+							<div class="bshare-custom" style="float: right;height=25px;">
+								<img style="padding-bottom: 6px;" src="http://img.cfan.com.cn/templates/default/css/images171225/weixin.png" onclick="ChangeMyDivShow('testid130595')">
+								<wb:share-button 
+									addition="simple" 
+									type="icon" 
+									url="http://www.cfan.com.cn/2018/0411/130595.shtml" title="看完秒懂！这就是Android手机越用越卡的原因！，智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因，只是当时是以苹果降速门为切入点，并没有说透。今天，就让咱们聚焦Android手机领域，从硬件、系统和软件三个方面分析安卓手机为啥容易出现“越用越慢”的尴尬问题吧。" 
+									pic="http://upload.cfan.com.cn/2018/0411/thumb_200_145_1523409817511.jpg">
+									<iframe src="http://widget.weibo.com/staticjs/weibosharev2.html?url=http%3A%2F%2Fwww.cfan.com.cn%2F2018%2F0411%2F130595.shtml&amp;type=icon&amp;language=zh_cn&amp;title=看完秒懂！这就是Android手机越用越卡的原因！，智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因，只是当时是以苹果降速门为切入点，并没有说透。今天，就让咱们聚焦Android手机领域，从硬件、系统和软件三个方面分析安卓手机为啥容易出现“越用越慢”的尴尬问题吧。&amp;pic=http://upload.cfan.com.cn/2018/0411/thumb_200_145_1523409817511.jpg&amp;searchPic=true&amp;style=simple"
+										width="18" height="25" frameborder="0" scrolling="no"
+										marginheight="0">
+									</iframe>
+								</wb:share-button>
+							</div>
+	
+							<div class="testclass" id="testid130595" style="display: none;">
+								<img src="http://upload.cfan.com.cn/qrcode/2018/0411/39373/lbazhl3mcijt-7.png" width="150px" height="150px/">
+							</div>
+	
 						</div>
-						<div class="bshare-custom" style="float: right;height=25px;">
-							<img style="padding-bottom: 6px;"
-								src="http://img.cfan.com.cn/templates/default/css/images171225/weixin.png"
-								onclick="ChangeMyDivShow('testid130595')">&nbsp;&nbsp;
-							<wb:share-button addition="simple" type="icon"
-								url="http://www.cfan.com.cn/2018/0411/130595.shtml"
-								title="看完秒懂！这就是Android手机越用越卡的原因！，智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因，只是当时是以苹果降速门为切入点，并没有说透。今天，就让咱们聚焦Android手机领域，从硬件、系统和软件三个方面分析安卓手机为啥容易出现“越用越慢”的尴尬问题吧。"
-								pic="http://upload.cfan.com.cn/2018/0411/thumb_200_145_1523409817511.jpg">
-								<iframe
-									src="http://widget.weibo.com/staticjs/weibosharev2.html?url=http%3A%2F%2Fwww.cfan.com.cn%2F2018%2F0411%2F130595.shtml&amp;type=icon&amp;language=zh_cn&amp;title=看完秒懂！这就是Android手机越用越卡的原因！，智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因，只是当时是以苹果降速门为切入点，并没有说透。今天，就让咱们聚焦Android手机领域，从硬件、系统和软件三个方面分析安卓手机为啥容易出现“越用越慢”的尴尬问题吧。&amp;pic=http://upload.cfan.com.cn/2018/0411/thumb_200_145_1523409817511.jpg&amp;searchPic=true&amp;style=simple"
-									width="18" height="25" frameborder="0" scrolling="no"
-									marginheight="0"></iframe>
-							</wb:share-button>
-						</div>
-
-						<div class="testclass" id="testid130595" style="display: none;">
-							<img
-								src="http://upload.cfan.com.cn/qrcode/2018/0411/39373/lbazhl3mcijt-7.png"
-								width="150px" height="150px/">
-						</div>
-
 					</div>
-				</div>
-			</li>
-		</ul>
-	</div>
-
-
-
+				</li>
+				
+				<li>
+					<div class="left-post">
+						<div class="new-item">产品</div>
+						<a href="http://www.cfan.com.cn/2018/0411/130595.shtml"
+							target="_blank" title="看完秒懂！这就是Android手机越用越卡的原因！">
+							<div class="left-post-pic"
+								style="background: url(http://upload.cfan.com.cn/2018/0411/1523409817511.jpg) no-repeat center; background-size: cover;"></div>
+						</a>
+						<div class="left-post-info" style="position: relative;">
+							<a href="http://www.cfan.com.cn/2018/0411/130595.shtml" target="_blank" title="看完秒懂！">
+								<h1 class="left-post-title">
+									看完秒懂！这就是Android手机越用越卡的原因！
+								</h1>
+								<div class="left-post-txt">
+									智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因
+								</div>
+							</a>
+							<div class="left-post-note" style="margin-left: 0;">
+								<div class="author">作者:智趣狗</div>
+							</div>
+							<div class="bshare-custom" style="float: right;height=25px;">
+								<img style="padding-bottom: 6px;" src="http://img.cfan.com.cn/templates/default/css/images171225/weixin.png" onclick="ChangeMyDivShow('testid130595')">
+								<wb:share-button 
+									addition="simple" 
+									type="icon" 
+									url="http://www.cfan.com.cn/2018/0411/130595.shtml" title="看完秒懂！这就是Android手机越用越卡的原因！，智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因，只是当时是以苹果降速门为切入点，并没有说透。今天，就让咱们聚焦Android手机领域，从硬件、系统和软件三个方面分析安卓手机为啥容易出现“越用越慢”的尴尬问题吧。" 
+									pic="http://upload.cfan.com.cn/2018/0411/thumb_200_145_1523409817511.jpg">
+									<iframe src="http://widget.weibo.com/staticjs/weibosharev2.html?url=http%3A%2F%2Fwww.cfan.com.cn%2F2018%2F0411%2F130595.shtml&amp;type=icon&amp;language=zh_cn&amp;title=看完秒懂！这就是Android手机越用越卡的原因！，智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因，只是当时是以苹果降速门为切入点，并没有说透。今天，就让咱们聚焦Android手机领域，从硬件、系统和软件三个方面分析安卓手机为啥容易出现“越用越慢”的尴尬问题吧。&amp;pic=http://upload.cfan.com.cn/2018/0411/thumb_200_145_1523409817511.jpg&amp;searchPic=true&amp;style=simple"
+										width="18" height="25" frameborder="0" scrolling="no"
+										marginheight="0">
+									</iframe>
+								</wb:share-button>
+							</div>
+	
+							<div class="testclass" id="testid130595" style="display: none;">
+								<img src="http://upload.cfan.com.cn/qrcode/2018/0411/39373/lbazhl3mcijt-7.png" width="150px" height="150px/">
+							</div>
+	
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
 	</main>
 
 

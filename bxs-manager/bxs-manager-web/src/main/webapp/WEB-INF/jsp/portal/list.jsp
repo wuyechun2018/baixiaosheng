@@ -147,7 +147,7 @@ color:#E00;
 	    var sumCount=Math.ceil(articleData.rows.length/6) ;
     	for(var i=0;i<articleData.rows.length;i++){
    		  var articleObj=articleData.rows[i];
-		  var createDate=articleObj.createDate.substr(0,10);
+		  var createDate=articleObj.publishDate.substr(0,10);
 		  var articleTitle=articleObj.articleTitle;
 		  var articleUrl=ctx+"/portal/content?id="+articleObj.id;
 		  var articleTitlePart="";

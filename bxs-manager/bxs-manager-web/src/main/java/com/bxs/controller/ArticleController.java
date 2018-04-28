@@ -74,6 +74,26 @@ public class ArticleController extends BaseController{
 	}
 	
 	
+	
+	/**
+	 * 
+	 * 返回文章列表数据
+	 * @author: wyc
+	 * @createTime: 2018年1月31日 上午11:04:49
+	 * @history:
+	 * @param request
+	 * @return EUIGrid
+	 */
+	@RequestMapping("/pagerListNoCache")
+	@ResponseBody
+	public  EUIGrid pagerListNoCache(HttpServletRequest request){
+		EUIPager ePager=getPager(request);
+		Map<String,Object> param=getParamMap(request);
+		return articleService.pagerList(ePager,param);
+	}
+	
+	
+	
 	/**
 	 * 
 	 * 返回文章列表数据

@@ -151,6 +151,12 @@ public class TopicServiceImpl  implements TopicService{
 	}
 
 
+	@Override
+	public List<Topic> getAllTopic() {
+		return topicDao.getAllTopic();
+	}
+
+
 
 	
 }

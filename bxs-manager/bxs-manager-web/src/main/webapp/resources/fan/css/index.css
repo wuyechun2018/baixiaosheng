@@ -338,5 +338,12 @@ a:hover, .active, .active a {
     .left-top-date{	width:20%;font-size:12px;height:26px;float:left;text-align:right;margin-left:1%}
 }
 
+@media only screen and (max-width:768px) {
+	.footer-logo{display:none;}
+	.footer-img{display:none;}
+	.footer-link{display:none;}
+	.footer-txt{width:100%;text-align:center;margin-left:0;}
+}
+
 
 

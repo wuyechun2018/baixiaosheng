@@ -173,6 +173,21 @@ public class TopicDao {
 		List<Topic> list = jdbcTemplate.query(sql,new Object[]{pid,"%"+topicName+"%"},new BeanPropertyRowMapper(Topic.class));
 		return list;
 	}
+	
+	
+	/**
+	 * 
+	 * 获取所有专题
+	 * @author: wyc
+	 * @createTime: 2018年4月26日 下午9:36:39
+	 * @history:
+	 * @return List<Topic>
+	 */
+	public List<Topic> getAllTopic() {
+		String sql="SELECT * FROM t_topic T WHERE T.pid='1' AND T.data_state='1' ORDER BY T.display_order";
+		List<Topic> list = jdbcTemplate.query(sql,new BeanPropertyRowMapper(Topic.class));
+		return list;
+	}
 
 	/**
 	 * 

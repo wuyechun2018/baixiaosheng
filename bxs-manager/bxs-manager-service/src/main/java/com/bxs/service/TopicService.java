@@ -68,7 +68,15 @@ public interface TopicService {
 	List<Topic> getListByIds(String configValue);
 
 
-	
+	/**
+	 * 
+	 * 获取所有专题
+	 * @author: wyc
+	 * @createTime: 2018年4月27日 上午8:50:06
+	 * @history:
+	 * @return List<Topic>
+	 */
+	public List<Topic> getAllTopic();
 
 	
 

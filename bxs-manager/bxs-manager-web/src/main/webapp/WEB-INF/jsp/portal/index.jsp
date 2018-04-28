@@ -204,7 +204,7 @@ function showArticle(dispDivId,articleData){
 			  if(articleObj.articleType=='5'||articleObj.articleType=='6'){
 				  titleLength=12;
 			  }
-			  var createDate=articleObj.createDate.substr(0,10);
+			  var createDate=articleObj.publishDate.substr(0,10);
 			  var articleTitle=articleObj.articleTitle;
 			  var articleUrl=ctx+"/portal/content?id="+articleObj.id;
 			  var articleTitlePart="";
