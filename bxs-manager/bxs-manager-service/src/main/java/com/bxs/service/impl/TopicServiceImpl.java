@@ -157,6 +157,12 @@ public class TopicServiceImpl  implements TopicService{
 	}
 
 
+	@Override
+	public Topic getTopicById(String id) {
+		return topicDao.getTopicById(id);
+	}
+
+
 
 	
 }

@@ -14,7 +14,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <!--/手机版设置-->
-<title>思淘客</title>
+<title>思淘客-联系我们</title>
 <link href="${ctx}/resources/fan/css/index.css" rel="stylesheet" />
 <script type="text/javascript" src="${ctx}/resources/fan/js/jquery-1.9.1.min.js"></script>
 
@@ -200,7 +200,7 @@ $(function(){
 
 	
 	 
-	 <jsp:include page="footer.jsp" flush="true">
+	<jsp:include page="footer.jsp" flush="true">
 		 <jsp:param value="${ctx}" name="ctxPath"/> 
 	 </jsp:include>
 

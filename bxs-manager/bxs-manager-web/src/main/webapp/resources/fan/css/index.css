@@ -1,3 +1,7 @@
+
+html {
+  font-size: 62.5%;
+}
 body {
 	margin: 0;
 	font-size: 1.6rem;
@@ -118,7 +122,7 @@ body {
 
 .new-item {
 	background: #999;
-	width: 60px;
+	width: 80px;
 	height: 25px;
 	color: #fff;
 	line-height: 24px;
@@ -346,4 +350,85 @@ a:hover, .active, .active a {
 }
 
 
+/**以下为文章内容**/
+.article {
+    width: 72%;
+    margin: 0 auto;
+}
+
+.article h1 {
+    width: 100%;
+    font-size: 36px;
+    height: 100%;
+    line-height: 50px;
+    margin-top: 50px;
+}
+
+.article span {
+    padding-right: 12px;
+}
+
+.article .notes {
+    font-size: 14px;
+    margin-top: 9px;
+    margin-bottom: 50px;
+}
+
+.maincontent {
+    font-size: 18px;
+    line-height: 32px;
+}
+
+.article span {
+    padding-right: 12px;
+}
+
+.article .pre {
+    background: url(images171225/pre.jpg) no-repeat 0 6px;
+    text-indent: 20px;
+    margin-top: 50px;
+}
+
+.article .pre a, .article .next a {
+    color: #39658f;
+}
+
+.article .next {
+    background: url(images171225/next.jpg) no-repeat 0 6px;
+    text-indent: 20px;
+    margin-top: 10px;
+    margin-bottom: 60px;
+}
+
+/**关于我们**/
+.about {
+    width: 72%;
+    margin: 0 auto;
+}
+
+.about01 {
+    background: url(images171225/about01.jpg)no-repeat left;
+    height: 57px;
+    margin-top: 30px;
+    padding-top: 120px;
+    padding-bottom: 20px;
+    font-size: 36px;
+    text-indent: 318px;
+    border-bottom: 1px #b7b7b7 dashed;
+}
+
+.abouttext {
+    font-size: 16px;
+    line-height: 32px;
+    margin-top: 60px;
+    margin-bottom: 150px;
+    padding-left: 20px;
+}
+
+.footerbox {
+    width: 100%;
+    height: 180px;
+    background: #fff;
+    margin-top: 15px;
+}
 
