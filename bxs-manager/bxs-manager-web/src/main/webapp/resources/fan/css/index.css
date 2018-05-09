@@ -407,7 +407,7 @@ a:hover, .active, .active a {
 }
 
 .about01 {
-    background: url(images171225/about01.jpg)no-repeat left;
+    background: url(../images/about01.jpg)no-repeat left;
     height: 57px;
     margin-top: 30px;
     padding-top: 120px;
@@ -416,6 +416,30 @@ a:hover, .active, .active a {
     text-indent: 318px;
     border-bottom: 1px #b7b7b7 dashed;
 }
+
+.about02{
+	background:url(../images/about02.jpg)no-repeat left;
+	height:59px;
+	margin-top:30px;
+	padding-top:120px;
+	padding-bottom:20px;
+	font-size:36px;
+	text-indent:218px;
+	border-bottom:1px #b7b7b7 dashed;
+}
+
+
+.about03{
+background:url(../images/about03.jpg)no-repeat left;
+height:59px;
+margin-top:30px;
+padding-top:120px;
+padding-bottom:20px;
+font-size:36px;
+text-indent:258px;
+border-bottom:1px #b7b7b7 dashed;
+}
+
 
 .abouttext {
     font-size: 16px;

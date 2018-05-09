@@ -133,6 +133,13 @@ $(function(){
 	 		</tr>
 	 		
 	 		<tr>
+			 	<th>内容简介：</th>	 		
+	 			<td colspan="2">
+	 			 	<textarea id="aboutContent" name="aboutContent" style="width:800px;height:100px;">${article.aboutContent}</textarea>
+	 			</td>
+	 		</tr>
+	 		
+	 		<tr>
 			 	<th>信息来源：</th>	 		
 	 			<td>
 	 			  <input type="text" name="newsfrom" value="${article.newsfrom}" style="width:300px;" />

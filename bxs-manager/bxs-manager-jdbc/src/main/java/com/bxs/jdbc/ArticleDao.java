@@ -79,7 +79,8 @@ public class ArticleDao {
 						"  pop_state,\n" +
 						"  publish_media,\n" +
 						"  title_color,\n" +
-						"  res_edtior\n" +
+						"  res_edtior,\n" +
+						"  about_content\n" +
 						")\n" + 
 						"VALUES\n" + 
 						"  (\n" + 
@@ -105,6 +106,7 @@ public class ArticleDao {
 						"    ?,\n" + 
 						"    ?,\n" + 
 						"    ?,\n" +
+						"    ?,\n" + 
 						"    ?,\n" + 
 						"    ?\n" +
 						"  )";
@@ -137,6 +139,7 @@ public class ArticleDao {
 			         ps.setString(22, article.getPublishMedia());
 			         ps.setString(23, article.getTitleColor());
 			         ps.setString(24, article.getResEdtior());
+			         ps.setString(25, article.getAboutContent());
 			       }
 			     }
 			 );
@@ -184,7 +187,8 @@ public class ArticleDao {
 						"  pop_state = ?,\n" + 
 						"  publish_media = ?,\n" + 
 						"  title_color = ?,\n" + 
-						"  res_edtior = ?\n" + 
+						"  res_edtior = ?,\n" + 
+						"  about_content = ?\n" + 
 						"WHERE id = ?";
 
 		jdbcTemplate.execute(sql,
@@ -214,7 +218,8 @@ public class ArticleDao {
 			         ps.setString(21, article.getPublishMedia());
 			         ps.setString(22, article.getTitleColor());
 			         ps.setString(23, article.getResEdtior());
-			         ps.setString(24, article.getId());
+			         ps.setString(24, article.getAboutContent());
+			         ps.setString(25, article.getId());
 			       }
 			     }
 			 );

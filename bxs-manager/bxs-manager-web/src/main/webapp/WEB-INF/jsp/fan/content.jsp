@@ -99,6 +99,7 @@
 		<div class="maincontent">${article.articleContent}</div>
 		<p></p>
 		<!--上一篇下一篇-->
+		<%--
 		<div class="near">
 			<div class="pre">
 				上一篇： <a href="http://www.cfan.com.cn/2018/0427/130713.shtml"
@@ -108,8 +109,14 @@
 				下一篇： <a href="http://www.cfan.com.cn/2018/0428/130720.shtml"
 					target="_blank">加速上网？ 适合自己的DNS服务选对了吗？</a>
 			</div>
-		</div>
+		</div> --%>
 		<!--/上一篇下一篇-->
+		
+		<div class="near">
+			<div style="text-align: center;font-size: 16px;"><a  style="color:#ff004e;" href="${ctx}/fan/index" target="_blank">回到首页</a>
+			</div>
+		</div>
+		
 		<div class="clear"></div>
 	</div>
 	<!--/文章内容-->

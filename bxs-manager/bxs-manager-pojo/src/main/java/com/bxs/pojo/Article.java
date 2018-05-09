@@ -73,6 +73,8 @@ public class Article implements java.io.Serializable {
 	private String titleColor;
 	//责任编辑
 	private String resEdtior;
+	//内容简介
+	private String aboutContent;
 	
 
 	public String getId() {
@@ -270,4 +272,13 @@ public class Article implements java.io.Serializable {
 	public void setResEdtior(String resEdtior) {
 		this.resEdtior = resEdtior;
 	}
+
+	public String getAboutContent() {
+		return aboutContent;
+	}
+
+	public void setAboutContent(String aboutContent) {
+		this.aboutContent = aboutContent;
+	}
+	
 }
