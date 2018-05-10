@@ -24,7 +24,7 @@ body {
 	margin-left: 4%;
 	width: 120px;
 	height: 110px;
-	background: url(images171225/cfan-logo.jpg) no-repeat center;
+	background: url(../images/logo.png) no-repeat center;
 	float: left;
 }
 
@@ -50,7 +50,7 @@ body {
 }
 
 .navlist .on {
-	border-bottom: 4px #ff7e00 solid;
+	border-bottom: 4px #fdd44e solid;
 }
 
 .head-right {
@@ -168,7 +168,7 @@ a:hover, .active, .active a {
 
 .right-item {
     background: #000;
-    width: 38px;
+    width: 80px;
     height: 20px;
     color: #fff;
     line-height: 20px;
@@ -223,7 +223,7 @@ a:hover, .active, .active a {
     margin-top: 15px;
     width: 120px;
     height: 110px;
-    background: url(images171225/cfan-logo.jpg)no-repeat center;
+    background: url(../images/logo.png)no-repeat center;
     float: left;
 }
 
@@ -262,7 +262,7 @@ a:hover, .active, .active a {
 		margin-left: 1%;
 		width: 120px;
 		height: 110px;
-		background: url(images171225/cfan-logo.jpg) no-repeat center;
+		background: url(../images/logo.png) no-repeat center;
 		float: left;
 	}
 	.navlist li {
@@ -283,7 +283,7 @@ a:hover, .active, .active a {
 		margin-left: 1%;
 		width: 120px;
 		height: 110px;
-		background: url(images171225/cfan-logo.jpg) no-repeat center;
+		background: url(../images/logo.png) no-repeat center;
 		float: left;
 	}
 	.head-right {

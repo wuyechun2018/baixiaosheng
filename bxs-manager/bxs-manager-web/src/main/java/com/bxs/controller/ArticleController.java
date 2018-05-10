@@ -93,6 +93,24 @@ public class ArticleController extends BaseController{
 	}
 	
 	
+	/**
+	 * 
+	 * 获取最热门文章
+	 * @author: wyc
+	 * @createTime: 2018年5月9日 下午7:06:25
+	 * @history:
+	 * @param request
+	 * @return EUIGrid
+	 */
+	@RequestMapping("/topPagerList")
+	@ResponseBody
+	public  EUIGrid topPagerList(HttpServletRequest request){
+		EUIPager ePager=getPager(request);
+		Map<String,Object> param=getParamMap(request);
+		return articleService.topPagerList(ePager,param);
+	}
+	
+	
 	
 	/**
 	 * 

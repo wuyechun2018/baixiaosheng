@@ -7,8 +7,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="shortcut icon" href="http://www.cfan.com.cn/cfan.ico" />
-<link rel="icon" href="http://www.cfan.com.cn/cfan.ico" type="image/x-icon">
+<link rel="shortcut icon" href="${ctx}/resources/fan/images/sitaoke.ico" />
+<link rel="icon" href="${ctx}/resources/fan/images/sitaoke.ico" type="image/x-icon">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--手机版设置-->
 <meta http-equiv="X-UA-Compatible" content="IE=11">
@@ -67,6 +67,58 @@ function ChangeMyDivShow(imgObj){
     }
 }
 
+
+
+function loadRightArticle(){
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/article/topPagerList',
+		data:{
+			page:1,
+			rows:6
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	for(var i=0;i<data.rows.length;i++){
+	    		var articleObj=data.rows[i];
+	    		var articleTitle=articleObj.articleTitle;
+	    		//栏目名称
+	    		var topicName=articleObj.topicName;
+	    		//作者
+	    		var author=articleObj.author;
+	    		//信息来源
+	    		var newsfrom=articleObj.newsfrom;
+	    		var articleImageUrl=articleObj.articleImageUrl;
+	    		if(articleImageUrl==null||articleImageUrl==''){
+	    			articleImageUrl=ctx+'/resources/fan/images/default.gif';
+	    		}
+	    		var articleUrl=ctx+"/fan/content/"+articleObj.id;
+	    		
+	    		
+	    		var aboutContent=articleObj.aboutContent==null?'':articleObj.aboutContent;
+	    		
+	    		
+	    		var liHTML="<div class=\"right-post\" id=\"rightPost\">\n" +
+	    			"        <a href=\""+articleUrl+"\" title=\""+articleTitle+"\" target=\"_blank\">\n" + 
+	    			"          <div class=\"right-item\">"+topicName+"</div>\n" + 
+	    			"          <div class=\"right-post-pic\" style=\"background: url("+articleImageUrl+") no-repeat center; background-size: cover;\"></div>\n" + 
+	    			"          <h1 class=\"right-post-title\">"+articleTitle+"</h1>\n" + 
+	    			"          <div class=\"right-post-date\">2018-03-27 08:48</div>\n" + 
+	    			"        </a>\n" + 
+	    			"      </div>";
+
+
+		    	$('#postArticle').append(liHTML);
+	    	}
+	    		
+	    }
+	})
+}
+
 //加载文章
 function loadArticle(page){
 	//$('#dataUL').html();
@@ -99,6 +151,9 @@ function loadArticle(page){
 	    		var articleUrl=ctx+"/fan/content/"+articleObj.id;
 	    		
 	    		
+	    		var aboutContent=articleObj.aboutContent==null?'':articleObj.aboutContent;
+	    		
+	    		
 	    		var liHTML="<li>\n" +
 	    		"          <div class='left-post'>\n" + 
 	    		"            <div class='new-item'>"+topicName+"</div>\n" + 
@@ -113,10 +168,13 @@ function loadArticle(page){
 	    						articleTitle+
 	    		"                </h1>\n" + 
 	    		"                <div class='left-post-txt'>\n" + 
-	    		"                  智趣狗在今年1月曾简单介绍过手机为啥越用越卡的原因\n" + 
+	    						aboutContent+
 	    		"                </div>\n" + 
 	    		"              </a>\n" + 
 	    		"              <div class='left-post-note' style='margin-left: 0;'>\n" + 
+	    		"                <div class='author'>作者:"+author+"</div>\n" + 
+	    		"              </div>\n" + 
+	    		"              <div class='left-post-note' style='margin-left: 20;'>\n" + 
 	    		"                <div class='author'>作者:"+author+"</div>\n" + 
 	    		"              </div>\n" + 
 	    		"            </div>\n" + 
@@ -138,6 +196,7 @@ function seeMore(){
 //页面加载
 $(function(){
 	loadArticle(pageCount);
+	loadRightArticle();
 })
 
 
@@ -184,15 +243,16 @@ $(function(){
 	<main class="main-right">
 		<div class="title">热门文章</div>
 		<div id="postArticle">
-			<div class="right-post">
-			<a href="http://www.cfan.com.cn/2018/0327/130473.shtml" title="129元到底值不值？联想Watch 9智能手表评测" target="_blank">
-				<div class="right-item">产品</div>
-				<div class="right-post-pic" style="background: url(http://upload.cfan.com.cn/2018/0327/1522111502825.jpg) no-repeat center; background-size: cover;"></div>
-				<h1 class="right-post-title">129元到底值不值？联想Watch 9智能手表评测</h1>
-				<div class="right-post-date">2018-03-27 08:48</div>
-			</a>
-		</div>
-		
+			<%--
+			<div class="right-post" id="rightPost">
+				<a href="http://www.cfan.com.cn/2018/0327/130473.shtml" title="129元到底值不值？联想Watch 9智能手表评测" target="_blank">
+					<div class="right-item">产品</div>
+					<div class="right-post-pic" style="background: url(http://upload.cfan.com.cn/2018/0327/1522111502825.jpg) no-repeat center; background-size: cover;"></div>
+					<h1 class="right-post-title">129元到底值不值？联想Watch 9智能手表评测</h1>
+					<div class="right-post-date">2018-03-27 08:48</div>
+				</a>
+			</div>
+			 --%>
 		</div>
 	</main>
 	

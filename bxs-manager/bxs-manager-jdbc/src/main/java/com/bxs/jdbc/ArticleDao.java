@@ -1209,5 +1209,22 @@ public class ArticleDao {
 		String sql="SELECT COUNT(1) FROM t_sign T WHERE T.data_state='1' AND T.sign_state='0' AND t.article_id=?;";
 		return  jdbcTemplate.queryForObject(sql,new Object[]{articleId},Long.class);
 	}
+
+	/**
+	 * 
+	 * 获取文章列表，根据浏览数倒序排列
+	 * @author: wyc
+	 * @createTime: 2018年5月9日 下午7:14:09
+	 * @history:
+	 * @param ePager
+	 * @param param
+	 * @return List<?>
+	 */
+	public List<?> topPagerList(EUIPager ePager, Map<String, Object> param) {
+		String querySql="SELECT t.*,s.topic_name FROM t_article T LEFT JOIN t_topic s ON t.topic_id=s.id ORDER BY T.view_count DESC";
+		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
+		return list;
+	}
 	
 }

@@ -61,4 +61,6 @@ public interface ArticleService {
 	public EUIGrid pagerListForSois(EUIPager ePager, Map<String, Object> param);
 
 	boolean isAllSigned(String articleId);
+
+	EUIGrid topPagerList(EUIPager ePager, Map<String, Object> param);
 }

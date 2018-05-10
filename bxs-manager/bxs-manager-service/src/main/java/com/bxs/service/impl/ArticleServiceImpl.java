@@ -322,6 +322,14 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 	}
 
+	@Override
+	public EUIGrid topPagerList(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(Long.valueOf(ePager.getRows()));
+		grid.setRows(articleDao.topPagerList(ePager,param));
+		return grid;
+	}
+
 
 	
 	
