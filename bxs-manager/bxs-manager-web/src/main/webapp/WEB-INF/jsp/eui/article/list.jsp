@@ -9,6 +9,11 @@
 <script type="text/javascript">
 //当前选中的左边树的节点ID,即单位ID，它是一个全局变量
 var SELECT_NODE_Id="";
+debugger;
+//从cookie
+if($.cookie('S_NODE_ID')){
+	SELECT_NODE_Id=$.cookie('S_NODE_ID');
+}
 
 function leftCollapse(){
    // $("#dgTable").datagrid('resize',{width:parent.$('.layout-panel-center').width()-50});
@@ -218,13 +223,22 @@ $(function(){
 			onClick : function(node) {
 				//此处给全局变量赋值
 				SELECT_NODE_Id=node.id;
+				//存入cookie
+				$.cookie('S_NODE_ID',SELECT_NODE_Id);
 				doQuery();
 			},
 			onLoadSuccess : function(node, data) {
 				//默认展开根节点
 				var rooNode = $("#leftTree").tree('getRoot');
 				$("#leftTree").tree('expandAll');
-
+				
+				//选中
+				if(SELECT_NODE_Id!=''){
+					var snode = $('#leftTree').tree('find', SELECT_NODE_Id);
+					$('#leftTree').tree('select', snode.target);
+				}
+				
+				
 			}
 		});
 	
@@ -237,7 +251,7 @@ $(function(){
 	    queryParams: {
 	    	//普通类型
 	    	//articleType:'1',
-	    	topicId:'',
+	    	topicId:SELECT_NODE_Id,
 	    	articleTitle:'',
 	    	publishDeptId:'',
 	    	checkState:''
