@@ -13,6 +13,7 @@ import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.stereotype.Repository;
 import com.bxs.common.vo.EUIPager;
+import com.bxs.pojo.Article;
 import com.bxs.pojo.InfoRank;
 import com.bxs.pojo.InfoRankVo;
 
@@ -104,6 +105,28 @@ public class InfoRankDao {
 
 	}
 
+	/**
+	 * 
+	 * 获取信息排名
+	 * @author: wyc
+	 * @createTime: 2018年5月11日 上午11:48:32
+	 * @history:
+	 * @param statYear
+	 * @param deptId
+	 * @return Long
+	 */
+	public InfoRank getInfoRankByStatYearAndDeptId(String statYear,String deptId) {
+		String sql="SELECT * FROM t_info_rank T WHERE  T.stat_year=? AND t.dept_id=?";
+		List<InfoRank> list = jdbcTemplate.query(sql,new Object[]{statYear,deptId},new BeanPropertyRowMapper(InfoRank.class));
+		if(!list.isEmpty()){
+			return list.get(0);
+		}else{
+			return null;
+		}
+	}
+	
+	
+	
 	public Long getTotalCountByStatYearAndDeptId(String statYear,String deptId) {
 		String sql="SELECT COUNT(1) FROM V_INFO_RANK T WHERE  T.stat_year=? AND t.dept_id=?";
 		return  jdbcTemplate.queryForObject(sql,new Object[]{statYear,deptId},Long.class);
