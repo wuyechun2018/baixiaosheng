@@ -7,8 +7,8 @@
 <html>
 
 <head>
-<link rel="shortcut icon" href="http://www.cfan.com.cn/cfan.ico" />
-<link rel="icon" href="http://www.cfan.com.cn/cfan.ico"
+<link rel="shortcut icon" href="${ctx}/resources/fan/images/sitaoke.ico" />
+<link rel="icon" href="${ctx}/resources/fan/images/sitaoke.ico"
 	type="image/x-icon">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--手机版设置-->
@@ -60,7 +60,7 @@
 
 <body>
 	<!--头部-->
-	<header class="header"> <a href="http://www.cfan.com.cn">
+	<header class="header"> <a href="${ctx}/fan/index">
 		<div class="logo"></div>
 	</a> <nav class="navlist">
 	<ul>

@@ -7,8 +7,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="shortcut icon" href="http://www.cfan.com.cn/cfan.ico" />
-<link rel="icon" href="http://www.cfan.com.cn/cfan.ico" type="image/x-icon">
+<link rel="shortcut icon" href="${ctx}/resources/fan/images/sitaoke.ico" />
+<link rel="icon" href="${ctx}/resources/fan/images/sitaoke.ico" type="image/x-icon">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--手机版设置-->
 <meta http-equiv="X-UA-Compatible" content="IE=11">

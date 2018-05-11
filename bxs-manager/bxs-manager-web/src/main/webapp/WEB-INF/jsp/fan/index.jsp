@@ -209,7 +209,7 @@ $(function(){
 <body>
 	<!--头部-->
 	<header class="header"> 
-		<a href="http://www.cfan.com.cn">
+		<a href="${ctx}/fan/index">
 			<div class="logo"></div>
 		</a> 
 		<nav class="navlist">
