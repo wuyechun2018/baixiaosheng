@@ -1,31 +1,118 @@
 package com.bxs.controller;
-
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bxs.common.vo.EUIPager;
+import com.bxs.common.dict.SystemConstant;
+import com.bxs.common.utils.EncryptionUtil;
 import com.bxs.pojo.Article;
+import com.bxs.pojo.SysUser;
 import com.bxs.pojo.Topic;
+import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
 import com.bxs.service.TopicService;
+import com.bxs.service.UserService;
 
 @Controller
 @RequestMapping("/fan")
 public class FanController {
+	
+	private static final Logger logger =LoggerFactory.getLogger(FanController.class);
+
 	
 	@Autowired
 	private TopicService topicService;
 	
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private UserService userService;
+	
+	
+	/**
+	 * 
+	 * 登录
+	 * @author: wyc
+	 * @createTime: 2018年6月7日 下午5:29:37
+	 * @history:
+	 * @param username
+	 * @param password
+	 * @param session
+	 * @return ModelAndView
+	 */
+	@RequestMapping("/doLogin")
+	public ModelAndView doLogin(String username,String password,HttpSession session){
+		ModelAndView mv=new ModelAndView();
+		List<UserInfoVo> list=userService.getUserByLoginName(username);
+		mv.setViewName("/fan/login");
+		if(!list.isEmpty()){
+			UserInfoVo info=list.get(0);
+			//密码相等
+			if(info.getLoginPassword().equals(EncryptionUtil.getMd5String(password))){
+				//用户信息存入Session
+				session.setAttribute(SystemConstant.CURRENT_SESSION_USER_INFO, info);
+				//携带用户信息
+				mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO, info);
+				logger.info("{}登录[管理系统]成功,时间为{}",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+				//跳转到后台管理主页面
+				mv.setViewName("/fan/index");
+			}else{
+				mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
+				logger.info("{}登录[管理系统]失败,时间为{},密码错误",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+				//登录失败，跳转到登录页面
+				mv.setViewName("/fan/login");
+			}
+			
+			List<Topic> topicList=topicService.getAllTopic();
+			mv.addObject("topicList", topicList);
+			
+			
+		}else{
+			logger.info("账号{}登录[管理系统]失败,时间为{},系统中无该用户",username,new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+			mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
+		}
+		return mv;
+	}
+	
+	
+	/**
+	 * 
+	 * 用户注册
+	 * @author: wyc
+	 * @createTime: 2018年6月8日 上午11:41:55
+	 * @history:
+	 * @param loginName
+	 * @param loginPassword
+	 * @param mobilePhone
+	 * @return String
+	 */
+	@RequestMapping("/doRegister")
+	public ModelAndView doRegister(String loginName,String loginPassword,String mobilePhone){
+		logger.info("用户注册，登录名为{},时间为{}",loginName+"["+mobilePhone+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+		ModelAndView mv=new ModelAndView();
+		SysUser user=new SysUser();
+		user.setLoginName(loginName);
+		//用户名默认和登录名保持一致
+		user.setUserName(loginName);
+		user.setLoginPassword(loginPassword);
+		userService.save(user);
+		mv.addObject("msg", "注册成功，请到登录页面进行登录！");
+		mv.setViewName("/fan/register");
+		return mv;
+	}
+	
+	
 	
 	/**
 	 * 
@@ -37,7 +124,7 @@ public class FanController {
 	 * @return String
 	 */
 	@RequestMapping(value = "/{page}")
-	public String getDefinedPage(@PathVariable("module") String module,@PathVariable("page") String page) {
+	public String getDefinedPage(@PathVariable("page") String page) {
 		return "/fan/"+page;
 	}
 	

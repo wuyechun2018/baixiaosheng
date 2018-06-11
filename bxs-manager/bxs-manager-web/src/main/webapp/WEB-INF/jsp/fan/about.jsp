@@ -61,6 +61,10 @@
 <body>
 	<!--头部-->
 	<header class="header"> <a href="${ctx}/fan/index">
+		<div class="header-info">
+			<a href="${ctx}/fan/register">注册</a> 
+			<a href="${ctx}/fan/login">登录</a>
+		</div>
 		<div class="logo"></div>
 	</a> <nav class="navlist">
 	<ul>
