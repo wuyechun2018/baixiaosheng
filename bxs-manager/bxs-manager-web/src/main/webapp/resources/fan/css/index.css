@@ -14,21 +14,22 @@ body {
 
 .header {
 	width: 100%;
-	height: 150px;
+	height: 158px;
 	background: #fff
 }
 
 .header-info{
 	text-align:right;
-	hegight:32px;
+	hegight:42px;
 	/*
 	background: linear-gradient(#e8e1e1,#666);
-	*/
 	background-color:#F08080;
+	*/
+	background-color:#0593d3;
 	padding-right:2%;
 	font-family: microsoft yahei;
 	color:#FFF;
-	line-height:30px;
+	line-height:40px;
 	
 }
 
@@ -308,7 +309,7 @@ a:hover, .active, .active a {
 	.logo {
 		margin-left: 1%;
 		width: 120px;
-		height: 110px;
+		height: 85px;
 		background: url(../images/logo.png) no-repeat center;
 		float: left;
 	}
