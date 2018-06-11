@@ -72,18 +72,23 @@
                               <span id="auth-continue" class="a-button a-button-span12 a-button-primary auth-requires-verify-modal">
                                 <span class="a-button-inner">
                                   <input id="continue" tabindex="8" class="a-button-input" type="submit" aria-labelledby="auth-continue-announce">
-                                  <span id="auth-continue-announce" class="a-button-text" aria-hidden="true">继续</span></span>
+                                  <span id="auth-continue-announce" class="a-button-text" aria-hidden="true">继续</span>
+                                  </span>
                               </span>
                             </div>
                             <div class="a-divider a-divider-section">
                               <div class="a-divider-inner"></div>
                             </div>
-                            <div class="a-row">已拥有帐户？
-                              <a class="a-link-emphasis" href="${ctx}/fan/login">登录</a></div>
+                            <div class="a-row">
+                           		 已拥有帐户？<a class="a-link-emphasis" href="${ctx}/fan/login">登录</a>
+                              </div>
                           </div>
                         </div>
                       </form>
                     </div>
+                  	<div class="info-msg">
+							${infoMsg}
+                  	</div>
                   </div>
                 </div>
               </div>

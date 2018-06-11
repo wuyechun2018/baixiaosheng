@@ -37,6 +37,14 @@ body {
 	font-size:14px;
 }
 
+.header-info A:hover{
+	color:#fdd44e;
+}
+
+.i-info{
+	font-weight: bold;
+}
+
 
 .logo {
 	margin-left: 4%;

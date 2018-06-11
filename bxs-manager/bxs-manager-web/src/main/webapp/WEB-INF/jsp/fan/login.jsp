@@ -82,13 +82,19 @@
                         </div>
                       </form>
                     </div>
+                  
+                  	<div style="text-align: center;">
+						
+                  	</div>
                   </div>
                 </div>
               </div>
               <div id="right-2"></div>
               <div class="a-section a-spacing-top-extra-large auth-footer">
                 <div class="a-divider a-divider-section">
-                  <div class="a-divider-inner"></div>
+                  <div class="a-divider-inner">
+                  	
+                  </div>
                 </div>
                 <%--
                 <div class="a-section a-spacing-small a-text-center a-size-mini">

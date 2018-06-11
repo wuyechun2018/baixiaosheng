@@ -62,8 +62,12 @@
 	<!--头部-->
 	<header class="header"> 
 		<div class="header-info">
-			<a href="${ctx}/fan/register">注册</a> 
+			<i class="fa fa-th-large" aria-hidden="true"></i>
+			<a href="${ctx}/fan/register">注册</a>
+			<i class="fa fa-user-o" aria-hidden="true"></i>
 			<a href="${ctx}/fan/login">登录</a>
+			<i class="fa fa-sign-out" aria-hidden="true"></i>
+			<a href="${ctx}/fan/loginout">退出</a>
 		</div>
 		<a href="${ctx}/fan/index">
 		<div class="logo"></div>

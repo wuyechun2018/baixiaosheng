@@ -86,6 +86,30 @@ public class FanController {
 	}
 	
 	
+	
+	/**
+	 * 
+	 * 系统用户退出
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午8:46:06
+	 * @history:
+	 * @param request
+	 * @return String
+	 */
+	@RequestMapping(value = "/loginout")
+	public ModelAndView doLoginOut(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		session.invalidate();
+		ModelAndView mv=new ModelAndView();
+		//获取栏目信息
+		List<Topic> topicList=topicService.getAllTopic();
+		mv.setViewName("/fan/index");
+		mv.addObject("topicList", topicList);
+		return mv;
+	}
+	
+	
 	/**
 	 * 
 	 * 用户注册
@@ -107,7 +131,7 @@ public class FanController {
 		user.setUserName(loginName);
 		user.setLoginPassword(loginPassword);
 		userService.save(user);
-		mv.addObject("msg", "注册成功，请到登录页面进行登录！");
+		mv.addObject("infoMsg", "注册成功，请到<a href='./login'>登录</a>页面进行登录！");
 		mv.setViewName("/fan/register");
 		return mv;
 	}

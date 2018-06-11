@@ -16,6 +16,7 @@
 <!--/手机版设置-->
 <title>思淘客</title>
 <link href="${ctx}/resources/fan/css/index.css" rel="stylesheet" />
+<link href="${ctx}/resources/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" media="screen">
 <script type="text/javascript" src="${ctx}/resources/fan/js/jquery-1.9.1.min.js"></script>
 
 
@@ -172,10 +173,10 @@ function loadArticle(page){
 	    		"                </div>\n" + 
 	    		"              </a>\n" + 
 	    		"              <div class='left-post-note' style='margin-left: 0;'>\n" + 
-	    		"                <div class='author'>作者:"+author+"</div>\n" + 
+	    		"                <div class='author'><span class='i-info'>作者:</span>"+author+"</div>\n" + 
 	    		"              </div>\n" + 
 	    		"              <div class='left-post-note' style='margin-left: 20;'>\n" + 
-	    		"                <div class='author'>作者:"+author+"</div>\n" + 
+	    		"                <div class='author'><span class='i-info'>数据来源:</span>"+newsfrom+"</div>\n" + 
 	    		"              </div>\n" + 
 	    		"            </div>\n" + 
 	    		"          </div>\n" + 
@@ -210,8 +211,12 @@ $(function(){
 	<!--头部-->
 	<header class="header">
 		<div class="header-info">
-			<a href="${ctx}/fan/register">注册</a> 
+			<i class="fa fa-th-large" aria-hidden="true"></i>
+			<a href="${ctx}/fan/register">注册</a>
+			<i class="fa fa-user-o" aria-hidden="true"></i>
 			<a href="${ctx}/fan/login">登录</a>
+			<i class="fa fa-sign-out" aria-hidden="true"></i>
+			<a href="${ctx}/fan/loginout">退出</a>
 		</div>
 		<a href="${ctx}/fan/index">
 			<div class="logo"></div>
