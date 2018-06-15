@@ -69,7 +69,7 @@ function ChangeMyDivShow(imgObj){
 }
 
 
-
+//右边，热门文章栏
 function loadRightArticle(){
 	$.ajax({
 		cache: true,
@@ -98,17 +98,13 @@ function loadRightArticle(){
 	    			articleImageUrl=ctx+'/resources/fan/images/default.gif';
 	    		}
 	    		var articleUrl=ctx+"/fan/content/"+articleObj.id;
-	    		
-	    		
 	    		var aboutContent=articleObj.aboutContent==null?'':articleObj.aboutContent;
-	    		
-	    		
 	    		var liHTML="<div class=\"right-post\" id=\"rightPost\">\n" +
 	    			"        <a href=\""+articleUrl+"\" title=\""+articleTitle+"\" target=\"_blank\">\n" + 
 	    			"          <div class=\"right-item\">"+topicName+"</div>\n" + 
 	    			"          <div class=\"right-post-pic\" style=\"background: url("+articleImageUrl+") no-repeat center; background-size: cover;\"></div>\n" + 
 	    			"          <h1 class=\"right-post-title\">"+articleTitle+"</h1>\n" + 
-	    			"          <div class=\"right-post-date\">2018-03-27 08:48</div>\n" + 
+	    			"          <div class=\"right-post-date\">"+articleObj.createDate+"</div>\n" + 
 	    			"        </a>\n" + 
 	    			"      </div>";
 
@@ -126,7 +122,7 @@ function loadArticle(page){
 	$.ajax({
 		cache: true,
 		type: "POST",
-		url:'${ctx}/article/pagerListNoCache',
+		url:'${ctx}/article/pagerListOrderByCreateDate',
 		data:{
 			page:page,
 			rows:5
@@ -150,11 +146,7 @@ function loadArticle(page){
 	    			articleImageUrl=ctx+'/resources/fan/images/default.gif';
 	    		}
 	    		var articleUrl=ctx+"/fan/content/"+articleObj.id;
-	    		
-	    		
 	    		var aboutContent=articleObj.aboutContent==null?'':articleObj.aboutContent;
-	    		
-	    		
 	    		var liHTML="<li>\n" +
 	    		"          <div class='left-post'>\n" + 
 	    		"            <div class='new-item'>"+topicName+"</div>\n" + 
@@ -211,9 +203,13 @@ $(function(){
 	<!--头部-->
 	<header class="header">
 		<div class="header-info">
-			<i class="fa fa-th-large" aria-hidden="true"></i>
+			<c:if test="${! empty userInfoVo}">
+				<i class="fa fa-user-o" aria-hidden="true"></i>
+				<a>${userInfoVo.loginName}</a>
+			</c:if>  
+			<i class="fa fa-address-book-o" aria-hidden="true"></i>
 			<a href="${ctx}/fan/register">注册</a>
-			<i class="fa fa-user-o" aria-hidden="true"></i>
+			<i class="fa fa-commenting-o" aria-hidden="true"></i>
 			<a href="${ctx}/fan/login">登录</a>
 			<i class="fa fa-sign-out" aria-hidden="true"></i>
 			<a href="${ctx}/fan/loginout">退出</a>

@@ -330,6 +330,14 @@ public class ArticleServiceImpl implements ArticleService {
 		return grid;
 	}
 
+	@Override
+	public EUIGrid pagerListOrderByCreateDate(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(articleDao.getTotalCount(param));
+		grid.setRows(articleDao.pagerArticleListOrderByCreateDate(ePager,param));
+		return grid;
+	}
+
 
 	
 	

@@ -10,6 +10,8 @@ body {
 
 .info-msg{
 	text-align:center;
+	font-weight: bold;
+	color:red;
 }
 
 .a-box .a-box-inner {

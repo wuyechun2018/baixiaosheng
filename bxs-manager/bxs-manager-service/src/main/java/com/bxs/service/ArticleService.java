@@ -20,6 +20,9 @@ public interface ArticleService {
 
 	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 	
+	EUIGrid pagerListOrderByCreateDate(EUIPager ePager, Map<String, Object> param);
+
+	
 	EUIGrid pagerListForVideo(EUIPager ePager, Map<String, Object> param);
 	
 	/**

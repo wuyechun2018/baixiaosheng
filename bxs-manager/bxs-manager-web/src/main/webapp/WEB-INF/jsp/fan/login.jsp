@@ -41,19 +41,19 @@
                           <div class="a-box-inner">
                             <h1 class="a-spacing-small moa_desktop_signup">登录</h1>
                             <div class="a-row a-spacing-base">
-                              <label for="ap_customer_name" class="a-form-label">登录名或手机号码</label>
-                              <input type="text" maxlength="50" id="ap_customer_name" autocomplete="off" name="username" tabindex="1" class="a-input-text a-span12 auth-autofocus auth-required-field">
+                              <label for="username" class="a-form-label">登录名或手机号码</label>
+                              <input type="text" maxlength="50" id="username" autocomplete="off" name="username" placeholder="请输入登录名或手机号" tabindex="1" class="a-input-text a-span12 ">
                             </div>
                             <div class="auth-require-fields-match-group">
                               <div class="a-row a-spacing-base">
                                 <label for="ap_password" class="a-form-label">密码</label>
-                                <input type="password" maxlength="1024" id="password" autocomplete="off" placeholder="至少 6 个字符" name="password" tabindex="5" class="a-input-text a-span12 auth-required-field auth-require-fields-match  auth-require-password-validation">
+                                <input type="password" maxlength="1024" id="password" autocomplete="off" placeholder="请输入密码" name="password" tabindex="5" class="a-input-text a-span12 ">
                               </div>
                             </div>
                             <div class="a-row a-spacing-large">
-                              <div data-a-input-name="legalAgreementCheckBox" class="a-checkbox auth-required-field">
+                              <div data-a-input-name="remembermeBox" class="a-checkbox auth-required-field">
                                 <label>
-                                  <input type="checkbox" name="legalAgreementCheckBox" value="true" tabindex="7">
+                                  <input type="checkbox" name="rememberme" value="true" tabindex="7">
                                   <i class="a-icon a-icon-checkbox"></i>
                                   <span class="a-label a-checkbox-label">记住登录状态
                                    </span></label>

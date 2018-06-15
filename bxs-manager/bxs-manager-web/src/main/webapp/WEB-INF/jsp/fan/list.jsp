@@ -74,7 +74,7 @@ function loadArticle(page){
 	$.ajax({
 		cache: true,
 		type: "POST",
-		url:'${ctx}/article/pagerListNoCache',
+		url:'${ctx}/article/pagerListOrderByCreateDate',
 		data:{
 			topicId:$('#topicId').val(),
 			page:page,

@@ -304,6 +304,21 @@ public class UserDao {
 
 	/**
 	 * 
+	 * 根据手机号获取用户信息
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午10:57:14
+	 * @history:
+	 * @param username
+	 * @return List<UserInfoVo>
+	 */
+	public List<UserInfoVo> getUserByMobilePhone(String mobilePhone) {
+		String sql="SELECT * FROM V_USER_INFO T WHERE 1=1 AND T.DATA_STATE='1' AND T.MOBILE_PHONE=?";
+		List<UserInfoVo> list = jdbcTemplate.query(sql,new Object[]{mobilePhone},new BeanPropertyRowMapper(UserInfoVo.class));
+		return list;
+	}
+	
+	/**
+	 * 
 	 * 根据登录名获取用户信息列表
 	 * @author: wyc
 	 * @createTime: 2018年1月30日 下午10:57:14
@@ -316,9 +331,19 @@ public class UserDao {
 		List<UserInfoVo> list = jdbcTemplate.query(sql,new Object[]{username},new BeanPropertyRowMapper(UserInfoVo.class));
 		return list;
 	}
+	
+	
 
 
-
+	/**
+	 * 
+	 * 根据用户生日获取用户列表
+	 * @author: wyc
+	 * @createTime: 2018年6月12日 上午11:50:25
+	 * @history:
+	 * @param dayStr
+	 * @return List<SysUser>
+	 */
 	public List<SysUser> getUserListByBirthday(String dayStr) {
 		String sql="SELECT * FROM T_USER T WHERE T.birthday LIKE ? ";
 		List<SysUser> list = jdbcTemplate.query(sql,new Object[]{"%"+dayStr+"%"},new BeanPropertyRowMapper(SysUser.class));

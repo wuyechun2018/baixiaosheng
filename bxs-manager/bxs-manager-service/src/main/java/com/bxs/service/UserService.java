@@ -19,6 +19,8 @@ public interface UserService {
 	public EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 
 	public List<UserInfoVo> getUserByLoginName(String username);
+	
+	public List<UserInfoVo> getUserByMobilePhone(String mobilePhone);
 
 	public List<SysUser> getUserListByBirthday(String dayStr);
 

@@ -56,6 +56,9 @@ public class DataInitJob {
 	//@Value("${stat.article.topic}")
 	//private String statArticleTopic;
 	
+	//定时任务开关
+	private boolean jobSwitchOn=false;
+	
 	
 	
 	/**
@@ -68,18 +71,20 @@ public class DataInitJob {
 	@Scheduled(cron = "0 0/5 * * * ?")
 	@Async
 	public void updateRankInfo(){
-		logger.info("-----更新信息排名数据开始,时间是:{}",new DateTime().toString("yyyy/MM/dd HH:mm:ss"));
-		String statYear=new SimpleDateFormat("yyyy").format(new Date());
-		// 获取部门数据
-		List<Dept> deptList = deptDao.getListByPid("1");
-		for (Dept dept : deptList) {
-			InfoRank rank=infoRankDao.getInfoRankByStatYearAndDeptId(statYear, dept.getId());
-			// 支队
-			rank.setZhidui(articleDao.getCountByPublishDateAndTopic(statYear,"ZHYW,GZJB,GZDT",dept.getId()));
-			//更新
-			infoRankDao.update(rank);
+		if(jobSwitchOn){
+			logger.info("-----更新信息排名数据开始,时间是:{}",new DateTime().toString("yyyy/MM/dd HH:mm:ss"));
+			String statYear=new SimpleDateFormat("yyyy").format(new Date());
+			// 获取部门数据
+			List<Dept> deptList = deptDao.getListByPid("1");
+			for (Dept dept : deptList) {
+				InfoRank rank=infoRankDao.getInfoRankByStatYearAndDeptId(statYear, dept.getId());
+				// 支队
+				rank.setZhidui(articleDao.getCountByPublishDateAndTopic(statYear,"ZHYW,GZJB,GZDT",dept.getId()));
+				//更新
+				infoRankDao.update(rank);
+			}
+			logger.info("-----更新信息排名数据结束,时间是:{}",new DateTime().toString("yyyy/MM/dd HH:mm:ss"));
 		}
-		logger.info("-----更新信息排名数据结束,时间是:{}",new DateTime().toString("yyyy/MM/dd HH:mm:ss"));
 	}
 	
 	
@@ -94,49 +99,51 @@ public class DataInitJob {
 	@Scheduled(cron = "0 0/30 * * * ?")
 	@Async
 	public void initArticleCount(){
-		//获取
-		List<Topic> topicList=topicDao.getListByPid("1");
-		for (Topic topic : topicList) {
-			List<ArticleCount> countList=articleCountDao.getListByTopicCode(topic.getTopicCode());
-			Long acount=articleCountDao.getArticleTotalCount(topic.getTopicCode());
-			if(countList.isEmpty()){
-				//插入
-				System.out.println("插入-----"+topic.getTopicCode()+",数量："+acount);
-				ArticleCount articleCount=new ArticleCount();
-				articleCount.setArticleCount(acount.intValue());
-				articleCount.setTopicCode(topic.getTopicCode());
-				articleCount.setUpdateDate(new Date());
-				
-				articleCountDao.save(articleCount);
-			}else{
-				//更新
-				System.out.println("更新-----"+topic.getTopicCode()+",数量："+acount);
-				ArticleCount articleCount=countList.get(0);
-				articleCount.setArticleCount(acount.intValue());
-				articleCount.setUpdateDate(new Date());
-				
-				articleCountDao.update(articleCount);
+		if(jobSwitchOn){
+			//获取
+			List<Topic> topicList=topicDao.getListByPid("1");
+			for (Topic topic : topicList) {
+				List<ArticleCount> countList=articleCountDao.getListByTopicCode(topic.getTopicCode());
+				Long acount=articleCountDao.getArticleTotalCount(topic.getTopicCode());
+				if(countList.isEmpty()){
+					//插入
+					System.out.println("插入-----"+topic.getTopicCode()+",数量："+acount);
+					ArticleCount articleCount=new ArticleCount();
+					articleCount.setArticleCount(acount.intValue());
+					articleCount.setTopicCode(topic.getTopicCode());
+					articleCount.setUpdateDate(new Date());
+					
+					articleCountDao.save(articleCount);
+				}else{
+					//更新
+					System.out.println("更新-----"+topic.getTopicCode()+",数量："+acount);
+					ArticleCount articleCount=countList.get(0);
+					articleCount.setArticleCount(acount.intValue());
+					articleCount.setUpdateDate(new Date());
+					
+					articleCountDao.update(articleCount);
+				}
 			}
+			
+			//更新总数
+			List<ArticleCount> totalList=articleCountDao.getListByTopicCode("TOTAL");
+			Long sCount=articleCountDao.getTotalCount();
+			if(!totalList.isEmpty()){
+				ArticleCount totalCount=totalList.get(0);
+				totalCount.setArticleCount(sCount.intValue());
+				totalCount.setUpdateDate(new Date());
+				articleCountDao.update(totalCount);
+				System.out.println("更新-----文章总数,数量："+sCount);
+			}else{
+				ArticleCount articleCount=new ArticleCount();
+				articleCount.setArticleCount(sCount.intValue());
+				articleCount.setTopicCode("TOTAL");
+				articleCount.setUpdateDate(new Date());
+				articleCountDao.save(articleCount);
+				System.out.println("插入-----文章总数,数量："+sCount);
+			}
+			
 		}
-		
-		//更新总数
-		List<ArticleCount> totalList=articleCountDao.getListByTopicCode("TOTAL");
-		Long sCount=articleCountDao.getTotalCount();
-		if(!totalList.isEmpty()){
-			ArticleCount totalCount=totalList.get(0);
-			totalCount.setArticleCount(sCount.intValue());
-			totalCount.setUpdateDate(new Date());
-			articleCountDao.update(totalCount);
-			System.out.println("更新-----文章总数,数量："+sCount);
-		}else{
-			ArticleCount articleCount=new ArticleCount();
-			articleCount.setArticleCount(sCount.intValue());
-			articleCount.setTopicCode("TOTAL");
-			articleCount.setUpdateDate(new Date());
-			articleCountDao.save(articleCount);
-			System.out.println("插入-----文章总数,数量："+sCount);
-		}
-		
 	}
 
 }

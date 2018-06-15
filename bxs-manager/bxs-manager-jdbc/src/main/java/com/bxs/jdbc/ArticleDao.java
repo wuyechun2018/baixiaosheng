@@ -324,6 +324,24 @@ public class ArticleDao {
 	 * @param param
 	 * @return List<?>
 	 */
+	public List<?> pagerArticleListOrderByCreateDate(EUIPager ePager, Map<String, Object> param) {
+		String  querySql="SELECT * FROM V_ARTICLE_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSqlOrderByCreateDate(param);
+		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
+		return list;
+	}
+	
+	
+	/**
+	 * 
+	 * 分页、条件 筛选列表
+	 * @author: wyc
+	 * @createTime: 2018年1月31日 下午3:03:50
+	 * @history:
+	 * @param ePager
+	 * @param param
+	 * @return List<?>
+	 */
 	public List<?> pagerArticleListForVideo(EUIPager ePager, Map<String, Object> param) {
 		String  querySql="SELECT * FROM V_ARTICLE_INFO T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSqlForVideo(param,false);
 		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
@@ -699,6 +717,69 @@ public class ArticleDao {
 		return sqlBuff.toString();
 	}
 	
+	
+	/**
+	 * 
+	 * 根据查询参数生成查询语句
+	 * @author: wyc
+	 * @createTime: 2018年1月31日 下午4:35:08
+	 * @history:
+	 * @param param
+	 * @return String
+	 */
+	private String getParamSqlOrderByCreateDate(Map<String, Object> param) {
+		StringBuffer sqlBuff=new StringBuffer();
+		
+		if(param.get("articleType")!=null&&StringUtils.isNotBlank(param.get("articleType").toString())){
+			sqlBuff.append(" AND ARTICLE_TYPE = '" + param.get("articleType").toString() + "'\n");
+		}
+		//栏目ID,1代表全部栏目
+		if(param.get("topicId")!=null&&StringUtils.isNotBlank(param.get("topicId").toString())&&!"1".equals(param.get("topicId").toString())){
+			sqlBuff.append(" AND TOPIC_ID = '" + param.get("topicId").toString() + "'\n");
+		}
+		//首页推荐
+		if(param.get("frontSliderState")!=null&&StringUtils.isNotBlank(param.get("frontSliderState").toString())){
+			sqlBuff.append(" AND front_slider_state = '" + param.get("frontSliderState").toString() + "'\n");
+		}
+		
+		//栏目编码
+		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())&&!"1".equals(param.get("topicCode").toString())){
+			sqlBuff.append(" AND TOPIC_CODE = '" + param.get("topicCode").toString() + "'\n");
+		}
+		
+		//发布部门,1代表全部部门
+		if(param.get("publishDeptId")!=null&&StringUtils.isNotBlank(param.get("publishDeptId").toString())&&!"1".equals(param.get("publishDeptId").toString())){
+			sqlBuff.append(" AND PUBLISH_DEPT_ID = '" + param.get("publishDeptId").toString() + "'\n");
+		}
+		
+		//发布人
+		if(param.get("publishUserId")!=null&&StringUtils.isNotBlank(param.get("publishUserId").toString())){
+			sqlBuff.append(" AND PUBLISH_USER_ID = '" + param.get("publishUserId").toString() + "'\n");
+		}
+		
+		//审核状态,2代表全部状态,0 未审核 1 已审核
+		if(param.get("checkState")!=null&&StringUtils.isNotBlank(param.get("checkState").toString())&&!"2".equals(param.get("checkState").toString())){
+			sqlBuff.append(" AND CHECK_STATE = '" + param.get("checkState").toString() + "'\n");
+		}
+		
+		//文章标题
+		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
+			sqlBuff.append(" AND  T.ARTICLE_TITLE LIKE '%"+param.get("articleTitle").toString()+"%' \n");
+		}
+		
+		if(param.get("publishUserName")!=null&&StringUtils.isNotBlank(param.get("publishUserName").toString())){
+			sqlBuff.append(" AND  T.PUBLISH_USER_NAME LIKE '%"+param.get("publishUserName").toString()+"%' \n");
+		}
+		//是否弹窗
+		if(param.get("popState")!=null&&StringUtils.isNotBlank(param.get("popState").toString())){
+			sqlBuff.append(" AND  T.POP_STATE = '"+param.get("popState").toString()+"' \n");
+		}
+		
+		//性能优化，如果是Count操作，则不加排序字段
+		sqlBuff.append(" ORDER BY CREATE_DATE DESC");
+		
+		return sqlBuff.toString();
+	}
 	
 	/**
 	 * 

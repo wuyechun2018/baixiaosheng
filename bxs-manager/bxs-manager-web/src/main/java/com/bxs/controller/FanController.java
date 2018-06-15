@@ -67,6 +67,7 @@ public class FanController {
 				logger.info("{}登录[管理系统]成功,时间为{}",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 				//跳转到后台管理主页面
 				mv.setViewName("/fan/index");
+				mv.addObject("userInfoVo", info);
 			}else{
 				mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
 				logger.info("{}登录[管理系统]失败,时间为{},密码错误",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
@@ -125,14 +126,39 @@ public class FanController {
 	public ModelAndView doRegister(String loginName,String loginPassword,String mobilePhone){
 		logger.info("用户注册，登录名为{},时间为{}",loginName+"["+mobilePhone+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 		ModelAndView mv=new ModelAndView();
-		SysUser user=new SysUser();
-		user.setLoginName(loginName);
-		//用户名默认和登录名保持一致
-		user.setUserName(loginName);
-		user.setLoginPassword(loginPassword);
-		userService.save(user);
-		mv.addObject("infoMsg", "注册成功，请到<a href='./login'>登录</a>页面进行登录！");
-		mv.setViewName("/fan/register");
+		boolean successFlag=true;
+		//通过用户名查询
+		List<UserInfoVo> userListByUser=userService.getUserByLoginName(loginName);
+		if(!userListByUser.isEmpty()){
+			mv.setViewName("/fan/register");
+			mv.addObject("infoMsg", "用户名已存在请重新填写！");
+			successFlag=false;
+		}
+		//通过电话号码查询
+		List<UserInfoVo> userListByPhone=userService.getUserByMobilePhone(mobilePhone);
+		if(!userListByPhone.isEmpty()){
+			mv.setViewName("/fan/register");
+			mv.addObject("infoMsg", "该手机号已被注册,请直接登录或重新填写！");
+			successFlag=false;
+		}
+		//正常注册
+		if(successFlag){
+			//正常注册
+			mv.setViewName("/fan/register");
+			SysUser user=new SysUser();
+			user.setLoginName(loginName);
+			//用户名默认和登录名保持一致
+			user.setUserName(loginName);
+			user.setLoginPassword(loginPassword);
+			user.setMobilePhone(mobilePhone);
+			userService.save(user);
+			
+			logger.info("用户注册成功，登录名为{},时间为{}",loginName+"["+mobilePhone+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+			mv.addObject("infoMsg", "注册成功，请到<a href='./login'> 登录 </a>页面进行登录！");
+		}
+		mv.addObject("rLoginName", loginName);
+		mv.addObject("rLoginPassword", loginPassword);
+		mv.addObject("rMobilePhone", mobilePhone);
 		return mv;
 	}
 	

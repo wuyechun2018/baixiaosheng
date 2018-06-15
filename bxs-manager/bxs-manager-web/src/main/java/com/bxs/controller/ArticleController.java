@@ -95,6 +95,24 @@ public class ArticleController extends BaseController{
 	
 	/**
 	 * 
+	 * 返回文章列表数据
+	 * @author: wyc
+	 * @createTime: 2018年1月31日 上午11:04:49
+	 * @history:
+	 * @param request
+	 * @return EUIGrid
+	 */
+	@RequestMapping("/pagerListOrderByCreateDate")
+	@ResponseBody
+	public  EUIGrid pagerListOrderByCreateDate(HttpServletRequest request){
+		EUIPager ePager=getPager(request);
+		Map<String,Object> param=getParamMap(request);
+		return articleService.pagerListOrderByCreateDate(ePager,param);
+	}
+	
+	
+	/**
+	 * 
 	 * 获取最热门文章
 	 * @author: wyc
 	 * @createTime: 2018年5月9日 下午7:06:25

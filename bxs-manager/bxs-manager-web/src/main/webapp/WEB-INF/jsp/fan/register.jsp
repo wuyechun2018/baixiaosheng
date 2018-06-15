@@ -34,27 +34,26 @@
               <div id="authportal-center-section" class="a-section">
                 <div id="authportal-main-section" class="a-section">
                   <div class="a-section auth-pagelet-container">
-                    <!--show a warning modal dialog when the third party account is connected with Amazon-->
                     <div class="a-section auth-pagelet-container">
-                      <form id="ap_register_form" name="register" method="post" novalidate="" action="${ctx}/fan/doRegister" class="ap_ango_default auth-validate-form-moa auth-real-time-validation fwcim-form" data-fwcim-id="undefineda1f80c93">
+                      <form id="ap_register_form" name="register" method="post" novalidate="" action="${ctx}/fan/doRegister" class="ap_ango_default ">
                         <div class="a-box a-spacing-extra-large">
                           <div class="a-box-inner">
                             <h1 class="a-spacing-small moa_desktop_signup">创建账户</h1>
                             <div class="a-row a-spacing-base">
-                              <label for="ap_customer_name" class="a-form-label">登录名</label>
-                              <input type="text" maxlength="50" id="ap_customer_name" autocomplete="off" name="loginName" tabindex="1" class="a-input-text a-span12 auth-autofocus auth-required-field">
+                              <label for="loginName" class="a-form-label">登录名</label>
+                              <input type="text" maxlength="50" name="loginName" value="${rLoginName}" class="a-input-text a-span12 ">
                             </div>
-                            <div class="a-section a-spacing-base ap_mobile_number_fields">
+                            <div class="a-spacing-base">
                               <div class="a-row">
-                                <label for="ap_phone_number" class="a-form-label">手机号码</label>
-                              	<input type="text" maxlength="50" id="ap_phone_number" autocomplete="off" name="mobilePhone" tabindex="1" class="a-input-text a-span12 auth-autofocus auth-required-field">
+                                <label for="mobilePhone" class="a-form-label">手机号码</label>
+                              	<input type="text" maxlength="50"  name="mobilePhone" value="${rMobilePhone}"  class="a-input-text a-span12 ">
                               </div>
                             </div>
                             
                             <div class="auth-require-fields-match-group">
                               <div class="a-row a-spacing-base">
-                                <label for="ap_password" class="a-form-label">密码</label>
-                                <input type="password" maxlength="1024" id="ap_password" autocomplete="off" placeholder="至少 6 个字符" name="loginPassword" tabindex="5" class="a-input-text a-span12 auth-required-field auth-require-fields-match  auth-require-password-validation">
+                                <label for="loginPassword" class="a-form-label">密码</label>
+                                <input type="password" maxlength="1024"  placeholder="至少 6 个字符" value="${rLoginPassword}" name="loginPassword" tabindex="5" class="a-input-text a-span12 ">
                               </div>
                             </div>
                             <div class="a-row a-spacing-large">
@@ -72,23 +71,21 @@
                               <span id="auth-continue" class="a-button a-button-span12 a-button-primary auth-requires-verify-modal">
                                 <span class="a-button-inner">
                                   <input id="continue" tabindex="8" class="a-button-input" type="submit" aria-labelledby="auth-continue-announce">
-                                  <span id="auth-continue-announce" class="a-button-text" aria-hidden="true">继续</span>
+                                  <span id="auth-continue-announce" class="a-button-text" aria-hidden="true">确认注册</span>
                                   </span>
                               </span>
                             </div>
                             <div class="a-divider a-divider-section">
                               <div class="a-divider-inner"></div>
                             </div>
-                            <div class="a-row">
-                           		 已拥有帐户？<a class="a-link-emphasis" href="${ctx}/fan/login">登录</a>
+                            <div class="a-row" style="font-size:16px;text-align: center;color:red;font-weight:bold;">
+                           		${infoMsg}
                               </div>
                           </div>
                         </div>
                       </form>
                     </div>
-                  	<div class="info-msg">
-							${infoMsg}
-                  	</div>
+                  	
                   </div>
                 </div>
               </div>
