@@ -222,7 +222,7 @@ $(function(){
 				 <li ><a href="${ctx}/fan/index">首页</a></li>
 		          <c:forEach items="${topicList}" var="topic" begin="0" end="4">
 						<c:if test="${curTopic.id==topic.id}">
-							 <li class="on"><a href="${ctx}/fan/list/{topic.id}" >${topic.topicName}</a></li>
+							 <li class="on"><a href="${ctx}/fan/list/${topic.id}" >${topic.topicName}</a></li>
 						</c:if>
 						<c:if test="${curTopic.id!=topic.id}">
 							<li><a href="${ctx}/fan/list/${topic.id}" >${topic.topicName}</a></li>

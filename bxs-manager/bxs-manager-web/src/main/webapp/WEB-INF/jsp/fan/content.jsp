@@ -79,11 +79,11 @@
 		<c:forEach items="${topicList}" var="topic" begin="0" end="4">
 			<c:if test="${article.topicId==topic.id}">
 				<li class="on"><a
-					href="${ctx}/fan/list/{topic.topicCode}"
+					href="${ctx}/fan/list/${topic.id}"
 					target="_blank">${topic.topicName}</a></li>
 			</c:if>
 			<c:if test="${article.topicId!=topic.id}">
-				<li><a href="${ctx}/fan/list/${topic.topicCode}"
+				<li><a href="${ctx}/fan/list/${topic.id}"
 					target="_blank">${topic.topicName}</a></li>
 			</c:if>
 		</c:forEach>
