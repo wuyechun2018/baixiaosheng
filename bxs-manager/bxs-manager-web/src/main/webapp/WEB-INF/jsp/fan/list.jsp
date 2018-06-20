@@ -117,10 +117,13 @@ function loadArticle(page){
 	    		"                </h1>\n" + 
 	    		"                <div class='left-post-txt'>\n" + 
 	    						aboutContent + 
-	    		"                </div>\n" + 
+				"                </div>\n" + 
 	    		"              </a>\n" + 
 	    		"              <div class='left-post-note' style='margin-left: 0;'>\n" + 
-	    		"                <div class='author'>作者:"+author+"</div>\n" + 
+	    		"                <div class='author'><span class='i-info'>作者:</span>"+author+"</div>\n" + 
+	    		"              </div>\n" + 
+	    		"              <div class='left-post-note' style='margin-left: 20;'>\n" + 
+	    		"                <div class='author'><span class='i-info'>数据来源:</span>"+newsfrom+"</div>\n" + 
 	    		"              </div>\n" + 
 	    		"            </div>\n" + 
 	    		"          </div>\n" + 
