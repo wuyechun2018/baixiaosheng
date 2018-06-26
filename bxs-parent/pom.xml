@@ -33,7 +33,16 @@
 		<jedis.version>2.7.2</jedis.version>
 		<solrj.version>4.10.3</solrj.version>
 		<activiti.version>5.21.0</activiti.version>
+		<ojdbc.version>10.2.0.4.0</ojdbc.version>
 	</properties>
+	
+	<repositories>
+        <repository>
+            <id>nexus-aliyun</id>
+            <name>Nexus aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
 
 	<dependencyManagement>
 		<dependencies>
@@ -256,6 +265,12 @@
 			    <artifactId>activiti-image-generator</artifactId>  
 			    <version>${activiti.version}</version>  
 		   </dependency>    
+			
+			<dependency>
+			  <groupId>com.oracle</groupId>
+			  <artifactId>ojdbc14</artifactId>
+			  <version>${ojdbc.version}</version>
+			</dependency>
 			
 		</dependencies>
 	</dependencyManagement>

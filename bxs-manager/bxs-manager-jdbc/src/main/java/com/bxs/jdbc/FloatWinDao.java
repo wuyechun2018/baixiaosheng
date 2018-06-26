@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -14,11 +13,9 @@ import org.springframework.jdbc.core.support.AbstractLobCreatingPreparedStatemen
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.stereotype.Repository;
-
 import com.bxs.common.dict.DataState;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.FloatWin;
-import com.bxs.pojo.LinkInfoVo;
 
 @Repository
 public class FloatWinDao {

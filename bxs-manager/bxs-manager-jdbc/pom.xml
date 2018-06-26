@@ -25,6 +25,13 @@
 		<groupId>mysql</groupId>
 		<artifactId>mysql-connector-java</artifactId>
 	</dependency>
+	
+	<!-- Oracle -->
+	<dependency>
+		<groupId>com.oracle</groupId>
+		<artifactId>ojdbc14</artifactId>
+	</dependency>
+	
 	<!-- 连接池 -->
 	<dependency>
 		<groupId>com.alibaba</groupId>
