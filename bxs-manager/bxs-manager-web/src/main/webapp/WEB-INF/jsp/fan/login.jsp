@@ -77,8 +77,9 @@
                             <div class="a-divider a-divider-section">
                               <div class="a-divider-inner"></div>
                             </div>
-                            <div class="a-row">登录即表示您同意网站的使用条件及隐私声明</div>
-                          </div>
+                            <div class="a-row" style="font-size:16px;text-align: center;color:red;font-weight:bold;">
+                           		${SYSTEM_ERROR_MSG}
+                              </div>
                         </div>
                       </form>
                     </div>

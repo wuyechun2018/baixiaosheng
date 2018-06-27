@@ -345,36 +345,6 @@ a:hover, .active, .active a {
 }
 
 
-@media only screen and (max-width:768px) {
-	.main-right{display:none;	}
-	.main-left{width:100%;margin-left:0; margin-top:17px;}
-	.left-top{margin-bottom:17px;}
-	.left-post{margin-bottom:15px;}
-}
-
-@media only screen and (max-width:768px) {
-	.focusimg_right{display:none;}
-	.focusimg_left{width:100%;height:220px;}
-	.focusimg_left .title{font-size:24px;}
-}
-
-@media only screen and (max-width:768px) {
-	.left-post-title{font-size:18px;line-height:22px;}
-	.left-post-txt{font-size:12px; line-height:18px;height:115px;}
-	.left-post-note,.left-post-date{font-size:12px}
-	.left-top-pic{display:none;}
-	.left-top-list{	width:96%;height:52px;padding-bottom:5px;margin-left:2%;margin-bottom:0;border-bottom:1px #e9e9e9 solid;}
-    .left-top-info{width:100%;}
-    .left-top-title{font-size:15px;line-height:20px; font-weight: bold; height:26px;width:73%;float:left;}
-    .left-top-date{	width:20%;font-size:12px;height:26px;float:left;text-align:right;margin-left:1%}
-}
-
-@media only screen and (max-width:768px) {
-	.footer-logo{display:none;}
-	.footer-img{display:none;}
-	.footer-link{display:none;}
-	.footer-txt{width:100%;text-align:center;margin-left:0;}
-}
 
 
 /**以下为文章内容**/
@@ -481,5 +451,119 @@ border-bottom:1px #b7b7b7 dashed;
     height: 180px;
     background: #fff;
     margin-top: 15px;
+}
+
+.focusimg {
+    width: 100%;
+    background-size: cover;
+    background: #fff;
+}
+
+.focusimg_left {
+    width: 50%;
+    height: 411px;
+    float: left;
+    cursor: pointer;
+    position: relative;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    box-sizing: border-box;
+}
+
+.focusimg_left .title {
+    position: absolute;
+    padding: 0;
+    bottom: 0px;
+    background-color: rgba(0,0,0,0.5);
+    font-size: 30px;
+    color: #fff;
+    width: 100%;
+    background: -webkit-linear-gradient(top,transparent 80%,rgba(8,0,0,2) 100%);
+    background: linear-gradient(to bottom,transparent 80%,rgba(8,0,0,2) 100%);
+    height: 100%;
+}
+
+.focusimg_left .title span {
+    position: absolute;
+    bottom: 10px;
+    padding-left: 15px;
+    padding-right: 10px;
+}
+
+
+.right_list{
+  position: relative;
+  width:49%;
+  height:201px;
+  float:left;
+  margin-bottom:9px;
+  margin-left:1%;
+ }
+
+.right_list .title {
+    position: absolute;
+    padding: 0;
+    bottom: 0px;
+    background-color: rgba(0,0,0,0.5);
+    font-size: 18px;
+    color: #fff;
+    width: 100%;
+    background: -webkit-linear-gradient(top,transparent 80%,rgba(8,0,0,2) 100%);
+    background: linear-gradient(to bottom,transparent 80%,rgba(8,0,0,2) 100%);
+    height: 100%;
+}
+
+.right_list .title span {
+    position: absolute;
+    bottom: 5px;
+    padding-left: 15px;
+    padding-right: 10px;
+}
+
+.focusimg_right {
+    width: 49.5%;
+    height: 100%;
+    float: right;
+    cursor: pointer;
+    position: relative;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+}
+
+@media only screen and (max-width:768px) {
+	.main-right{display:none;	}
+	.main-left{width:100%;margin-left:0; margin-top:17px;}
+	.left-top{margin-bottom:17px;}
+	.left-post{margin-bottom:15px;}
+}
+
+@media only screen and (max-width:768px) {
+	.focusimg_right{display:none;}
+	.focusimg_left{width:100%;height:220px;}
+	.focusimg_left .title{font-size:24px;}
+}
+
+@media only screen and (max-width:768px) {
+	.left-post-title{font-size:18px;line-height:22px;}
+	.left-post-txt{font-size:12px; line-height:18px;height:115px;}
+	.left-post-note,.left-post-date{font-size:12px}
+	.left-top-pic{display:none;}
+	.left-top-list{	width:96%;height:52px;padding-bottom:5px;margin-left:2%;margin-bottom:0;border-bottom:1px #e9e9e9 solid;}
+    .left-top-info{width:100%;}
+    .left-top-title{font-size:15px;line-height:20px; font-weight: bold; height:26px;width:73%;float:left;}
+    .left-top-date{	width:20%;font-size:12px;height:26px;float:left;text-align:right;margin-left:1%}
+}
+
+@media only screen and (max-width:768px) {
+	.footer-logo{display:none;}
+	.footer-img{display:none;}
+	.footer-link{display:none;}
+	.footer-txt{width:100%;text-align:center;margin-left:0;}
 }
 

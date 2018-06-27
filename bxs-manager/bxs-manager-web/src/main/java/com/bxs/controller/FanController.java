@@ -62,11 +62,11 @@ public class FanController {
 	@RequestMapping("/doLogin")
 	public ModelAndView doLogin(String username,String password,HttpSession session){
 		ModelAndView mv=new ModelAndView();
-		List<UserInfoVo> list=userService.getUserByLoginName(username);
+		List<UserInfoVo> list=userService.getUserByLoginNameOrMobilePhone(username);
 		mv.setViewName("/fan/login");
 		if(!list.isEmpty()){
 			UserInfoVo info=list.get(0);
-			//密码相等
+			//密码相等 
 			if(info.getLoginPassword().equals(EncryptionUtil.getMd5String(password))){
 				//用户信息存入Session
 				session.setAttribute(SystemConstant.CURRENT_SESSION_USER_INFO, info);
@@ -76,10 +76,12 @@ public class FanController {
 				//跳转到后台管理主页面
 				mv.setViewName("/fan/index");
 				mv.addObject("userInfoVo", info);
+				
 			}else{
 				mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
 				logger.info("{}登录[管理系统]失败,时间为{},密码错误",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 				//登录失败，跳转到登录页面
+				mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误！");
 				mv.setViewName("/fan/login");
 			}
 			
@@ -89,7 +91,7 @@ public class FanController {
 			
 		}else{
 			logger.info("账号{}登录[管理系统]失败,时间为{},系统中无该用户",username,new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
-			mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
+			mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户不存在，请先注册！");
 		}
 		return mv;
 	}
@@ -284,6 +286,7 @@ public class FanController {
 		sysLog.setOpTime(new Date());
 		sysLog.setOpType("VISIT");
 		sysLog.setOpUserId("000");
+		//获取客户端IP
 		sysLog.setClientIp(CommonUtil.getClientIP(request));
 		sysLog.setOpDesc(article.getArticleTitle());
 		sysLogService.save(sysLog);

@@ -79,6 +79,12 @@ public class UserServiceImpl implements UserService {
 	public List<UserInfoVo> getUserByMobilePhone(String mobilePhone) {
 		return userDao.getUserByMobilePhone(mobilePhone);
 	}
+	
+	@Override
+	public List<UserInfoVo> getUserByLoginNameOrMobilePhone(String username) {
+		return userDao.getUserByLoginNameOrMobilePhone(username);
+	}
+
 
 	@Override
 	public List<SysUser> getUserListByBirthday(String dayStr) {
@@ -99,6 +105,5 @@ public class UserServiceImpl implements UserService {
 	public void resetPwd(String id, String password) {
 		userDao.resetPwd(id,password);
 	}
-
 	
 }

@@ -332,7 +332,20 @@ public class UserDao {
 		return list;
 	}
 	
-	
+	/**
+	 * 
+	 * 根据"登录名"或"手机号"获取用户信息列表
+	 * @author: wyc
+	 * @createTime: 2018年1月30日 下午10:57:14
+	 * @history:
+	 * @param username
+	 * @return List<UserInfoVo>
+	 */
+	public List<UserInfoVo> getUserByLoginNameOrMobilePhone(String username) {
+		String sql="SELECT * FROM  V_USER_INFO T WHERE 1=1 AND T.DATA_STATE='1' AND (T.login_name LIKE concat('%',?,'%') OR t.mobile_phone LIKE concat('%',?,'%'))";
+		List<UserInfoVo> list = jdbcTemplate.query(sql,new Object[]{username,username},new BeanPropertyRowMapper(UserInfoVo.class));
+		return list;
+	}
 
 
 	/**

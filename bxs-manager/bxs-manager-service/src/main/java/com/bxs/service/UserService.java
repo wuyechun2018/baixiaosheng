@@ -21,6 +21,8 @@ public interface UserService {
 	public List<UserInfoVo> getUserByLoginName(String username);
 	
 	public List<UserInfoVo> getUserByMobilePhone(String mobilePhone);
+	
+	public List<UserInfoVo> getUserByLoginNameOrMobilePhone(String username);
 
 	public List<SysUser> getUserListByBirthday(String dayStr);
 
