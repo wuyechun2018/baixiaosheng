@@ -1,4 +1,5 @@
 package com.bxs.controller;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bxs.common.dict.SystemConstant;
+import com.bxs.common.utils.CommonUtil;
 import com.bxs.common.utils.EncryptionUtil;
 import com.bxs.pojo.Article;
+import com.bxs.pojo.SysLog;
 import com.bxs.pojo.SysUser;
 import com.bxs.pojo.Topic;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
+import com.bxs.service.SysLogService;
 import com.bxs.service.TopicService;
 import com.bxs.service.UserService;
 
@@ -38,6 +42,10 @@ public class FanController {
 	
 	@Autowired
 	private UserService userService;
+	
+	
+	@Autowired
+	private SysLogService sysLogService;
 	
 	
 	/**
@@ -262,12 +270,24 @@ public class FanController {
 	 * @return ModelAndView
 	 */
 	@RequestMapping("/content/{id}")
-	public ModelAndView content(@PathVariable String id) {
+	public ModelAndView content(@PathVariable String id,HttpServletRequest request) {
 		ModelAndView mv=new ModelAndView("fan/content");
 		List<Topic> topicList=topicService.getAllTopic();
 		Article article=articleService.getArticleById(id);
+		//浏览次数+1
 		article.setViewCount(article.getViewCount()+1);
 		articleService.save(article);
+		//记录访问日志
+		SysLog sysLog=new SysLog();
+		sysLog.setBizId(id);
+		sysLog.setModelName("文章内容");
+		sysLog.setOpTime(new Date());
+		sysLog.setOpType("VISIT");
+		sysLog.setOpUserId("000");
+		sysLog.setClientIp(CommonUtil.getClientIP(request));
+		sysLog.setOpDesc(article.getArticleTitle());
+		sysLogService.save(sysLog);
+		
 		mv.addObject("topicList", topicList);
 		mv.addObject("article",article);
 		return mv;
