@@ -38,6 +38,9 @@ public class DeptController {
 	@RequestMapping("/getListByPid")
 	@ResponseBody
 	public Object getListByPid(String pid){
+		if(pid==null){
+			pid="0";
+		}
 		return deptService.getListByPid(pid);
 	}
 	

@@ -11,8 +11,12 @@
 	<!-- 扫描web包，应用Spring的注解 -->
 	<context:component-scan base-package="com.bxs.jdbc"/>
 
-	<!-- 加载配置文件 -->
+	<!-- 加载配置文件 
 	<context:property-placeholder location="classpath:jdbc.properties" />
+	-->
+	
+	<!-- 将配置文件放到磁盘目录下，方便修改和多环境部署  -->
+	<context:property-placeholder location="file:/jdbc.properties" />
 	
 	<!-- 数据库连接池 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"

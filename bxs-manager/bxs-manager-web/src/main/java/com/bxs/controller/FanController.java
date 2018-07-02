@@ -18,6 +18,7 @@ import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.utils.CommonUtil;
 import com.bxs.common.utils.EncryptionUtil;
 import com.bxs.pojo.Article;
+import com.bxs.pojo.ArticleInfoVo;
 import com.bxs.pojo.SysLog;
 import com.bxs.pojo.SysUser;
 import com.bxs.pojo.Topic;
@@ -275,10 +276,9 @@ public class FanController {
 	public ModelAndView content(@PathVariable String id,HttpServletRequest request) {
 		ModelAndView mv=new ModelAndView("fan/content");
 		List<Topic> topicList=topicService.getAllTopic();
-		Article article=articleService.getArticleById(id);
+		ArticleInfoVo article=articleService.getArticleInfoById(id);
 		//浏览次数+1
-		article.setViewCount(article.getViewCount()+1);
-		articleService.save(article);
+		articleService.addViewCount(id);
 		//记录访问日志
 		SysLog sysLog=new SysLog();
 		sysLog.setBizId(id);

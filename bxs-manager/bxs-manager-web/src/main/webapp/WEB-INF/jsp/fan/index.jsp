@@ -23,14 +23,14 @@
 
 <style type="text/css">
 .testclass{
-            width:150px;
-            height:150px;
-            border: 1px solid #666; 
-            padding: 5px; 
-            position: absolute; 
-            bottom: 0; right: 60px; 
-            background:#fff;"
-            z-index:9999;
+   width:150px;
+   height:150px;
+   border: 1px solid #666; 
+   padding: 5px; 
+   position: absolute; 
+   bottom: 0; right: 60px; 
+   background:#fff;"
+   z-index:9999;
 }
 .ui-more {
 	line-height: 30px;
@@ -98,6 +98,7 @@ function loadRightArticle(){
 	    			articleImageUrl=ctx+'/resources/fan/images/default.gif';
 	    		}
 	    		var articleUrl=ctx+"/fan/content/"+articleObj.id;
+	    		//文章内容
 	    		var aboutContent=articleObj.aboutContent==null?'':articleObj.aboutContent;
 	    		var liHTML="<div class=\"right-post\" id=\"rightPost\">\n" +
 	    			"        <a href=\""+articleUrl+"\" title=\""+articleTitle+"\" target=\"_blank\">\n" + 
@@ -146,6 +147,7 @@ function loadArticle(page){
 	    			articleImageUrl=ctx+'/resources/fan/images/default.gif';
 	    		}
 	    		var articleUrl=ctx+"/fan/content/"+articleObj.id;
+	    		//文章内容
 	    		var aboutContent=articleObj.aboutContent==null?'':articleObj.aboutContent;
 	    		var liHTML="<li>\n" +
 	    		"          <div class='left-post'>\n" + 
@@ -186,9 +188,77 @@ function seeMore(){
 	loadArticle(pageCount);
 }
 
+//根据类型编码查询链接
+function loadLinkByTypeCode(linkTypeCode,page,rows){
+	var linkData=null;
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/link/loadLinkByTypeCode',
+		data:{
+			linkTypeCode:linkTypeCode,
+			page:page,
+			rows:rows
+		},
+		async: false,
+	    error: function(request) {
+	        alert('系统正在升级，请联系管理员或稍后再试！');
+	    },
+	    success: function(data) {
+	    	linkData=data;
+	    }
+	})
+	return linkData;
+}
+
+//加载左边焦点图
+function  loadFocImageLeft(){
+	var focLeftData=loadLinkByTypeCode('FAN_FOC_LINK_LEFT',1,1);
+	//只有一个大图
+	if(focLeftData.rows.length>0){
+		var linkObj=focLeftData.rows[0];
+		var linkName=linkObj.linkName;
+		var focImageLeftHTML=
+			" <a href=\""+linkObj.linkUrl+"\" title=\""+linkName+"\">\n" +
+			"  <div class=\"focusimg_left\" style=\"background:url("+linkObj.linkImageUrl+"); background-size:cover;background-position:center;\">\n" + 
+			"   <div class=\"title\">\n" + 
+			"    <span>"+linkName+"</span>\n" + 
+			"   </div>\n" + 
+			"  </div>\n" + 
+			"</a>";
+		$('#foc_image_left').append(focImageLeftHTML);	
+	}
+}
+
+//加载右边焦点图(右边四小图)
+function loadFocImageRight(){
+	//获取超链接数据
+	var focRightData=loadLinkByTypeCode('FAN_FOC_LINK_RIGHT',1,4);
+	var focImageRightHTML="";
+	for(var i=0;i<focRightData.rows.length;i++){
+		var linkObj=focRightData.rows[i]
+		var linkName=linkObj.linkName;
+		focImageRightHTML+=
+			"  <a href=\""+linkObj.linkUrl+"\" title=\""+linkName+"\" target=\"_blank\">\n" +
+			"   <div class=\"right_list\" style=\"background:url("+linkObj.linkImageUrl+");background-size:cover;background-position:center;\">\n" + 
+			"    <div class=\"title\">\n" + 
+			"     <span>"+linkName+"</span>\n" + 
+			"    </div>\n" + 
+			"   </div>\n" + 
+			"</a>";
+	}
+	$('#foc_image_right').append(focImageRightHTML);	
+}
+
 //页面加载
 $(function(){
+	//左边焦点大图
+	loadFocImageLeft();
+	//右边焦点四小图
+	loadFocImageRight();
+	//加载文章
 	loadArticle(pageCount);
+	//加载右边热点文章
 	loadRightArticle();
 })
 
@@ -234,53 +304,17 @@ $(function(){
 	
 	<div class="clear"></div>
 	
-	<%--
+	<%-- --%>
 	<section class="focusimg">
 		<!--左侧大图-->
-		<a href="http://www.cfan.com.cn/180622" title="不止网速快 5G技术会改变什么？">
-		<div class="focusimg_left" style="background:url(http://upload.cfan.com.cn/2018/0625/1529909296371.jpg); background-size:cover;background-position:center;">
-		<div class="title"><span>不止网速快 5G技术会改变什么？</span></div>
-		</div>
-		</a>	
-		
+			<div id="foc_image_left"></div>
 		<!--/左侧大图-->
 		<!--右侧四图-->
-		<div class="focusimg_right">
-		
-		
-		<a href="http://www.cfan.com.cn/2018/0622/131030.shtml" title="“轻办公”的专属利器！华为平板M5 Pro评测体验" target="_blank">
-		<div class="right_list" style="background:url(http://upload.cfan.com.cn/2018/0622/1529635608183.jpg);background-size:cover;background-position:center;">
-		<div class="title"><span>“轻办公”的专属利器！华为平板M5 Pro评测体验</span></div>
-		</div>
-		</a>
-		
-		
-		<a href="http://www.cfan.com.cn/2018/0621/131025.shtml" title="放不下旧系统？5分钟让你重回XP" target="_blank">
-		<div class="right_list" style="background:url(http://upload.cfan.com.cn/2018/0622/1529631596495.jpg);background-size:cover;background-position:center;">
-		<div class="title"><span>放不下旧系统？5分钟让你重回XP</span></div>
-		</div>
-		</a>
-		
-		
-		<a href="http://www.cfan.com.cn/2018/0621/131023.shtml" title="小心掌中宝变掌心雷！原来手机并没有你想象的那么安全！" target="_blank">
-		<div class="right_list" style="background:url(http://upload.cfan.com.cn/2018/0621/1529543209463.jpg);background-size:cover;background-position:center;">
-		<div class="title"><span>小心掌中宝变掌心雷！原来手机并没有你想象的那么安全！</span></div>
-		</div>
-		</a>
-		
-		
-		<a href="http://www.cfan.com.cn/2018/0620/131018.shtml" title="想买OPPO Find X？先看完这篇文章再说！" target="_blank">
-		<div class="right_list" style="background:url(http://upload.cfan.com.cn/2018/0620/1529459847262.jpg);background-size:cover;background-position:center;">
-		<div class="title"><span>想买OPPO Find X？先看完这篇文章再说！</span></div>
-		</div>
-		</a>
-		
-		</div>
+			<div class="focusimg_right" id="foc_image_right"></div>
 		<!--/右侧四图-->
-		
 		<div class="clear"></div>
 	</section>
-	 --%>
+	
 	
 	
 

@@ -99,15 +99,24 @@
 		<h1>${article.articleTitle}</h1>
 		<!-- 文章相关信息 -->
 		<div class="notes">
-			<span> 
-			<a href="http://www.cfan.com.cn/2018/0428/130718.shtml" title="" target="_blank"></a>
-				</span> <span>${article.publishDate}</span> 
-			<span> 
-				<a href="http://www.cfan.com.cn/technic/" target="_blank">应用</a>
+			<span>
+			      消息来源：
+				<a href="javascript:void(0)" title="" target="_blank">${article.newsfrom}</a>
+			</span> 
+			<span>
+				发布时间：
+				<fmt:formatDate value="${article.publishDate}"  pattern="yyyy-MM-dd"/>
+			</span> 
+			<span>
+				作者： 
+				<a href="javascript:void(0)" target="_blank">${article.author}</a>
 			</span>
 		</div>
 		<!-- @end文章相关信息 -->
 		<div class="maincontent">${article.articleContent}</div>
+		<div class="content-image" style="text-align: center;">
+			<img src="${articleInfoVo.articleImageUrl }" />
+		</div>
 		<p></p>
 		<!--上一篇下一篇-->
 		<%--
