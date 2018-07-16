@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/jdbc 
+			http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+			http://www.springframework.org/schema/data/jpa
+   			http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
+			http://www.springframework.org/schema/util 
+			http://www.springframework.org/schema/util/spring-util-4.0.xsd
+			http://www.springframework.org/schema/jee
+            http://www.springframework.org/schema/jee/spring-jee-4.0.xsd" >
+    
+    <!--此处是Spring Data Jpa的配置文件,前期主要使用SpringJdbcTemplate,在针对普通增删改时相对复杂  -->
+	<!--SpringJdbcTemplate 配置在applicationContext-dao.xml中  -->
+	<!--使用applicationContext-dao.xml 的数据源  -->
+            
+	<!-- 启用扫描并自动创建代理的功能 -->
+	<jpa:repositories base-package="org.bxs.jpa" />
+ 	
+	<!--定义实体管理器工厂-->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
+		<!-- 指定实体类包路径 -->
+		<property name="packagesToScan" value="com.bxs.pojo.jpa" />
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				
+			</props>
+		</property>
+	</bean>
+
+	<!-- hibernate 对Jpa的实现 -->
+	<bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+			<!-- <property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" /> -->
+	</bean>
+
+	<!-- 事务配置 -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+	
+	<!--如果采用了一个高端的ORM技术（Hibernate,JPA,JDO）,同时采用一个JDBC技术（Spring JDBC
+	、iBatis）,由于前者的会话（Session）是对后者连接（Connection）的封装，Spring会“足够智能的”
+	在同一个事务线程让前者的会话封装后者的连接。所以，我们只要直接采用前者的事务管理器就可以了。
+	Spring  3.x 企业应用开发实战 陈雄华  p341
+	  -->
+	
+	
+</beans>

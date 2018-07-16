@@ -34,4 +34,9 @@
 		<aop:advisor advice-ref="txAdvice"
 			pointcut="execution(* com.bxs.service.*.*(..))" />
 	</aop:config>
+	
+	
+	<!-- 单独的使用SpringJDBCTemplate时，此文件作为事务配置文件 -->
+	<!-- 引入SpringDataJpa后，采用其配置，该配置文件不再需要，将其调整为 tst-applicationContext-trans,按照加载规则，该文件不再加载 -->
+	<!-- 使用SpringDataJpa的事务配置即可 -->
 </beans>

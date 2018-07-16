@@ -20,6 +20,12 @@
   	  <version>0.0.1-SNAPSHOT</version>
     </dependency>
     
+    <dependency>
+       <groupId>com.baixiaosheng</groupId>
+      <artifactId>bxs-manager-jpa</artifactId>
+  	  <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    
     	<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

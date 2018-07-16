@@ -10,6 +10,7 @@
   <modules>
   	<module>bxs-manager-pojo</module>
   	<module>bxs-manager-jdbc</module>
+  	<module>bxs-manager-jpa</module>
   	<module>bxs-manager-service</module>
   	<module>bxs-manager-web</module>
   </modules>

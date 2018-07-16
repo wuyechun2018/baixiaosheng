@@ -272,6 +272,22 @@
 			  <version>${ojdbc.version}</version>
 			</dependency>
 			
+			<!--Spring Data JPA Start  -->
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-jpa</artifactId>
+				<version>1.8.0.RELEASE</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>4.3.5.Final</version>
+			</dependency>
+			<!--Spring Data JPA End  -->
+			
+			
+			
 		</dependencies>
 	</dependencyManagement>
 	<build>
