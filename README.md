@@ -57,3 +57,23 @@ service mysql stop;
 serivce mysql start;  
 
 
+
+2018-07-16 引入Spring Data Jpa,提高基本的增、删、改操作效率
+# Changes to be committed:
+#	new file:   bxs-manager/bxs-manager-jpa/pom.xml
+#	new file:   bxs-manager/bxs-manager-jpa/src/main/java/org/bxs/jpa/BizNodeRepository.java
+#	modified:   bxs-manager/bxs-manager-pojo/pom.xml
+#	new file:   bxs-manager/bxs-manager-pojo/src/main/java/com/bxs/pojo/jpa/BizNode.java
+#	new file:   bxs-manager/bxs-manager-pojo/src/main/java/com/bxs/pojo/jpa/BizNodeExtend.java
+#	modified:   bxs-manager/bxs-manager-service/pom.xml
+#	new file:   bxs-manager/bxs-manager-service/src/main/java/com/bxs/service/BizNodeService.java
+#	new file:   bxs-manager/bxs-manager-service/src/main/java/com/bxs/service/impl/BizNodeServiceImpl.java
+#	new file:   bxs-manager/bxs-manager-web/src/main/java/com/bxs/controller/BizNodeController.java
+#	new file:   bxs-manager/bxs-manager-web/src/main/resources/spring/applicationContext-dao-jpa.xml
+#	renamed:    bxs-manager/bxs-manager-web/src/main/resources/spring/applicationContext-trans.xml -> bxs-manager/bxs-manager-web/src/main/resources/spring/tst-applicationContext-trans.xml
+#	modified:   bxs-manager/pom.xml
+#	modified:   bxs-parent/pom.xml
+#
+
+
+
