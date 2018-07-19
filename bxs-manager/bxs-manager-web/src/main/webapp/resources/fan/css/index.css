@@ -25,7 +25,7 @@ body {
 	background: linear-gradient(#e8e1e1,#666);
 	background-color:#F08080;
 	*/
-	background-color:#0593d3;
+	background-color:#d30507;
 	padding-right:2%;
 	font-family: microsoft yahei;
 	color:#FFF;
@@ -538,13 +538,14 @@ div {
 
 @media only screen and (max-width:768px) {
 	.main-right{display:none;	}
-	.main-left{width:100%;margin-left:0; margin-top:17px;}
+	.main-left{width:100%;margin-left:0; margin-top:200px;}
 	.left-top{margin-bottom:17px;}
 	.left-post{margin-bottom:15px;}
 }
 
 @media only screen and (max-width:768px) {
-	.focusimg_right{display:none;}
+	.focusimg{display: block;}
+	.focusimg_right{width:100%;height:220px;}
 	.focusimg_left{width:100%;height:220px;}
 	.focusimg_left .title{font-size:24px;}
 }

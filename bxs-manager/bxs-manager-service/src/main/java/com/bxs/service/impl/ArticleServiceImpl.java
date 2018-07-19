@@ -333,7 +333,14 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public EUIGrid pagerListOrderByCreateDate(EUIPager ePager, Map<String, Object> param) {
 		EUIGrid grid = new EUIGrid();
-		grid.setTotal(articleDao.getTotalCount(param));
+		//此处 只需要总数即可，不做条件筛选
+		List<ArticleCount> list=articleCountDao.getListByTopicCode("TOTAL");
+		if(!list.isEmpty()){
+			ArticleCount articleCount=list.get(0);
+			grid.setTotal(Long.valueOf(articleCount.getArticleCount()));
+		}else{
+			grid.setTotal(articleDao.getTotalCountFast(param));
+		}
 		grid.setRows(articleDao.pagerArticleListOrderByCreateDate(ePager,param));
 		return grid;
 	}
