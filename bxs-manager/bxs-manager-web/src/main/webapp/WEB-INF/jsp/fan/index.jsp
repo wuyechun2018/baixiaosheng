@@ -273,6 +273,7 @@ $(function(){
 	<!--头部-->
 	<header class="header">
 		<div class="header-info">
+			<span class="logo-span">STK</span>
 			<c:if test="${! empty userInfoVo}">
 				<i class="fa fa-user-o" aria-hidden="true"></i>
 				<a>${userInfoVo.loginName}</a>

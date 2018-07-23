@@ -5,7 +5,8 @@ html {
 body {
 	margin: 0;
 	font-size: 1.6rem;
-	font-family: "Microsoft YaHei" ! important;
+	/*font-family: "Microsoft YaHei" ! important;*/
+	font-family: Helvetica, "Open Sans", Arial, "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, STHeiti, "WenQuanYi Micro Hei", SimSun, sans-serif;
 	color: #000;
 	background-color: #f6f6f6;
 	-webkit-font-smoothing: antialiased;
@@ -16,6 +17,15 @@ body {
 	width: 100%;
 	height: 158px;
 	background: #fff
+}
+
+.logo-span{
+	font-size:20px;
+	font-weight: bold;
+	float:left;
+	margin-left:12px;
+	
+	
 }
 
 .header-info{
