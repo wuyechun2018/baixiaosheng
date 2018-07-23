@@ -31,30 +31,12 @@
    <link href="${resCtx}/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
    <link href="${resCtx}/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
    <!-- END THEME GLOBAL STYLES -->
-   
-    <!-- BEGIN PAGE LEVEL STYLES -->
-        <link href="${resCtx}/assets/pages/css/profile.min.css" rel="stylesheet" type="text/css" />
-    <!-- END PAGE LEVEL STYLES -->
-   
-   
    <!-- BEGIN THEME LAYOUT STYLES -->
    <link href="${resCtx}/assets/layouts/layout2/css/layout.min.css" rel="stylesheet" type="text/css" />
    <link href="${resCtx}/assets/layouts/layout2/css/themes/blue.min.css" rel="stylesheet" type="text/css" id="style_color" />
    <link href="${resCtx}/assets/layouts/layout2/css/custom.min.css" rel="stylesheet" type="text/css" />
    <!-- END THEME LAYOUT STYLES -->
-   
-   
-   <link href="${ctx}/resources/stk/js-lib/ztree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css" />
-   
-   
-   
-   
    <link rel="shortcut icon" href="favicon.ico" /> 
-   
-  
-   
-   
-   
 </head>
 <!-- END HEAD -->
 
@@ -368,135 +350,32 @@
             <div class="page-content-wrapper">
                 <!-- BEGIN CONTENT BODY -->
                 <div class="page-content">
-                	 <!-- BEGIN PAGE HEADER-->
-	                    <h1 class="page-title"> Blank Page Layout
-	                        <small>blank page layout</small>
-	                    </h1>
-                     <!-- END PAGE HEADER-->
-                     <div class="row">
-                        <div class="col-md-12">
-                            <!-- BEGIN PROFILE SIDEBAR -->
-                            <div class="profile-sidebar">
-                                <!-- PORTLET MAIN -->
-                                <div class="portlet light profile-sidebar-portlet ">
-                               		<div class="portlet-title">
-	                                    <div class="caption">
-	                                        <i class="icon-equalizer font-red-sunglo"></i>
-	                                        <span class="caption-subject font-red-sunglo bold uppercase">Tree</span>
-	                                    </div>
-	                                    <div class="actions">
-                                                    <div class="portlet-input input-inline input-small">
-                                                        <div class="input-icon right">
-                                                            <i class="icon-magnifier"></i>
-                                                            <input type="text" class="form-control input-circle" placeholder="搜索..."> </div>
-                                                    </div>
-                                       </div>
-                               	 	</div>
-                               	 	<div class="portlet-body">
-                                   		<div class="scroller" style="height: 500px; overflow: auto; width: auto;" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd" data-initialized="1">
-											<ul id="treeDemo" class="ztree"></ul>
-										</div>
-                                	</div>
-                               
-                                </div>
-                                <!-- END PORTLET MAIN -->
-                            </div>
-                            <!-- END BEGIN PROFILE SIDEBAR -->
-                            <!-- BEGIN PROFILE CONTENT -->
-                            <div class="profile-content">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="portlet light ">
-                                           <div class="portlet-title">
-                                                <div class="caption">
-                                                    <i class="icon-equalizer font-red-sunglo"></i>
-                                                    <span class="caption-subject font-red-sunglo bold uppercase">Form Sample</span>
-                                                    <span class="caption-helper"></span>
-                                                </div>
-                                               
-                                            </div>
-                                            <div class="portlet-body form">
-                                                <!-- BEGIN FORM-->
-                                                <form action="#" class="form-horizontal">
-                                                    <div class="form-body">
-                                                        <div class="form-group">
-                                                            <label class="col-md-3 control-label">Text</label>
-                                                            <div class="col-md-4">
-                                                                <input type="text" class="form-control" placeholder="Enter text">
-                                                                <span class="help-block"> A block of help text. </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-md-3 control-label">Email Address</label>
-                                                            <div class="col-md-4">
-                                                                <div class="input-group">
-                                                                    <span class="input-group-addon">
-                                                                        <i class="fa fa-envelope"></i>
-                                                                    </span>
-                                                                    <input type="email" class="form-control" placeholder="Email Address"> </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-md-3 control-label">Password</label>
-                                                            <div class="col-md-4">
-                                                                <div class="input-group">
-                                                                    <input type="password" class="form-control" placeholder="Password">
-                                                                    <span class="input-group-addon">
-                                                                        <i class="fa fa-user"></i>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-md-3 control-label">Left Icon</label>
-                                                            <div class="col-md-4">
-                                                                <div class="input-icon">
-                                                                    <i class="fa fa-bell-o"></i>
-                                                                    <input type="text" class="form-control" placeholder="Left icon"> </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-md-3 control-label">Right Icon</label>
-                                                            <div class="col-md-4">
-                                                                <div class="input-icon right">
-                                                                    <i class="fa fa-microphone"></i>
-                                                                    <input type="text" class="form-control" placeholder="Right icon"> </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-md-3 control-label">Input With Spinner</label>
-                                                            <div class="col-md-4">
-                                                                <input type="password" class="form-control spinner" placeholder="Password"> </div>
-                                                        </div>
-                                                        <div class="form-group last">
-                                                            <label class="col-md-3 control-label">Static Control</label>
-                                                            <div class="col-md-4">
-                                                                <p class="form-control-static"> email@example.com </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-actions">
-                                                        <div class="row">
-                                                            <div class="col-md-offset-3 col-md-9">
-                                                                <button type="submit" class="btn green">Submit</button>
-                                                                <button type="button" class="btn default">Cancel</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                                <!-- END FORM-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END PROFILE CONTENT -->
-                        </div>
+                    <!-- BEGIN PAGE HEADER-->
+                  
+                    <h1 class="page-title"> Blank Page Layout
+                        <small>blank page layout</small>
+                    </h1>
+                    <div class="page-bar">
+                        <ul class="page-breadcrumb">
+                            <li>
+                                <i class="icon-home"></i>
+                                <a href="index.html">首页</a>
+                                <i class="fa fa-angle-right"></i>
+                            </li>
+                            <li>
+                                <a href="#">Blank Page</a>
+                                <i class="fa fa-angle-right"></i>
+                            </li>
+                            <li>
+                                <span>Page Layouts</span>
+                            </li>
+                        </ul>
+                      
                     </div>
-                    
-                    
-                    
-                   
+                    <!-- END PAGE HEADER-->
+                    <div class="note note-info">
+                        <p> A black page template with a minimal </p>
+                    </div>
                 </div>
                 <!-- END CONTENT BODY -->
             </div>
@@ -538,72 +417,6 @@
             <script src="${resCtx}/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
             <script src="${resCtx}/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
             <!-- END THEME LAYOUT SCRIPTS -->
-            
-            <script src="${ctx}/resources/stk/js-lib/ztree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
-  
-  			 <script type="text/javascript">
-   
-		   var setting = {
-		   		async: {
-		   			enable: true,
-		   			url:'${ctx}/bizNode/getTreeNodeList',
-					otherParam:{"otherParam":"zTreeAsyncTest"},
-					autoParam: ["id=pId"]
-		   		},
-		   		callback: {
-		   			onMouseDown: zTreeOnMouseDown,
-		   			onAsyncSuccess: zTreeOnAsyncSuccess,
-		   			onRightClick: OnRightClick
-		   		},
-		   		view: {
-						fontCss: getFont,
-						nameIsHTML: true
-					},
-					data: {
-						key: {
-							title: "title"
-						}
-					}
-		   	};
-		   
-		   
-		   //节点点击事件
-		  	function zTreeOnMouseDown(event, treeId, treeNode) {
-		  		if(treeNode){
-		  			
-		  		}
-		  	}
-		   
-			//树加载成功
-		   	function zTreeOnAsyncSuccess(event, treeId, treeNode){
-		   		if(!treeNode){
-		   			var zTree=$.fn.zTree.getZTreeObj("treeDemo");
-		            var node=zTree.getNodeByParam("pId","-1",null);
-		            zTree.expandNode(node,true,true,true);
-		   		}
-		   		
-		   	}
-			
-		   //自定义节点字体样式
-		   	function getFont(treeId, node) {
-		   		var obj={"font-weight":"normal"};
-				return obj;
-			}
-		  
-		    //右击
-		   	function OnRightClick(event, treeId, treeNode) {
-				
-			}
-		
-		   
-		   
-		   	$(function(){
-		   		 $.fn.zTree.init($("#treeDemo"), setting);
-		   	
-		   	})
-   </script>
-  
-  
     </body>
 
 </html>

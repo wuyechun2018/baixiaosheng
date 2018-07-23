@@ -29,6 +29,8 @@ public class BizNode implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String id;
+	//节点编码
+	private String nodeCode;
 	// 节点名称
 	private String nodeName;
 	// 父节点Id
@@ -123,6 +125,12 @@ public class BizNode implements Serializable {
 		this.nodeName = nodeName;
 	}
 
-	
+	public String getNodeCode() {
+		return nodeCode;
+	}
+
+	public void setNodeCode(String nodeCode) {
+		this.nodeCode = nodeCode;
+	}
 	
 }
