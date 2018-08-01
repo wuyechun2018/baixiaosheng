@@ -1,11 +1,19 @@
 package com.bxs.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,12 +39,13 @@ public class BizNodeController {
 	 */
 	@RequestMapping("/save")
 	@ResponseBody
-	public Object save(){
-		BizNode node=new BizNode();
-		node.setTypeName("zhangsan");
-		node.setCreateDate(new Date());
-		node.setUpdateDate(new Date());
-		bizNodeService.save(node);
+	public Object save(BizNode bizNode){
+		//编辑
+		if(StringUtils.isBlank(bizNode.getId())){
+			bizNode.setCreateDate(new Date());
+		}
+		bizNode.setUpdateDate(new Date());
+		bizNodeService.save(bizNode);
 		return new JsonMsg();
 	}
 	
@@ -49,14 +58,43 @@ public class BizNodeController {
 	 */
 	@RequestMapping("/getTreeNodeList")
 	@ResponseBody
-	public Object getTreeNodeList(){
-		List<ZTreeNode> nodeList=new ArrayList<ZTreeNode>();
-		nodeList.add(new ZTreeNode("1","-1","节点1",false));
-		nodeList.add(new ZTreeNode("2","1","节点2",true));
-		nodeList.add(new ZTreeNode("3","1","节点3",true));
-		nodeList.add(new ZTreeNode("4","-1","节点4",true));
-		return nodeList;
+	public Object getTreeNodeList(String pId){
+		String typeCode="stock";
+		if(pId==null){
+			pId="-1";
+		}
+		
+		List<ZTreeNode> zTreeNodeList=new ArrayList<ZTreeNode>();
+		List<BizNode> bizNodeList=bizNodeService.findNodeListByTypeCodeAndPid(typeCode,pId);
+		for (BizNode bizNode : bizNodeList) {
+			ZTreeNode zTreeNode=new ZTreeNode();
+			zTreeNode.setId(bizNode.getId());
+			zTreeNode.setpId(bizNode.getPid());
+			zTreeNode.setName(bizNode.getBizNodeName());
+			zTreeNode.setTitle(bizNode.getBizNodeName()+"["+bizNode.getBizNodeCode()+"]");
+			//注意传入当前节点的Id
+			zTreeNode.setIsParent(bizNodeService.isParent(typeCode,bizNode.getId()));
+			//扩展属性
+			Map<String, Object> attr=new HashMap<String, Object>();
+			attr.put("nodeCode",bizNode.getBizNodeCode());
+			attr.put("nodeDesc",bizNode.getNodeDesc());
+			attr.put("typeCode",typeCode);
+			attr.put("typeName", bizNode.getTypeName());
+			attr.put("dataState", bizNode.getDataState());
+			attr.put("createDate", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bizNode.getCreateDate()));
+			attr.put("updateDate", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bizNode.getUpdateDate()));
+			zTreeNode.setAttribute(attr);
+			zTreeNodeList.add(zTreeNode);
+		}
+		return zTreeNodeList;
 	}
 	
+	
+	@InitBinder  
+    public void initBinder(WebDataBinder binder) {  
+       //DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+       binder.registerCustomEditor(Date.class,new CustomDateEditor(format, true)); 
+   }
 	
 }

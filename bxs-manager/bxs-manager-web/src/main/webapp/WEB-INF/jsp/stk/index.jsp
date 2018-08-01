@@ -378,23 +378,23 @@
                             <!-- BEGIN PROFILE SIDEBAR -->
                             <div class="profile-sidebar">
                                 <!-- PORTLET MAIN -->
-                                <div class="portlet light profile-sidebar-portlet ">
+                                <div class="portlet light ">
                                		<div class="portlet-title">
 	                                    <div class="caption">
 	                                        <i class="icon-equalizer font-red-sunglo"></i>
 	                                        <span class="caption-subject font-red-sunglo bold uppercase">Tree</span>
 	                                    </div>
 	                                    <div class="actions">
-                                                    <div class="portlet-input input-inline input-small">
-                                                        <div class="input-icon right">
-                                                            <i class="icon-magnifier"></i>
-                                                            <input type="text" class="form-control input-circle" placeholder="搜索..."> </div>
-                                                    </div>
+                                            <div class="portlet-input input-inline input-small">
+                                                <div class="input-icon right">
+                                                    <i class="icon-magnifier"></i>
+                                                    <input type="text" class="form-control input-circle" placeholder="搜索..."> </div>
+                                            </div>
                                        </div>
                                	 	</div>
                                	 	<div class="portlet-body">
                                    		<div class="scroller" style="height: 500px; overflow: auto; width: auto;" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd" data-initialized="1">
-											<ul id="treeDemo" class="ztree"></ul>
+											<ul id="leftTree" class="ztree"></ul>
 										</div>
                                 	</div>
                                
@@ -539,7 +539,10 @@
             <script src="${resCtx}/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
             <!-- END THEME LAYOUT SCRIPTS -->
             
-            <script src="${ctx}/resources/stk/js-lib/ztree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+            <script src="${ctx}/resources/stk/js-lib/ztree-v3.5.36/jquery.ztree.core.min.js" type="text/javascript"></script>
+  			<script src="${ctx}/resources/stk/js-lib/ztree-v3.5.36/jquery.ztree.exedit.min.js" type="text/javascript"></script>
+  			
+  
   
   			 <script type="text/javascript">
    
@@ -555,9 +558,17 @@
 		   			onAsyncSuccess: zTreeOnAsyncSuccess,
 		   			onRightClick: OnRightClick
 		   		},
+		   		edit: {
+					enable: true,
+					editNameSelectAll: true,
+					showRemoveBtn: showRemoveBtn,
+					showRenameBtn: showRenameBtn
+				},
 		   		view: {
 						fontCss: getFont,
-						nameIsHTML: true
+						nameIsHTML: true,
+						addHoverDom: addHoverDom,
+						removeHoverDom: removeHoverDom
 					},
 					data: {
 						key: {
@@ -565,6 +576,20 @@
 						}
 					}
 		   	};
+		   
+		   function addHoverDom(treeId, treeNode) {
+		   }
+		   
+		   function removeHoverDom(treeId, treeNode) {
+		   }
+		   
+			function showRemoveBtn(treeId, treeNode) {
+				return !treeNode.isFirstNode;
+			}
+			function showRenameBtn(treeId, treeNode) {
+				return !treeNode.isLastNode;
+			}
+
 		   
 		   
 		   //节点点击事件
@@ -577,7 +602,7 @@
 			//树加载成功
 		   	function zTreeOnAsyncSuccess(event, treeId, treeNode){
 		   		if(!treeNode){
-		   			var zTree=$.fn.zTree.getZTreeObj("treeDemo");
+		   			var zTree=$.fn.zTree.getZTreeObj("leftTree");
 		            var node=zTree.getNodeByParam("pId","-1",null);
 		            zTree.expandNode(node,true,true,true);
 		   		}
@@ -598,7 +623,7 @@
 		   
 		   
 		   	$(function(){
-		   		 $.fn.zTree.init($("#treeDemo"), setting);
+		   		 $.fn.zTree.init($("#leftTree"), setting);
 		   	
 		   	})
    </script>
