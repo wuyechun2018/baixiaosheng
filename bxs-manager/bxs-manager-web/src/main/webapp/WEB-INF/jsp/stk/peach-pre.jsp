@@ -227,16 +227,23 @@
 		   		},
 		   		callback: {
 		   			onMouseDown: zTreeOnMouseDown,
-		   			onAsyncSuccess: zTreeOnAsyncSuccess
+		   			onAsyncSuccess: zTreeOnAsyncSuccess,
+		   			onRightClick: OnRightClick,
+		   			beforeRemove: beforeRemove,
+					beforeRename: beforeRename
 		   		},
 		   		edit: {
-					enable: false
+					enable: true
 					,selectedMulti:false
+					//,editNameSelectAll: true
+					//,showRemoveBtn: showRemoveBtn
+					//,showRenameBtn: showRenameBtn
 				},
 		   		view: {
 						fontCss: getFont,
-						nameIsHTML: true
-						
+						nameIsHTML: true,
+						addHoverDom: addHoverDom,
+						removeHoverDom: removeHoverDom
 					},
 					data: {
 						key: {
@@ -245,15 +252,81 @@
 					}
 		   	};
 		   
-		
+		   var newCount = 1;
+		   function addHoverDom(treeId, treeNode) {
+			   var sObj = $("#" + treeNode.tId + "_span");
+				if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+				var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+					+ "' title='新增' onfocus='this.blur();'></span>";
+				sObj.after(addStr);
+				var btn = $("#addBtn_"+treeNode.tId);
+				if (btn) btn.bind("click", function(){
+					var zTree = $.fn.zTree.getZTreeObj("leftTree");
+					zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
+					return false;
+				});
+		   }
+		   
+		    function removeHoverDom(treeId, treeNode) {
+		    	$("#diyBtn_"+treeNode.id).unbind().remove();
+		    	$("#diyBtn_space_" +treeNode.id).unbind().remove();
+		   }
+		   
+			function showRemoveBtn(treeId, treeNode) {
+				return !treeNode.isFirstNode;
+			}
+			function showRenameBtn(treeId, treeNode) {
+				return !treeNode.isLastNode;
+			}
+			
+			//删除节点之前
+			function beforeRemove(treeId, treeNode) {
+				var zTree = $.fn.zTree.getZTreeObj("leftTree");
+				zTree.selectNode(treeNode);
+				return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+			}	
+			//更改节点名称之前
+			function beforeRename(treeId, treeNode, newName) {
+				if (newName.length == 0) {
+					setTimeout(function() {
+						var zTree = $.fn.zTree.getZTreeObj("leftTree");
+						zTree.cancelEditName();
+						alert("节点名称不能为空.");
+					}, 0);
+					return false;
+				}else{
+					$.ajax({
+						type : "POST",
+						url : '${ctx}/bizNode/save',
+						data : {
+							bizNodeName:newName,
+							typeCode:'stock',
+							dataState:'1',
+							pid:treeNode.pId
+						},
+						success : function(data) {
+							//var zTree=$.fn.zTree.getZTreeObj("leftTree");
+							//zTree.reAsyncChildNodes(null, "refresh");
+							
+						},
+						error : function(data) {
+							alert("error:" + data.responseText);
+						}
+					});
+				}
+				return true;
+			}
+
+		   
 		   
 		   //节点点击事件
 		  	function zTreeOnMouseDown(event, treeId, treeNode) {
+			   debugger;
 		  		if(treeNode){
 		  			$('#nodeId').val(treeNode.id);
                 	$('#nodePid').val(treeNode.pId);
                 	$('#bizNodeName').val(treeNode.name);
-                	if(typeof(treeNode.attribute) != "undefined"){
+                	if(typeof(treeNode.attribute) == "undefined"){
                 		$('#typeCode').val(treeNode.attribute.typeCode);
                     	$('#typeName').val(treeNode.attribute.typeName);
                     	$('#dataState').val(treeNode.attribute.dataState);
@@ -282,7 +355,11 @@
 		   		var obj={"font-weight":"normal"};
 				return obj;
 			}
-		 
+		  
+		    //右击
+		   	function OnRightClick(event, treeId, treeNode) {
+				
+			}
 		
 		    
 		    //提交表单
@@ -294,13 +371,10 @@
 						url : '${ctx}/bizNode/save',
 						data : $('#addForm').serialize(),
 						success : function(data) {
-							 var zTree=$.fn.zTree.getZTreeObj("leftTree");
-							 var nownode = zTree.getNodesByParam("id", data.msg.id, null);  
-							 var parent=nownode[0].getParentNode();  
-							 zTree.reAsyncChildNodes(parent, "refresh");  
-							 //zTree.reAsyncChildNodes(null, "refresh");
-							//重新启用提交按钮
-							$('#addForm').bootstrapValidator('disableSubmitButtons', false);  
+							var zTree=$.fn.zTree.getZTreeObj("leftTree");
+							zTree.reAsyncChildNodes(null, "refresh");
+							
+							
 							//$('#modal-msg').html(data.msg);
 							//$('#myModal').modal('show');
 						},
@@ -314,7 +388,6 @@
 		   
 		   	$(function(){
 		   		 $.fn.zTree.init($("#leftTree"), setting);
-		   		 //采用bootstrapValidator对表单进行验证
 		   		 $('#addForm').bootstrapValidator({
 				　　　　　　　　message: 'This value is not valid',
 				            　	 feedbackIcons:{

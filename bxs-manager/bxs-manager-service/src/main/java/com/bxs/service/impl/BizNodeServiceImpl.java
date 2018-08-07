@@ -21,8 +21,8 @@ public class BizNodeServiceImpl implements BizNodeService{
 	
 	
 	//@Transactional
-	public void save(BizNode bizNode){
- 		bizNodeRepository.save(bizNode);
+	public BizNode save(BizNode bizNode){
+ 		return bizNodeRepository.save(bizNode);
 	}
 
 

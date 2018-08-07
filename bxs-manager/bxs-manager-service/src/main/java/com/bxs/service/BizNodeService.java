@@ -6,7 +6,7 @@ import com.bxs.pojo.jpa.BizNode;
 
 public interface BizNodeService {
 	
-	public void save(BizNode bizNode);
+	public BizNode save(BizNode bizNode);
 
 	public List<BizNode> findNodeListByTypeCodeAndPid(String typeCode, String pid);
 

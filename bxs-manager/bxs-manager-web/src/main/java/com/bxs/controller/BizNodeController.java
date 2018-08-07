@@ -45,8 +45,8 @@ public class BizNodeController {
 			bizNode.setCreateDate(new Date());
 		}
 		bizNode.setUpdateDate(new Date());
-		bizNodeService.save(bizNode);
-		return new JsonMsg();
+		BizNode existNode=bizNodeService.save(bizNode);
+		return new JsonMsg(true,existNode);
 	}
 	
 	/**
