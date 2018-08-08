@@ -12,4 +12,6 @@ public interface BizNodeService {
 
 	public boolean isParent(String typeCode, String pid);
 
+	public BizNode findNodeById(String id);
+
 }

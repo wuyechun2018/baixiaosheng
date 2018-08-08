@@ -36,6 +36,12 @@ public class BizNodeServiceImpl implements BizNodeService{
 	public boolean isParent(String typeCode, String pid) {
 		return bizNodeDao.isParent(typeCode,pid);
 	}
+
+
+	@Override
+	public BizNode findNodeById(String id) {
+		return bizNodeRepository.findOne(id);
+	}
 	
 	
 }

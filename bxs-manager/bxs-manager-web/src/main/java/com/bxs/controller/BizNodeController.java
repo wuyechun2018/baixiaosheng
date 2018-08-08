@@ -37,6 +37,23 @@ public class BizNodeController {
 	 * @history:
 	 * @return Object
 	 */
+	@RequestMapping("/delete")
+	@ResponseBody
+	public Object delete(String id){
+		BizNode existNode=bizNodeService.findNodeById(id);
+		existNode.setDataState("0");
+		bizNodeService.save(existNode);
+		return new JsonMsg(true,"删除节点成功！");
+	}
+	
+	/**
+	 * 
+	 * 保存方法
+	 * @author: wyc
+	 * @createTime: 2018年7月16日 下午8:56:23
+	 * @history:
+	 * @return Object
+	 */
 	@RequestMapping("/save")
 	@ResponseBody
 	public Object save(BizNode bizNode){

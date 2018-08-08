@@ -121,6 +121,12 @@
                                                 <!-- BEGIN FORM-->
                                                 <form action="javascript:void(0)" class="form-horizontal" id="addForm">
                                                     <div class="form-body">
+                                                    	 <div class="form-group">
+                                                            <label class="col-md-3 control-label">上级节点</label>
+                                                            <div class="col-md-4">
+                                                               <input type="text" class="form-control" id="parentNodeName" name="parentNodeName" readonly placeholder=""/>
+                                                            </div>
+                                                        </div>
                                                         <div class="form-group">
                                                             <label class="col-md-3 control-label">节点名称</label>
                                                             <div class="col-md-4">
@@ -156,7 +162,14 @@
                                                     <div class="form-actions">
                                                         <div class="row">
                                                             <div class="col-md-offset-3 col-md-9">
+                                                            	<button type="button" onclick="addNode()" class="btn green-meadow">新增</button>
+                                                            	&nbsp;
                                                                 <button type="submit" onclick="submitForm()" class="btn green">保存</button>
+                                                               
+                                                                &nbsp;
+                                                                <button type="button" onclick="deleteNode()" class="btn btn-danger">删除</button>
+                                                                
+                                                                 &nbsp;
                                                                 <button type="button" class="btn default">取消</button>
                                                             </div>
                                                         </div>
@@ -179,6 +192,27 @@
                 <!-- END CONTENT BODY -->
             </div>
             <!-- END CONTENT -->
+            
+            
+           <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title">提示信息</h4>
+			      </div>
+			      <div class="modal-body">
+			        <p id="modal-msg"></p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
+			      </div>
+			    </div>
+			  </div>
+		</div>
+            
+            
+            
            
         </div>
         <!-- END CONTAINER -->
@@ -217,7 +251,9 @@
   			
   
   			 <script type="text/javascript">
-   
+          //当前选中的Node的Id    
+  		  var curNodeId=0; 
+  			 
 		   var setting = {
 		   		async: {
 		   			enable: true,
@@ -245,25 +281,32 @@
 					}
 		   	};
 		   
+		   //加载表单
+		   function loadForm(treeNode){
+			  	var parentNode=treeNode.getParentNode();
+			  	if(parentNode!=null){
+			  		$('#parentNodeName').val(parentNode.name);
+			  	}
+	  			$('#nodeId').val(treeNode.id);
+	           	$('#nodePid').val(treeNode.pId);
+	           	$('#bizNodeName').val(treeNode.name);
+	           	if(typeof(treeNode.attribute) != "undefined"){
+	           		$('#typeCode').val(treeNode.attribute.typeCode);
+	               	$('#typeName').val(treeNode.attribute.typeName);
+	               	$('#dataState').val(treeNode.attribute.dataState);
+	               	$('#createDate').val(treeNode.attribute.createDate);
+	               	$('#updateDate').val(treeNode.attribute.updateDate);
+			  		$('#bizNodeCode').val(treeNode.attribute.nodeCode);
+			  		$('#nodeDesc').val(treeNode.attribute.nodeDesc);
+	           	}
+		   }
 		
 		   
-		   //节点点击事件
+		    //节点点击事件
 		  	function zTreeOnMouseDown(event, treeId, treeNode) {
 		  		if(treeNode){
-		  			$('#nodeId').val(treeNode.id);
-                	$('#nodePid').val(treeNode.pId);
-                	$('#bizNodeName').val(treeNode.name);
-                	if(typeof(treeNode.attribute) != "undefined"){
-                		$('#typeCode').val(treeNode.attribute.typeCode);
-                    	$('#typeName').val(treeNode.attribute.typeName);
-                    	$('#dataState').val(treeNode.attribute.dataState);
-                    	$('#createDate').val(treeNode.attribute.createDate);
-                    	$('#updateDate').val(treeNode.attribute.updateDate);
-    		  			$('#bizNodeCode').val(treeNode.attribute.nodeCode);
-    		  			$('#nodeDesc').val(treeNode.attribute.nodeDesc);
-                	}
-                
-                	
+		  			curNodeId=treeNode.id;
+		  			loadForm(treeNode);
 		  		}
 		  	}
 		   
@@ -277,13 +320,58 @@
 		   		
 		   	}
 			
-		   //自定义节点字体样式
+		    //自定义节点字体样式
 		   	function getFont(treeId, node) {
 		   		var obj={"font-weight":"normal"};
 				return obj;
 			}
-		 
-		
+		    //新增节点
+		    function addNode(){
+		    	var zTree=$.fn.zTree.getZTreeObj("leftTree");
+		    	var nodes = zTree.getSelectedNodes();
+		    	if(nodes.length>0){
+		    		$("#addForm")[0].reset();
+		    		var parentNode=nodes[0];
+		    		$('#parentNodeName').val(parentNode.name);
+		    		$('#nodeId').val('');
+		    		$('#nodePid').val(parentNode.id);
+		    		$('#typeCode').val('stock');
+		    		$('#dataState').val('1');
+		    		
+		    	}else{
+		    		$('#modal-msg').html('请选择上级节点');
+					
+		    	}
+		    	
+		    }
+		    //删除节点
+		    function deleteNode(){
+		    	var zTree=$.fn.zTree.getZTreeObj("leftTree");
+		    	var nodes = zTree.getSelectedNodes();
+		    	if(nodes.length>0){
+		    		var node=nodes[0];
+		    		var parentNode=node.getParentNode();
+		    		
+		    		$.ajax({
+						type : "POST",
+						url : '${ctx}/bizNode/delete',
+						data : {id:node.id},
+						success : function(data) {
+							$('#modal-msg').html('成功删除节点['+node.name+"]");
+							$('#myModal').modal('show');
+							var zTree=$.fn.zTree.getZTreeObj("leftTree");
+							//zTree.reAsyncChildNodes(null, "refresh");
+							zTree.reAsyncChildNodes(parentNode, "refresh");
+						},
+						error : function(data) {
+							alert("error:" + data.responseText);
+						}
+					});
+		    	}else{
+		    		$('#modal-msg').html('请选择要删除的节点');
+					$('#myModal').modal('show');
+		    	}
+		    }
 		    
 		    //提交表单
 		    function submitForm(){
@@ -294,15 +382,21 @@
 						url : '${ctx}/bizNode/save',
 						data : $('#addForm').serialize(),
 						success : function(data) {
-							 var zTree=$.fn.zTree.getZTreeObj("leftTree");
-							 var nownode = zTree.getNodesByParam("id", data.msg.id, null);  
-							 var parent=nownode[0].getParentNode();  
-							 zTree.reAsyncChildNodes(parent, "refresh");  
-							 //zTree.reAsyncChildNodes(null, "refresh");
+							
+							$('#modal-msg').html('保存成功！');
+							$('#myModal').modal('show');
+							
+							var zTree=$.fn.zTree.getZTreeObj("leftTree");
+					    	var nodes = zTree.getSelectedNodes();
+					    	var parentNode=nodes[0].getParentNode();
+					    	zTree.reAsyncChildNodes(parentNode, "refresh");
+					    	zTree.reAsyncChildNodes(nodes[0], "refresh");
+					    	zTree.expandNode(nodes[0], true, true, true);
+					    	zTree.expandNode(parentNode, true, true, true);
+							
 							//重新启用提交按钮
 							$('#addForm').bootstrapValidator('disableSubmitButtons', false);  
-							//$('#modal-msg').html(data.msg);
-							//$('#myModal').modal('show');
+							
 						},
 						error : function(data) {
 							alert("error:" + data.responseText);
