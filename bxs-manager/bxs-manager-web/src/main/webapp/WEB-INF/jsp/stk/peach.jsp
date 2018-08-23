@@ -84,7 +84,7 @@
                                		<div class="portlet-title">
 	                                    <div class="caption">
 	                                        <i class="icon-equalizer font-red-sunglo"></i>
-	                                        <span class="caption-subject font-red-sunglo bold uppercase">Tree</span>
+	                                        <span class="caption-subject font-red-sunglo bold uppercase">树信息</span>
 	                                    </div>
 	                                    <div class="actions">
                                             <div class="portlet-input input-inline input-small">
@@ -111,8 +111,8 @@
                                         <div class="portlet light ">
                                            <div class="portlet-title">
                                                 <div class="caption">
-                                                    <i class="icon-equalizer font-red-sunglo"></i>
-                                                    <span class="caption-subject font-red-sunglo bold uppercase">Form Sample</span>
+                                                    <i class="icon-social-dribbble font-red-sunglo"></i>
+                                                    <span class="caption-subject font-red-sunglo bold uppercase">基本信息</span>
                                                     <span class="caption-helper"></span>
                                                 </div>
                                                
@@ -171,6 +171,9 @@
                                                                 
                                                                  &nbsp;
                                                                 <button type="button" class="btn default">取消</button>
+                                                                
+                                                                 &nbsp;
+                                                                <button type="button" onclick="addTips()" class="btn yellow-crusta">添加标签</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -180,6 +183,16 @@
                                         </div>
                                     </div>
                                 </div>
+                           
+                           		<div class="row" id="myTips">
+                                        <div class="col-xs-12">
+                                            <div class="mt-element-ribbon bg-grey-steel">
+                                                <div class="ribbon ribbon-shadow ribbon-color-default uppercase">Shadow Ribbon</div>
+                                                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
+                                            </div>
+                                        </div>
+                               </div>
+                           
                             </div>
                             <!-- END PROFILE CONTENT -->
                         </div>
@@ -205,6 +218,55 @@
 			        <p id="modal-msg"></p>
 			      </div>
 			      <div class="modal-footer">
+			        <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
+			      </div>
+			    </div>
+			  </div>
+		</div>
+		
+		
+		 <div class="modal fade" tabindex="-1" role="dialog" id="addTipsModal">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title">添加标签</h4>
+			      </div>
+			      <div class="modal-body">
+			        	<form action="javascript:void(0)" class="form-horizontal" id="addTipForm">
+                                                    <div class="form-body">
+                                                    	<div class="form-group">
+                                                            <label class="col-md-3 control-label">节点</label>
+                                                            <div class="col-md-7">
+                                                            	<input type="text" class="form-control" id="mainNodeName" name="mainNodeName" readonly/>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <div class="form-group">
+                                                            <label class="col-md-3 control-label">标签</label>
+                                                            <div class="col-md-7">
+                                                            	<input type="hidden" class="form-control"  id="bizNodeExtend" name="id" >
+                                                            	<input type="hidden" class="form-control"  id="mainNodeId" name="mainNodeId">
+                                                               	
+                                                               	<input type="text" class="form-control" id="attrKey" name="attrKey" placeholder=""/>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                         <div class="form-group">
+                                                            <label class="col-md-3 control-label">描述信息</label>
+                                                            <div class="col-md-7">
+                                                                <textarea rows="4"  id="attrValue" name="attrValue" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    
+                              </form>
+			        
+			        
+			      </div>
+			      <div class="modal-footer">
+			      	<button type="submit" class="btn green" onclick="submitTipForm()">保存</button>
 			        <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
 			      </div>
 			    </div>
@@ -271,7 +333,8 @@
 				},
 		   		view: {
 						fontCss: getFont,
-						nameIsHTML: true
+						nameIsHTML: true,
+						showIcon: showIconForTree
 						
 					},
 					data: {
@@ -280,6 +343,12 @@
 						}
 					}
 		   	};
+		   
+		   //不显示图标
+		   function showIconForTree(treeId, treeNode) {
+				return !treeNode.isParent;
+			};
+
 		   
 		   //加载表单
 		   function loadForm(treeNode){
@@ -325,6 +394,7 @@
 		   		var obj={"font-weight":"normal"};
 				return obj;
 			}
+		    
 		    //新增节点
 		    function addNode(){
 		    	var zTree=$.fn.zTree.getZTreeObj("leftTree");
@@ -373,6 +443,18 @@
 		    	}
 		    }
 		    
+		    //添加标签
+		    function addTips(){
+		    	$('#addTipsModal').modal('show');
+		    	$('#mainNodeId').val(curNodeId);
+		    	
+		    	var zTree=$.fn.zTree.getZTreeObj("leftTree");
+	            var node=zTree.getNodeByParam("id",curNodeId,null);
+		    	$('#mainNodeName').val(node.name);
+		    	
+		    	
+		    }
+		    
 		    //提交表单
 		    function submitForm(){
 		    	var data=$("#addForm").data('bootstrapValidator').validate();
@@ -397,6 +479,33 @@
 							//重新启用提交按钮
 							$('#addForm').bootstrapValidator('disableSubmitButtons', false);  
 							
+						},
+						error : function(data) {
+							alert("error:" + data.responseText);
+						}
+					});
+				}
+		    }
+		    
+		    
+		    
+		    //提交标签（扩展属性）表单
+		    function submitTipForm(){
+		    	//var data=$("#addTipForm").data('bootstrapValidator').validate();
+				//data.isValid()
+		    	if (true) {
+					$.ajax({
+						type : "POST",
+						url : '${ctx}/bizNodeExtend/save',
+						data : $('#addTipForm').serialize(),
+						success : function(data) {
+							$('#addTipsModal').modal('hide');
+							
+							$('#modal-msg').html('保存成功！');
+							$('#myModal').modal('show');
+							
+							//重新启用提交按钮
+							$('#addTipForm').bootstrapValidator('disableSubmitButtons', false);  
 						},
 						error : function(data) {
 							alert("error:" + data.responseText);
