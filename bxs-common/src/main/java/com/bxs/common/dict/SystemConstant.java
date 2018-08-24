@@ -17,6 +17,11 @@ public class SystemConstant {
 	public static final String CURRENT_SESSION_USER_INFO = "SESSION_USER_INFO";
 	
 	/**
+	 * 当前Session用户是否为管理员
+	 */
+	public static final String CURRENT_SESSION_IS_ADMIN = "SESSION_USER_IS_ADMIN";
+	
+	/**
 	 * 系统错误信息
 	 */
 	public static final String SYSTEM_ERROR_MSG = "SYSTEM_ERROR_MSG";

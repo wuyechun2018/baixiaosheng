@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/> 
+<c:set var="isAdmin" value="${sessionScope.SESSION_USER_IS_ADMIN}"/> 
 <c:set var="resCtx" value="${pageContext.request.contextPath}/resources/stk/metronic-4.7"/>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -159,6 +160,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <c:if test="${sessionScope.SESSION_USER_IS_ADMIN==true}">
                                                     <div class="form-actions">
                                                         <div class="row">
                                                             <div class="col-md-offset-3 col-md-9">
@@ -179,6 +181,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    </c:if>
                                                 </form>
                                                 <!-- END FORM-->
                                             </div>
@@ -314,6 +317,7 @@
   			 <script type="text/javascript">
           //当前选中的Node的Id    
   		  var curNodeId=0; 
+          var isAdmin="${isAdmin}";
   			 
 		   var setting = {
 		   		async: {
@@ -387,11 +391,16 @@
 						$('#myTips').html('');
 						var colorArray=["ribbon-color-primary","ribbon-color-success","ribbon-color-danger","ribbon-color-warning"];
 						for(var i=0;i<data.length;i++){
+							var delHTML="";
+							//有管理员权限，显示删除按钮
+							if(isAdmin){
+								delHTML="<a onclick=\"delTips('"+data[i].id+"')\" href=\"javascript:void(0)\"><i style=\"color:red\" class=\"fa fa-trash-o fa-fw fa-1x\"></i></a>";
+							}
 							var colorIndex=i%4;
 							var tipsHTML="<div class=\"col-xs-12\">\n" +
 								"      <div class=\"mt-element-ribbon bg-grey-steel\">\n" + 
 								"            <div class=\"ribbon ribbon-shadow "+colorArray[colorIndex]+" uppercase\">"+data[i].attrKey+"</div>\n" + 
-								"               <p class=\"ribbon-content\">"+data[i].attrValue+"<a onclick=\"delTips('"+data[i].id+"')\" href=\"javascript:void(0)\"><i style=\"color:red\" class=\"fa fa-trash-o fa-fw fa-1x\"></i></a></p>\n" + 
+								"               <p class=\"ribbon-content\">"+data[i].attrValue+delHTML+"</p>\n" + 
 								"      </div>\n" + 
 								"</div>";
 							$('#myTips').append(tipsHTML);

@@ -78,6 +78,8 @@ public class UserController extends BaseController {
 				if(!userRoleList.isEmpty()){
 					//用户信息存入Session
 					session.setAttribute(SystemConstant.CURRENT_SESSION_USER_INFO, info);
+					//是管理员
+					session.setAttribute(SystemConstant.CURRENT_SESSION_IS_ADMIN, true);
 					//携带用户信息
 					mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO, info);
 					logger.info("{}登录[管理系统]成功,时间为{}",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
