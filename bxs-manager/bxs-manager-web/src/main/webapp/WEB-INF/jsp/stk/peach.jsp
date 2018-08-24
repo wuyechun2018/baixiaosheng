@@ -90,7 +90,7 @@
                                             <div class="portlet-input input-inline input-small">
                                                 <div class="input-icon right">
                                                     <i class="icon-magnifier"></i>
-                                                    <input type="text" class="form-control input-circle" placeholder="搜索..."> </div>
+                                                    <input type="text" id="key" onchange="doSearch()" class="form-control input-circle" placeholder="搜索..."> </div>
                                             </div>
                                        </div>
                                	 	</div>
@@ -169,8 +169,10 @@
                                                                 &nbsp;
                                                                 <button type="button" onclick="deleteNode()" class="btn btn-danger">删除</button>
                                                                 
+                                                                <!-- 
                                                                  &nbsp;
                                                                 <button type="button" class="btn default">取消</button>
+                                                                 -->
                                                                 
                                                                  &nbsp;
                                                                 <button type="button" onclick="addTips()" class="btn yellow-crusta">添加标签</button>
@@ -185,12 +187,6 @@
                                 </div>
                            
                            		<div class="row" id="myTips">
-                                        <div class="col-xs-12">
-                                            <div class="mt-element-ribbon bg-grey-steel">
-                                                <div class="ribbon ribbon-shadow ribbon-color-default uppercase">Shadow Ribbon</div>
-                                                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-                                            </div>
-                                        </div>
                                </div>
                            
                             </div>
@@ -306,10 +302,13 @@
             <!--ZTree树  -->
             <script src="${ctx}/resources/stk/js-lib/ztree-v3.5.36/jquery.ztree.core.min.js" type="text/javascript"></script>
   			<script src="${ctx}/resources/stk/js-lib/ztree-v3.5.36/jquery.ztree.exedit.min.js" type="text/javascript"></script>
+  			<script src="${ctx}/resources/stk/js-lib/ztree-v3.5.36/jquery.ztree.exhide.js" type="text/javascript"></script>
+  			<script src="${ctx}/resources/stk/js-lib/ztree-v3.5.36/fuzzysearch.js" type="text/javascript"></script>
+  			
   			
   			<!-- 表单验证 -->
   			<script type="text/javascript" src="${ctx}/resources/js-lib/bootstrap-validator-0.5.3/js/bootstrapValidator.min.js"></script> 
-  			
+  			 <script src="${resCtx}/assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
   			
   
   			 <script type="text/javascript">
@@ -344,6 +343,12 @@
 					}
 		   	};
 		   
+		   function doSearch(){
+			   fuzzySearch('leftTree','#key',null,true);
+		   }
+		   
+		   
+		   
 		   //不显示图标
 		   function showIconForTree(treeId, treeNode) {
 				return !treeNode.isParent;
@@ -369,13 +374,44 @@
 			  		$('#nodeDesc').val(treeNode.attribute.nodeDesc);
 	           	}
 		   }
+		   
+		   //加载节点附属信息
+		   function loadNodeExtend(treeNode){
+			   $.ajax({
+					type : "POST",
+					url : '${ctx}/bizNodeExtend/list',
+					data :{
+						mainNodeId:treeNode.id
+					},
+					success : function(data) {
+						$('#myTips').html('');
+						var colorArray=["ribbon-color-primary","ribbon-color-success","ribbon-color-danger","ribbon-color-warning"];
+						for(var i=0;i<data.length;i++){
+							var colorIndex=i%4;
+							var tipsHTML="<div class=\"col-xs-12\">\n" +
+								"      <div class=\"mt-element-ribbon bg-grey-steel\">\n" + 
+								"            <div class=\"ribbon ribbon-shadow "+colorArray[colorIndex]+" uppercase\">"+data[i].attrKey+"</div>\n" + 
+								"               <p class=\"ribbon-content\">"+data[i].attrValue+"<a onclick=\"delTips('"+data[i].id+"')\" href=\"javascript:void(0)\"><i style=\"color:red\" class=\"fa fa-trash-o fa-fw fa-1x\"></i></a></p>\n" + 
+								"      </div>\n" + 
+								"</div>";
+							$('#myTips').append(tipsHTML);
+						}
+					},
+					error : function(data) {
+						alert("error:" + data.responseText);
+					}
+				});
+		   }
 		
 		   
 		    //节点点击事件
 		  	function zTreeOnMouseDown(event, treeId, treeNode) {
 		  		if(treeNode){
 		  			curNodeId=treeNode.id;
+		  			//加载节点表单
 		  			loadForm(treeNode);
+		  			//加载附属信息
+		  			loadNodeExtend(treeNode);
 		  		}
 		  	}
 		   
@@ -421,22 +457,38 @@
 		    	if(nodes.length>0){
 		    		var node=nodes[0];
 		    		var parentNode=node.getParentNode();
-		    		
-		    		$.ajax({
-						type : "POST",
-						url : '${ctx}/bizNode/delete',
-						data : {id:node.id},
-						success : function(data) {
-							$('#modal-msg').html('成功删除节点['+node.name+"]");
-							$('#myModal').modal('show');
-							var zTree=$.fn.zTree.getZTreeObj("leftTree");
-							//zTree.reAsyncChildNodes(null, "refresh");
-							zTree.reAsyncChildNodes(parentNode, "refresh");
-						},
-						error : function(data) {
-							alert("error:" + data.responseText);
-						}
-					});
+		    		 bootbox.confirm({
+				    	    message: "确定删除该节点吗？",
+				    	    buttons: {
+				    	        confirm: {
+				    	            label: '确定',
+				    	            className: 'btn-success'
+				    	        },
+				    	        cancel: {
+				    	            label: '取消',
+				    	            className: 'btn-danger'
+				    	        }
+				    	    },
+				    	    callback: function (result) {
+				    	    	  if(result){
+				    	    		  $.ajax({
+					   						type : "POST",
+					   						url : '${ctx}/bizNode/delete',
+					   						data : {id:node.id},
+					   						success : function(data) {
+					   							$('#modal-msg').html('成功删除节点['+node.name+"]");
+					   							$('#myModal').modal('show');
+					   							var zTree=$.fn.zTree.getZTreeObj("leftTree");
+					   							//zTree.reAsyncChildNodes(null, "refresh");
+					   							zTree.reAsyncChildNodes(parentNode, "refresh");
+					   						},
+					   						error : function(data) {
+					   							alert("error:" + data.responseText);
+					   						}
+					   					});
+				                   }
+				    	    }
+				    	});
 		    	}else{
 		    		$('#modal-msg').html('请选择要删除的节点');
 					$('#myModal').modal('show');
@@ -445,6 +497,7 @@
 		    
 		    //添加标签
 		    function addTips(){
+		    	$('#addTipForm')[0].reset();
 		    	$('#addTipsModal').modal('show');
 		    	$('#mainNodeId').val(curNodeId);
 		    	
@@ -454,6 +507,43 @@
 		    	
 		    	
 		    }
+		    
+		    //删除标签
+		    function delTips(id){
+		    	bootbox.confirm({
+		    	    message: "确定删除该标签吗？",
+		    	    buttons: {
+		    	        confirm: {
+		    	            label: '确定',
+		    	            className: 'btn-success'
+		    	        },
+		    	        cancel: {
+		    	            label: '取消',
+		    	            className: 'btn-danger'
+		    	        }
+		    	    },
+		    	    callback: function (result) {
+		    	    	  if(result){
+		                	   $.ajax({
+		       					type : "POST",
+		       					url : '${ctx}/bizNodeExtend/delete',
+		       					data : {
+		       						  id:id						
+		       						},
+		       					success : function(data) {
+		       						var zTree=$.fn.zTree.getZTreeObj("leftTree");
+		       						var node=zTree.getNodeByParam("id",curNodeId,null);
+		       						//加载附属信息
+		       			  			loadNodeExtend(node);
+		       						
+		       					}
+		       		    	})
+		                   }
+		    	    }
+		    	});
+		    }
+		    
+		    
 		    
 		    //提交表单
 		    function submitForm(){
@@ -501,11 +591,19 @@
 						success : function(data) {
 							$('#addTipsModal').modal('hide');
 							
-							$('#modal-msg').html('保存成功！');
-							$('#myModal').modal('show');
+							//$('#modal-msg').html('保存成功！');
+							//$('#myModal').modal('show');
 							
 							//重新启用提交按钮
-							$('#addTipForm').bootstrapValidator('disableSubmitButtons', false);  
+							$('#addTipForm').bootstrapValidator('disableSubmitButtons', false);
+							
+							
+							var zTree=$.fn.zTree.getZTreeObj("leftTree");
+							var node=zTree.getNodeByParam("id",curNodeId,null);
+							//加载附属信息
+				  			loadNodeExtend(node);
+							
+							
 						},
 						error : function(data) {
 							alert("error:" + data.responseText);
