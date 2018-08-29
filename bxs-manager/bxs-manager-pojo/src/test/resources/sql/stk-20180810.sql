@@ -36,3 +36,13 @@ CREATE TABLE `t_biz_node_extend` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE t_biz_node COMMENT='业务节点扩展属性表';
+
+CREATE TABLE `t_user_extend` (
+  `ID` varchar(32) NOT NULL COMMENT '主键',
+  `USER_ID` varchar(32) DEFAULT NULL COMMENT '用户Id',
+  `EMAIL` varchar(100) DEFAULT NULL COMMENT '邮箱',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE t_user_extend COMMENT='用户信息扩展表';
+
+

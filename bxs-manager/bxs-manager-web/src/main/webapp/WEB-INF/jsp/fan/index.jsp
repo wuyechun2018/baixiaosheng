@@ -277,13 +277,16 @@ $(function(){
 			<c:if test="${! empty userInfoVo}">
 				<i class="fa fa-user-o" aria-hidden="true"></i>
 				<a>${userInfoVo.loginName}</a>
-			</c:if>  
+			</c:if> 
+			<!-- 
 			<i class="fa fa-address-book-o" aria-hidden="true"></i>
 			<a href="${ctx}/fan/register">注册</a>
 			<i class="fa fa-commenting-o" aria-hidden="true"></i>
-			<a href="${ctx}/fan/login">登录</a>
+			<a href="${ctx}/fan/login">登录</a>  -->
+			<i class="fa fa-commenting-o" aria-hidden="true"></i>
+			<a href="${ctx}/stk/login">登录</a>
 			<i class="fa fa-sign-out" aria-hidden="true"></i>
-			<a href="${ctx}/fan/loginout">退出</a>
+			<a href="${ctx}/stk/loginout">退出</a>
 		</div>
 		<a href="${ctx}/fan/index">
 			<div class="logo"></div>
