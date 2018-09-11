@@ -28,7 +28,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void save(SysUser user) {
+	public String save(SysUser user) {
+		String userId="";
 		//fix 前端页面生日不填的错误
 		if(user.getBirthday()==null){
 			user.setBirthday(new Date());
@@ -43,12 +44,15 @@ public class UserServiceImpl implements UserService {
 			//常规的更新操作,不对密码进行更新，对于修改密码操作,在另外的方法中进行
 			user.setLoginPassword(existUser.getLoginPassword());
 			userDao.update(user);
+			//保证返回参数统一
+		    userId=user.getId();
 		} else {
 			//将密码进行MD5加密保存到数据库中
 			user.setLoginPassword(EncryptionUtil.getMd5String(user.getLoginPassword()));
 			// 保存操作
-			userDao.save(user);
+			userId=userDao.save(user);
 		}
+		return userId;
 
 	}
 
@@ -104,6 +108,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void resetPwd(String id, String password) {
 		userDao.resetPwd(id,password);
+	}
+
+	@Override
+	public List<SysUser> getUserByEmail(String email) {
+		return userDao.getUserByEmail(email);
 	}
 	
 }

@@ -41,8 +41,9 @@ public class UserDao {
 	 * @createTime: 2018年1月23日 下午4:52:32
 	 * @history:
 	 * @param user void
+	 * @return 
 	 */
-	public void save(final SysUser user) {
+	public String save(final SysUser user) {
 		 /**
 		 String insertSQL = "INSERT INTO T_USER (id, login_name, login_password, login_time,data_state) VALUES(?,?,?,?,?)";
 		 jdbcTemplate.execute(insertSQL,
@@ -85,12 +86,14 @@ public class UserDao {
 						"    ?,\n" + 
 						"    ?,\n" + 
 						"    ?\n" + 
-						"  ) ;";
-
+						"  ) ";
+		String userId=UUID.randomUUID().toString();
+		user.setId(userId);
+		
 		jdbcTemplate.execute(sql,
 			     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
 			       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
-			         ps.setString(1, UUID.randomUUID().toString());
+			         ps.setString(1,user.getId());
 			         ps.setString(2, user.getLoginName());
 			         ps.setString(3, user.getLoginPassword());
 			         ps.setTimestamp(4, new java.sql.Timestamp(user.getLoginTime().getTime()));
@@ -105,6 +108,7 @@ public class UserDao {
 			       }
 			     }
 			 );
+		return userId;
 	}
 	
 	/**
@@ -406,6 +410,22 @@ public class UserDao {
 	public void resetPwd(String id, String password) {
 		String sql="UPDATE T_USER T SET T.login_password=? WHERE ID=?";
 		jdbcTemplate.update(sql,new Object[]{password,id});
+	}
+
+
+	/**
+	 * 
+	 * 根据用户扩展表中的Email查询用户信息
+	 * @author: wyc
+	 * @createTime: 2018年9月11日 上午11:35:59
+	 * @history:
+	 * @param email
+	 * @return List<SysUser>
+	 */
+	public List<SysUser> getUserByEmail(String email) {
+		String sql="SELECT * FROM t_user t WHERE t.id IN(SELECT user_id FROM t_user_extend s WHERE s.EMAIL=?)";
+		List<SysUser> list = jdbcTemplate.query(sql,new Object[]{email},new BeanPropertyRowMapper(SysUser.class));
+		return list;
 	}
 	
 	

@@ -22,6 +22,7 @@ import com.bxs.pojo.SysUser;
 import com.bxs.pojo.Topic;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.pojo.jpa.SysUserExtend;
+import com.bxs.service.MailService;
 import com.bxs.service.SysUserExtendService;
 import com.bxs.service.TopicService;
 import com.bxs.service.UserService;
@@ -53,6 +54,17 @@ public class StkController {
 	@Autowired
 	private TopicService topicService;
 	
+
+	
+	
+	//@Value("${mail.smtp.from}")   
+    //private String mailSmtpFrom; 
+	
+	@Autowired
+	private MailService mailService;
+	
+	
+	
 	
 	/**
 	 * 
@@ -70,6 +82,29 @@ public class StkController {
 		return mv;
 	}
 	
+	
+	
+	/**
+	 * 
+	 * 忘记密码
+	 * @author: wyc
+	 * @createTime: 2018年9月11日 下午2:28:28
+	 * @history:
+	 * @param email
+	 * @return JsonMsg
+	 */
+	@RequestMapping(value = "/forgetPwd")
+	@ResponseBody
+	public JsonMsg forgetPwd(String email){
+		//根据email查到用户信息
+		//生成随机密码
+		//更新用户密码字段
+		//将短信发送给用户
+		mailService.sendMail(email,"测试邮件","您的账号密码已重置，请重新登录！");
+		
+		
+		return new JsonMsg();
+	}
 	
 	/**
 	 * 
@@ -114,6 +149,21 @@ public class StkController {
 			msg=new JsonMsg(false,"该手机号已被注册,请直接登录或重新填写！");
 			logger.info("IP为{}用户注册失败，登录名{}，电话{},时间{},手机号已存在",new Object[]{CommonUtil.getClientIP(request),loginName,mobilePhone,new DateTime().toString("yyyy-MM-dd HH:mm:ss")});
 		}
+		//通过登录名查询
+		List<UserInfoVo> userListByLoginName=userService.getUserByLoginName(loginName);
+		if(!userListByLoginName.isEmpty()){
+			flag=false;
+			msg=new JsonMsg(false,"该登录名已被注册,请直接登录或重新填写！");
+			logger.info("IP为{}用户注册失败，登录名{}，电话{},时间{},登录名已存在",new Object[]{CommonUtil.getClientIP(request),loginName,mobilePhone,new DateTime().toString("yyyy-MM-dd HH:mm:ss")});
+		}
+		//通过邮箱查询
+		List<SysUser> userListByEmail=userService.getUserByEmail(email);
+		if(!userListByEmail.isEmpty()){
+			flag=false;
+			msg=new JsonMsg(false,"该邮箱已被注册,请直接登录或重新填写！");
+			logger.info("IP为{}用户注册失败，登录名{}，电话{},时间{},邮箱已存在",new Object[]{CommonUtil.getClientIP(request),loginName,mobilePhone,new DateTime().toString("yyyy-MM-dd HH:mm:ss")});
+		}
+		
 		if(flag){
 			//保存主表信息
 			SysUser user=new SysUser();
@@ -123,9 +173,10 @@ public class StkController {
 			//Service中将密码进行MD5加密，此处不作加密
 			user.setLoginPassword(loginPassword);
 			user.setMobilePhone(mobilePhone);
-			userService.save(user);
+			String userId=userService.save(user);
 			//保证用户扩展表信息
 			SysUserExtend userExtend=new SysUserExtend();
+			userExtend.setUserId(userId);
 			userExtend.setEmail(email);
 			userExtendService.save(userExtend);
 			logger.info("IP为：{}用户于{}注册成功，登录名为{}，电话{}",new Object[]{CommonUtil.getClientIP(request),new DateTime().toString("yyyy-MM-dd HH:mm:ss"),loginName,mobilePhone});

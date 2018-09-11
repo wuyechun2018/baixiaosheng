@@ -10,7 +10,7 @@ import com.bxs.pojo.UserInfoVo;
 public interface UserService {
 	public List<SysUser> getUserList();
 
-	public void save(SysUser user);
+	public String  save(SysUser user);
 
 	public SysUser getUserById(String id);
 
@@ -19,6 +19,8 @@ public interface UserService {
 	public EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 
 	public List<UserInfoVo> getUserByLoginName(String username);
+	
+	public List<SysUser> getUserByEmail(String email);
 	
 	public List<UserInfoVo> getUserByMobilePhone(String mobilePhone);
 	

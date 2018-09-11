@@ -65,7 +65,11 @@
         		<artifactId>ehcache</artifactId>
 		</dependency>
 		
-    
+		<!-- 发送邮件
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+		</dependency>-->
   </dependencies>
   <build>
     <finalName>bxs-manager-web</finalName>
