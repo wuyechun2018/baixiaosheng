@@ -75,12 +75,14 @@ var Login = function() {
 
             messages: {
                 email: {
-                    required: "Email is required."
+                	required: "请输入您的电子邮箱！",
+                	email:"E-mail地址不正确,请输入正确的邮箱地址！"
                 }
             },
 
             invalidHandler: function(event, validator) { //display error alert on form submit   
-
+            	//debugger; 
+            	//$('#forget_pwd_tips').html('ok');
             },
 
             highlight: function(element) { // hightlight error inputs
@@ -95,6 +97,8 @@ var Login = function() {
 
             errorPlacement: function(error, element) {
                 error.insertAfter(element.closest('.input-icon'));
+                $('#forget_pwd_tips').html(error);
+                $('#forget_pwd_tips').addClass('has-error');
             },
 
             submitHandler: function(form) {
