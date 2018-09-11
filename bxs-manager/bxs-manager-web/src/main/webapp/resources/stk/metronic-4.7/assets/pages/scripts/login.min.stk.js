@@ -102,7 +102,24 @@ var Login = function() {
             },
 
             submitHandler: function(form) {
-                form.submit();
+                //form.submit();
+            	//submitForgetPwdForm();
+            	$.ajax({
+    				type : "POST",
+    				url : ctx+'/stk/forgetPwd',
+    				data : $('#forgetPwdForm').serialize(),
+    				success : function(data) {
+    					if(data.success==true){
+    						$('#forget_pwd_tips').html(data.msg);
+    		                $('#forget_pwd_tips').addClass('has-error');
+    					}else{
+    						
+    					}
+    				},
+    				error : function(data) {
+    					alert("error:" + data.responseText);
+    				}
+    			});
             }
         });
 
@@ -235,6 +252,25 @@ var Login = function() {
 					}else{
 						 $('#register-msg').html(data.msg);
 						 $('.alert-danger', $('.register-form')).show();
+					}
+				},
+				error : function(data) {
+					alert("error:" + data.responseText);
+				}
+			});
+    	}
+        
+        //提交忘记密码表单
+        function submitForgetPwdForm(){
+    		$.ajax({
+				type : "POST",
+				url : ctx+'/stk/forgetPwd',
+				data : $('#forgetPwdForm').serialize(),
+				success : function(data) {
+					if(data.success==true){
+						alert(data.msg);
+					}else{
+						
 					}
 				},
 				error : function(data) {

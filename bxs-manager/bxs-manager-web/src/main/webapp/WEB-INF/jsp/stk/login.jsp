@@ -116,7 +116,7 @@
             </form>
             <!-- END LOGIN FORM -->
             <!-- BEGIN FORGOT PASSWORD FORM -->
-            <form class="forget-form" action="${ctx}/stk/forgetPwd" method="post">
+            <form class="forget-form" action="javascript:void(0)" method="post" id="forgetPwdForm">
                 <h3 class="font-green">忘记密码 ?</h3>
                 <p id="forget_pwd_tips"> 请输入您注册时用的邮箱以便于我们重置您的密码. </p>
                 <div class="form-group">
