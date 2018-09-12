@@ -16,4 +16,9 @@ public class SysUserExtendServiceImpl implements SysUserExtendService{
 	public void save(SysUserExtend userExtend) {
 		sysUserExtendRepository.save(userExtend);
 	}
+
+	@Override
+	public SysUserExtend findByUserId(String userId) {
+		return sysUserExtendRepository.findByUserId(userId);
+	}
 }

@@ -29,6 +29,9 @@ public class SysUserExtend implements java.io.Serializable{
 	
 	//电子邮箱
 	private String email;
+	
+	//使用邮箱重置账号关键字
+	private String resetMailKey;
 
 	
 	@Id
@@ -60,4 +63,15 @@ public class SysUserExtend implements java.io.Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	@Column(name = "RESET_MAIL_KEY", length = 100)
+	public String getResetMailKey() {
+		return resetMailKey;
+	}
+
+	public void setResetMailKey(String resetMailKey) {
+		this.resetMailKey = resetMailKey;
+	}
+	
+	
 }

@@ -1,4 +1,6 @@
 package com.bxs.common.utils;
+import org.apache.commons.lang3.RandomStringUtils;
+
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
@@ -11,6 +13,8 @@ public class PinyinUtil {
 		System.out.println(toFirstChar("我是中国人"));
 		System.out.println(toPinyin("张海洋"));
 		System.out.println(clearNotChinese("前置机表名称（xxb用户下）").replaceAll(" ", ""));
+		
+		System.out.println(RandomStringUtils.randomAlphanumeric(16));;
 	}
 
 	/**

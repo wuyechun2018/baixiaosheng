@@ -6,4 +6,6 @@ public interface SysUserExtendService  {
 
 	void save(SysUserExtend userExtend);
 
+	SysUserExtend findByUserId(String id);
+
 }

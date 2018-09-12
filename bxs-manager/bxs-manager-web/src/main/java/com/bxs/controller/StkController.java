@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,15 +96,57 @@ public class StkController {
 	 */
 	@RequestMapping(value = "/forgetPwd")
 	@ResponseBody
-	public JsonMsg forgetPwd(String email){
+	public JsonMsg forgetPwd(HttpServletRequest request,String email){
 		//根据email查到用户信息
-		//生成随机密码
-		//更新用户密码字段
-		//将短信发送给用户
-		mailService.sendMail(email,"测试邮件","您的账号密码已重置，请重新登录！");
-		
-		
+		List<SysUser> userListByEmail=userService.getUserByEmail(email);
+		if(!userListByEmail.isEmpty()){
+			//生成关键字符串
+			String key=RandomStringUtils.randomAlphanumeric(12);
+			//将关键字符串存入用户扩展表
+			//生成用户确认字符串
+			//将字符串发送给用户邮箱
+			SysUser user=userListByEmail.get(0);
+			String confirmURL=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/stk/resetPwd?id="+user.getId()+"&key="+key;
+			String content="您发起了重置SITAOKE.VIP的密码的请求，您的用户名为["+user.getLoginName()+"]请点击以下链接或者复制该地址在浏览器访问以进行确认！</br>"+confirmURL+"";
+			SysUserExtend sysUserExtend=userExtendService.findByUserId(user.getId());
+			sysUserExtend.setResetMailKey(key);
+			userExtendService.save(sysUserExtend);
+			mailService.sendMail(email,"请确认重置密码",content);
+		}
 		return new JsonMsg();
+	}
+	
+	
+	
+	
+	/**
+	 * 
+	 * 忘记密码
+	 * @author: wyc
+	 * @createTime: 2018年9月11日 下午2:28:28
+	 * @history:
+	 * @param email
+	 * @return JsonMsg
+	 */
+	@RequestMapping(value = "/resetPwd")
+	@ResponseBody
+	public JsonMsg resetPwd(HttpServletRequest request,String id,String key){
+		//根据email查到用户信息
+		SysUser user=userService.getUserById(id);
+		//产生新密码
+		String newPwd="STK"+RandomStringUtils.randomAlphanumeric(5);
+		SysUserExtend sysUserExtend=userExtendService.findByUserId(user.getId());
+		//关键字相同，才重置密码
+		if(key.equals(sysUserExtend.getResetMailKey())){
+			//重置密码
+			userService.resetPwd(id,EncryptionUtil.getMd5String(newPwd));
+			//将密码发送给用户邮箱
+			String content="您的账号为【"+user.getLoginName()+"】,重置后的密码为：【"+newPwd+"】,请使用新密码进行登录！";
+			mailService.sendMail(sysUserExtend.getEmail(),"您的密码已重置",content);
+			return new JsonMsg(true,"密码重置成功！");
+		}else{
+			return new JsonMsg(false,"密码重置失败！");
+		}
 	}
 	
 	/**
