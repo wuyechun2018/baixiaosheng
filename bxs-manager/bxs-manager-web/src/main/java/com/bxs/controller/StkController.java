@@ -111,7 +111,7 @@ public class StkController {
 			SysUserExtend sysUserExtend=userExtendService.findByUserId(user.getId());
 			sysUserExtend.setResetMailKey(key);
 			userExtendService.save(sysUserExtend);
-			mailService.sendMail(email,"请确认重置密码",content);
+			mailService.sendMail(email,"[SITAOKE.VIP]请确认重置密码！",content);
 		}
 		return new JsonMsg();
 	}
@@ -142,7 +142,7 @@ public class StkController {
 			userService.resetPwd(id,EncryptionUtil.getMd5String(newPwd));
 			//将密码发送给用户邮箱
 			String content="您的账号为【"+user.getLoginName()+"】,重置后的密码为：【"+newPwd+"】,请使用新密码进行登录！";
-			mailService.sendMail(sysUserExtend.getEmail(),"您的密码已重置",content);
+			mailService.sendMail(sysUserExtend.getEmail(),"[SITAOKE.VIP]您的密码已重置!",content);
 			return new JsonMsg(true,"密码重置成功！");
 		}else{
 			return new JsonMsg(false,"密码重置失败！");
