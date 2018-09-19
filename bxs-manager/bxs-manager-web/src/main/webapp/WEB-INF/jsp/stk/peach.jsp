@@ -428,8 +428,10 @@
 		   	function zTreeOnAsyncSuccess(event, treeId, treeNode){
 		   		if(!treeNode){
 		   			var zTree=$.fn.zTree.getZTreeObj("leftTree");
-		            var node=zTree.getNodeByParam("pId","-1",null);
+		           	 var node=zTree.getNodeByParam("pId","-1",null);
 		            zTree.expandNode(node,true,true,true);
+		            //从展开第一层调整到展开全部
+		            zTree.expandAll(true);
 		   		}
 		   		
 		   	}

@@ -73,7 +73,7 @@
 		<div class="logo"></div>
 		</a> <nav class="navlist">
 	<ul>
-		<li><a href="${ctx}/fan/index">首页</a></li>
+		<li><a href="${ctx}/fan/index">最新资讯</a></li>
 		<c:forEach items="${topicList}" var="topic" begin="0" end="4">
 			<c:if test="${article.topicId==topic.id}">
 				<li class="on"><a

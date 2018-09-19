@@ -13,7 +13,7 @@
 		</a> 
 		<nav class="navlist">
 			<ul>
-				 <li class="on"><a href="${ctx}/portal/list?topicCode=''">首页</a></li>
+				 <li class="on"><a href="${ctx}/portal/list?topicCode=''">最新资讯</a></li>
 			 	  <c:forEach items="${topicList}" var="topic" begin="0" end="4">
 		           	  <li><a href="${ctx}/portal/list?topicCode=${topic.topicCode}" target="_blank">${topic.topicName}</a></li>
 		          </c:forEach>

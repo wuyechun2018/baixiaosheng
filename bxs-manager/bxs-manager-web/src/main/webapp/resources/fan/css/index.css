@@ -102,6 +102,12 @@ body {
 	margin-top: 26px;
 }
 
+.main-left-list {
+	float: left;
+	width: 67%;
+	margin-left: 4%;
+}
+
 .main-right {
 	float: right;
 	width: 23%;
@@ -330,7 +336,7 @@ a:hover, .active, .active a {
 	.navlist {
 		width: 100%;
 		background: #f6f6f6;
-		height: 50px;
+		height: 30px;
 		margin-left: 0;
 		float: none;
 		position: absolute;
@@ -338,16 +344,16 @@ a:hover, .active, .active a {
 		left: 0px;
 	}
 	.navlist li {
-		font-size: 20px;
+		font-size: 16px;
 		line-height: 20px;
 		height: 20px;
 		margin: 0;
 		width: 22%;
 		text-align: center;
-		border-right: 2px #b6b6b6 solid;
+		font-weight: bold;
 	}
 	.navlist .on {
-		border-bottom: 0;
+		border-bottom: 2px #fdd44e solid;
 	}
 	.navlist .last {
 		border-right: 0;
@@ -549,6 +555,7 @@ div {
 @media only screen and (max-width:768px) {
 	.main-right{display:none;	}
 	.main-left{width:100%;margin-left:0; margin-top:200px;}
+	.main-left-list{width:100%;margin-left:0;}
 	.left-top{margin-bottom:17px;}
 	.left-post{margin-bottom:15px;}
 }
@@ -576,5 +583,12 @@ div {
 	.footer-img{display:none;}
 	.footer-link{display:none;}
 	.footer-txt{width:100%;text-align:center;margin-left:0;}
+}
+
+@media only screen and (max-width:768px) {
+	.article {width: 90%;margin: 0 auto;}
+	.article h1{ font-size: 23px;margin-top:1px;text-align: center;}
+	.article .notes { font-size: 10px; margin-top: 6px; margin-bottom: 50px;}
+	
 }
 

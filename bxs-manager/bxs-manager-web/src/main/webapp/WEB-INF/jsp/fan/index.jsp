@@ -218,8 +218,10 @@ function  loadFocImageLeft(){
 	if(focLeftData.rows.length>0){
 		var linkObj=focLeftData.rows[0];
 		var linkName=linkObj.linkName;
+		var linkUrl=linkObj.linkUrl;
 		var focImageLeftHTML=
-			" <a href=\""+linkObj.linkUrl+"\" title=\""+linkName+"\">\n" +
+			
+			" <a href=\""+linkUrl+"\" title=\""+linkName+"\">\n" +
 			"  <div class=\"focusimg_left\" style=\"background:url("+linkObj.linkImageUrl+"); background-size:cover;background-position:center;\">\n" + 
 			"   <div class=\"title\">\n" + 
 			"    <span>"+linkName+"</span>\n" + 
@@ -230,6 +232,11 @@ function  loadFocImageLeft(){
 	}
 }
 
+//上线通知
+function onlineNote(){
+	alert('该功能正在开发中，敬请期待！');
+}
+
 //加载右边焦点图(右边四小图)
 function loadFocImageRight(){
 	//获取超链接数据
@@ -238,14 +245,27 @@ function loadFocImageRight(){
 	for(var i=0;i<focRightData.rows.length;i++){
 		var linkObj=focRightData.rows[i]
 		var linkName=linkObj.linkName;
-		focImageRightHTML+=
-			"  <a href=\""+linkObj.linkUrl+"\" title=\""+linkName+"\" target=\"_blank\">\n" +
-			"   <div class=\"right_list\" style=\"background:url("+linkObj.linkImageUrl+");background-size:cover;background-position:center;\">\n" + 
-			"    <div class=\"title\">\n" + 
-			"     <span>"+linkName+"</span>\n" + 
-			"    </div>\n" + 
-			"   </div>\n" + 
-			"</a>";
+		var linkUrl=linkObj.linkUrl;
+		if(linkUrl=='#'){
+			focImageRightHTML+=
+				"  <a href=\"javascript:void(0)\" onclick=\"onlineNote()\" title=\""+linkName+"\" target=\"_blank\">\n" +
+				"   <div class=\"right_list\" style=\"background:url("+linkObj.linkImageUrl+");background-size:cover;background-position:center;\">\n" + 
+				"    <div class=\"title\">\n" + 
+				"     <span>"+linkName+"</span>\n" + 
+				"    </div>\n" + 
+				"   </div>\n" + 
+				"</a>";
+		}else{
+			focImageRightHTML+=
+				"  <a href=\""+linkUrl+"\" title=\""+linkName+"\" target=\"_blank\">\n" +
+				"   <div class=\"right_list\" style=\"background:url("+linkObj.linkImageUrl+");background-size:cover;background-position:center;\">\n" + 
+				"    <div class=\"title\">\n" + 
+				"     <span>"+linkName+"</span>\n" + 
+				"    </div>\n" + 
+				"   </div>\n" + 
+				"</a>";
+		}
+		
 	}
 	$('#foc_image_right').append(focImageRightHTML);	
 }
@@ -293,7 +313,7 @@ $(function(){
 		</a> 
 		<nav class="navlist">
 			<ul>
-				 <li class="on"><a href="${ctx}/fan/index">首页</a></li>
+				 <li class="on"><a href="${ctx}/fan/index">最新资讯</a></li>
 			 	  <c:forEach items="${topicList}" var="topic" begin="0" end="4">
 		           	  <li><a href="${ctx}/fan/list/${topic.topicCode}" >${topic.topicName}</a></li>
 		          </c:forEach>

@@ -209,10 +209,8 @@ $(function(){
 	<!--头部-->
 	<header class="header">
 		<div class="header-info">
-			<i class="fa fa-th-large" aria-hidden="true"></i>
-			<a href="${ctx}/fan/register">注册</a>
-			<i class="fa fa-user-o" aria-hidden="true"></i>
-			<a href="${ctx}/fan/login">登录</a>
+			<i class="fa fa-commenting-o" aria-hidden="true"></i>
+			<a href="${ctx}/stk/login">登录</a>
 			<i class="fa fa-sign-out" aria-hidden="true"></i>
 			<a href="${ctx}/fan/loginout">退出</a>
 		</div>
@@ -222,7 +220,7 @@ $(function(){
 		<nav class="navlist">
 			<input id="topicId" value="${curTopic.id}" type="hidden"/>
 			<ul>
-				 <li ><a href="${ctx}/fan/index">首页</a></li>
+				 <li ><a href="${ctx}/fan/index">最新资讯</a></li>
 		          <c:forEach items="${topicList}" var="topic" begin="0" end="4">
 						<c:if test="${curTopic.id==topic.id}">
 							 <li class="on"><a href="${ctx}/fan/list/${topic.id}" >${topic.topicName}</a></li>
@@ -243,7 +241,7 @@ $(function(){
 	
 	<div class="clear"></div>
 
-	<main class="main-left">
+	<main class="main-left-list">
 		<div class="ui-video-list">
 			<ul id="dataUL">
 				
