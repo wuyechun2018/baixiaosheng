@@ -76,6 +76,10 @@
             <div class="page-content-wrapper">
                 <!-- BEGIN CONTENT BODY -->
                 <div class="page-content">
+                	<h1 class="page-title font-red-thunderbird"> 
+                			知根知底，才能信手拈来
+                         	 <small class="font-green-jungle">相信统计学的力量</small>
+                    </h1>
                      <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN PROFILE SIDEBAR -->
@@ -84,8 +88,8 @@
                                 <div class="portlet light ">
                                		<div class="portlet-title">
 	                                    <div class="caption">
-	                                        <i class="icon-equalizer font-red-sunglo"></i>
-	                                        <span class="caption-subject font-red-sunglo bold uppercase">树信息</span>
+	                                        <i class="fa fa-tree"></i>
+	                                        <span class="caption-subject  bold uppercase">树信息</span>
 	                                    </div>
 	                                    <div class="actions">
                                             <div class="portlet-input input-inline input-small">
@@ -112,8 +116,8 @@
                                         <div class="portlet light ">
                                            <div class="portlet-title">
                                                 <div class="caption">
-                                                    <i class="icon-social-dribbble font-red-sunglo"></i>
-                                                    <span class="caption-subject font-red-sunglo bold uppercase">基本信息</span>
+                                                    <i class="fa fa-cloud "></i>
+                                                    <span class="caption-subject  bold uppercase">基本信息</span>
                                                     <span class="caption-helper"></span>
                                                 </div>
                                                
