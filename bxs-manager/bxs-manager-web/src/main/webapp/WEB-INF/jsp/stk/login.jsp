@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/> 
-<c:set var="resCtx" value="${pageContext.request.contextPath}/resources/stk/metronic-4.7"/>    
+<c:set var="resCtx" value="${pageContext.request.contextPath}/resources/stk/metronic-4.7"/> 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <!--[if IE 8]> <html  class="ie8 no-js"> <![endif]-->
@@ -59,7 +60,7 @@
         <!-- BEGIN LOGIN -->
         <div class="content">
             <!-- BEGIN LOGIN FORM -->
-            <form class="login-form" action="${ctx}/stk/doLogin" method="post">
+            <form class="login-form" action="${ctx}/stk/doLogin?pageUrl=${param.pageUrl}" method="post">
                 <h3 class="form-title font-green">登录</h3>
                 <div class="alert alert-danger display-hide">
                     <button class="close" data-close="alert"></button>

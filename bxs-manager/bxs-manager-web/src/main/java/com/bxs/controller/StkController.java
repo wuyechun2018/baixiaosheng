@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -241,8 +242,13 @@ public class StkController {
 	 * @return ModelAndView
 	 */
 	@RequestMapping("/doLogin")
-	public ModelAndView doLogin(String username,String password,HttpSession session){
+	public ModelAndView doLogin(String username,String password,HttpServletRequest request){
+		HttpSession session = request.getSession(); 
+		String pageUrl=request.getParameter("pageUrl");
 		String loginViewName="/stk/login";
+		if(StringUtils.isNotBlank(pageUrl)){
+			loginViewName=pageUrl;
+		}
 		
 		ModelAndView mv=new ModelAndView();
 		List<UserInfoVo> list=userService.getUserByLoginNameOrMobilePhone(username);
@@ -256,8 +262,12 @@ public class StkController {
 				//携带用户信息
 				mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO, info);
 				logger.info("{}登录[管理系统]成功,时间为{}",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
-				//跳转到后台管理主页面
-				mv.setViewName("/fan/index");
+				if(StringUtils.isNotBlank(pageUrl)){
+					mv.setViewName(pageUrl);
+				}else{
+					//跳转到后台管理主页面
+					mv.setViewName("/fan/index");
+				}
 				mv.addObject("userInfoVo", info);
 				
 			}else{

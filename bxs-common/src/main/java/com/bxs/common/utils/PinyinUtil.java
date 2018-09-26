@@ -17,6 +17,7 @@ public class PinyinUtil {
 		System.out.println(toPinyin("李长是市长"));
 		//支持多音字
 		System.out.println(converterToSpell("李长是市长"));
+		System.out.println(converterToSpell("张三"));
 		System.out.println(toPinyin("我在长安城里快乐的成长"));
 		System.out.println(toPinyin(clearNotChinese("前置机表名称（xxb用户下）")));
 		System.out.println(toFirstChar("我是中国人"));

@@ -315,7 +315,8 @@
   			
   			<!-- 表单验证 -->
   			<script type="text/javascript" src="${ctx}/resources/js-lib/bootstrap-validator-0.5.3/js/bootstrapValidator.min.js"></script> 
-  			 <script src="${resCtx}/assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+  			<!--消息框 --> 
+  			<script src="${resCtx}/assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
   			
   
   			 <script type="text/javascript">

@@ -44,7 +44,8 @@
    <link href="${resCtx}/assets/layouts/layout2/css/custom.min.css" rel="stylesheet" type="text/css" />
    <!-- END THEME LAYOUT STYLES -->
     <link href="${resCtx}/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
-   
+    <!--日历  -->
+    <link href="${resCtx}/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
    
    
     <!--自定义CSS,覆盖原 layout.min.css  -->
@@ -102,28 +103,49 @@
                                                     <div class="form-body">
                                                     	 
                                                         <div class="form-group">
-                                                            <label class="col-md-3 control-label">节点名称</label>
-                                                            <div class="col-md-4">
-                                                            	<input type="hidden" class="form-control"  id="nodeId" name="id" >
-                                                                <input type="text" class="form-control"  id="bizNodeName" name="bizNodeName" placeholder="">
+                                                            <label class="col-md-3 control-label">日期</label>
+                                                            <div class="col-md-5">
+                                                            	<input type="hidden" class="form-control"  id="bizId" name="id" >
+                                                                <input type="text" class="form-control"  id="bizDay" name="bizDay" placeholder="">
                                                             </div>
                                                         </div>
                                 
+                                						<div class="form-group">
+                                                            <label class="col-md-3 control-label">我的心情</label>
+                                                            <div class="col-md-5">
+                                                                <div class="mt-radio-inline">
+			                                                        <label class="mt-radio">
+			                                                            <input type="radio" name="bizState" id="bizState_1" value="1" checked="checked"> 开心
+			                                                            <span></span>
+			                                                        </label>
+			                                                        <label class="mt-radio">
+			                                                            <input type="radio" name="bizState" id="bizState_2" value="2" > 难过
+			                                                            <span></span>
+			                                                        </label>
+			                                                        <label class="mt-radio">
+			                                                            <input type="radio" name="bizState" id="bizState_3" value="3" >麻木
+			                                                            <span></span>
+			                                                        </label>
+                                                    			</div>
+                                                            </div>
+                                                        </div>
+                                
+                                						
                                                         <div class="form-group">
-                                                            <label class="col-md-3 control-label">描述信息</label>
-                                                            <div class="col-md-4">
-                                                                <textarea rows="4" name="nodeDesc" id="nodeDesc" class="form-control"></textarea>
+                                                            <label class="col-md-3 control-label">我想说的</label>
+                                                            <div class="col-md-5">
+                                                                <textarea rows="6" name="bizDesc" id="bizDesc" class="form-control"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-actions">
                                                         <div class="row">
-                                                            <div class="col-md-offset-3 col-md-9">
+                                                            <div class="col-md-offset-4 col-md-8">
                                                             
-                                                                <button type="submit" onclick="submitForm()" class="btn green">保存</button>
+                                                                <button type="submit" onclick="submitForm()" class="btn btn-lg green">保存</button>
                                                                
                                                                 &nbsp;
-                                                                <button type="button" onclick="deleteNode()" class="btn btn-danger">删除</button>
+                                                                <button type="button" onclick="deleteCalendar()" class="btn btn-danger">删除</button>
                                                                 
                                                                
                                                             </div>
@@ -181,39 +203,199 @@
   			
   			<!-- 表单验证 -->
   			<script type="text/javascript" src="${ctx}/resources/js-lib/bootstrap-validator-0.5.3/js/bootstrapValidator.min.js"></script> 
+  			<!--消息框 --> 
   			<script src="${resCtx}/assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
   			
   			<!-- 日历控件 -->
-  			
   			<script src="${resCtx}/assets/global/plugins/fullcalendar/lib/moment.min.js" type="text/javascript"></script>
   			<script src="${resCtx}/assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
   			<script src="${resCtx}/assets/global/plugins/fullcalendar/lang/zh-cn.js" type="text/javascript"></script>
+  			
+  			<!-- 日期控件 -->
+  			<script src="${resCtx}/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+  			<script src="${resCtx}/assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
   			
   			
   
   			 <script type="text/javascript">
          		$(function(){
-         			  $('#calendar').fullCalendar( {
-         		                    editable: false,
-         		                   	height:200,
-         		                    eventLimit: true, 
-         		                   	handleWindowResize:false,
-         		                    events: [
-         		                    {
-         		                        title: 'All Day Event',
-         		                        start: '2018-09-19',
-         		                        allDay: true,
-         		                        backgroundColor: '#69a4e0'
-         		                    },
-         		                    {
-         		                        title: 'Click for Google',
-         		                        url: 'http://google.com/',
-         		                        start: '2015-02-28'
-         		                    }]
-         		                });
+         			
+         			//日历
+      			 	 $('#calendar').fullCalendar( {
+      		                    editable: false,
+      		                   	height:200,
+      		                    eventLimit: true, 
+      		                   	handleWindowResize:false,
+      		                    events: function(start,end,timezone, callback){
+      		                      var curMonth = this.getDate().format('YYYY-MM');
+      		                      $.ajax({
+      		                    	type : "POST",
+      		    					 url : '${ctx}/bizCalendar/list',
+      		                          data: {
+      		                         		month:curMonth
+      		                          },
+      		                          success: function(data) { 
+      		                             	 var events = [];
+	      		                             for(var i=0;i<data.length;i++){
+		      	    							  var eventObj=new Object();
+		      	    							  eventObj.id=data[i].id;
+		      	    							  eventObj.bizState=data[i].bizState;
+		      	    							  eventObj.start=data[i].bizDay;
+		      	    							  eventObj.bizDesc=data[i].bizDesc;
+		      	    							  eventObj.title=(data[i].bizDesc).length>10?(data[i].bizDesc.substr(0,10)+"..."):data[i].bizDesc;
+		      	    							  if(data[i].bizState=='1'){
+		      	    								  eventObj.backgroundColor='#D91E18';
+		      	    							  }else if(data[i].bizState=='2'){
+		      	    								  eventObj.backgroundColor='#26C281';
+		      	    							  }else{
+		      	    								  eventObj.backgroundColor='#95A5A6';
+		      	    							  }
+		      	    							events.push(eventObj);
+	      	    						  	}
+	      		                           callback(events);
+      		                          }
+      		                          })
+      		                       
+      		                    },
+      		                  eventClick: function(calEvent, jsEvent, view) {
+      		                	  //填充表单
+      		                	  $('#bizId').val(calEvent.id);
+    		                	  $('#bizDay').val(calEvent.start.format('YYYY-MM-DD'));
+    		                	  $('#bizDesc').val(calEvent.bizDesc);
+    		                	  var bizState=calEvent.bizState;
+    		                	  if(bizState=='1'){
+    		                		$('#bizState_1').prop('checked', 'checked');
+    		                	  }else if(bizState=='2'){
+    		                		$('#bizState_2').prop('checked', 'checked');
+    		                	  }else{
+    		                		$('#bizState_3').prop('checked', 'checked');
+    		                	  }
+      		                	  
+      		                  }
+      		           } );
+      			 	
+         			
+         			
+         			
+         			
+         			  
+         			 //日期选择 
+         			 $("#bizDay").datepicker({
+         	            language: "zh-CN",
+         	            autoclose: true,
+         	            todayBtn: true,
+         	            format: "yyyy-mm-dd"
+         	        });
+         			 //设置为当天
+         			$('#bizDay').datepicker('setDate', new Date());
+         			
+         			$('#addForm').bootstrapValidator({
+				　　　　　　　　message: 'This value is not valid',
+				            　	    feedbackIcons:{
+								valid: 'glyphicon glyphicon-ok',
+								invalid: 'glyphicon glyphicon-remove',
+				                　　　　　　　　      validating:'glyphicon glyphicon-refresh'
+				            　　　　　　　　   },
+				            fields: {
+				            	bizDay: {
+				                    message: '日期验证失败',
+				                    validators: {
+				                        notEmpty: {
+				                            message: '请填写日期'
+				                        }
+				                    }
+				                },
+				                bizDesc: {
+				                    message: '请填写一些你想说的吧',
+				                    validators: {
+				                        notEmpty: {
+				                            message: '请填写一些你想说的吧'
+				                        }
+				                    }
+				                }
+				            }
+				        });	
+         			 
+         			  
          			
          		})		
   			 
+         		
+         	//提交表单
+		    function submitForm(){
+		    	var data=$("#addForm").data('bootstrapValidator').validate();
+		    	if (data.isValid()) {
+					$.ajax({
+						type : "POST",
+						url : '${ctx}/bizCalendar/save',
+						data : $('#addForm').serialize(),
+						success : function(data) {
+							var objMsg=data.msg;
+							bootbox.alert({ 
+								  size: "small",
+								  title: "提示",
+								  message: "保存成功", 
+								  callback: function(){
+									  $('#calendar'). fullCalendar ( 'refetchEvents' ); 
+									  //清空表单
+									  $('#addForm')[0].reset();
+									  //设置为当天
+					         		  $('#bizDay').datepicker('setDate', new Date());
+									 //重新启用提交按钮
+									 $('#addForm').bootstrapValidator('disableSubmitButtons', false);  
+								  }
+								})
+						},
+						error : function(data) {
+							alert("error:" + data.responseText);
+						}
+					});
+				}
+		    }
+         		
+         	//删除	
+         	function deleteCalendar(){
+         		 bootbox.confirm({
+			    	    message: "确定删除这条记录吗？",
+			    	    buttons: {
+			    	        confirm: {
+			    	            label: '确定',
+			    	            className: 'btn-success'
+			    	        },
+			    	        cancel: {
+			    	            label: '取消',
+			    	            className: 'btn-danger'
+			    	        }
+			    	    },
+			    	    callback: function (result) {
+			    	    	  if(result){
+			    	    		  $.ajax({
+			    						type : "POST",
+			    						url : '${ctx}/bizCalendar/delete',
+			    						data : {
+			    							id:$('#bizId').val()
+			    						},
+			    						success : function(data) {
+			    							$('#calendar').fullCalendar('removeEvents',$('#bizId').val())
+			    							/*
+			    							bootbox.alert({ 
+			    								  size: "small",
+			    								  title: "提示",
+			    								  message: "删除成功", 
+			    								  callback: function(){
+			    									  $('#calendar').fullCalendar('removeEvents',$('#bizId').val())
+			    								  }
+			    								})*/
+			    						},
+			    						error : function(data) {
+			    							alert("error:" + data.responseText);
+			    						}
+			    					});
+			                   }
+			    	    }
+			    	});
+         		
+         	}	
   			 
   			 
   			 </script>
