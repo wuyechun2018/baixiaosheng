@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bxs.common.dict.DataState;
 import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.utils.BaseController;
+import com.bxs.common.utils.HtmlUtil;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
@@ -53,6 +54,24 @@ public class ArticleController extends BaseController{
 	
 	@Autowired
 	private ArticleService articleService;
+	
+	
+	/**
+	 * 
+	 * 根据Id获取文章内容
+	 * @author: wyc
+	 * @createTime: 2018年10月11日 下午9:28:39
+	 * @history:
+	 * @param id
+	 * @return Object
+	 */
+	@RequestMapping("/data/{id}")
+	@ResponseBody
+	public Object getArticleById(@PathVariable String id){
+		Article article=articleService.getArticleById(id);
+		article.setArticleContent(HtmlUtil.delHTMLTag(article.getArticleContent()));
+		return article;
+	}
 	
 	
 	

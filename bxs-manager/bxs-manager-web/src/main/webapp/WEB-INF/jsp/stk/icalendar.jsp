@@ -134,7 +134,7 @@
                                                         <div class="form-group">
                                                             <label class="col-md-3 control-label">我想说的</label>
                                                             <div class="col-md-5">
-                                                                <textarea rows="6" name="bizDesc" id="bizDesc" class="form-control"></textarea>
+                                                                <textarea placeholder="今天好开心哇！终于跑赢大盘喽！我觉得中国平安是只好股票啊，下次在60元一定要记得抄底！" rows="6" name="bizDesc" id="bizDesc" class="form-control"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>

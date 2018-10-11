@@ -1,3 +1,20 @@
+
+-- 日志表
+CREATE TABLE `t_biz_calendar` (
+  `ID` varchar(32) NOT NULL COMMENT '主键',
+  `USER_ID` varchar(36) DEFAULT NULL COMMENT '当前用户ID',
+  `BIZ_DAY` date DEFAULT NULL COMMENT '日期',
+  `BIZ_STATE` varchar(10) DEFAULT NULL COMMENT '业务状态',
+  `BIZ_DESC` longtext COMMENT '描述信息',
+  `DATA_STATE` varchar(10) DEFAULT NULL COMMENT '数据状态',
+  `CREATE_DATE` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATE_DATE` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
 -- 1、 添加表注释
 ALTER TABLE t_biz_node COMMENT='业务节点基本属性表';
 
