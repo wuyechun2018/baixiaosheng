@@ -11,12 +11,12 @@
 	<!-- 扫描web包，应用Spring的注解 -->
 	<context:component-scan base-package="com.bxs.jdbc"/>
 
-	<!-- 加载配置文件 
+	<!-- 加载配置文件 -->
 	<context:property-placeholder location="classpath:jdbc.properties" />
-	-->
 	
-	<!-- 将配置文件放到磁盘目录下，方便修改和多环境部署  -->
-	<context:property-placeholder location="file:/jdbc.properties" />
+	
+	<!-- 将配置文件放到磁盘目录下，方便修改和多环境部署 
+	<context:property-placeholder location="file:/jdbc.properties" /> -->
 	
 	<!-- 数据库连接池 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
@@ -29,7 +29,7 @@
 		<property name="minIdle" value="5" />
 	</bean>
 	
-	<!-- 工作流数据库连接池 -->
+	<!-- 工作流数据库连接池 
 	<bean id="activityDataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		destroy-method="close">
 		<property name="url" value="${activity.jdbc.url}" />
@@ -38,7 +38,7 @@
 		<property name="driverClassName" value="${activity.jdbc.driver}" />
 		<property name="maxActive" value="10" />
 		<property name="minIdle" value="5" />
-	</bean>
+	</bean>-->
 	
 	<!-- 配置JDBC模板  -->
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"

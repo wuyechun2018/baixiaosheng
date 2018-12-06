@@ -72,6 +72,23 @@
         		<artifactId>ehcache</artifactId>
 		</dependency>
 		 -->
+		 
+		 <!--工作流 -->	
+		<dependency>  
+			    <groupId>org.activiti</groupId>  
+			    <artifactId>activiti-engine</artifactId>  
+		 </dependency>  
+  
+		<dependency>  
+		    <groupId>org.activiti</groupId>  
+		    <artifactId>activiti-spring</artifactId>  
+		</dependency>
+		
+		<dependency>  
+			    <groupId>org.activiti</groupId>  
+			    <artifactId>activiti-image-generator</artifactId>  
+		</dependency>  
+		
     
   </dependencies>
 </project>

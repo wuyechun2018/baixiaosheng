@@ -2,8 +2,6 @@ package com.bxs.pojo;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class Leave {
 	private static final long serialVersionUID = 1L;
 	
@@ -54,7 +52,7 @@ public class Leave {
 		this.leaveType = leaveType;
 	}
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	//@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	public Date getStartTime() {
 		return startTime;
 	}
@@ -63,7 +61,7 @@ public class Leave {
 		this.startTime = startTime;
 	}
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	//@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	public Date getEndTime() {
 		return endTime;
 	}

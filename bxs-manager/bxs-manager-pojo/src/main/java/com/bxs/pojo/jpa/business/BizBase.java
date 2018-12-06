@@ -1,8 +1,6 @@
 package com.bxs.pojo.jpa.business;
-
 import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,29 +8,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 
- * 商家
- * 
+ * 之前想让其它类都继承，但是在JPA保存的时候，效果并不是我要的，且对表结构设计有影响，作罢！
  * @desc: bxs-manager-pojo
  * @author: wyc
- * @createTime: 2018年10月8日 下午3:56:31
+ * @createTime: 2018年11月15日 下午5:16:48
  * @history:
  * @version: v1.0
  */
-@Entity(name = "t_biz_shop")
-public class Shop {
+public class BizBase {
 
-	// 名称
-	private String shopName;
-	// 负责人
-	private String shopManager;
-	// 联系电话
-	private String telephone;
-	// 地址
-	private String address;
-
-	// 主键
+	//主键
 	private String id;
-	// 说明，备注
+	//说明，备注
 	private String bizDesc;
 	// 排序
 	private int displayOrder;
@@ -54,11 +41,10 @@ public class Shop {
 	public String getId() {
 		return id;
 	}
-
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	
 	@Column(name = "BIZ_DESC", length = 500)
 	public String getBizDesc() {
 		return bizDesc;
@@ -123,41 +109,4 @@ public class Shop {
 	public void setUpdateUserId(String updateUserId) {
 		this.updateUserId = updateUserId;
 	}
-
-	@Column(name = "SHOP_NAME", length = 100)
-	public String getShopName() {
-		return shopName;
-	}
-
-	public void setShopName(String shopName) {
-		this.shopName = shopName;
-	}
-
-	@Column(name = "SHOP_MANAGER", length = 100)
-	public String getShopManager() {
-		return shopManager;
-	}
-
-	public void setShopManager(String shopManager) {
-		this.shopManager = shopManager;
-	}
-
-	@Column(name = "TELEPHONE", length = 50)
-	public String getTelephone() {
-		return telephone;
-	}
-
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-
-	@Column(name = "ADDRESS", length = 500)
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
 }

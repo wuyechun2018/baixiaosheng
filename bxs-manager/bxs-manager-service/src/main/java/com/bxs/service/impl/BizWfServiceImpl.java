@@ -17,11 +17,11 @@ public class BizWfServiceImpl implements BizWfService {
 	
 	private static final Logger logger =LoggerFactory.getLogger(BizWfServiceImpl.class);
 
-	@Autowired
-	private IdentityService identityService;
+	//@Autowired
+	//private IdentityService identityService;
 	
-	@Autowired
-    private RuntimeService runtimeService;
+	//@Autowired
+    //private RuntimeService runtimeService;
 	
 	@Autowired
 	private BizWfDao bizWfDao;
@@ -29,18 +29,17 @@ public class BizWfServiceImpl implements BizWfService {
 	
 	@Override
 	public ProcessInstance startWorkflow(BizWf wfObj, Map<String, Object> variables) {
-		//保存,返回业务Id
+		//淇濆瓨,杩斿洖涓氬姟Id
 		String businessKey =bizWfDao.save(wfObj);
 		ProcessInstance processInstance = null;
 		try {
-			// 用来设置启动流程的人员ID，引擎会自动把用户ID保存到activiti:initiator中
-			identityService.setAuthenticatedUserId(wfObj.getUserId());
-			processInstance = runtimeService.startProcessInstanceByKey(wfObj.getBizTypeName(), businessKey, variables);
+			//identityService.setAuthenticatedUserId(wfObj.getUserId());
+			//processInstance = runtimeService.startProcessInstanceByKey(wfObj.getBizTypeName(), businessKey, variables);
 			String processInstanceId = processInstance.getId();
 			wfObj.setProcessInstanceId(processInstanceId);
 			logger.debug("start process of {key={}, bkey={}, pid={}, variables={}}",new Object[] { "leave", businessKey, processInstanceId, variables });
 		} finally {
-			identityService.setAuthenticatedUserId(null);
+			//identityService.setAuthenticatedUserId(null);
 		}
 		return processInstance;
 	}

@@ -1,10 +1,18 @@
 package com.bxs.controller;
 import java.util.Date;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.bxs.common.utils.BaseController;
+import com.bxs.common.vo.EUIGrid;
+import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.jpa.BizNodeExtend;
 import com.bxs.service.BizNodeExtendService;
@@ -21,7 +29,7 @@ import com.bxs.service.BizNodeExtendService;
  */
 @Controller
 @RequestMapping("/bizNodeExtend")
-public class BizNodeExtendController {
+public class BizNodeExtendController extends BaseController{
 	
 	@Autowired
 	private BizNodeExtendService bizNodeExtendService;
@@ -82,5 +90,21 @@ public class BizNodeExtendController {
 		return bizNodeExtendService.getListByMainNodeId(mainNodeId);
 	}
 	
+	/**
+	 * 
+	 * 分页获取"附属节点信息"列表
+	 * @author: wyc
+	 * @createTime: 2018年11月29日 下午5:00:30
+	 * @history:
+	 * @param request
+	 * @return EUIGrid
+	 */
+	@RequestMapping("/pagerList")
+	@ResponseBody
+	public  EUIGrid pagerList(HttpServletRequest request){
+		EUIPager ePager=getPager(request);
+		Map<String,Object> param=getParamMap(request);
+		return bizNodeExtendService.pagerList(ePager,param);
+	}
 
 }
