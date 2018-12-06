@@ -14,6 +14,11 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 public class PinyinUtil {
 
 	public static void main(String[] args) {
+		
+		System.out.println(9/6);
+		System.out.println(9%6);
+		
+		
 		System.out.println(toPinyin("李长是市长"));
 		//支持多音字
 		System.out.println(converterToSpell("李长是市长"));
