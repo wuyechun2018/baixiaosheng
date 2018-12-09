@@ -1316,7 +1316,7 @@ public class ArticleDao {
 		return  jdbcTemplate.queryForObject(sql,Long.class);
 	}
 	
-	public List<?> getArticleListRowsByKeyword(EUIPager ePager,Map<String, Object> param,boolean isFullText) {
+	public List<ArticleInfoVo> getArticleListRowsByKeyword(EUIPager ePager,Map<String, Object> param,boolean isFullText) {
 		String querySql="SELECT T.ID,T.ARTICLE_TITLE,T.PUBLISH_DATE FROM t_article T WHERE 1=1\n";
 		querySql=querySql+getSqlByParam(param,isFullText);
 		String sql="SELECT * FROM ("+querySql+")S limit ?,?";

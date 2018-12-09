@@ -1,4 +1,7 @@
 package com.bxs.service.impl;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -365,7 +368,9 @@ public class ArticleServiceImpl implements ArticleService {
 				System.out.println("LIKE匹配，只是获取数据量");
 			}else{
 				System.out.println("LIKE匹配，获取数据列表");
-				grid.setRows(articleDao.getArticleListRowsByKeyword(ePager,param,false));
+				List list=articleDao.getArticleListRowsByKeyword(ePager,param,false);
+				sortArticleList(list);
+				grid.setRows(list);
 
 			}
 		}else{
@@ -375,11 +380,35 @@ public class ArticleServiceImpl implements ArticleService {
 				System.out.println("FullText匹配，只是获取数据量");
 			}else{
 				System.out.println("FullText匹配，获取数据列表");
-				grid.setRows(articleDao.getArticleListRowsByKeyword(ePager,param,true));
+				List list=articleDao.getArticleListRowsByKeyword(ePager,param,true);
+				sortArticleList(list);
+				grid.setRows(list);
 			}
 		}
 	
 		return grid;
+	}
+	
+	private void sortArticleList(List<ArticleInfoVo> list) {
+		Collections.sort(list, new Comparator<ArticleInfoVo>() {
+			@Override
+			public int compare(ArticleInfoVo o1, ArticleInfoVo o2) {
+				try {
+					Date dt1 = o1.getPublishDate();
+					Date dt2 = o2.getPublishDate();
+					if (dt1.getTime() > dt2.getTime()) {
+						return -1;
+					} else if (dt1.getTime() < dt2.getTime()) {
+						return 1;
+					} else {
+						return 0;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return 0;
+			}
+		});
 	}
 	
 }
