@@ -86,15 +86,18 @@ color:#E00;
     <script type="text/javascript">
 	var ctx = "${ctx}";   
    //根据栏目编码加载文章
-    function loadArticleByTopic(topicCode,page,rows,isSytj,keys){
-    	var articleData=null;
+    function loadArticleByTopic(topicCode,publishDeptId,page,rows,isSytj,keys){
+    	debugger;
+	   var articleData=null;
     	$.ajax({
     		cache: true,
     		type: "POST",
-    		url:'${ctx}/article/loadArticleForOpt',
+    		//url:'${ctx}/article/loadArticleForOpt',
+    		url:'${ctx}/article/getArticleListByKeyword',
     		data:{
     			articleTitle:keys,
     			topicCode:topicCode,
+    			publishDeptId:publishDeptId,
     			frontSliderState:isSytj,
     			page:page,
     			rows:rows
@@ -244,11 +247,36 @@ function loadTopic(){
 	}) 
 }
 
+
+//加载查询框部门下拉列表
+function loadDept(){
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/dept/getListByPid?pid=1',
+		data:{
+			
+		},
+		async: false,
+	    error: function(request) {
+	        
+	    },
+	    success: function(data) {
+	      $('#publishDeptCombobox').append('<option value="1">请选择部门</option>');
+    	  for(var i=0;i<data.length;i++){
+	    	  var topicObj=data[i];
+	    	  $('#publishDeptCombobox').append('<option value="'+topicObj.id+'">'+topicObj.text+'</option>');
+	      }
+	    }
+	}) 
+}
+
  
 //加载列表
 function loadList(keys){
 	 var topicCode=$('#topicCode').val();
-	 var articleData=loadArticleByTopic(topicCode,'1','10000','',keys);
+	 var publishDeptId=$("#publishDeptCombobox").val();
+	 var articleData=loadArticleByTopic(topicCode,publishDeptId,'1','10000','',keys);
 	 //showArticle('ATICLE_LIST',articleData,1);
 	 var sumcount=articleData.total;
 	 if(sumcount==0){
@@ -264,7 +292,7 @@ function loadList(keys){
 		    next: '<a class="end" href="javascript:void(0);">下一页&gt;<\/a>',
 		    page: '<a href="javascript:void(0);">{{page}}<\/a>',
 		    onPageChange: function (n) {
-		    	var articleData=loadArticleByTopic(topicCode,n,'18','',keys);
+		    	var articleData=loadArticleByTopic(topicCode,publishDeptId,n,'18','',keys);
 		   		showArticle('ATICLE_LIST',articleData,n);
 		   		//高亮
 		   		highlightshow(keys);
@@ -284,6 +312,7 @@ $(document).ready(function() {
 	loadList('');
   }
   loadTopic();
+  loadDept();
 });
 </script><!--end of bg-body script-->
 <div class="container">
@@ -365,6 +394,13 @@ $(document).ready(function() {
                         <option value="0">新闻资讯</option>
                         <option value="0">后台获取栏目</option>
                        --%>
+                    </select>
+                </div>
+                <div class="n_in fl">
+                	<select name="type" id="publishDeptCombobox">
+                    	<%--
+                    	<option value="0">请选择部门</option>--%>
+                       
                     </select>
                 </div>
             	<div class="n_in fl"><input type="text" class="key" name="keys" id="keys" placeholder="请输入关键字" /></div>

@@ -28,8 +28,8 @@ var ctx = "${ctx}";
 			    ,cols: [[
 				  {title: '序号',width:80,templet: '#indexTpl',align:'center'}       
 			      ,{field:'signDeptName', width:120, title: '部门',align:'center'}
-			      ,{field:'signUserName', width:120, title: '签收人',align:'center'}
-			      ,{field:'signDate', width:280, title: '签收时间',align:'center'
+			      ,{field:'signUserName', width:120, title: '反馈人',align:'center'}
+			      ,{field:'signDate', width:280, title: '反馈时间',align:'center'
 			    	  ,templet: function(d){
 			    	       if(d.signState=='1'){
 			    	    	   return d.signDate;
@@ -53,12 +53,12 @@ var ctx = "${ctx}";
 			    ,page: true
 			  });
 			   
-			   function view(text){
+			   function view(text,sdate){
 			    	layui.layer.open({
 			            title : '反馈信息',
 			            type : 1,
 			            area:  ['700px', '300px'],
-			            content : '<div style="padding: 5px 10px;">'+text+'</div>',
+			            content : '<div style="padding: 5px 10px;">'+text+'<div style="position:absolute;right:3px;bottom:10px;width:210px;"><span style="color:#333;font-weight:bold;">反馈时间：</span>'+sdate+'</div></div>',
 			            maxmin: false,
 			            success : function(layero, index){
 			                
@@ -71,7 +71,7 @@ var ctx = "${ctx}";
 			        var layEvent = obj.event,
 			        data = obj.data;
 			        if(layEvent === 'view'){
-			        	view(data.signContent);
+			        	view(data.signContent,data.signDate);
 			  	  }
 			   })
 			   

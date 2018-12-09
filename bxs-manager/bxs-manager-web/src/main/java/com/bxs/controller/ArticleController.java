@@ -769,6 +769,23 @@ public class ArticleController extends BaseController{
 		return new JsonMsg();
 	}
 	
-	
+	/**
+	 * 
+	 * 根据关键字查询列表
+	 * @author: wyc
+	 * @createTime: 2018年12月9日 下午7:16:29
+	 * @history:
+	 * @param page
+	 * @param rows
+	 * @param request
+	 * @return Object
+	 */
+	@RequestMapping("/getArticleListByKeyword")
+	@ResponseBody
+	public Object getArticleListByKeyword(int page,int rows,HttpServletRequest request){
+		EUIPager ePager=new EUIPager(page,rows);
+		Map<String,Object> param=getParamMap(request);
+		return articleService.getArticleListByKeyword(ePager,param);
+	}
 
 }

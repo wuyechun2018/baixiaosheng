@@ -510,7 +510,7 @@ public class ArticleDao {
 						//" ORDER BY TOP_COUNT DESC,publish_date DESC\n" + 
 						"    )W LIMIT ?,?\n" + 
 						"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";
-
+		System.out.println("searchByKey:"+sql);
 		List<ArticleMiniInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleMiniInfoVo.class));
 		return list;
 	}
@@ -527,7 +527,7 @@ public class ArticleDao {
 						getTopicParamSql(param)+
 						"    )W\n" + 
 						"            )W LEFT JOIN t_topic s ON w.topic_id=s.ID";
-
+		System.out.println("getCountBySearchKeyFromList"+sql+",isFullText:"+isFullText);
 		List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
 		return list.size();
 	}
@@ -705,7 +705,9 @@ public class ArticleDao {
 		}
 		//是否弹窗
 		if(param.get("popState")!=null&&StringUtils.isNotBlank(param.get("popState").toString())){
-			sqlBuff.append(" AND  T.POP_STATE = '"+param.get("popState").toString()+"' \n");
+			//sqlBuff.append(" AND  T.POP_STATE = '"+param.get("popState").toString()+"' \n");
+			//2018-12-08 调整为只弹出3天内的数据
+			sqlBuff.append(" AND  T.POP_STATE = '"+param.get("popState").toString()+"' AND  T.PUBLISH_DATE>DATE_SUB(CURDATE(),INTERVAL 3 DAY) \n");
 		}
 		
 		//性能优化，如果是Count操作，则不加排序字段
@@ -1307,5 +1309,46 @@ public class ArticleDao {
 		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
 		return list;
 	}
+
+	public Long getArticleListCountByKeyword(Map<String, Object> param,boolean isFullText) {
+		String sql="SELECT COUNT(1) FROM t_article T WHERE 1=1\n";
+		sql=sql+getSqlByParam(param,isFullText);
+		return  jdbcTemplate.queryForObject(sql,Long.class);
+	}
+	
+	public List<?> getArticleListRowsByKeyword(EUIPager ePager,Map<String, Object> param,boolean isFullText) {
+		String querySql="SELECT T.ID,T.ARTICLE_TITLE,T.PUBLISH_DATE FROM t_article T WHERE 1=1\n";
+		querySql=querySql+getSqlByParam(param,isFullText);
+		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		System.out.println("getArticleListRowsByKeyword["+sql+"]");
+		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));
+		return list;
+	}
+	
+	private String getSqlByParam(Map<String, Object> param,boolean isFullText) {
+		StringBuffer sqlBuff=new StringBuffer();
+		
+		if(param.get("articleTitle")!=null&&StringUtils.isNotBlank(param.get("articleTitle").toString())){
+			if(isFullText){
+				sqlBuff.append("AND  MATCH(article_title) AGAINST('"+param.get("articleTitle").toString()+"')");
+			}else{
+				sqlBuff.append("AND ARTICLE_TITLE LIKE '%" + param.get("articleTitle").toString() + "%'\n");
+			}
+		}
+		//栏目编码
+		if(param.get("topicCode")!=null&&StringUtils.isNotBlank(param.get("topicCode").toString())&&!"1".equals(param.get("topicCode").toString())){
+			sqlBuff.append("AND topic_id =(SELECT id FROM t_topic WHERE topic_code='" + param.get("topicCode").toString() + "')\n");
+		}
+		
+		//发布部门,1代表全部部门
+		if(param.get("publishDeptId")!=null&&StringUtils.isNotBlank(param.get("publishDeptId").toString())&&!"1".equals(param.get("publishDeptId").toString())){
+			sqlBuff.append(" AND PUBLISH_DEPT_ID = '" + param.get("publishDeptId").toString() + "'\n");
+		}
+		
+		sqlBuff.append("AND T.check_state='1'\n");
+		sqlBuff.append("AND T.data_state='1'\n");
+		return sqlBuff.toString();
+	}
+
 	
 }

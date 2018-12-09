@@ -33,7 +33,7 @@ var ctx = "${ctx}";
 		    		 }}
 				  ,{field:'publishDeptName', width:120, title: '报送部门',align:'center'}
 			      ,{field:'publishUserName', width:120, title: '作者',align:'center'}
-			      ,{field:'signDate', width:160, title: '我的反馈时间',align:'center'
+			      ,{field:'signDate', width:175, title: '我的反馈时间',align:'center'
 			    	  ,templet: function(d){
 			    	       if(d.signState=='1'){
 			    	    	   return d.signDate;
@@ -48,13 +48,14 @@ var ctx = "${ctx}";
 			    ,page: true
 			  });
 			   
-			   function view(text){
+			   function view(text,sdate){
 			    	layui.layer.open({
 			            title : '反馈信息',
 			            type : 1,
 			            area:  ['700px', '300px'],
-			            content : '<div style="padding: 5px 10px;">'+text+'</div>',
-			            maxmin: false,
+			           // content : '<div style="padding: 5px 10px;">'+text+'</div>',
+			           content : '<div style="padding: 5px 10px;">'+text+'<div style="position:absolute;right:3px;bottom:10px;width:210px;"><span style="color:#333;font-weight:bold;">反馈时间：</span>'+sdate+'</div></div>',
+			           maxmin: false,
 			            success : function(layero, index){
 			                
 			            }
@@ -80,7 +81,7 @@ var ctx = "${ctx}";
 			        var layEvent = obj.event,
 			        data = obj.data;
 			        if(layEvent === 'view'){
-			        	view(data.signContent);
+			        	view(data.signContent,data.signDate);
 			  	  }else if(layEvent === 'viewArticle'){
 			        	var url=ctx+"/sois/show/"+data.articleId;
 			        	viewArticle(url);

@@ -4,7 +4,7 @@
 .nei_top{height: 67px;line-height: 67px;border-bottom: 4px solid #1061bc; padding-left:20px;}
 .nei_top h1{ float:left;font-weight: bold;font-size: 18px;color: #1061bc;}
 
-.nei_top .n_search{width: 480px;height: 35px;font-size: 16px;border: #dcdcdc solid 1px;background: url(../images/file_line.png) no-repeat 120px center; margin-top:15px; margin-right:20px;}
+.nei_top .n_search{width: 610px;height: 35px;font-size: 16px;border: #dcdcdc solid 1px;background: url(../images/file_line.png) no-repeat 120px center; margin-top:15px; margin-right:20px;}
 .n_in select{
 	color: #1061bc;
     padding: 5px 10px;

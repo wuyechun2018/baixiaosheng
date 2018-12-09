@@ -77,7 +77,9 @@ public class SignController extends BaseController {
 			Sign sign=new Sign();
 			sign.setArticleId(articleId);
 			sign.setSignDeptId(info.getDeptId());
+			//签收内容
 			sign.setSignContent(signContent);
+			sign.setSignDate(new Date());
 			signService.submitFeedback(sign);
 			return new JsonMsg(true,"反馈信息已提交！");
 		}else{

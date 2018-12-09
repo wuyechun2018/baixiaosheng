@@ -1599,8 +1599,10 @@ $(document).ready(function() {
 <script type="text/JavaScript">
 var isShow=$.cookie('isShow');
 if(isShow=='1'){
+	debugger;
 	//doNothing
 }else{
+	debugger;
 	$.ajax({
 			cache: true,
 			type: "POST",
@@ -1628,7 +1630,7 @@ if(isShow=='1'){
 	var now = new Date();
 	//10秒 10*1000
 	//暂时定制为15秒
-	now.setTime(now.getTime()+5*60*1000);
+	now.setTime(now.getTime()+5*60*1);
 	$.cookie('isShow', '1', { expires: now});
 }
 </script>

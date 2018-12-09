@@ -108,7 +108,7 @@ public class SignDao {
 						 "    ?,\n" + 
 						 "    ?,\n" + 
 						 "    ?\n" + 
-						 "  ) ;\n" + 
+						 "  ) \n" + 
 						 "";
 
 		 jdbcTemplate.execute(sql,
@@ -297,15 +297,17 @@ public class SignDao {
 		String sql="UPDATE\n" +
 				"  t_sign\n" + 
 				"SET\n" + 
-				"  sign_content = ?\n" + 
+				"  sign_content = ?,\n" + 
+				"  sign_date = ?\n" + 
 				"WHERE article_id = ? AND sign_dept_id=?";
 
 		jdbcTemplate.execute(sql,
 	     new AbstractLobCreatingPreparedStatementCallback(new DefaultLobHandler()) {
 	       protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
 		         lobCreator.setClobAsString(ps,1,sign.getSignContent());
-		         ps.setString(2, sign.getArticleId());
-		         ps.setString(3, sign.getSignDeptId());
+		         ps.setTimestamp(2, new java.sql.Timestamp(sign.getSignDate().getTime()));
+		         ps.setString(3, sign.getArticleId());
+		         ps.setString(4, sign.getSignDeptId());
 	       }
 	     }
 	   );

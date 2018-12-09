@@ -139,5 +139,9 @@ public class Sign implements java.io.Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	
+	//反馈时间
+	//private Date feedbackDate;
 
 }

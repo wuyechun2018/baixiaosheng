@@ -345,7 +345,41 @@ public class ArticleServiceImpl implements ArticleService {
 		return grid;
 	}
 
+	@Override
+	public Object getArticleListByKeyword(EUIPager ePager, Map<String, Object> param) {
+		boolean isOnlyCount=false;
+		//当rows为10000时，为翻页，只需要获取数量，数据不需返回，节省时间
+		if(ePager.getRows()==10000){
+			isOnlyCount=true;
+		}
+		
+		EUIGrid grid = new EUIGrid();
+		//先进行LILE匹配
+		//如果大于0，直接返回
+		//如果小于0，再使用全文检索匹配
+		Long count=articleDao.getArticleListCountByKeyword(param,false);
+		if(count>0){
+			System.out.println("采用的是LIKE匹配");
+			grid.setTotal(count);
+			if(isOnlyCount){
+				System.out.println("LIKE匹配，只是获取数据量");
+			}else{
+				System.out.println("LIKE匹配，获取数据列表");
+				grid.setRows(articleDao.getArticleListRowsByKeyword(ePager,param,false));
 
+			}
+		}else{
+			System.out.println("采用的是FullText匹配");
+			grid.setTotal(articleDao.getArticleListCountByKeyword(param,true));
+			if(isOnlyCount){
+				System.out.println("FullText匹配，只是获取数据量");
+			}else{
+				System.out.println("FullText匹配，获取数据列表");
+				grid.setRows(articleDao.getArticleListRowsByKeyword(ePager,param,true));
+			}
+		}
 	
+		return grid;
+	}
 	
 }
