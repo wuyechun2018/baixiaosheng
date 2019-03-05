@@ -82,7 +82,7 @@ CREATE TABLE `t_dept` (
   PRIMARY KEY (`id`,`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-insert into t_dept
+ INSERT INTO t_dept
   (id,
    pid,
    dept_code,
@@ -91,46 +91,11 @@ insert into t_dept
    dept_desc,
    data_state,
    display_order)
-values
-  ('1', '0', '0', '部门', '1', '单位部门', '1', 1);
-  
-  
-  insert into t_dept
-  (id,
-   pid,
-   dept_code,
-   dept_name,
-   dept_type,
-   dept_desc,
-   data_state,
-   display_order)
-values
-  ('2', '1', '1001', '总经理', '1', '总经理', '1', 1);
-  
-   insert into t_dept
-  (id,
-   pid,
-   dept_code,
-   dept_name,
-   dept_type,
-   dept_desc,
-   data_state,
-   display_order)
-values
-  ('2', '1', '1002', '财务部', '1', '财务部', '1', 1);
-  
-  
-insert into t_dept
-  (id,
-   pid,
-   dept_code,
-   dept_name,
-   dept_type,
-   dept_desc,
-   data_state,
-   display_order)
-values
-  ('2', '1', '1003', '市场部', '1', '市场部', '1', 1);
+VALUES
+  ('1', '0', '0', '部门', '1', '单位部门', '1', 1)
+  ('2', '1', '1001', '总经理', '1', '总经理', '1', 1),
+  ('3', '1', '1002', '财务部', '1', '财务部', '1', 1),
+  ('4', '1', '1003', '市场部', '1', '市场部', '1', 1);
 
 
 4-3)创建表 t_post 职位
@@ -214,6 +179,53 @@ CREATE TABLE `t_config` (
 
 
 
+CREATE TABLE `t_config_type` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `pid` varchar(36) DEFAULT NULL COMMENT '父主键',
+  `config_type_code` varchar(50) DEFAULT NULL COMMENT '系统配置类型编码',
+  `config_type_name` varchar(100) DEFAULT NULL COMMENT '系统配置类型名称',
+  `config_value_type` varchar(10) DEFAULT NULL COMMENT '配置项类型',
+  `config_type_desc` varchar(500) DEFAULT NULL COMMENT '系统配置类型描述',
+  `data_state` varchar(10) DEFAULT NULL COMMENT '数据状态',
+  `display_order` bigint(10) DEFAULT NULL COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置类型表';
+
+
+INSERT INTO t_config_type
+  (id,
+   pid,
+   config_type_code,
+   config_type_name,
+   config_value_type,
+   config_type_desc,
+   data_state,
+   display_order)
+VALUES
+  ('1', '0', 'PZLX', '配置类型', '0', '系统配置', '1', 1);
+
+
+create view v_config_info as 
+select t.id                AS id,
+       t.config_type_id    AS config_type_id,
+       t.config_name       AS config_name,
+       t.config_code       AS config_code,
+       t.config_value      AS config_value,
+       t.link_url          AS link_url,
+       t.link_target_type  AS link_target_type,
+       t.config_image_url  AS config_image_url,
+       t.data_state        AS data_state,
+       t.display_order     AS display_order,
+       t.config_desc       AS config_desc,
+       s.config_type_name  AS config_type_name,
+       s.config_type_code  AS config_type_code,
+       s.config_value_type AS config_value_type
+  from t_config t
+  left join t_config_type s
+    on t.config_type_id = s.id;
+
+
+
 5)启动报错 Table 'ierp.t_user_role' doesn't exist
 5-1)
 CREATE TABLE `t_role` (
@@ -227,6 +239,91 @@ CREATE TABLE `t_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+5-2)初始化数据
+insert into t_role
+  (id,
+   role_code,
+   role_name,
+   role_desc,
+   data_state,
+   create_date,
+   update_date)
+values
+  ('2',
+   'GUEST',
+   '访客',
+   '普通用户',
+   '1',
+   '2019-02-03 23:51:08',
+   '2019-02-03 23:51:28'),
+  ('1',
+   'SYSADMIN',
+   '系统管理员',
+   '系统管理员,一般赋予最高权限',
+   '1',
+   '2019-02-27 23:51:08',
+   '2019-02-27 23:51:28');
+   
+   
+   CREATE TABLE `t_user_role` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `user_id` varchar(50) DEFAULT NULL COMMENT '用户ID',
+  `role_id` varchar(100) DEFAULT NULL COMMENT '角色ID',
+  `data_state` varchar(10) DEFAULT NULL COMMENT '数据状态（0：删除 1：正常）',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+insert into t_user_role
+  (id, user_id, role_id, data_state, create_date, update_date)
+values
+  ('1',
+   '1',
+   '1',
+   '1',
+   '2019-02-28 09:45:28',
+   '2019-02-28 09:50:28');
+
+6)启动报错 Table 'ierp.t_menu' doesn't exist
+6-1)
+CREATE TABLE `t_menu` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `pid` varchar(36) DEFAULT NULL COMMENT '父主键',
+  `menu_name` varchar(100) DEFAULT NULL COMMENT '菜单名称',
+  `menu_url` varchar(200) DEFAULT NULL COMMENT '菜单地址',
+  `menu_type` varchar(10) DEFAULT NULL COMMENT '菜单类型（1:文件夹 2:菜单）',
+  `DATA_STATE` varchar(10) DEFAULT NULL COMMENT '数据状态（0：删除 1：正常 2：锁定）',
+  `display_order` bigint(10) DEFAULT NULL COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+insert into t_menu
+  (id, pid, menu_name, menu_url, menu_type, DATA_STATE, display_order)
+values
+  ('18', '0', '系统配置', '#', '1', '1', 18),
+  ('19', '18', '配置项', '/eui/config/list', '2', '1', 19),
+  ('8', '0', '基础信息', '  #', '2', '1', 8),
+  ('9', '8', '用户管理', '/eui/user/list', '2', '1', 13),
+  ('11', '8', '职位管理', '/eui/post/list', '2', '1', 12),
+  ('12', '8', '部门管理', '/eui/dept/list', '2', '1', 11);
+
+
+
+7)Table 'ierp.v_post_info' doesn't exist
+CREATE view v_post_info as
+select t . id AS id,
+       t . pid AS pid,
+       t . dept_id AS dept_id,
+       t . post_code AS post_code,
+       t . post_name AS post_name,
+       t . post_desc AS post_desc,
+       t . data_state AS data_state,
+       t . display_order AS display_order,
+       s . dept_name AS dept_name
+  from t_post t left join t_dept s on t . dept_id = s . id;
 
 
 前端页面调整
