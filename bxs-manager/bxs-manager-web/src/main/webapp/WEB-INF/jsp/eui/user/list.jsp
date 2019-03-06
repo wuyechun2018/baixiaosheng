@@ -100,6 +100,7 @@ function addFun(){
 
 //加载部门下拉框树
 function loadDeptTree(){
+	//弹出框，单位下拉框树
 	$('#deptComboTree').combotree({
 		url : '${ctx}/dept/getListByPid?pid=0',
 		onBeforeExpand : function(node, param) {
@@ -109,6 +110,10 @@ function loadDeptTree(){
 	    required: true,
 	    onLoadSuccess : function(node, data) {
 	    	$('#deptComboTree').combotree("tree").tree('expandAll');
+		},
+		onSelect:function(node){
+			$('#form_postId').combobox('setValue', null);
+			$('#form_postId').combobox('reload', ctx+'/post/getPostByDeptId?deptId='+node.id);
 		}
 	});
 }
@@ -230,6 +235,7 @@ function submitRoleForm(){
 
 
  $(function(){
+	 //主页面，左边树
 	 $('#leftTree').tree({
 			checkbox : false,
 			url : '${ctx}/dept/getListByPid?pid=0',
