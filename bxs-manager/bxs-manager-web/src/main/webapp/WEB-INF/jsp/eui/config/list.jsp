@@ -344,7 +344,9 @@ function loadLeftTree(){
 		pagination: true,  
 		rownumbers: true,  
 		columns:[[
-		          {field:'configName',title: '配置名称',align: 'center',width: 280},
+		          {field:'configCode',title: '配置编码',align: 'center',width:120},
+		          {field:'configName',title: '配置名称',align: 'center',width: 130},
+		          {field:'configValue',title: '配置值',align: 'center',width: 130},
 		          {field:'configTypeId',title: '链接类型ID',align: 'center',width: 100,hidden:true},
 		          {field:'configTypeName',title: '类型名称',align: 'center',width: 100},
 		          {field:'linkUrl',title: '链接地址',align: 'center',width: 100}, 
@@ -396,7 +398,9 @@ function loadLeftTree(){
  <%--TBar 添加按钮 --%>
  <div id="tb">
 	   <a href="javascript:void(0)" id="addBtn" onclick="addFun()" class="easyui-linkbutton" plain="true"  iconCls="Applicationadd">添加</a>
+	   <!-- 
 	   <a href="javascript:void(0)" onclick="clickCacheBtn()" id="cache" class="easyui-linkbutton" plain="true"  iconCls="Applicationviewicons" title="打开一个页面即可,请不要关闭该页面">打开缓存</a>
+ 		 -->
  </div>
  
 <%--TBar 左边链接类型按钮 --%>
@@ -408,7 +412,7 @@ function loadLeftTree(){
 </div>
  
  <%--点击"添加"弹出的窗口 --%>
- <div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:680px;height:430px;padding:10px;">
+ <div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:680px;height:450px;padding:10px;">
 	    <form id="addForm" method="post">
 		   	<table class="isingelTable">
 				  <tr>
@@ -426,6 +430,12 @@ function loadLeftTree(){
 				        <th>配置名称：</th>
 				        <td>
 				          <input style="width:250px;" class="easyui-textbox" type="text" name="configName" data-options="required:true"></input>
+				        </td>
+				      </tr>
+				      <tr>
+				        <th>配置编码：</th>
+				        <td>
+				          <input style="width:250px;" class="easyui-textbox" type="text" name="configCode" data-options="required:true"></input>
 				        </td>
 				      </tr>
 				      <tr>
