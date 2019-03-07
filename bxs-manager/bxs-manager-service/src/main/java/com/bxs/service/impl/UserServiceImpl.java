@@ -1,5 +1,6 @@
 package com.bxs.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.bxs.common.dict.DataState;
 import com.bxs.common.utils.EncryptionUtil;
+import com.bxs.common.vo.EUICombobox;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.UserDao;
+import com.bxs.pojo.PostInfoVo;
 import com.bxs.pojo.SysUser;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.UserService;
@@ -113,6 +116,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<SysUser> getUserByEmail(String email) {
 		return userDao.getUserByEmail(email);
+	}
+
+	@Override
+	public List<EUICombobox> getUserComboboxData() {
+		List<EUICombobox> result=new ArrayList<EUICombobox>();
+		List<SysUser> list=userDao.getUserList();
+		for (SysUser sysUser : list) {
+			EUICombobox combo=new EUICombobox();
+			combo.setId(sysUser.getId());
+			combo.setText(sysUser.getUserName());
+			result.add(combo);
+		}
+		return result;
 	}
 	
 }
