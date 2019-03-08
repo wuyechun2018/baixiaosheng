@@ -128,13 +128,14 @@ function doQuery(){
     var options = $("#dgTable").datagrid("options");
     //设置参数
     //开始时间
-    options.queryParams.accountDateFrom=$('#accountDateFrom').val();
+    options.queryParams.accountDateFrom= $('#accountDateFrom').datebox('getValue');
     //结束时间
-    options.queryParams.accountDateTo=$('#accountDateTo').val();
+    options.queryParams.accountDateTo=$('#accountDateTo').datebox('getValue');
     //入账人Id
     options.queryParams.accountUserId=$('#queryAccountUserId').combobox('getValue');
     //入账类型
-    options.queryParams.accountType=$("input[name='queryAccountType'][checked]").val(); 
+    //options.queryParams.accountType=$("input[type=radio][name=queryAccountType]").val(); 
+    options.queryParams.accountType=$("input[name='queryAccountType']:checked").val();
     $("#dgTable").datagrid(options);
 }
 
@@ -231,10 +232,10 @@ function doQuery(){
 					</td>
 					<td style="width:100px;text-align: right;margin-right: 5px;font-weight: bold;">入账类别:</td>
 					<td style="width:200px;">
-						<input  type="radio"  name="queryAccountType" value="0" checked="checked" />
-					    <label for="radio_accountType_sr">收入</label>
-						<input  type="radio"  name="queryAccountType" value="1" />
-						<label for="radio_accountType_zc">支出</label>
+						<input  type="radio" id="radio_queryAccountType_sr"  name="queryAccountType" value="0" checked="checked" />
+					    <label for="radio_queryAccountType_sr">收入</label>
+						<input  type="radio"  id="radio_queryAccountType_zc" name="queryAccountType" value="1" />
+						<label for="radio_queryAccountType_zc">支出</label>
 					</td>
 					
 					<td>&nbsp;</td>
