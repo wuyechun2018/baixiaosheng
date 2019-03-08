@@ -2,7 +2,9 @@ package com.bxs.controller.ierp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,12 +17,15 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.utils.BaseController;
+import com.bxs.common.vo.EUIGrid;
+import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.pojo.jpa.ierp.BizAccount;
@@ -85,6 +90,49 @@ public class BizAccountController extends BaseController{
 		return new JsonMsg(true,"保存成功！");
 	}
 	
+	
+	
+	/**
+	 * 
+	 * 删除-逻辑删除
+	 * @author: wyc
+	 * @createTime: 2018年1月23日 上午9:19:39
+	 * @history:
+	 * @param id
+	 * @return String
+	 */
+	@RequestMapping("/delete")
+	@ResponseBody
+	public JsonMsg delete(HttpServletRequest request,HttpSession session) {
+		String id=request.getParameter("id");
+		String bizStamp=new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		UserInfoVo userInfo=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		logger.info("==================删除操作"+bizStamp+"==================");
+		logger.info("时间："+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		logger.info("当前用户："+userInfo.getUserName()+"["+userInfo.getLoginName()+"]");
+		logger.info("删除主键："+id);
+		bizAccountService.delete(id);
+		logger.info("=================="+bizStamp+"处理完成==================");
+		return new JsonMsg();
+	}
+	
+	
+	/**
+	 * 
+	 * 分页列表
+	 * @author: wyc
+	 * @createTime: 2019年3月7日 下午9:03:35
+	 * @history:
+	 * @param request
+	 * @return EUIGrid
+	 */
+	@RequestMapping("/pagerList")
+	@ResponseBody
+	public  EUIGrid pagerList(HttpServletRequest request){
+		EUIPager ePager=getPager(request);
+		Map<String,Object> param=getParamMap(request);
+		return bizAccountService.pagerList(ePager,param);
+	}
 	
 	
 	/**
