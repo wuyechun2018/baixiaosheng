@@ -7,7 +7,7 @@
 <%@ include file="/WEB-INF/jsp/base/easyui.jsp" %>
 <link href="${ctx}/resources/css/base.css" rel="stylesheet" media="screen">
 <link href="${ctx}/resources/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" media="screen">
-<title>后台管理</title>
+<title>${XTMC}</title>
 
 <script type="text/javascript">
 
@@ -97,15 +97,25 @@ function closeTab(menu, type) {
 
 //打开默认Tab
 function addDefault(){
+	 //折叠右边
+	 $('#ilayout').layout('collapse','east');
+	
 	 var param=new Object();
-	 param.url=ctx+'/manager/sysinfo?version'+Math.random();
-	 param.title='系统信息';
+	 //param.url=ctx+'/manager/sysinfo?version'+Math.random();
+	 //param.title='系统信息';
+	 
+	 param.url=ctx+'/eui/ierp/index?version'+Math.random();
+	 param.title='统计分析';
 	 addTab(param);
 }
 
 
+
 $(function(){
-	   //加载左边菜单树
+		//切换主题
+		//changeThemes('black');
+	   
+		//加载左边菜单树
 	   loadMenu();
 	   
 	   //Tab事件注册
@@ -158,16 +168,18 @@ $(function(){
 			<div id="topbar" class="top-bar">
                 <div class="top-bar-left">
                     <div style="margin-left: 15px; color: #000;height: 52px;">
-                    	<img style="vertical-align:middle;"  src="${ctx}/resources/images/logo40.png">
-                    	<span style="vertical-align:middle;font-family: 华文细黑;font-size:30px;height:52px;line-height: 52px;color:#fff">信息管理系统</span>
+                    	<img style="vertical-align:middle;"  src="${ctx}/resources/images/${LOGO}.png">
+                    	<span style="vertical-align:middle;font-family: 华文细黑;font-size:30px;height:52px;line-height: 52px;color:#fff">${XTMC}</span>
                     </div>
                 </div>
                 
                 <div class="top-bar-right">
+                	<!-- 
                 	<span class="top-bar-info" >
                 		<i class="fa fa-th-large" aria-hidden="true"></i>
                   		<a style="vertical-align:middle;color:#fff;font-size:14px;text-decoration: none;"  target="_blank" href="${ctx}/portal/index" >网站首页</a>
                   	</span>
+                  	 -->
                   	<span class="top-bar-exit">
                   		<%--
                   		<img style="vertical-align:middle;" alt="退出" src="${ctx}/resources/images/exit.png">

@@ -1,12 +1,8 @@
 package com.bxs.common.utils;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.StringUtils;
-
 import com.bxs.common.vo.EUIPager;
 
 public class BaseController {

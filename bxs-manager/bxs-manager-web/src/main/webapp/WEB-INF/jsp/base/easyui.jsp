@@ -7,9 +7,9 @@
 <LINK href="${ctx}/resources/images/favicon.ico" type="image/x-icon" rel="icon">                        
 <LINK href="${ctx}/resources/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="${ctx}/resources/js-lib/jquery-easyui-1.4.3/themes/metro/easyui.css" rel="stylesheet" media="screen">
+<link id="euiThemes" href="${ctx}/resources/js-lib/jquery-easyui-1.4.3/themes/metro/easyui.css" rel="stylesheet" media="screen">
 <link href="${ctx}/resources/js-lib/jquery-easyui-1.4.3/themes/icon.css" rel="stylesheet" media="screen">
-<link href="${ctx}/resources/css/grid.css" rel="stylesheet" media="screen">
+<link id="igridThemes" href="${ctx}/resources/css/grid.css" rel="stylesheet" media="screen">
 <link href="${ctx}/resources/css/base.css" rel="stylesheet" media="screen">
 <link href="${ctx}/resources/mine-icons/css/icons.css" rel="stylesheet" media="screen">
 
@@ -46,6 +46,34 @@ if(document.documentElement.clientWidth == 0){
 <script type="text/javascript" src="${ctx}/resources/js-lib/base.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js-lib/jquery/jquery.cookie.js"></script>
 
+<script type="text/javascript">
+
+//切换
+function changeThemes(themesName){
+	//var euiThemesCssUrl=ctx+"/resources/js-lib/jquery-easyui-1.4.3/themes/"+themesName+"/easyui.css";
+	var euiThemesCssUrl= $("#euiThemes").attr("href").replace('metro', themesName);
+	$('#euiThemes').attr('href', euiThemesCssUrl);
+	
+	var $iframe = $('iframe');
+	if ($iframe.length > 0) {
+		for ( var i = 0; i < $iframe.length; i++) {
+			var ifr = $iframe[i];
+			$(ifr).contents().find('#euiThemes').attr('href', euiThemesCssUrl);
+		}
+	}
+	
+}
+
+$(function(){
+	setTimeout(function(){
+		//changeThemes('black');
+	},1);
+})
+
+
+
+
+</script>
 
 </body>
 </html>

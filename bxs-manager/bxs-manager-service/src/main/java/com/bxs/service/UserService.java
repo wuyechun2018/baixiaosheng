@@ -2,6 +2,7 @@ package com.bxs.service;
 import java.util.List;
 import java.util.Map;
 
+import com.bxs.common.vo.EUICombobox;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.SysUser;
@@ -33,5 +34,7 @@ public interface UserService {
 	public void updateUserInfo(SysUser user);
 
 	public void resetPwd(String id, String password);
+
+	public List<EUICombobox> getUserComboboxData();
 
 }

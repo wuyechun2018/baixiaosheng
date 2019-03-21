@@ -1317,8 +1317,9 @@ public class ArticleDao {
 	}
 	
 	public List<ArticleInfoVo> getArticleListRowsByKeyword(EUIPager ePager,Map<String, Object> param,boolean isFullText) {
+		String orderBySql="ORDER BY T.publish_date DESC";
 		String querySql="SELECT T.ID,T.ARTICLE_TITLE,T.PUBLISH_DATE FROM t_article T WHERE 1=1\n";
-		querySql=querySql+getSqlByParam(param,isFullText);
+		querySql=querySql+getSqlByParam(param,isFullText)+orderBySql;
 		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
 		System.out.println("getArticleListRowsByKeyword["+sql+"]");
 		List<ArticleInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ArticleInfoVo.class));

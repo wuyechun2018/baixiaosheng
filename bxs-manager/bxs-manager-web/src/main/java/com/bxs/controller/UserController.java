@@ -26,12 +26,15 @@ import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.utils.BaseController;
 import com.bxs.common.utils.EncryptionUtil;
 import com.bxs.common.utils.PinyinUtil;
+import com.bxs.common.vo.EUICombobox;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
+import com.bxs.pojo.ConfigInfoVo;
 import com.bxs.pojo.SysUser;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.pojo.UserRole;
+import com.bxs.service.ConfigService;
 import com.bxs.service.UserRoleService;
 import com.bxs.service.UserService;
 
@@ -49,7 +52,10 @@ import com.bxs.service.UserService;
 public class UserController extends BaseController {
 
 	private static final Logger logger =LoggerFactory.getLogger(UserController.class);
-
+	
+	//系统配置
+	@Autowired
+	private ConfigService configService;
 	
 	@Autowired
 	private UserService userService;
@@ -83,6 +89,19 @@ public class UserController extends BaseController {
 					//携带用户信息
 					mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO, info);
 					logger.info("{}登录[管理系统]成功,时间为{}",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+					
+					//获取基础配置信息
+					List<ConfigInfoVo> sysConfigList=configService.getConfigByTypeCode("JCXX");
+					for (ConfigInfoVo configInfoVo : sysConfigList) {
+						if("XTMC".equals(configInfoVo.getConfigCode())){
+							mv.addObject("XTMC",configInfoVo.getConfigValue());
+						}
+						
+						if("LOGO".equals(configInfoVo.getConfigCode())){
+							mv.addObject("LOGO",configInfoVo.getConfigValue());
+						}
+					}
+					
 					//跳转到后台管理主页面
 					mv.setViewName("/manager/index");
 				}else{
@@ -118,7 +137,8 @@ public class UserController extends BaseController {
 		HttpSession session = request.getSession();
 		session.removeAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
 		session.invalidate();
-		return "/login";
+		return "/login-yun";
+		//return "/login";
 	}
 	
 	/**
@@ -139,6 +159,27 @@ public class UserController extends BaseController {
 			}else{
 				return new JsonMsg(false,"密码错误，请重新输入！");
 			}
+		}else{
+			return new JsonMsg(false,"请重新登录");
+		}
+	}
+	
+	
+	
+	/**
+	 * 
+	 * 验证是否已经登录
+	 * @author: wyc
+	 * @createTime: 2018年2月26日 下午7:03:03
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/isHasLogin")
+	@ResponseBody
+	public Object isHasLogin(String password,HttpSession session){
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		if(info!=null){
+			return new JsonMsg(true,info);
 		}else{
 			return new JsonMsg(false,"请重新登录");
 		}
@@ -364,6 +405,21 @@ public class UserController extends BaseController {
 			userService.updateUserInfo(sysUser);
 		}
 		return new JsonMsg();
+	}
+	
+	
+	/**
+	 * 
+	 * 获取用户下拉列表数据
+	 * @author: wyc
+	 * @createTime: 2019年3月7日 下午6:58:27
+	 * @history:
+	 * @return List<EUICombobox>
+	 */
+	@RequestMapping("/getUserComboboxData")
+	@ResponseBody
+	public List<EUICombobox> getUserComboboxData(){
+		return userService.getUserComboboxData();
 	}
 	
 	

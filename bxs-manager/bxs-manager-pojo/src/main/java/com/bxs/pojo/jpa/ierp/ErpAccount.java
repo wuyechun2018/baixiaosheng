@@ -11,8 +11,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 //@Entity
 //@Table(name = "t_biz_account")
-@Entity(name = "t_biz_account")
-public class BizAccount implements java.io.Serializable {
+@Entity(name = "t_erp_account")
+public class ErpAccount implements java.io.Serializable {
 
 	// Fields
     //主键
@@ -45,16 +45,16 @@ public class BizAccount implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public BizAccount() {
+	public ErpAccount() {
 	}
 
 	/** minimal constructor */
-	public BizAccount(String id) {
+	public ErpAccount(String id) {
 		this.id = id;
 	}
 
 	/** full constructor */
-	public BizAccount(String id, Date accountDate, String accountUserId,
+	public ErpAccount(String id, Date accountDate, String accountUserId,
 			String accountItem, String accountType, Double amount,
 			Double actualAmount, String accountDesc, String createUserId,
 			Date createDate, String updateUserId, Date updateDate,
@@ -87,7 +87,7 @@ public class BizAccount implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "ACCOUNT_DATE", length = 19)
+	@Column(name = "ACCOUNT_DATE")
 	public Date getAccountDate() {
 		return this.accountDate;
 	}

@@ -2,8 +2,8 @@ package org.bxs.jpa;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.bxs.pojo.jpa.ierp.BizAccount;
+import com.bxs.pojo.jpa.ierp.ErpAccount;
 
-public interface BizAccountRepository extends CrudRepository<BizAccount, String>{
+public interface BizAccountRepository extends CrudRepository<ErpAccount, String>{
 
 }

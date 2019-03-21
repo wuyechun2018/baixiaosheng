@@ -28,8 +28,8 @@ import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.UserInfoVo;
-import com.bxs.pojo.jpa.ierp.BizAccount;
-import com.bxs.service.ierp.BizAccountService;
+import com.bxs.pojo.jpa.ierp.ErpAccount;
+import com.bxs.service.ierp.ErpAccountService;
 
 /**
  * 
@@ -41,13 +41,13 @@ import com.bxs.service.ierp.BizAccountService;
  * @version: v1.0
  */
 @Controller
-@RequestMapping("/bizAccount")
-public class BizAccountController extends BaseController{
+@RequestMapping("/erpAccount")
+public class ErpAccountController extends BaseController{
 	
-	private static final Logger logger =LoggerFactory.getLogger(BizAccountController.class);
+	private static final Logger logger =LoggerFactory.getLogger(ErpAccountController.class);
 	
 	@Autowired
-	private BizAccountService bizAccountService;
+	private ErpAccountService bizAccountService;
 
 	/**
 	 * 
@@ -61,7 +61,7 @@ public class BizAccountController extends BaseController{
 	 */
 	@RequestMapping("/save")
 	@ResponseBody
-	public JsonMsg save(BizAccount bizAccount,HttpSession session){
+	public JsonMsg save(ErpAccount bizAccount,HttpSession session){
 		String bizStamp=new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		UserInfoVo userInfo=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
 		logger.info("==================开始处理"+bizStamp+"==================");

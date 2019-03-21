@@ -23,7 +23,6 @@ fieldset {
 	height: 23px;
 	width: 150px;
 	/*border: 1px solid silver;*/
-	background-color: #FFF;
 	text-align: right;
 }
 
@@ -35,7 +34,6 @@ fieldset {
 	height: 23px;
 	width: 150px;
 	/*border: 1px solid silver;*/
-	background-color: #FFF;
 }
 
 
@@ -53,7 +51,6 @@ fieldset {
 	padding-bottom: 5px;
 	height: 23px;
 	width: 100px;
-	background-color: #FFF;
 	text-align: right;
 }
 
@@ -65,6 +62,5 @@ fieldset {
 	height: 23px;
 	width: 150px;
 	/*border: 1px solid silver;*/
-	background-color: #FFF;
 }
 

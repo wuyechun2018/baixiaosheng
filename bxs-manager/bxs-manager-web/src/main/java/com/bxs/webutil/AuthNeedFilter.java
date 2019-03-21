@@ -14,6 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import com.bxs.common.dict.SystemConstant;
 import com.bxs.pojo.UserInfoVo;
 
+/**
+ * 
+ * 在用的，在web.xml中进行了注册
+ * @desc: bxs-manager-web
+ * @author: wyc
+ * @createTime: 2019年3月7日 下午8:55:04
+ * @history:
+ * @version: v1.0
+ */
 public class AuthNeedFilter implements Filter{
 
 	@Override

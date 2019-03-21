@@ -30,7 +30,7 @@ public class BizNodeExtendDao {
 	 * @return List<BizNodeExtend>
 	 */
 	public List<BizNodeExtend> getListByMainNodeId(String mainNodeId) {
-		String sql="SELECT * FROM t_biz_node_extend T WHERE DATA_STATE='1' AND T.MAIN_NODE_ID=?";
+		String sql="SELECT * FROM t_biz_node_extend T WHERE DATA_STATE='1' AND T.MAIN_NODE_ID=? ORDER BY T.UPDATE_DATE DESC";
 		List<BizNodeExtend> list = jdbcTemplate.query(sql,new Object[]{mainNodeId},new BeanPropertyRowMapper(BizNodeExtend.class));
 		return list;
 	}

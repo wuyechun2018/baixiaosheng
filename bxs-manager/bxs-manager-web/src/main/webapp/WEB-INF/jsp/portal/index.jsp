@@ -1630,7 +1630,7 @@ if(isShow=='1'){
 	var now = new Date();
 	//10秒 10*1000
 	//暂时定制为15秒
-	now.setTime(now.getTime()+5*60*1);
+	now.setTime(now.getTime()+5*60*1000);
 	$.cookie('isShow', '1', { expires: now});
 }
 </script>

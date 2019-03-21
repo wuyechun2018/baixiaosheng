@@ -13,7 +13,7 @@ function submitForm(){
   if($("#addForm").form('validate')){
 	$.ajax({
          type: "POST",
-         url:'${ctx}/bizAccount/save',
+         url:'${ctx}/erpAccount/save',
          data: $('#addForm').serialize(),
          success: function (data) {
         	 $('#addWin').window('close');
@@ -73,14 +73,14 @@ function viewFun(id) {
     $('#closeTd').show();
     $('#editTd').hide();
     
-    //$('#saveBtn').css("color","#c3c3c3");
-    
-    
     $('#addWin').panel({
 		title : '查看',
 		iconCls : "icon-edit"
 	});
     $("#addForm").form("load", record); 
+    
+   
+    
 }
 
 //点击“操作列-修改”
@@ -105,7 +105,7 @@ function deleteFun(id){
         	$.ajax({
     			cache: true,
     			type: "POST",
-    			url:'${ctx}/bizAccount/delete',
+    			url:'${ctx}/erpAccount/delete',
     			data:{
     				id:id
     			},
@@ -139,6 +139,14 @@ function doQuery(){
     $("#dgTable").datagrid(options);
 }
 
+//清空查询条件
+function doResetQuery(){
+	$('#queryForm').form('clear');
+	//默认收入
+	//$("#radio_accountType_sr" ).prop("checked",true);
+	doQuery();
+}
+
 
  $(function(){
 	 //初始化时先判断当前用户是否已经登录
@@ -170,7 +178,7 @@ function doQuery(){
 	 //中间表格
 	var dgTableHeight=$(window).height()-$('.searchBox').height()-28;
     $('#dgTable').datagrid({  
-		url:ctx+'/bizAccount/pagerList',
+		url:ctx+'/erpAccount/pagerList',
 		method:'post',
 	    queryParams: {
 	    	accountDateFrom:'',
@@ -201,8 +209,8 @@ function doQuery(){
 		          }},
 		          {field:'amount',title: '金额',align: 'center',width: 50}, 
 		          {field:'actualAmount',title: '实际金额',align: 'center',width: 50}, 
-		          {field:'accountDesc',title: '备注',align: 'center',width: 100,hidden:true},
-		          {field:'id',title: '操作',align: 'center',width: 80, formatter:function(val,rec){
+		          {field:'accountDesc',title: '备注',align: 'center',width: 60},
+		          {field:'id',title: '操作',align: 'center',width: 85, formatter:function(val,rec){
 		        	  return "<button class='ibtn-front' onclick=viewFun('"+val+"')>查看</button><button class='ibtn-edit' onclick=editFun('"+val+"')>编辑</button><button class='ibtn-top' onclick=deleteFun('"+val+"')>删除</button>";
 		          }}
 		]]
@@ -217,6 +225,7 @@ function doQuery(){
     <div data-options="region:'center'" style="padding:5px;height:auto">
         <fieldset style="margin: 0" class="searchBox">
             <legend>信息查询</legend>
+              <form id="queryForm" method="post">
             <table style="width:100%;">
 				<tr>
 					<td style="width:100px;text-align: right;margin-right: 5px;font-weight: bold;">入账时间:</td>
@@ -231,18 +240,17 @@ function doQuery(){
 						  <input style="width:200px;" class="easyui-combobox" id="queryAccountUserId" name="accountUserId" data-options="valueField:'id',textField:'text',url:'${ctx}/user/getUserComboboxData',onSelect:function(){doQuery()}">
 					</td>
 					<td style="width:100px;text-align: right;margin-right: 5px;font-weight: bold;">入账类别:</td>
-					<td style="width:200px;">
+					<td style="width:150px;">
 						<input  type="radio" id="radio_queryAccountType_sr"  name="queryAccountType" value="0" checked="checked" />
 					    <label for="radio_queryAccountType_sr">收入</label>
 						<input  type="radio"  id="radio_queryAccountType_zc" name="queryAccountType" value="1" />
 						<label for="radio_queryAccountType_zc">支出</label>
 					</td>
 					
-					<td>&nbsp;</td>
-					<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" iconCls="Zoom">查询</a></td>
+					<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" iconCls="Zoom">查询</a>&nbsp;<a href="javascript:void(0)" id="search" onclick="doResetQuery()" class="easyui-linkbutton" iconCls="Arrowrefresh">清空</a></td>
 				</tr>
 			</table>
-            
+            </form>
         </fieldset>
         <table id="dgTable">
         </table>

@@ -336,6 +336,35 @@ ModelAndView mv=new ModelAndView("login-yun");
 
 
 
+create table T_ERP_USER
+(
+   ID                   VARCHAR(36) not null,
+   EMP_NO               VARCHAR(50) comment '员工编号',
+   EMP_NAME             VARCHAR(50) comment '员工姓名',
+   LOGIN_NAME           VARCHAR(50) comment '登录名',
+   LOGIN_PWD            VARCHAR(50) comment '登录密码',
+   EMP_STATE            VARCHAR(50) comment '用户状态（在职、离职)',
+   BELONG_ORG_ID        VARCHAR(36) comment '所属公司ID',
+   POST_ID              VARCHAR(36) comment '职位ID',
+   MOBILE_PHONE         VARCHAR(50) comment '电话',
+   EMAIL                VARCHAR(100) comment '邮箱',
+   CREATE_USER_ID       VARCHAR(36) comment '创建人',
+   CREATE_DATE          DATE comment '创建时间',
+   UPDATE_USER_ID       VARCHAR(36) comment '更新人',
+   UPDATE_DATE          DATE comment '更新时间',
+   DATA_STATE           VARCHAR(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table T_ERP_USER comment 'ERP用户';
+
+
+
+
+
+
+
+
 
 
 
