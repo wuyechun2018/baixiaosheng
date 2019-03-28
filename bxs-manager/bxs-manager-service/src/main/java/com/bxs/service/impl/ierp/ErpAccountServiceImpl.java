@@ -1,11 +1,8 @@
 package com.bxs.service.impl.ierp;
-
 import java.util.Map;
-
-import org.bxs.jpa.BizAccountRepository;
+import org.bxs.jpa.ErpAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.ierp.ErpAccountDao;
@@ -16,7 +13,7 @@ import com.bxs.service.ierp.ErpAccountService;
 public class ErpAccountServiceImpl implements ErpAccountService{
 
 	@Autowired
-	private BizAccountRepository bizAccountRepository;
+	private ErpAccountRepository bizAccountRepository;
 	
 	@Autowired
 	private ErpAccountDao bizAccountDao;

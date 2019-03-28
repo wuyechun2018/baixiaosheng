@@ -14,7 +14,9 @@
 	<!--SpringJdbcTemplate 配置在applicationContext-dao.xml中  -->
 	<!--使用applicationContext-dao.xml 的数据源  -->
             
-	<!-- 启用扫描并自动创建代理的功能 -->
+	<!-- 启用扫描并自动创建代理的功能
+	<jpa:repositories base-package="org.bxs.jpa.*.*" /> -->
+	
 	<jpa:repositories base-package="org.bxs.jpa" />
  	
 	<!--定义实体管理器工厂-->

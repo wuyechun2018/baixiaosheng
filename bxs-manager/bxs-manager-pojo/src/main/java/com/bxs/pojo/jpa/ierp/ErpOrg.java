@@ -21,13 +21,23 @@ public class ErpOrg implements java.io.Serializable {
 
 	private String id;
 	private String orgCode;
+	private String orgName;
+	//上级公司Id
 	private String parentOrgId;
+	//联系地址
 	private String contactAddress;
 	private String contactUserId;
 	private String contactMobile;
 	private String contactEmail;
 	//负责人Id
 	private String orgLeaderId;
+	
+	// 排序
+	private int displayOrder;
+	
+	//部门描述
+	private String orgDesc;
+	
 	private String createUserId;
 	private Date createDate;
 	private String updateUserId;
@@ -86,6 +96,16 @@ public class ErpOrg implements java.io.Serializable {
 
 	public void setOrgCode(String orgCode) {
 		this.orgCode = orgCode;
+	}
+	
+	
+	@Column(name = "ORG_NAME", length =100)
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
 	}
 
 	@Column(name = "PARENT_ORG_ID", length = 36)
@@ -188,5 +208,27 @@ public class ErpOrg implements java.io.Serializable {
 	public void setDataState(String dataState) {
 		this.dataState = dataState;
 	}
+
+	@Column(name = "DISPLAY_ORDER", length = 10)
+	public int getDisplayOrder() {
+		return displayOrder;
+	}
+
+	public void setDisplayOrder(int displayOrder) {
+		this.displayOrder = displayOrder;
+	}
+
+	@Column(name = "ORG_DESC", length = 1000)
+	public String getOrgDesc() {
+		return orgDesc;
+	}
+
+	public void setOrgDesc(String orgDesc) {
+		this.orgDesc = orgDesc;
+	}
+	
+	
+	
+	
 
 }
