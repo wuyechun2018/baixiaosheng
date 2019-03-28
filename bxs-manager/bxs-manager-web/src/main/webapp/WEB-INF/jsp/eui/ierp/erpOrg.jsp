@@ -18,7 +18,7 @@ function addNodeFun(){
 		//增加
 		$('#rightForm').form('clear');
 		//节点主键
-		$("#pid").val(node.id);
+		$("#parentOrgId").val(node.id);
 	}else{
 		$.messager.alert('提示',"请选择父栏目");
 	}

@@ -79,8 +79,8 @@ public class ErpLog implements java.io.Serializable {
 		this.loginClientIp = loginClientIp;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "OPREATE_TIME", length = 10)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "OPREATE_TIME")
 	public Date getOpreateTime() {
 		return this.opreateTime;
 	}

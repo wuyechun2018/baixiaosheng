@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.utils.BaseController;
+import com.bxs.common.utils.CommonUtil;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.UserInfoVo;
+import com.bxs.pojo.jpa.ierp.ErpLog;
 import com.bxs.pojo.jpa.ierp.ErpOrg;
+import com.bxs.service.ierp.ErpLogService;
 import com.bxs.service.ierp.ErpOrgService;
 
 @Controller
@@ -29,6 +32,9 @@ public class ErpOrgController extends BaseController{
 
 	@Autowired
 	private ErpOrgService erpOrgService;
+	
+	@Autowired
+	private ErpLogService erpLogService;
 	
 	
 	/**
@@ -79,7 +85,7 @@ public class ErpOrgController extends BaseController{
 	 */
 	@RequestMapping("/save")
 	@ResponseBody
-	public JsonMsg save(ErpOrg erpOrg, HttpSession session) {
+	public JsonMsg save(ErpOrg erpOrg, HttpSession session,HttpServletRequest request) {
 		UserInfoVo userInfo=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
 		if(StringUtils.isBlank(erpOrg.getId())){
 			logger.info("新增操作");
@@ -93,8 +99,16 @@ public class ErpOrgController extends BaseController{
 		erpOrg.setUpdateDate(new Date());
 		
 		erpOrgService.save(erpOrg);
-		return new JsonMsg();
 		
+		ErpLog erpLog=new ErpLog();
+		erpLog.setLoginClientIp(CommonUtil.getClientIP(request));
+		erpLog.setLoginUserId(userInfo.getId());
+		erpLog.setOpreateInfo("保存单位");
+		erpLog.setOpreateType("1");
+		erpLog.setOpreateTime(new Date());
+		erpLogService.save(erpLog);
+		
+		return new JsonMsg();
 	}
 
 	/**
