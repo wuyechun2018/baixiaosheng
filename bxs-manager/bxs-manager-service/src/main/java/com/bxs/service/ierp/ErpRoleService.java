@@ -10,8 +10,8 @@ public interface ErpRoleService {
 
 	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 
-	Object save(ErpRole erpRole);
+	void save(ErpRole erpRole);
 
-	Object delete(String id);
+	void delete(String id);
 
 }

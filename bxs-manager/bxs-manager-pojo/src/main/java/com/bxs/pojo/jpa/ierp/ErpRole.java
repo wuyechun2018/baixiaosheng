@@ -16,11 +16,12 @@ import org.hibernate.annotations.GenericGenerator;
 public class ErpRole implements java.io.Serializable {
 
 	// Fields
-
 	private String id;
 	private String roleCode;
 	private String roleName;
 	private String dataState;
+	//描述信息
+	private String memo;
 
 	// Constructors
 
@@ -80,6 +81,15 @@ public class ErpRole implements java.io.Serializable {
 
 	public void setDataState(String dataState) {
 		this.dataState = dataState;
+	}
+
+	@Column(name = "MEMO", length = 500)
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 
 }

@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +38,10 @@ public class ErpUserController extends BaseController {
 	//系统配置
 	@Autowired
 	private ConfigService configService;
+	
+	
+	@Value("${login.page.flag}")
+	private String LOGIN_PAGE_FLAG;
 	
 	
 	/**
@@ -71,7 +76,7 @@ public class ErpUserController extends BaseController {
 		ModelAndView mv=new ModelAndView();
 		//从 t_erp_user 中获取数据
 		List<ErpUser> list=erpUserService.getUserByLoginName(username);
-		mv.setViewName("login");
+		mv.setViewName(LOGIN_PAGE_FLAG);
 		if(!list.isEmpty()){
 			ErpUser info=list.get(0);
 			//密码相等
@@ -101,7 +106,7 @@ public class ErpUserController extends BaseController {
 				mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
 				logger.info("{}登录[管理系统]失败,时间为{},密码错误",info.getEmpName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 				//登录失败，跳转到登录页面
-				mv.setViewName("login");
+				mv.setViewName(LOGIN_PAGE_FLAG);
 			}
 			
 		}else{

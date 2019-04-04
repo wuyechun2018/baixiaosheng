@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bxs.common.utils.BaseController;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
+import com.bxs.common.vo.JsonMsg;
 import com.bxs.pojo.jpa.ierp.ErpRole;
 import com.bxs.service.ierp.ErpRoleService;
 
@@ -26,7 +27,15 @@ public class ErpRoleController extends BaseController{
 	@Autowired
 	private ErpRoleService erpRoleService;
 	
-	
+	/**
+	 * 
+	 * 分页列表
+	 * @author: wyc
+	 * @createTime: 2019年4月2日 下午3:03:38
+	 * @history:
+	 * @param request
+	 * @return EUIGrid
+	 */
 	@RequestMapping("/pagerList")
 	@ResponseBody
 	public EUIGrid pagerList(HttpServletRequest request) {
@@ -35,17 +44,38 @@ public class ErpRoleController extends BaseController{
 		return erpRoleService.pagerList(ePager,param);
 	}
 
+	/**
+	 * 
+	 * 保存
+	 * @author: wyc
+	 * @createTime: 2019年4月2日 下午3:50:45
+	 * @history:
+	 * @param erpRole
+	 * @param session
+	 * @return Object
+	 */
 	@RequestMapping("/save")
 	@ResponseBody
 	public Object save(ErpRole erpRole, HttpSession session) {
-		return erpRoleService.save(erpRole);
+		 erpRoleService.save(erpRole);
+		 return new JsonMsg();
 	}
 
+	/**
+	 * 
+	 * 逻辑删除
+	 * @author: wyc
+	 * @createTime: 2019年4月2日 下午3:50:37
+	 * @history:
+	 * @param request
+	 * @return Object
+	 */
 	@RequestMapping("/delete")
 	@ResponseBody
 	public Object delete(HttpServletRequest request) {
 		String id=request.getParameter("id");
-		return erpRoleService.delete(id);
+		erpRoleService.delete(id);
+		return new JsonMsg();
 	}
 
 }

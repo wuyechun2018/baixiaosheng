@@ -12,6 +12,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -63,6 +64,9 @@ public class UserController extends BaseController {
 	@Autowired
 	private UserRoleService userRoleService;
 	
+	@Value("${login.page.flag}")
+	private String LOGIN_PAGE_FLAG;
+	
 	/**
 	 * 
 	 * 系统用户登录
@@ -74,7 +78,7 @@ public class UserController extends BaseController {
 	public ModelAndView doLogin(String username,String password,HttpSession session){
 		ModelAndView mv=new ModelAndView();
 		List<UserInfoVo> list=userService.getUserByLoginName(username);
-		mv.setViewName("login");
+		mv.setViewName(LOGIN_PAGE_FLAG);
 		if(!list.isEmpty()){
 			UserInfoVo info=list.get(0);
 			//密码相等
@@ -112,7 +116,7 @@ public class UserController extends BaseController {
 				mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
 				logger.info("{}登录[管理系统]失败,时间为{},密码错误",info.getUserName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 				//登录失败，跳转到登录页面
-				mv.setViewName("login");
+				mv.setViewName(LOGIN_PAGE_FLAG);
 			}
 			
 		}else{

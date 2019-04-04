@@ -1,10 +1,12 @@
 package com.bxs.controller;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +21,10 @@ public class IndexController{
 	
 	@Autowired
 	private ConfigService configService;
+	
+	
+	@Value("${login.page.flag}")
+	private String LOGIN_PAGE_FLAG;
 	
 	/**
 	 * 
@@ -79,7 +85,10 @@ public class IndexController{
 	public ModelAndView login(HttpServletRequest request){
 		logger.info("跳转到:{},访问时间是:{}", "login",new DateTime().toString("yyyy/MM/dd HH:mm:ss") );
 		//ModelAndView mv=new ModelAndView("login");
-		ModelAndView mv=new ModelAndView("login-yun");
+		//ModelAndView mv=new ModelAndView("login-yun");
+		
+		//为了保证登录页面切换时的方便以及"登录"、"退出"时的
+		ModelAndView mv=new ModelAndView(LOGIN_PAGE_FLAG);
 		return mv;
 	}
 	

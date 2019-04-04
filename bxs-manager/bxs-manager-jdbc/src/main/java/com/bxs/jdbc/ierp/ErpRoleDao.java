@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.ierp.BizAccountVo;
+import com.bxs.pojo.jpa.ierp.ErpRole;
 
 @Repository
 public class ErpRoleDao {
@@ -22,9 +23,9 @@ public class ErpRoleDao {
 
 
 	public List<?> getPagerList(EUIPager ePager, Map<String, Object> param) {
-		String  querySql="SELECT T.* FROM T_ERP_ROLE WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
+		String  querySql="SELECT T.* FROM T_ERP_ROLE T WHERE 1=1 AND T.DATA_STATE='1'\n"+getParamSql(param);
 		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
-		List<BizAccountVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(BizAccountVo.class));
+		List<ErpRole> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ErpRole.class));
 		return list;
 	}
 	
