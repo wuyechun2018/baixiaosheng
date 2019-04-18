@@ -22,9 +22,13 @@ public class IndexController{
 	@Autowired
 	private ConfigService configService;
 	
-	
+	//登录页面样式切换，定义在global.propeties中
 	@Value("${login.page.flag}")
 	private String LOGIN_PAGE_FLAG;
+	
+	//访问项目根路径时到达的页面
+	@Value("${index.page.flag}")
+	private String INDEX_PAGE_FLAG;
 	
 	/**
 	 * 
@@ -63,7 +67,7 @@ public class IndexController{
 	@RequestMapping({"/","/welcome","/index"})
 	public ModelAndView index(HttpServletRequest request){
 		logger.info("跳转到:{},访问时间是:{}", "login",new DateTime().toString("yyyy/MM/dd HH:mm:ss") );
-		ModelAndView mv=new ModelAndView("/portal/index");
+		ModelAndView mv=new ModelAndView(INDEX_PAGE_FLAG);
 		
 		//背景图片-轮换图
 		if(!configService.getConfigByTypeCode("BJT").isEmpty()){

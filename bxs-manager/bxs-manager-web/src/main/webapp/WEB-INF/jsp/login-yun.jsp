@@ -41,11 +41,11 @@ function loginSubmit(){
 			<!-----页面右侧透明背景----->
 			<div class="box-bg-yun"></div>
 			<!--------表单内容------------>
-			<form action="${ctx}/user/doLogin" method="post" name="frmLogin" id="loginForm">
+			<form action="${ctx}/erpUser/doLogin" method="post" name="frmLogin" id="loginForm">
 				<div class="form">
 					<h1 class="yun-login-h1">密码登录</h1>
 					<%----%>
-					<p>
+					<p style="color:red">
 						${SYSTEM_ERROR_MSG}
 					</p> 
 					<div class="item clearfix">

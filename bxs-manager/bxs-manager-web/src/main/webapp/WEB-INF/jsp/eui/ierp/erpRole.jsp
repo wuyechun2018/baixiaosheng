@@ -13,6 +13,7 @@
 	position: absolute;
 	top:45%;
 	min-width: 50px;
+	width:50px;
 	text-align: center;
 }
 
@@ -20,6 +21,7 @@
 	position: absolute;
 	top:55%;
 	min-width: 50px;
+	width:50px;
 	text-align: center;
 }
 
@@ -74,13 +76,16 @@ function addFun(){
 	});
 	$('#addWin').window('open');
 	$('#addForm').form('clear');
-	$('#closeTd').hide();
-	$('#editTd').show();
 	
-	//入账时间默认为当天
-	$('#accountDate').datebox('setValue',myDateFormatter(new Date()));
-	//默认收入
-	$("#radio_accountType_sr" ).prop("checked",true);
+	
+	$('#userRoleSetTab').tabs('select',0);
+	//新增时
+	$('#userRoleSetTab').tabs('disableTab', 1);
+	$('#userRoleSetTab').tabs('disableTab', 2);
+	
+	loadPemissionTree();
+    //加载用户角色Tab页面
+    loadUserRoleTab();
 }
 
 //点击"添加弹出框-取消按钮",提交表单
@@ -89,26 +94,50 @@ function clearForm(){
 	$('#addWin').window('close');
 }
 
-//信息查询-入账类别-单选框事件
-function bindRadioChanged(){
-	$('input[type=radio][name=queryAccountType]').change(function() {
-		     if (this.value == '0') {
-		    	 doQuery();
-	          }else if (this.value == '1') {
-	        	  doQuery();
-	         }
-	 });
+//点击"权限设置"-"取消"按钮
+function clearRoleMenuForm(){
+	$('#addWin').window('close');
 }
+
+//提交"权限设置"
+function submitRoleMenuForm(){
+ //获取选中的menuId	
+ var roleId=$('#selectRoleId').val();
+ var menuIds='';
+ 
+ var checkedNodes = $('#pemissionTree').tree('getChecked');
+ for(var i=0;i<checkedNodes.length;i++){
+	 menuIds=menuIds+checkedNodes[i].id+",";
+ }
+ menuIds=menuIds.substring(0, menuIds.length-1);
+	
+ $.ajax({
+       type: "POST",
+       url:'${ctx}/erpRoleMenu/save',
+       data:{
+    	   roleId:roleId,
+    	   menuIds:menuIds
+       },
+       success: function (data) {
+    	   $.messager.alert('提示信息',data.msg);
+       },
+       error: function(data) {
+           alert("error:"+data.responseText);
+        }
+ 		});
+}
+
 
 //点击“操作列-查看”
 function viewFun(id) {
+	
+	$('#userRoleSetTab').tabs('enableTab', 1);
+	$('#userRoleSetTab').tabs('enableTab', 2);
+	
 	var rowIndex=getSelectRowIndex(id);
     //获取操作列
     var record=$('#dgTable').datagrid('getData').rows[rowIndex];
     $('#addWin').window('open');
-    
-    $('#closeTd').show();
-    $('#editTd').hide();
     
     $('#addWin').panel({
 		title : '查看',
@@ -116,12 +145,18 @@ function viewFun(id) {
 	});
     $("#addForm").form("load", record); 
     
-    loadPemissionTree();
-    
+  //加载权限树
+    loadPemissionTree(id);
+    //此处的Id为roleId
+    loadUserRoleTab(id);
 }
 
 //点击“操作列-修改”
 function editFun(id) {
+	 
+	$('#userRoleSetTab').tabs('enableTab', 1);
+	$('#userRoleSetTab').tabs('enableTab', 2);
+	
 	var rowIndex=getSelectRowIndex(id);
     //获取操作列
     var record=$('#dgTable').datagrid('getData').rows[rowIndex];
@@ -134,7 +169,9 @@ function editFun(id) {
 	});
     $("#addForm").form("load", record);
     //加载权限树
-    loadPemissionTree();
+    loadPemissionTree(id);
+    //此处的Id为roleId
+    loadUserRoleTab(id);
 }
 
 //点击“操作列-删除”
@@ -168,9 +205,29 @@ function doQuery(){
     //设置参数
     options.queryParams.roleName= $('#qRoleName').textbox('getValue');
     //结束时间
-    options.queryParams.roleCode=$('#qRoleCode').datebox('getValue');
+    options.queryParams.roleCode=$('#qRoleCode').textbox('getValue');
     $("#dgTable").datagrid(options);
 }
+
+//待授权查询
+function doWaitDgQuery(){
+    var options = $("#waitDgTable").datagrid("options");
+    //查询
+    options.queryParams.roleId=$('#selectRoleId').val();
+    options.queryParams.queryKey= $('#waitDgQueryKey').val();
+    $("#waitDgTable").datagrid(options);
+}
+
+
+//已授权用户查询
+function doHasDgQuery(){
+    var options = $("#hasDgTable").datagrid("options");
+    //查询
+    options.queryParams.roleId=$('#selectRoleId').val();
+    options.queryParams.queryKey= $('#hasDgQueryKey').val();
+    $("#hasDgTable").datagrid(options);
+}
+
 
 //清空查询条件
 function doResetQuery(){
@@ -180,21 +237,25 @@ function doResetQuery(){
 	doQuery();
 }
 
-function loadUserRoleTab(){
+//加载用户角色Tab页面
+function loadUserRoleTab(roleId){
+	//alert(roleId);
+	$('#selectRoleId').val(roleId);
+	
 	//中间表格
-	var dgTableHeight=$(window).height()-$('.searchBox').height()-18;
+	var dgTableHeight=340;
+	
+	//1、待授权列表
     $('#waitDgTable').datagrid({  
-		url:ctx+'/user/pagerList',
+		url:ctx+'/erpUserRole/getUserListByRoleId',
 		method:'post',
 	    queryParams: {
-	    	deptId:'',
-	    	loginOrUserName:'',
-	    	postName:'',
-	    	telephone:'',
-	    	birthday:''
+	    	isWait:'0',
+	    	roleId:roleId,
+	    	queryKey:$('#waitDgQueryKey').val()
 		},
 		fit:false,
-		pageSize: 20,
+		pageSize: 10,
 		height: dgTableHeight,
 		fitColumns:true,
 		striped: true,
@@ -202,42 +263,103 @@ function loadUserRoleTab(){
 		pagination: true,  
 		rownumbers: true,  
 		columns:[[
-		          {field:'loginName',title: '登录名',align: 'left',width: 100,hidden:true},
-		          {field:'userName',title: '角色名称',align: 'center',width: 100},
-		          {field:'deptId',title: '部门ID',align: 'center',width: 100,hidden:true}, 
-		          {field:'deptName',title: '角色编码',align: 'center',width: 100}
+				{field:'id',title: '部门ID',align: 'center',width: 100,hidden:true}, 
+				{field:'empNo',title: '工号',align: 'left',width: 80},
+				{field:'empName',title: '姓名',align: 'center',width: 100},
+				{field:'loginName',title: '登录名',align: 'center',width: 100}
 		]]
 	  });
     
-    
+    //2、已授权列表
     $('#hasDgTable').datagrid({  
-		url:ctx+'/user/pagerList',
+		url:ctx+'/erpUserRole/getUserListByRoleId',
 		method:'post',
 	    queryParams: {
-	    	deptId:'',
-	    	loginOrUserName:'',
-	    	postName:'',
-	    	telephone:'',
-	    	birthday:''
+	    	isWait:'1',
+	    	roleId:roleId,
+	    	queryKey:$('#hasDgQueryKey').val()
 		},
 		fit:false,
-		pageSize: 20,
+		pageSize: 10,
 		height: dgTableHeight,
 		fitColumns:true,
 		striped: true,
 		singleSelect:true,
 		pagination: true,  
-		rownumbers: true,  
+		rownumbers: true,
 		columns:[[
-		          {field:'loginName',title: '登录名',align: 'left',width: 100,hidden:true},
-		          {field:'userName',title: '角色名称',align: 'center',width: 100},
-		          {field:'deptId',title: '部门ID',align: 'center',width: 100,hidden:true}, 
-		          {field:'deptName',title: '角色编码',align: 'center',width: 100}
+		          {field:'id',title: '部门ID',align: 'center',width: 100,hidden:true}, 
+		          {field:'empNo',title: '工号',align: 'left',width: 80},
+		          {field:'empName',title: '姓名',align: 'center',width: 80},
+		          {field:'loginName',title: '登录名',align: 'center',width: 100}
 		]]
 	  });
 	
+    //doWaitDgQuery();
+    //doHasDgQuery();
+    
 }
 
+//给角色添加用户
+function addUserRole(){
+	//获取选中的用户
+	var rowIndex=getSelectRowIndex(id);
+    //获取操作列
+    var record=$('#waitDgTable').datagrid('getData').rows[rowIndex];
+	var userId=record.id;
+	var roleId=$('#selectRoleId').val();
+	
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/erpUserRole/save',
+		data:{
+			userId:userId,
+			roleId:roleId
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	$.messager.alert('提示信息',data.msg);
+	    	doWaitDgQuery();
+	    	doHasDgQuery();
+	    }
+	})
+	
+	
+}
+
+//给角色移除用户
+function removeUserRole(){
+	//获取选中的用户
+	var rowIndex=getSelectRowIndex(id);
+    //获取操作列
+    var record=$('#hasDgTable').datagrid('getData').rows[rowIndex];
+	var userId=record.id;
+	var roleId=$('#selectRoleId').val();
+	
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/erpUserRole/delete',
+		data:{
+			userId:userId,
+			roleId:roleId
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	$.messager.alert('提示信息',data.msg);
+	    	doWaitDgQuery();
+	    	doHasDgQuery();
+	    }
+	})
+	
+}
 
 
 
@@ -266,15 +388,15 @@ function loadUserRoleTab(){
              alert("error:"+data.responseText);
           }
    		});
-	 //绑定radio选择事件
-	 bindRadioChanged();	 
+	
 	 //中间表格
 	var dgTableHeight=$(window).height()-$('.searchBox').height()-28;
     $('#dgTable').datagrid({  
 		url:ctx+'/erpRole/pagerList',
 		method:'post',
 	    queryParams: {
-	    	
+	    	roleName:$('#qRoleName').textbox('getValue'),
+	    	roleCode:$('#qRoleCode').textbox('getValue')
 		},
 		fit:false,
 		pageSize: 20,
@@ -295,21 +417,16 @@ function loadUserRoleTab(){
 		,toolbar:$('#tb')
 	  });
     
-    
-    
-	
-    
-    
-    
  })
  
-function loadPemissionTree(){
+ //加载权限树，角色和目录菜单的对应关系
+function loadPemissionTree(roleId){
 	 $('#pemissionTree').tree({
 			checkbox : true,
-			url : '${ctx}/sysmenu/getListByPid?pid=0',
+			url : '${ctx}/erpRoleMenu/getErpMenuListByPid?pid=0&roleId='+roleId,
 			method : 'post',
 			onBeforeExpand : function(node, param) {
-			   $('#pemissionTree').tree('options').url = ctx+ "/sysmenu/getListByPid?pid=" + node.id;
+			   $('#pemissionTree').tree('options').url = ctx+ "/erpRoleMenu/getErpMenuListByPid?pid=" + node.id+"&roleId="+roleId;
 			},
 			onClick : function(node) {
 				   clickNodeFun(node);
@@ -339,11 +456,11 @@ function loadPemissionTree(){
 				<tr>
 					 <td style="width:100px;text-align: right;margin-right: 5px;">角色名称:</td>
 					<td style="width:200px;text-align: left;">
-						<input id="qRoleName" name="qRoleName" style="width:150px">
+						<input id="qRoleName"  class="easyui-textbox"  name="qRoleName" style="width:150px">
 					</td>
 					<td style="width:100px;text-align: right;margin-right: 5px;">角色代码:</td>
 					<td style="width:200px;">
-						<input id="qRoleCode" name="qRoleCode" style="width:150px">
+						<input id="qRoleCode"  class="easyui-textbox"  name="qRoleCode" style="width:150px">
 					</td>
 					
 					<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" iconCls="Zoom">查询</a>&nbsp;<a href="javascript:void(0)" id="search" onclick="doResetQuery()" class="easyui-linkbutton" iconCls="Arrowrefresh">清空</a></td>
@@ -363,8 +480,8 @@ function loadPemissionTree(){
  
  
   <%--点击"添加"弹出的窗口 --%>
-<div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:660px;height:425px;padding:1px;">
-	<div class="easyui-tabs" style="width:100%;height:100%;">
+<div id="addWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:699px;height:500px;padding:1px;">
+	<div class="easyui-tabs" style="width:100%;height:450px" id="userRoleSetTab">
         <div title="角色信息" style="padding:0px">
 			 <form id="addForm" method="post">
 			   	<table  class="isingelTable">
@@ -399,9 +516,11 @@ function loadPemissionTree(){
 			    			<td style="width:50%;text-align: right;padding-right: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="submitForm()">保存</a></td>
 			    			<td style="width:50%;text-align: left;padding-left: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearForm()">取消</a></td>
 			    		</tr>
+			    		<%--
 			    		<tr id="closeTd">
 			    			<td colspan="2" style="width:50%;text-align: center;"><a href="javascript:void(0)" data-options="iconCls:'Cross'" id="resetBtn" class="easyui-linkbutton" onclick="clearForm()">关闭</a></td>
 			    		</tr>
+			    		 --%>
 					 </table>
 			    </div>
         </div>
@@ -409,56 +528,61 @@ function loadPemissionTree(){
           	<div style="height:300px;">
              <ul id="pemissionTree"></ul>
             </div>
+            
+            <div style="text-align:center;padding:25px 5px 5px 5px;">
+		    	<table style="width:100%;">
+		    		<tr >
+		    			<td style="width:50%;text-align: right;padding-right: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveRoleMenuBtn" class="easyui-linkbutton" onclick="submitRoleMenuForm()">保存</a></td>
+		    			<td style="width:50%;text-align: left;padding-left: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetRoleMenuBtn" class="easyui-linkbutton" onclick="clearRoleMenuForm()">取消</a></td>
+		    		</tr>
+				 </table>
+			</div>
+            
         </div>
         <div title="用户设置" data-options="" style="padding:0px">
-        	<%--开始 --%>
-        	<div class="easyui-layout"  fit="true">
-			    <div data-options="region:'west',split:false,border:false" style="width: 48%; padding: 1px;">
-			        <div>
-			        	<table style="width:100%;padding:8px 0" class="searchBox">
+        	<table style="margin:0px;">
+        		<tr style="margin:0px;padding:0px;">
+        			<td style="margin:0px;padding:0px;width:308px;height:410px;border: 0px solid;">
+        				<input style="visibility: hidden;" id="selectRoleId" />
+		        		<table style="width:100%;padding:0px;margin:0px;;height:50px;" class="searchBox">
 							<tr>
 								<td style="width:100px;text-align: right;margin-right: 5px;">名称:</td>
 								<td style="width:200px;text-align: left;">
-									<input id="telephone" name="telephone" style="width:150px">
+									<input id="waitDgQueryKey" name="waitDgQueryKey" style="width:150px">
 								</td>
 								
 								<td>&nbsp;</td>
-								<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" style="min-width: 54px;" iconCls="Zoom">查询</a></td>
+								<td><a href="javascript:void(0)" id="search" onclick="doWaitDgQuery()" class="easyui-linkbutton" style="min-width: 54px;" iconCls="Zoom">查询</a></td>
 							</tr>
 						</table>
 			            <table id="waitDgTable">
 			        	</table>
-			        </div>
-			    </div>
-			    <div data-options="region:'center',split:false,border:false" style="width: 4%;min-width:60px; padding:1px;height:auto">
-			        <div class="add-div">
-			        	<a href="javascript:void(0)" title="添加" class="add-remove-btn" >&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</a>
-			        </div>
-			        <div class="remove-div">
-			        	<a href="javascript:void(0)" title="移除" class="add-remove-btn">&nbsp;&nbsp;&lt;&lt;&nbsp;&nbsp;</a>
-			        </div>
-			    </div>
-    
-			    <div data-options="region:'east',split:false,border:false" style="width: 48%; padding:1px;height:auto">
-			        	<div>
-				        	<table style="width:100%;padding:8px 0" class="searchBox">
-								<tr>
-									<td style="width:100px;text-align: right;margin-right: 5px;">名称:</td>
-									<td style="width:200px;text-align: left;">
-										<input id="telephone" name="telephone" style="width:150px">
-									</td>
-									
-									<td>&nbsp;</td>
-									<td><a href="javascript:void(0)" id="search" onclick="doQuery()" class="easyui-linkbutton" style="min-width: 54px;" iconCls="Zoom">查询</a></td>
-								</tr>
-							</table>
-				            <table id="hasDgTable">
-				        	</table>
-			        </div>
-			    </div>
- 			</div>
- 			<%--结束 --%>
- 			  
+        			</td>
+        			<td style="margin:0px;padding:0px;width:68px;height:410px;border: 0px solid;">
+        				<div class="add-div">
+				        	<a href="javascript:void(0)" title="添加" class="add-remove-btn" onclick="addUserRole()">&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</a>
+				        </div>
+				        <div class="remove-div">
+				        	<a href="javascript:void(0)" title="移除" class="add-remove-btn" onclick="removeUserRole()">&nbsp;&nbsp;&lt;&lt;&nbsp;&nbsp;</a>
+				        </div>
+        			</td>
+        			<td style="margin:0px;padding:0px;width:318px;height:410px;border: 0px solid;">
+        				<table style="width:100%;padding:0px;margin:0px;height:50px;" class="searchBox">
+							<tr>
+								<td style="width:100px;text-align: right;margin-right: 5px;">名称:</td>
+								<td style="width:200px;text-align: left;">
+									<input id="hasDgQueryKey" name="hasDgQueryKey" style="width:150px">
+								</td>
+								
+								<td>&nbsp;</td>
+								<td><a href="javascript:void(0)" id="search" onclick="doHasDgQuery()" class="easyui-linkbutton" style="min-width: 54px;" iconCls="Zoom">查询</a></td>
+							</tr>
+						</table>
+			            <table id="hasDgTable">
+			        	</table>
+        			</td>
+        		</tr>
+        	</table>
         </div>
     </div>
 </div>

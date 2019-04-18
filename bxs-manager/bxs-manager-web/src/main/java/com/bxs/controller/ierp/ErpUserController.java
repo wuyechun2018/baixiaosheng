@@ -82,11 +82,12 @@ public class ErpUserController extends BaseController {
 			//密码相等
 			if(info.getLoginPwd().equals(EncryptionUtil.getMd5String(password))){
 			//用户信息存入Session
-			session.setAttribute(SystemConstant.CURRENT_SESSION_USER_INFO,covertToUserInfo(info));
+			UserInfoVo userInfo=covertToUserInfo(info);	
+			session.setAttribute(SystemConstant.CURRENT_SESSION_USER_INFO,userInfo);
 			//是管理员
 			session.setAttribute(SystemConstant.CURRENT_SESSION_IS_ADMIN, true);
 			//携带用户信息
-			mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO, info);
+			mv.addObject(SystemConstant.CURRENT_SESSION_USER_INFO,userInfo);
 			logger.info("{}登录成功,时间为{}",info.getEmpName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 			
 			//获取基础配置信息
@@ -101,7 +102,7 @@ public class ErpUserController extends BaseController {
 				}
 			}
 				//跳转到后台管理主页面
-				mv.setViewName("/manager/index");
+				mv.setViewName("/manager/index-yun");
 			}else{
 				mv.addObject(SystemConstant.SYSTEM_ERROR_MSG, "用户名或者密码错误");
 				logger.info("{}登录[管理系统]失败,时间为{},密码错误",info.getEmpName()+"["+info.getLoginName()+"]",new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
@@ -129,6 +130,7 @@ public class ErpUserController extends BaseController {
 	 */
 	private UserInfoVo covertToUserInfo(ErpUser info) {
 		UserInfoVo userInfoVo=new UserInfoVo();
+		userInfoVo.setId(info.getId());
 		userInfoVo.setUserName(info.getEmpName());
 		userInfoVo.setLoginName(info.getLoginName());
 		userInfoVo.setLoginPassword(info.getLoginPwd());

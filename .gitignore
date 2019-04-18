@@ -1,4 +1,6 @@
 *.class
+*dbc.properties
+*dbc-bak.properties
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -28,3 +30,5 @@ dependency-reduced-pom.xml
 .classpath
 
 .svn/
+
+

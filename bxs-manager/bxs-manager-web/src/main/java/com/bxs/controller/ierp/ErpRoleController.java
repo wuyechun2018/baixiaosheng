@@ -4,6 +4,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,9 @@ public class ErpRoleController extends BaseController{
 	@RequestMapping("/save")
 	@ResponseBody
 	public Object save(ErpRole erpRole, HttpSession session) {
+		if(StringUtils.isBlank(erpRole.getId())){
+			erpRole.setDataState("1");
+		 }
 		 erpRoleService.save(erpRole);
 		 return new JsonMsg();
 	}

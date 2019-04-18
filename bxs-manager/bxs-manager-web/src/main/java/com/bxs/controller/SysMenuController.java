@@ -1,9 +1,13 @@
 package com.bxs.controller;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bxs.common.dict.SystemConstant;
+import com.bxs.pojo.UserInfoVo;
 import com.bxs.service.ArticleService;
 import com.bxs.service.SysMenuService;
 
@@ -37,6 +41,24 @@ public class SysMenuController {
 	@ResponseBody
 	public Object getListByPid(String pid){
 		return sysMenuService.getListByPid(pid);
+	}
+	
+	
+	
+	/**
+	 * 
+	 * 根据父主键获取菜单
+	 * @author: wyc
+	 * @createTime: 2019年4月17日 下午4:17:55
+	 * @param pid 
+	 * @param session
+	 * @return Object
+	 */
+	@RequestMapping("/getListByPidAndUserId")
+	@ResponseBody
+	public Object getListByPidAndUserId(String pid,HttpSession session){
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		return sysMenuService.getListByPidAndUserId(pid,info.getId());
 	}
 	
 
