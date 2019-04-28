@@ -1,5 +1,7 @@
 *.class
-
+*.properties
+jdbc-bak.properties
+jdbc.properties
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
