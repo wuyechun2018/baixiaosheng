@@ -39,7 +39,10 @@ public class ErpUserServiceImpl implements ErpUserService{
 
 	@Override
 	public EUIGrid pagerList(EUIPager ePager, Map<String, Object> param) {
-		return null;
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(erpUserDao.getTotalCount(param));
+		grid.setRows(erpUserDao.getPagerList(ePager,param));
+		return grid;
 	}
 
 
@@ -54,6 +57,12 @@ public class ErpUserServiceImpl implements ErpUserService{
 			result.add(combo);
 		}
 		return result;
+	}
+
+
+	@Override
+	public ErpUser getErpUserById(String id) {
+		return erpUserRepository.findOne(id);
 	}
 
 }

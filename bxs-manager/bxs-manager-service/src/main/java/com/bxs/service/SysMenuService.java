@@ -6,4 +6,6 @@ public interface SysMenuService {
 
 	List<EUITree> getListByPid(String pid);
 
+	List<EUITree> getListByPidAndUserId(String pid, String userId);
+
 }

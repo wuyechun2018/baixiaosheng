@@ -1,6 +1,7 @@
 package com.bxs.jdbc.ierp;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -8,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bxs.common.vo.EUIPager;
+import com.bxs.pojo.ierp.BizAccountVo;
+import com.bxs.pojo.jpa.ierp.ErpUser;
 import com.bxs.pojo.jpa.ierp.ErpUserRole;
 
 @Repository
@@ -31,9 +34,86 @@ public class ErpUserRoleDao {
 	
 	private String getParamSql(Map<String, Object> param) {
 		StringBuffer sqlBuff=new StringBuffer();
-		if(param.get("loginClientIp")!=null&&StringUtils.isNotBlank(param.get("loginClientIp").toString())){
-			sqlBuff.append(" AND T.LOGIN_CLIENT_IP = '" + param.get("loginClientIp").toString() + "'\n");
+		if(param.get("queryKey")!=null&&StringUtils.isNotBlank(param.get("queryKey").toString())){
+			sqlBuff.append("AND( T.EMP_NO LIKE '%"+param.get("queryKey").toString()+"%' OR EMP_NAME LIKE '%"+param.get("queryKey").toString()+"%' OR LOGIN_NAME LIKE '%"+param.get("queryKey").toString()+"%')");
 		}
 		return sqlBuff.toString();
+	}
+
+
+	/**
+	 * 
+	 * 获取筛选
+	 * @author: wyc
+	 * @createTime: 2019年4月9日 上午10:42:05
+	 * @history:
+	 * @param param
+	 * @return Long
+	 */
+	public Long getUserListCountByRoleId(Map<String, Object> param) {
+		String sql="";
+		//未授权
+		if(param.get("isWait")!=null&&StringUtils.isNotBlank(param.get("isWait").toString())&&"0".equals(param.get("isWait").toString())){
+			sql="SELECT COUNT(1)\n" +
+					"  FROM T_ERP_USER T\n" + 
+					" WHERE T.ID NOT IN (SELECT S.USER_ID\n" + 
+					"                      FROM T_ERP_USER_ROLE S\n" + 
+					"                     WHERE S.DATA_STATE = '1'\n" + 
+					"                       AND S.ROLE_ID =?)\n"+getParamSql(param);
+		}else{
+			sql="SELECT COUNT(1)\n" +
+					"  FROM T_ERP_USER T\n" + 
+					" WHERE T.ID  IN (SELECT S.USER_ID\n" + 
+					"                      FROM T_ERP_USER_ROLE S\n" + 
+					"                     WHERE S.DATA_STATE = '1'\n" + 
+					"                       AND S.ROLE_ID = ?)\n"+getParamSql(param);
+		}
+		return  jdbcTemplate.queryForObject(sql,new String[]{param.get("roleId").toString()},Long.class);
+	}
+
+	/**
+	 * 
+	 * 分页列表
+	 * @author: wyc
+	 * @createTime: 2019年4月9日 上午10:41:53
+	 * @history:
+	 * @param ePager
+	 * @param param
+	 * @return List<?>
+	 */
+	public List<?> getPagerUserListByRoleId(EUIPager ePager, Map<String, Object> param) {
+		String  querySql="";
+		//未授权
+		if(param.get("isWait")!=null&&StringUtils.isNotBlank(param.get("isWait").toString())&&"0".equals(param.get("isWait").toString())){
+			querySql="SELECT *\n" +
+							"  FROM T_ERP_USER T\n" + 
+							" WHERE T.ID NOT IN (SELECT S.USER_ID\n" + 
+							"                      FROM T_ERP_USER_ROLE S\n" + 
+							"                     WHERE S.DATA_STATE = '1'\n" + 
+							"                       AND S.ROLE_ID = ?)\n"+getParamSql(param);
+
+		}else{
+			querySql="SELECT *\n" +
+					"  FROM T_ERP_USER T\n" + 
+					" WHERE T.ID IN (SELECT S.USER_ID\n" + 
+					"                      FROM T_ERP_USER_ROLE S\n" + 
+					"                     WHERE S.DATA_STATE = '1'\n" + 
+					"                       AND S.ROLE_ID = ?)\n"+getParamSql(param);
+		}
+		
+		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<ErpUser> list = jdbcTemplate.query(sql,new Object[]{param.get("roleId").toString(),ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ErpUser.class));
+		return list;
+	}
+
+	
+	public ErpUserRole findByUserIdAndRoleId(String userId, String roleId) {
+		String sql="SELECT * FROM t_erp_user_role S WHERE S.USER_ID=? AND S.ROLE_ID=? AND S.DATA_STATE='1'";
+		List<ErpUserRole> list = jdbcTemplate.query(sql,new Object[]{userId,roleId},new BeanPropertyRowMapper(ErpUserRole.class));
+		if(!list.isEmpty()){
+			return list.get(0);
+		}else{
+			return null;
+		}
 	}
 }

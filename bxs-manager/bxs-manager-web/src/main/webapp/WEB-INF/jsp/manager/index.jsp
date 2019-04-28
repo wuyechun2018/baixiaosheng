@@ -101,11 +101,11 @@ function addDefault(){
 	 $('#ilayout').layout('collapse','east');
 	
 	 var param=new Object();
-	 //param.url=ctx+'/manager/sysinfo?version'+Math.random();
-	 //param.title='系统信息';
+	 param.url=ctx+'/manager/sysinfo?version'+Math.random();
+	 param.title='系统信息';
 	 
-	 param.url=ctx+'/eui/ierp/index?version'+Math.random();
-	 param.title='统计分析';
+	 //param.url=ctx+'/eui/ierp/index?version'+Math.random();
+	 //param.title='统计分析';
 	 addTab(param);
 }
 

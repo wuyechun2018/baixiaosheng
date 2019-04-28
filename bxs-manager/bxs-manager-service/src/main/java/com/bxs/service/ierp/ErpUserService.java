@@ -18,4 +18,6 @@ public interface ErpUserService {
 
 	List<EUICombobox> getUserComboboxData();
 
+	ErpUser getErpUserById(String id);
+
 }

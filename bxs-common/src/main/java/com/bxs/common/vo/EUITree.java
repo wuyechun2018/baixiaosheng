@@ -9,7 +9,7 @@ public class EUITree implements java.io.Serializable {
 	private String text;
 	// 节点状态，有两个值 'open' or 'closed', 默认为'open'. 当为‘closed’,说明此节点下有子节点否则此节点为叶子节点
 	private String state;
-	private String checked;
+	private boolean checked;
 	// 节点中其他属性的集合
 	private Map<String, String> attributes;
 	// 子节点集合
@@ -50,11 +50,11 @@ public class EUITree implements java.io.Serializable {
 		this.state = state;
 	}
 
-	public String getChecked() {
+	public boolean getChecked() {
 		return checked;
 	}
 
-	public void setChecked(String checked) {
+	public void setChecked(boolean checked) {
 		this.checked = checked;
 	}
 

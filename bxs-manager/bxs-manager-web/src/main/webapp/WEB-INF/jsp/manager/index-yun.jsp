@@ -211,6 +211,7 @@ $(function(){
 		</div>
 		
 		<%--页面左边，菜单栏--%>
+		<%--当前登录人信息 --%>
 		<div data-options="region:'west',split:true, border: true,iconCls: 'Userstar'" title="<span style='font-size:14px;color:#000;margin-left:8px;'>${SESSION_USER_INFO.userName}</span>" style="width:200px;font-family: Microsoft YaHei;" >
 			<div class="easyui-accordion" data-options="fit:true,border:false" id="menuDiv">
 			</div>

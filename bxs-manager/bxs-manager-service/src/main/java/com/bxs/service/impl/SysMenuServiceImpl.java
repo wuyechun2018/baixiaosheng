@@ -40,4 +40,28 @@ public class SysMenuServiceImpl  implements SysMenuService{
 		return list;
 	}
 
+
+	@Override
+	public List<EUITree> getListByPidAndUserId(String pid, String userId) {
+		List<EUITree> list=new ArrayList<EUITree>();
+		List<SysMenu> menuList=sysMenuDao.getListByPidAndUserId(pid,userId);
+		for (SysMenu sysMenu : menuList) {
+			EUITree easyTree=new EUITree();
+			easyTree.setId(sysMenu.getId());
+			easyTree.setText(sysMenu.getMenuName());
+			//节点状态，有两个值  'open' or 'closed', 默认为'open'. 当为‘closed’,说明此节点下有子节点否则此节点为叶子节点
+			if("1".equals(sysMenu.getMenuType())){
+				easyTree.setState("closed");
+			}else{
+				easyTree.setState("open");
+			}
+			Map<String, String> attr=new HashMap<String, String>();
+			attr.put("menuPid", sysMenu.getPid());
+			attr.put("menuAddr", sysMenu.getMenuUrl());
+			easyTree.setAttributes(attr);
+			list.add(easyTree);
+		}
+		return list;
+	}
+
 }

@@ -41,6 +41,8 @@ public class ErpUser implements java.io.Serializable {
 	private Date updateDate;
 	//数据状态
 	private String dataState;
+	//用户描述
+	private String userDesc;
 
 	// Constructors
 
@@ -216,5 +218,16 @@ public class ErpUser implements java.io.Serializable {
 	public void setDataState(String dataState) {
 		this.dataState = dataState;
 	}
+
+	@Column(name = "USER_DESC", length = 500)
+	public String getUserDesc() {
+		return userDesc;
+	}
+
+	public void setUserDesc(String userDesc) {
+		this.userDesc = userDesc;
+	}
+	
+	
 
 }

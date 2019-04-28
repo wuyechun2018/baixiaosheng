@@ -156,6 +156,9 @@ public class ErpUserController extends BaseController {
 			logger.info("新增操作");
 			erpUser.setCreateUserId(erpUser.getId());
 			erpUser.setCreateDate(new Date());
+			//默认密码
+			erpUser.setLoginPwd(EncryptionUtil.getMd5String("123456"));
+			
 			// 设置为有效
 			erpUser.setDataState("1");
 		}
@@ -183,6 +186,25 @@ public class ErpUserController extends BaseController {
 		EUIPager ePager=getPager(request);
 		Map<String,Object> param=getParamMap(request);
 		return erpUserService.pagerList(ePager,param);
+	}
+	
+	
+	/**
+	 * 
+	 * 重置密码
+	 * @author: wyc
+	 * @createTime: 2019年4月24日 下午4:58:53
+	 * @history:
+	 * @param id
+	 * @return Object
+	 */
+	@RequestMapping("/resetPwd")
+	@ResponseBody
+	public Object resetPwd(String id){
+		ErpUser erpUser=erpUserService.getErpUserById(id);
+		erpUser.setLoginPwd(EncryptionUtil.getMd5String("123456"));
+		erpUserService.save(erpUser);
+		return new JsonMsg(true,"密码已重置");
 	}
 	
 

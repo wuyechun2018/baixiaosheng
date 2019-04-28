@@ -10,8 +10,11 @@ public interface ErpUserRoleService {
 
 	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 
-	Object save(ErpUserRole erpUserRole);
+	void save(ErpUserRole erpUserRole);
 
-	Object delete(String id);
+	EUIGrid getUserListByRoleId(EUIPager ePager, Map<String, Object> param);
+
+	void delete(String roleId, String userId);
+
 
 }
