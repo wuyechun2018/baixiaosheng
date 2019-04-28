@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bxs.common.vo.EUIPager;
 import com.bxs.pojo.ierp.BizAccountVo;
+import com.bxs.pojo.jpa.ierp.ErpRole;
 import com.bxs.pojo.jpa.ierp.ErpUser;
 import com.bxs.pojo.jpa.ierp.ErpUserRole;
 
@@ -36,6 +37,15 @@ public class ErpUserRoleDao {
 		StringBuffer sqlBuff=new StringBuffer();
 		if(param.get("queryKey")!=null&&StringUtils.isNotBlank(param.get("queryKey").toString())){
 			sqlBuff.append("AND( T.EMP_NO LIKE '%"+param.get("queryKey").toString()+"%' OR EMP_NAME LIKE '%"+param.get("queryKey").toString()+"%' OR LOGIN_NAME LIKE '%"+param.get("queryKey").toString()+"%')");
+		}
+		return sqlBuff.toString();
+	}
+	
+	
+	private String getRoleParamSql(Map<String, Object> param) {
+		StringBuffer sqlBuff=new StringBuffer();
+		if(param.get("queryKey")!=null&&StringUtils.isNotBlank(param.get("queryKey").toString())){
+			sqlBuff.append("AND (T.ROLE_NAME LIKE '%"+param.get("queryKey").toString()+"%' OR ROLE_CODE LIKE '%"+param.get("queryKey").toString()+"%')");
 		}
 		return sqlBuff.toString();
 	}
@@ -87,7 +97,7 @@ public class ErpUserRoleDao {
 		if(param.get("isWait")!=null&&StringUtils.isNotBlank(param.get("isWait").toString())&&"0".equals(param.get("isWait").toString())){
 			querySql="SELECT *\n" +
 							"  FROM T_ERP_USER T\n" + 
-							" WHERE T.ID NOT IN (SELECT S.USER_ID\n" + 
+							" WHERE T.DATA_STATE='1' AND T.ID NOT IN (SELECT S.USER_ID\n" + 
 							"                      FROM T_ERP_USER_ROLE S\n" + 
 							"                     WHERE S.DATA_STATE = '1'\n" + 
 							"                       AND S.ROLE_ID = ?)\n"+getParamSql(param);
@@ -95,7 +105,7 @@ public class ErpUserRoleDao {
 		}else{
 			querySql="SELECT *\n" +
 					"  FROM T_ERP_USER T\n" + 
-					" WHERE T.ID IN (SELECT S.USER_ID\n" + 
+					" WHERE T.DATA_STATE='1' AND T.ID IN (SELECT S.USER_ID\n" + 
 					"                      FROM T_ERP_USER_ROLE S\n" + 
 					"                     WHERE S.DATA_STATE = '1'\n" + 
 					"                       AND S.ROLE_ID = ?)\n"+getParamSql(param);
@@ -115,5 +125,58 @@ public class ErpUserRoleDao {
 		}else{
 			return null;
 		}
+	}
+
+
+	public Long getRoleListCountByUserId(Map<String, Object> param) {
+		String sql="";
+		if(param.get("isWait")!=null&&StringUtils.isNotBlank(param.get("isWait").toString())&&"0".equals(param.get("isWait").toString())){
+			sql="SELECT COUNT(1)\n" +
+							"  FROM T_ERP_ROLE T\n" + 
+							" WHERE T.DATA_STATE = '1'\n" + 
+							"   AND T.ID NOT IN (SELECT S.ROLE_ID\n" + 
+							"                      FROM T_ERP_USER_ROLE S\n" + 
+							"                     WHERE S.DATA_STATE = '1'\n" + 
+							"                       AND S.USER_ID = ?)"+getRoleParamSql(param);
+
+		}else{
+			sql="SELECT COUNT(1)\n" +
+					"  FROM T_ERP_ROLE T\n" + 
+					" WHERE T.DATA_STATE = '1'\n" + 
+					"   AND T.ID IN (SELECT S.ROLE_ID\n" + 
+					"                      FROM T_ERP_USER_ROLE S\n" + 
+					"                     WHERE S.DATA_STATE = '1'\n" + 
+					"                       AND S.USER_ID = ?)"+getRoleParamSql(param);
+		}
+		return  jdbcTemplate.queryForObject(sql,new String[]{param.get("userId").toString()},Long.class);
+	}
+
+
+	public List<?> getPagerRoleListByUserId(EUIPager ePager, Map<String, Object> param) {
+		String  querySql="";
+		//未授权
+		if(param.get("isWait")!=null&&StringUtils.isNotBlank(param.get("isWait").toString())&&"0".equals(param.get("isWait").toString())){
+			querySql="SELECT *\n" +
+							"  FROM T_ERP_ROLE T\n" + 
+							" WHERE T.DATA_STATE = '1'\n" + 
+							"   AND T.ID NOT IN (SELECT S.ROLE_ID\n" + 
+							"                      FROM T_ERP_USER_ROLE S\n" + 
+							"                     WHERE S.DATA_STATE = '1'\n" + 
+							"                       AND S.USER_ID = ?)"+getRoleParamSql(param);
+
+
+		}else{
+			querySql="SELECT *\n" +
+					"  FROM T_ERP_ROLE T\n" + 
+					" WHERE T.DATA_STATE = '1'\n" + 
+					"   AND T.ID  IN (SELECT S.ROLE_ID\n" + 
+					"                      FROM T_ERP_USER_ROLE S\n" + 
+					"                     WHERE S.DATA_STATE = '1'\n" + 
+					"                       AND S.USER_ID = ?)"+getRoleParamSql(param);
+		}
+		
+		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
+		List<ErpRole> list = jdbcTemplate.query(sql,new Object[]{param.get("userId").toString(),ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ErpRole.class));
+		return list;
 	}
 }

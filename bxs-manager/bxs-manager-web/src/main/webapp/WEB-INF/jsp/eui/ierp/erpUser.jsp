@@ -5,6 +5,45 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%--放置的位置要特别注意,不能放在第三行,否则会有一些样式问题 --%>
 <%@ include file="/WEB-INF/jsp/base/easyui.jsp" %>
+<style type="text/css">
+
+.add-div{
+	position: absolute;
+	top:45%;
+	min-width: 50px;
+	width:50px;
+	text-align: center;
+}
+
+.remove-div{
+	position: absolute;
+	top:55%;
+	min-width: 50px;
+	width:50px;
+	text-align: center;
+}
+
+
+.add-remove-btn{
+	color:#777;
+	background:#FFF;
+	font-size:14px;
+	font-weight:bold;
+	border: 1px solid #dddddd;
+	text-decoration: none;
+	min-width: 40px;
+	padding:2px 3px;
+}
+
+
+.add-remove-btn:hover{
+	background:#E6E6E6;
+}
+
+
+</style>
+
+
 <title>用户管理</title>
 <script type="text/javascript">
 //当前选中的左边树的节点ID,即单位ID，它是一个全局变量
@@ -125,6 +164,9 @@ function editFun(id) {
 	var rowIndex=getSelectRowIndex(id);
     //获取操作列
     var record=$('#dgTable').datagrid('getData').rows[rowIndex];
+    
+    
+    
   	//加载公司下拉框树
 	loadOrgTree();
     $('#addWin').window('open');
@@ -179,29 +221,159 @@ function addRole(){
 	if (rows.length > 0) {
 		 $('#roleWin').window('open');
 		 var userId=rows[0].id;
-		 $('#userId').val(rows[0].id);
-		 $.ajax({
-		        type: "POST",
-		        url:'${ctx}/userRole/isSysAdmin',
-		        data: {
-		        	userId:userId
-		        },
-		        success: function (data) {
-		       	  	if(data.success){
-		       	  	 	 $('#radio_sysadmin_y').prop('checked', 'checked');
-		       	  	}else{
-		       	  		 $('#radio_sysadmin_n').prop('checked', 'checked');
-		       	  	}
-		        },
-		        error: function(data) {
-		            alert("error:"+data.responseText);
-		         }
-		  		});
+		 loadRoleGrid(userId);
+		
 		
 	}else{
 		 $.messager.alert("操作提示", "请选择一个用户！","warning");  
 	}
 }
+
+
+//待授权查询
+function doWaitDgQuery(){
+    var options = $("#waitDgTable").datagrid("options");
+    //查询
+    options.queryParams.roleId=$('#selectUserId').val();
+    options.queryParams.queryKey= $('#waitDgQueryKey').val();
+    $("#waitDgTable").datagrid(options);
+}
+
+
+//已授权用户查询
+function doHasDgQuery(){
+    var options = $("#hasDgTable").datagrid("options");
+    //查询
+    options.queryParams.roleId=$('#selectUserId').val();
+    options.queryParams.queryKey= $('#hasDgQueryKey').val();
+    $("#hasDgTable").datagrid(options);
+}
+
+
+
+
+/**
+ * 给某个用户添加角色
+ */
+function addUserRole(){
+	//当前所选记录
+	var roleRecord=$('#waitDgTable').datagrid('getSelected');
+	var roleId=roleRecord.id;
+	var userId=$('#selectUserId').val();
+	
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/erpUserRole/save',
+		data:{
+			userId:userId,
+			roleId:roleId
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	$.messager.alert('提示信息',data.msg);
+	    	doWaitDgQuery();
+	    	doHasDgQuery();
+	    }
+	})
+	
+	
+	
+}
+
+/**
+ * 给某个用户移除角色
+ */
+function removeUserRole(){
+	var roleRecord=$('#hasDgTable').datagrid('getSelected');
+	var roleId=roleRecord.id;
+	var userId=$('#selectUserId').val();
+	
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'${ctx}/erpUserRole/delete',
+		data:{
+			userId:userId,
+			roleId:roleId
+		},
+		async: false,
+	    error: function(request) {
+	        $.messager.alert('提示信息',"系统正在升级，请联系管理员或稍后再试！");
+	    },
+	    success: function(data) {
+	    	$.messager.alert('提示信息',data.msg);
+	    	doWaitDgQuery();
+	    	doHasDgQuery();
+	    }
+	})
+}
+
+
+/**
+ * 加载已授权/未授权 列表
+ */
+function loadRoleGrid(userId){
+	 $('#selectUserId').val(userId);
+	
+	 //中间表格
+	var dgTableHeight=340;
+	
+	//1、待授权列表
+    $('#waitDgTable').datagrid({  
+		url:ctx+'/erpUserRole/getRoleListByUserId',
+		method:'post',
+	    queryParams: {
+	    	isWait:'0',
+	    	userId:userId,
+	    	queryKey:$('#waitDgQueryKey').val()
+		},
+		fit:false,
+		pageSize: 10,
+		height: dgTableHeight,
+		fitColumns:true,
+		striped: true,
+		singleSelect:true,
+		pagination: true,  
+		rownumbers: true,  
+		columns:[[
+				{field:'id',title: 'ID',align: 'center',width: 100,hidden:true}, 
+				{field:'roleCode',title: '编码',align: 'left',width: 80},
+				{field:'roleName',title: '名称',align: 'center',width: 100},
+				{field:'memo',title: '说明',align: 'center',width: 100}
+		]]
+	  });
+    
+    //2、已授权列表
+    $('#hasDgTable').datagrid({  
+		url:ctx+'/erpUserRole/getRoleListByUserId',
+		method:'post',
+	    queryParams: {
+	    	isWait:'1',
+	    	userId:userId,
+	    	queryKey:$('#hasDgQueryKey').val()
+		},
+		fit:false,
+		pageSize: 10,
+		height: dgTableHeight,
+		fitColumns:true,
+		striped: true,
+		singleSelect:true,
+		pagination: true,  
+		rownumbers: true,
+		columns:[[
+		          {field:'id',title: '部门ID',align: 'center',width: 100,hidden:true}, 
+		          {field:'roleCode',title: '编码',align: 'left',width: 80},
+					{field:'roleName',title: '名称',align: 'center',width: 100},
+					{field:'memo',title: '说明',align: 'center',width: 100}
+		]]
+	  });
+	
+}
+
 
 
 //关闭"角色分配"窗口
@@ -433,30 +605,50 @@ function submitRoleForm(){
 	</div>
 
 <%--点击"角色分配"弹出的窗口 --%>
-<div id="roleWin" class="easyui-window" title="&nbsp;角色分配" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:460px;height:215px;padding:10px;">
-   <form id="roleForm" method="post">
-   	<table  class="isingelTable">
-   		<tr>
-   			<th>设为管理员：</th>
-   			<td>
-   				<input type="hidden" id="userId"  name="userId" value="1"></input>
-   				
-   				<input  type="radio" id="radio_sysadmin_n" name="sysadmin" value="0" checked="checked" />
-			    <label for="radio_sysadmin_n" >否</label>
-				<input  type="radio" id="radio_sysadmin_y" name="sysadmin" value="1" />
-				<label for="radio_sysadmin_y">是</label>
-   			</td>
-   		<tr>
-   	</table>
-   </form>
-    <div style="text-align:center;padding:25px 5px 5px 5px;">
-    	<table style="width:100%;">
-    		<tr>
-    			<td style="width:50%;text-align: right;padding-right: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="submitRoleForm()">保存</a></td>
-    			<td style="width:50%;text-align: left;padding-left: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearRoleForm()">取消</a></td>
-    		</tr>
-		 </table>
-    </div>
+<div id="roleWin" class="easyui-window" title="&nbsp;角色分配" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:699px;height:460px;padding:1px;">
+   <table style="margin:0px;">
+        		<tr style="margin:0px;padding:0px;">
+        			<td style="margin:0px;padding:0px;width:308px;height:410px;border: 0px solid;">
+        				<input style="visibility: hidden;" id="selectUserId" />
+		        		<table style="width:100%;padding:0px;margin:0px;;height:50px;" class="searchBox">
+							<tr>
+								<td style="width:100px;text-align: right;margin-right: 5px;">名称:</td>
+								<td style="width:200px;text-align: left;">
+									<input id="waitDgQueryKey" name="waitDgQueryKey" style="width:150px">
+								</td>
+								
+								<td>&nbsp;</td>
+								<td><a href="javascript:void(0)" id="search" onclick="doWaitDgQuery()" class="easyui-linkbutton" style="min-width: 54px;" iconCls="Zoom">查询</a></td>
+							</tr>
+						</table>
+			            <table id="waitDgTable">
+			        	</table>
+        			</td>
+        			<td style="margin:0px;padding:0px;width:68px;height:410px;border: 0px solid;">
+        				<div class="add-div">
+				        	<a href="javascript:void(0)" title="添加" class="add-remove-btn" onclick="addUserRole()">&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</a>
+				        </div>
+				        <div class="remove-div">
+				        	<a href="javascript:void(0)" title="移除" class="add-remove-btn" onclick="removeUserRole()">&nbsp;&nbsp;&lt;&lt;&nbsp;&nbsp;</a>
+				        </div>
+        			</td>
+        			<td style="margin:0px;padding:0px;width:318px;height:410px;border: 0px solid;">
+        				<table style="width:100%;padding:0px;margin:0px;height:50px;" class="searchBox">
+							<tr>
+								<td style="width:100px;text-align: right;margin-right: 5px;">名称:</td>
+								<td style="width:200px;text-align: left;">
+									<input id="hasDgQueryKey" name="hasDgQueryKey" style="width:150px">
+								</td>
+								
+								<td>&nbsp;</td>
+								<td><a href="javascript:void(0)" id="search" onclick="doHasDgQuery()" class="easyui-linkbutton" style="min-width: 54px;" iconCls="Zoom">查询</a></td>
+							</tr>
+						</table>
+			            <table id="hasDgTable">
+			        	</table>
+        			</td>
+        		</tr>
+        	</table>
 </div> 
  
 </body>

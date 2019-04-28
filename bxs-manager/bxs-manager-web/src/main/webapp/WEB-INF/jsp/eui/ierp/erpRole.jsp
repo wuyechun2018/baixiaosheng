@@ -302,10 +302,7 @@ function loadUserRoleTab(roleId){
 
 //给角色添加用户
 function addUserRole(){
-	//获取选中的用户
-	var rowIndex=getSelectRowIndex(id);
-    //获取操作列
-    var record=$('#waitDgTable').datagrid('getData').rows[rowIndex];
+    var record=$('#waitDgTable').datagrid('getSelected');
 	var userId=record.id;
 	var roleId=$('#selectRoleId').val();
 	
@@ -334,9 +331,9 @@ function addUserRole(){
 //给角色移除用户
 function removeUserRole(){
 	//获取选中的用户
-	var rowIndex=getSelectRowIndex(id);
+	//var rowIndex=getSelectRowIndex(id);
     //获取操作列
-    var record=$('#hasDgTable').datagrid('getData').rows[rowIndex];
+    var record=$('#hasDgTable').datagrid('getSelected');
 	var userId=record.id;
 	var roleId=$('#selectRoleId').val();
 	

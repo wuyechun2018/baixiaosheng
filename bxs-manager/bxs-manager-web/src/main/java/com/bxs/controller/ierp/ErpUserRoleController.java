@@ -61,7 +61,34 @@ public class ErpUserRoleController extends BaseController{
 	}
 	
 	
+	/**
+	 * 
+	 * 根据用户Id获取已授权/未授权的角色分页列表
+	 * @author: wyc
+	 * @createTime: 2019年4月28日 下午2:10:08
+	 * @history:
+	 * @param request
+	 * @return EUIGrid
+	 */
+	@RequestMapping("/getRoleListByUserId")
+	@ResponseBody
+	public EUIGrid getRoleListByUserId(HttpServletRequest request){
+		EUIPager ePager=getPager(request);
+		Map<String,Object> param=getParamMap(request);
+		return erpUserRoleService.getRoleListByUserId(ePager,param);
+	}
 	
+	
+	
+	/**
+	 * 
+	 * 分页列表
+	 * @author: wyc
+	 * @createTime: 2019年4月28日 下午2:08:47
+	 * @history:
+	 * @param request
+	 * @return EUIGrid
+	 */
 	@RequestMapping("/pagerList")
 	@ResponseBody
 	public EUIGrid pagerList(HttpServletRequest request) {

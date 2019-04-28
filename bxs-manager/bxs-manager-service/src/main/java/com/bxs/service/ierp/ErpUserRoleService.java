@@ -16,5 +16,7 @@ public interface ErpUserRoleService {
 
 	void delete(String roleId, String userId);
 
+	EUIGrid getRoleListByUserId(EUIPager ePager, Map<String, Object> param);
+
 
 }

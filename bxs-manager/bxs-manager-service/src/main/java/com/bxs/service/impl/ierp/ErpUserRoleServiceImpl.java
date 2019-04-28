@@ -46,4 +46,15 @@ public class ErpUserRoleServiceImpl implements ErpUserRoleService{
 		erpUserRoleRespository.save(erpUserRole);
 	}
 
+	/**
+	 * 根据用户Id获取已授权/未授权的角色分页列表
+	 */
+	@Override
+	public EUIGrid getRoleListByUserId(EUIPager ePager, Map<String, Object> param) {
+		EUIGrid grid = new EUIGrid();
+		grid.setTotal(erpUserRoleDao.getRoleListCountByUserId(param));
+		grid.setRows(erpUserRoleDao.getPagerRoleListByUserId(ePager,param));
+		return grid;
+	}
+
 }
