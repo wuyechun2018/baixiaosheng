@@ -63,7 +63,7 @@ public class ErpAccountTypeDao {
 		if(param.get("accountType")!=null&&StringUtils.isNotBlank(param.get("accountType").toString())){
 			sqlBuff.append(" AND  T.ACCOUNT_TYPE = '"+param.get("accountType").toString()+"' \n");
 		}
-		sqlBuff.append(" ORDER BY T.DISPLAY_ORDER ");
+		sqlBuff.append(" ORDER BY T.INCOME_EXPENSE, T.DISPLAY_ORDER ");
 		return sqlBuff.toString();
 	}
 	
@@ -77,13 +77,13 @@ public class ErpAccountTypeDao {
 	 * @return List<ErpAccountType>
 	 */
 	public List<ErpAccountType> getListByPid(String pid) {
-		String sql="SELECT * FROM T_ERP_ACCOUNT_TYPE T WHERE T.ACCOUNT_TYPE_PID=? AND DATA_STATE='1' ORDER BY T.DISPLAY_ORDER";
+		String sql="SELECT * FROM T_ERP_ACCOUNT_TYPE T WHERE T.ACCOUNT_TYPE_PID=? AND DATA_STATE='1' ORDER BY T.INCOME_EXPENSE, T.DISPLAY_ORDER";
 		List<ErpAccountType> list = jdbcTemplate.query(sql,new Object[]{pid},new BeanPropertyRowMapper(ErpAccountType.class));
 		return list;
 	}
 
 	public List<ErpAccountType> getListByPidAndType(String pid, String type) {
-		String sql="SELECT * FROM T_ERP_ACCOUNT_TYPE T WHERE T.ACCOUNT_TYPE_PID=? AND INCOME_EXPENSE=? AND DATA_STATE='1' ORDER BY T.DISPLAY_ORDER";
+		String sql="SELECT * FROM T_ERP_ACCOUNT_TYPE T WHERE T.ACCOUNT_TYPE_PID=? AND INCOME_EXPENSE=? AND DATA_STATE='1' ORDER BY T.INCOME_EXPENSE, T.DISPLAY_ORDER";
 		List<ErpAccountType> list = jdbcTemplate.query(sql,new Object[]{pid,type},new BeanPropertyRowMapper(ErpAccountType.class));
 		return list;
 	}
