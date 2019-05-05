@@ -167,6 +167,21 @@ table.gridtable td {
 }
 
 
+.ibtn-log{
+	color:green;
+	width:80px;
+	background-color: #FFF;
+	background-image:none;
+	border: 1px solid green;
+	margin: 0 2px;
+	text-align: center;
+}
+
+.ibtn-log:hover{
+	cursor: pointer;
+}
+
+
 .top-bar-info {
     position: absolute;
     width: 90px;

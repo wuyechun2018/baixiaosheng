@@ -42,6 +42,9 @@ public class UserInfoVo {
 	//备注信息
 	private String userDesc;
 	
+	//所属公司Id
+	private String belongOrgId;
+	
 	public String getId() {
 		return id;
 	}
@@ -132,4 +135,11 @@ public class UserInfoVo {
 	public void setUserDesc(String userDesc) {
 		this.userDesc = userDesc;
 	}
+	public String getBelongOrgId() {
+		return belongOrgId;
+	}
+	public void setBelongOrgId(String belongOrgId) {
+		this.belongOrgId = belongOrgId;
+	}
+	
 }

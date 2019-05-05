@@ -11,4 +11,6 @@ public interface ErpAccountTypeService {
 
 	void delete(String id);
 
+	Object getListByPidAndType(String pid, String type);
+
 }

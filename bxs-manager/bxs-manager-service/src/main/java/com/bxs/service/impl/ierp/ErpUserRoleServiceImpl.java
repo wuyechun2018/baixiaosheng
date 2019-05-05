@@ -1,4 +1,5 @@
 package com.bxs.service.impl.ierp;
+import java.util.List;
 import java.util.Map;
 
 import org.bxs.jpa.ErpUserRoleRespository;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.bxs.common.vo.EUIGrid;
 import com.bxs.common.vo.EUIPager;
 import com.bxs.jdbc.ierp.ErpUserRoleDao;
+import com.bxs.pojo.jpa.ierp.ErpRole;
 import com.bxs.pojo.jpa.ierp.ErpUserRole;
 import com.bxs.service.ierp.ErpUserRoleService;
 
@@ -55,6 +57,18 @@ public class ErpUserRoleServiceImpl implements ErpUserRoleService{
 		grid.setTotal(erpUserRoleDao.getRoleListCountByUserId(param));
 		grid.setRows(erpUserRoleDao.getPagerRoleListByUserId(ePager,param));
 		return grid;
+	}
+
+	@Override
+	public String getRoleCodeStrByUserId(String userId) {
+		String roleCodeStr="";
+		List<ErpRole> roleCodeList=erpUserRoleDao.getRoleListByUserId(userId);
+		for (int i = 0; i < roleCodeList.size(); i++) {
+			String code=roleCodeList.get(i).getRoleCode();
+			roleCodeStr=roleCodeStr+code+",";
+		}
+		roleCodeStr=roleCodeStr.substring(0, roleCodeStr.lastIndexOf(","));
+		return roleCodeStr;
 	}
 
 }

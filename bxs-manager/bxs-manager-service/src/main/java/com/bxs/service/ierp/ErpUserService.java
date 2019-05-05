@@ -16,7 +16,7 @@ public interface ErpUserService {
 
 	EUIGrid pagerList(EUIPager ePager, Map<String, Object> param);
 
-	List<EUICombobox> getUserComboboxData();
+	List<EUICombobox> getUserComboboxData(Map<String,Object> param);
 
 	ErpUser getErpUserById(String id);
 

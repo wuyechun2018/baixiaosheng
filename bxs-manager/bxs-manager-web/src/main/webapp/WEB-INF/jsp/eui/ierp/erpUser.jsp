@@ -457,9 +457,11 @@ function submitRoleForm(){
 		        	   }
 		          }}, 
 		          {field:'mobilePhone',title: '手机号',align: 'center',width: 100}, 
-		          {field:'email',title: '邮箱',align: 'center',width: 100},
-		          {field:'id',title: '操作',align: 'center',width: 100, formatter:function(val,rec){
-		        	  return "<span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span>|<span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
+		          {field:'email',title: '邮箱',align: 'center',width: 100,hidden:true},
+		          {field:'id',title: '操作',align: 'center',width: 120, formatter:function(val,rec){
+		        	 // return "<span class='btn_a_edit'><a href='javascript:void(0)' onclick=editFun('"+val+"') >编辑</a></span>|<span class='btn_a_delete'><a href='javascript:void(0)' onclick=deleteFun('"+val+"') >删除</a></span>";
+		        	  return "<button class='ibtn-edit' onclick=editFun('"+val+"')>编辑</button><button class='ibtn-top' onclick=deleteFun('"+val+"')>删除</button>";
+		          
 		          }}
 		]]
 		,toolbar:$('#tb')

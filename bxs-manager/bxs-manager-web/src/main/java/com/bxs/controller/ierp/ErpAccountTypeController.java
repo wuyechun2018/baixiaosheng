@@ -49,6 +49,28 @@ public class ErpAccountTypeController {
 	}
 	
 	
+	
+	/**
+	 * 
+	 * 根据父主键和类型（0 ：收入  1：支出）
+	 * @author: wyc
+	 * @createTime: 2019年4月29日 下午5:19:08
+	 * @history:
+	 * @param pid
+	 * @param type
+	 * @return Object
+	 */
+	@RequestMapping("/getListByPidAndType")
+	@ResponseBody
+	public Object getListByPidAndType(String pid,String type){
+		if(pid==null){
+			pid="0";
+		}
+		return erpAccountTypeService.getListByPidAndType(pid,type);
+	}
+	
+	
+	
 	/**
 	 * 
 	 * 删除操作

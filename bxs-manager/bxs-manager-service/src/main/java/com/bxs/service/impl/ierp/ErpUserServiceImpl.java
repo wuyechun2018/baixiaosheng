@@ -47,9 +47,9 @@ public class ErpUserServiceImpl implements ErpUserService{
 
 
 	@Override
-	public List<EUICombobox> getUserComboboxData() {
+	public List<EUICombobox> getUserComboboxData(Map<String,Object> param) {
 		List<EUICombobox> result=new ArrayList<EUICombobox>();
-		List<ErpUser> list=erpUserDao.getUserList();
+		List<ErpUser> list=erpUserDao.getUserList(param);
 		for (ErpUser erpUser : list) {
 			EUICombobox combo=new EUICombobox();
 			combo.setId(erpUser.getId());

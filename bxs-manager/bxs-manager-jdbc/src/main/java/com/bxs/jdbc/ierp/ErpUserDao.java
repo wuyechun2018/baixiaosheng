@@ -50,6 +50,11 @@ public class ErpUserDao {
 	 */
 	private String getParamSql(Map<String, Object> param) {
 		StringBuffer sqlBuff=new StringBuffer();
+		
+		if(param.get("Id")!=null&&StringUtils.isNotBlank(param.get("Id").toString())){
+			sqlBuff.append(" AND T.ID = '" + param.get("Id").toString() + "'\n");
+		}
+		
 		if(param.get("orgId")!=null&&StringUtils.isNotBlank(param.get("orgId").toString())&&!"1".equals(param.get("orgId").toString())){
 			sqlBuff.append(" AND T.BELONG_ORG_ID = '" + param.get("orgId").toString() + "'\n");
 		}
@@ -71,8 +76,8 @@ public class ErpUserDao {
 	}
 
 
-	public List<ErpUser> getUserList() {
-		String  querySql="SELECT * FROM T_erp_user T WHERE 1=1  AND T.DATA_STATE='1'\n";
+	public List<ErpUser> getUserList(Map<String,Object> param) {
+		String  querySql="SELECT * FROM T_erp_user T WHERE 1=1  AND T.DATA_STATE='1'\n"+getParamSql(param);
 		List<ErpUser> list = jdbcTemplate.query(querySql,new BeanPropertyRowMapper(ErpUser.class));
 		return list;
 	}

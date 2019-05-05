@@ -73,4 +73,26 @@ public class ErpAccountTypeServiceImpl implements ErpAccountTypeService {
 		erpAccountTypeRespostory.save(erpAccountType);
 	}
 
+	@Override
+	public Object getListByPidAndType(String pid, String type) {
+		List<EUITree> list=new ArrayList<EUITree>();
+		List<ErpAccountType> erpAccountTypeList=erpAccountTypeDao.getListByPidAndType(pid,type);
+		for (ErpAccountType erpAccountType : erpAccountTypeList) {
+			EUITree easyTree=new EUITree();
+			easyTree.setId(erpAccountType.getId());
+			easyTree.setText(erpAccountType.getAccountTypeName());
+			easyTree.setState(hasChild(erpAccountType.getId())?"closed":"open");
+			Map<String, String> attr=new HashMap<String, String>();
+			attr.put("accountTypePid", erpAccountType.getAccountTypePid());
+			attr.put("accountTypeCode",erpAccountType.getAccountTypeCode());
+			attr.put("displayOrder", erpAccountType.getDisplayOrder()+"");
+			attr.put("incomeExpense",erpAccountType.getIncomeExpense());
+			attr.put("memo",erpAccountType.getMemo());
+			attr.put("dataState", erpAccountType.getDataState());
+			easyTree.setAttributes(attr);
+			list.add(easyTree);
+		}
+		return list;
+	}
+
 }

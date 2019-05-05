@@ -82,4 +82,10 @@ public class ErpAccountTypeDao {
 		return list;
 	}
 
+	public List<ErpAccountType> getListByPidAndType(String pid, String type) {
+		String sql="SELECT * FROM T_ERP_ACCOUNT_TYPE T WHERE T.ACCOUNT_TYPE_PID=? AND INCOME_EXPENSE=? AND DATA_STATE='1' ORDER BY T.DISPLAY_ORDER";
+		List<ErpAccountType> list = jdbcTemplate.query(sql,new Object[]{pid,type},new BeanPropertyRowMapper(ErpAccountType.class));
+		return list;
+	}
+
 }

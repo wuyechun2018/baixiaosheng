@@ -1,9 +1,12 @@
 package com.bxs.controller.ierp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -14,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.bxs.common.dict.BizConstant;
 import com.bxs.common.dict.SystemConstant;
 import com.bxs.common.utils.BaseController;
 import com.bxs.common.utils.EncryptionUtil;
@@ -25,6 +30,7 @@ import com.bxs.pojo.ConfigInfoVo;
 import com.bxs.pojo.UserInfoVo;
 import com.bxs.pojo.jpa.ierp.ErpUser;
 import com.bxs.service.ConfigService;
+import com.bxs.service.ierp.ErpUserRoleService;
 import com.bxs.service.ierp.ErpUserService;
 
 @Controller
@@ -34,6 +40,9 @@ public class ErpUserController extends BaseController {
 
 	@Autowired
 	private ErpUserService erpUserService;
+	
+	@Autowired
+	private ErpUserRoleService erpUserRoleService;
 	
 	//系统配置
 	@Autowired
@@ -55,8 +64,9 @@ public class ErpUserController extends BaseController {
 	 */
 	@RequestMapping("/getUserComboboxData")
 	@ResponseBody
-	public List<EUICombobox> getUserComboboxData(){
-		return erpUserService.getUserComboboxData();
+	public List<EUICombobox> getUserComboboxData(HttpServletRequest request){
+		Map<String,Object> param=getParamMap(request);
+		return erpUserService.getUserComboboxData(param);
 	}
 	
 	
@@ -134,6 +144,7 @@ public class ErpUserController extends BaseController {
 		userInfoVo.setUserName(info.getEmpName());
 		userInfoVo.setLoginName(info.getLoginName());
 		userInfoVo.setLoginPassword(info.getLoginPwd());
+		userInfoVo.setBelongOrgId(info.getBelongOrgId());
 		return userInfoVo;
 	}
 
@@ -205,6 +216,38 @@ public class ErpUserController extends BaseController {
 		erpUser.setLoginPwd(EncryptionUtil.getMd5String("123456"));
 		erpUserService.save(erpUser);
 		return new JsonMsg(true,"密码已重置");
+	}
+	
+	
+	/**
+	 * 
+	 * 验证是否已经登录
+	 * @author: wyc
+	 * @createTime: 2018年2月26日 下午7:03:03
+	 * @history:
+	 * @return Object
+	 */
+	@RequestMapping("/isHasLogin")
+	@ResponseBody
+	public Object isHasLogin(String password,HttpSession session){
+		Map<String,Object> userMap=new HashMap<String,Object>();
+		UserInfoVo info=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		String roleCodeStr=erpUserRoleService.getRoleCodeStrByUserId(info.getId());
+		userMap.put("userInfo",info);
+		//普通员工（只能看到自己的账务）
+		userMap.put(BizConstant.ERP_ROLE_CODE_PTYG,(roleCodeStr.toUpperCase().indexOf(BizConstant.ERP_ROLE_CODE_PTYG)>-1));
+		//财务（只能看到本公司的员工的账务）
+		userMap.put(BizConstant.ERP_ROLE_CODE_CW, roleCodeStr.toUpperCase().indexOf(BizConstant.ERP_ROLE_CODE_CW)>-1);
+		//总经理（拥有最高权限）
+		userMap.put(BizConstant.ERP_ROLE_CODE_ZJL, roleCodeStr.toUpperCase().indexOf(BizConstant.ERP_ROLE_CODE_ZJL)>-1);
+		//管理员（拥有最高权限）
+		userMap.put(BizConstant.ERP_ROLE_CODE_GLY, roleCodeStr.toUpperCase().indexOf(BizConstant.ERP_ROLE_CODE_GLY)>-1);
+		
+		if(info!=null){
+			return new JsonMsg(true,userMap);
+		}else{
+			return new JsonMsg(false,"请重新登录");
+		}
 	}
 	
 

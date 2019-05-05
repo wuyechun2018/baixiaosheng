@@ -179,4 +179,18 @@ public class ErpUserRoleDao {
 		List<ErpRole> list = jdbcTemplate.query(sql,new Object[]{param.get("userId").toString(),ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ErpRole.class));
 		return list;
 	}
+
+
+	public List<ErpRole> getRoleListByUserId(String userId) {
+		String sql=	"SELECT ROLE_CODE\n" +
+						"  FROM T_ERP_ROLE S\n" + 
+						" WHERE S.ID IN (SELECT T.ROLE_ID\n" + 
+						"                  FROM T_ERP_USER_ROLE T\n" + 
+						"                 WHERE T.USER_ID = ?\n" + 
+						"                   AND T.DATA_STATE = '1')\n" + 
+						"   AND S.DATA_STATE = '1'";
+
+		List<ErpRole> list = jdbcTemplate.query(sql,new Object[]{userId},new BeanPropertyRowMapper(ErpRole.class));
+		return list;
+	}
 }

@@ -18,5 +18,7 @@ public interface ErpUserRoleService {
 
 	EUIGrid getRoleListByUserId(EUIPager ePager, Map<String, Object> param);
 
+	String getRoleCodeStrByUserId(String userId);
+
 
 }
