@@ -1,5 +1,5 @@
-Bxs 是“百晓生”的中文拼音首字符简写，起源于自己想做一个“排行榜”网站，放一些新奇好玩的东西。
-==
+BXS 是“百晓生”的中文拼音首字符简写，起源于自己想做一个“排行榜”网站，放一些新奇好玩的东西。
+
 
 1、初始化成一个Maven项目；  
 ==
@@ -60,25 +60,11 @@ serivce mysql start;
 
 
 4、几个值得一看的页面
+1）http://localhost:2468/bxs-manager-web/stk/index  基于metronic-4.7的后台管理页面
 
 
 
-2018-07-16 引入Spring Data Jpa,提高基本的增、删、改操作效率
-# Changes to be committed:
-#	new file:   bxs-manager/bxs-manager-jpa/pom.xml
-#	new file:   bxs-manager/bxs-manager-jpa/src/main/java/org/bxs/jpa/BizNodeRepository.java
-#	modified:   bxs-manager/bxs-manager-pojo/pom.xml
-#	new file:   bxs-manager/bxs-manager-pojo/src/main/java/com/bxs/pojo/jpa/BizNode.java
-#	new file:   bxs-manager/bxs-manager-pojo/src/main/java/com/bxs/pojo/jpa/BizNodeExtend.java
-#	modified:   bxs-manager/bxs-manager-service/pom.xml
-#	new file:   bxs-manager/bxs-manager-service/src/main/java/com/bxs/service/BizNodeService.java
-#	new file:   bxs-manager/bxs-manager-service/src/main/java/com/bxs/service/impl/BizNodeServiceImpl.java
-#	new file:   bxs-manager/bxs-manager-web/src/main/java/com/bxs/controller/BizNodeController.java
-#	new file:   bxs-manager/bxs-manager-web/src/main/resources/spring/applicationContext-dao-jpa.xml
-#	renamed:    bxs-manager/bxs-manager-web/src/main/resources/spring/applicationContext-trans.xml -> bxs-manager/bxs-manager-web/src/main/resources/spring/tst-applicationContext-trans.xml
-#	modified:   bxs-manager/pom.xml
-#	modified:   bxs-parent/pom.xml
-#
+
 
 
 
