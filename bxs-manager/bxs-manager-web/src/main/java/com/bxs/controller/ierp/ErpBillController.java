@@ -77,7 +77,7 @@ public class ErpBillController extends BaseController {
 	public JsonMsg save(ErpBill erpBill, HttpSession session,HttpServletRequest request) {
 		UserInfoVo userInfo=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
 		logger.info("开始保存账单操作[erpBill-save]");
-		String opInfo="保存";
+		String opInfo="新增";
 		
 		erpBill.setDataState("1");
 		//新增操作
@@ -91,16 +91,103 @@ public class ErpBillController extends BaseController {
 		}
 		//设置业务状态，1待提交、2待审核（可取回，可打回）、3已审核、4已归档
 		erpBill.setBizStatus("1");
-		erpBillService.save(erpBill);
+		ErpBill savedBill=erpBillService.save(erpBill);
 		
 		//操作日志
 		ErpLog erpLog=new ErpLog();
 		erpLog.setLoginClientIp(CommonUtil.getClientIP(request));
 		erpLog.setLoginUserId(userInfo.getId());
-		erpLog.setOpreateInfo(opInfo);
+		erpLog.setOperateInfo(opInfo);
 		//业务账单
-		erpLog.setOpreateType(BizConstant.ERP_LOG_OPTYPE_BILL);
-		erpLog.setOpreateTime(new Date());
+		erpLog.setOperateType(BizConstant.ERP_LOG_OPTYPE_BILL);
+		erpLog.setOperateTime(new Date());
+		//业务主体Id
+		erpLog.setBizId(savedBill.getId());
+		erpLogService.save(erpLog);
+		
+		return new JsonMsg();
+	}
+	
+	
+	
+	/**
+	 * 
+	 * 上报
+	 * @author: wyc
+	 * @createTime: 2019年5月6日 下午6:30:11
+	 * @history:
+	 * @return JsonMsg
+	 */
+	@RequestMapping("/report")
+	@ResponseBody
+	public JsonMsg report(ErpBill erpBill, HttpSession session,HttpServletRequest request){
+		UserInfoVo userInfo=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+
+		ErpBill existErpBill=erpBillService.getErpBillById(erpBill.getId());
+		//设置业务状态，1待提交、2待审核（可取回，可打回）、3已审核、4已归档
+		existErpBill.setBizStatus("2");
+		erpBillService.save(existErpBill);
+		
+		//操作日志
+		ErpLog erpLog=new ErpLog();
+		erpLog.setLoginClientIp(CommonUtil.getClientIP(request));
+		erpLog.setLoginUserId(userInfo.getId());
+		//提交 操作，从 待提交 到 待审核
+		erpLog.setOperateInfo("提交");
+		//业务账单
+		erpLog.setOperateType(BizConstant.ERP_LOG_OPTYPE_BILL);
+		erpLog.setOperateTime(new Date());
+		//业务主体Id
+		erpLog.setBizId(existErpBill.getId());
+		erpLogService.save(erpLog);
+		
+		return new JsonMsg();
+	}
+	
+	
+	/**
+	 * 
+	 * 审批操作
+	 * @author: wyc
+	 * @createTime: 2019年5月10日 上午8:59:03
+	 * @history:
+	 * @param erpBill
+	 * @param session
+	 * @param request
+	 * @return JsonMsg
+	 */
+	@RequestMapping("/spReport")
+	@ResponseBody
+	public JsonMsg spReport(ErpBill erpBill, HttpSession session,HttpServletRequest request){
+		UserInfoVo userInfo=(UserInfoVo) session.getAttribute(SystemConstant.CURRENT_SESSION_USER_INFO);
+		//TG 通过 DH 打回
+		String spFlag=request.getParameter("spFlag");
+		ErpBill existErpBill=erpBillService.getErpBillById(erpBill.getId());
+		//审核意见
+		String shDesc=request.getParameter("shDesc");
+		String operateInfo="";
+		if("TG".equals(spFlag)){
+			//如果通过则状态为 已审核
+			existErpBill.setBizStatus("3");
+			operateInfo="审核通过，审批意见为："+shDesc;
+		}else if("DH".equals(spFlag)){
+			//打回
+		    existErpBill.setBizStatus("1");
+		    operateInfo="打回，审批意见为："+shDesc;
+		}
+		erpBillService.save(existErpBill);
+
+		//操作日志
+		ErpLog erpLog=new ErpLog();
+		erpLog.setLoginClientIp(CommonUtil.getClientIP(request));
+		erpLog.setLoginUserId(userInfo.getId());
+		//提交 操作，从 待提交 到 待审核
+		erpLog.setOperateInfo(operateInfo);
+		//业务账单
+		erpLog.setOperateType(BizConstant.ERP_LOG_OPTYPE_BILL);
+		erpLog.setOperateTime(new Date());
+		//业务主体Id
+		erpLog.setBizId(existErpBill.getId());
 		erpLogService.save(erpLog);
 		
 		return new JsonMsg();

@@ -103,9 +103,9 @@ public class ErpOrgController extends BaseController{
 		ErpLog erpLog=new ErpLog();
 		erpLog.setLoginClientIp(CommonUtil.getClientIP(request));
 		erpLog.setLoginUserId(userInfo.getId());
-		erpLog.setOpreateInfo("保存单位");
-		erpLog.setOpreateType("1");
-		erpLog.setOpreateTime(new Date());
+		erpLog.setOperateInfo("保存单位");
+		erpLog.setOperateType("1");
+		erpLog.setOperateTime(new Date());
 		erpLogService.save(erpLog);
 		
 		return new JsonMsg();

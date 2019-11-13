@@ -115,9 +115,9 @@ public class ErpAccountTypeController {
 		ErpLog erpLog=new ErpLog();
 		erpLog.setLoginClientIp(CommonUtil.getClientIP(request));
 		erpLog.setLoginUserId(userInfo.getId());
-		erpLog.setOpreateInfo("保存账单类型");
-		erpLog.setOpreateType("1");
-		erpLog.setOpreateTime(new Date());
+		erpLog.setOperateInfo("保存账单类型");
+		erpLog.setOperateType("1");
+		erpLog.setOperateTime(new Date());
 		erpLogService.save(erpLog);
 		
 		return new JsonMsg();

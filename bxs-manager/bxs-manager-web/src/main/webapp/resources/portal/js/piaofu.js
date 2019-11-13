@@ -83,7 +83,8 @@ $.fn.autoMove = function(args){
 			mvtid = setTimeout(move, time);//递归调用，使飘窗连续运动
 		}
 		move();//触发动作
-		that.on('mouseenter', function(){ clearTimeout(mvtid) });//添加鼠标事件
+		//that.on('mouseenter', function(){ clearTimeout(mvtid) });//添加鼠标事件
+		that.on('mouseover', function(){ clearTimeout(mvtid) });//添加鼠标事件
 		that.on('mouseleave', function(){ move() });
 	});
 }//end plugin definition

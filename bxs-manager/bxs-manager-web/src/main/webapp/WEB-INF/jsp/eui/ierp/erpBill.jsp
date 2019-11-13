@@ -8,6 +8,30 @@
 <title>账单管理</title>
 <script type="text/javascript">
 
+//提交"审批"表单
+//TG 通过 DH 打回
+function submitSpForm(spFlag){
+	if($("#addForm").form('validate')){
+		$.ajax({
+	        type: "POST",
+	        url:'${ctx}/erpBill/spReport?spFlag='+spFlag,
+	        data: $('#addForm').serialize(),
+	        success: function (data) {
+	        	$.messager.alert('提示信息',data.msg);
+	       	 	$('#addWin').window('close');
+			    //刷新列表
+			    $("#dgTable").datagrid('reload');
+			    
+	        },
+	        error: function(data) {
+	            alert("error:"+data.responseText);
+	         }
+	  		});
+	   }
+}
+
+
+
 //点击"添加弹出框-保存按钮",提交表单
 function submitForm(){
   if($("#addForm").form('validate')){
@@ -27,6 +51,43 @@ function submitForm(){
    }
 };
 
+//不允许操作
+function notOperFun(id,opFlag){
+	if(opFlag=='EDIT'){
+		$.messager.alert('提示信息','该条记录已上报，不允许编辑操作！');
+	}else if(opFlag=='DELETE'){
+		$.messager.alert('提示信息','该条记录已上报，不允许删除操作！');
+	}
+}
+
+
+function addFormBtnShow(funFlag){
+	//上报、关闭
+	$('#reportTd').hide();
+	//关闭
+	$('#closeTd').hide();
+	//通过、打回、关闭
+	$('#shTd').hide();
+	//申请更改
+	$('#sqggTd').hide();
+	//审核意见
+	$('#shOption').hide();
+	// 保存 、取消
+	$('#editTd').hide();
+	
+	if(funFlag=='Add'){
+		// 保存 、取消
+		$('#editTd').show();
+	}else if(funFlag=='View'){
+		//关闭
+		$('#closeTd').show();
+	}else if(funFlag=='Edit'){
+		//保存、取消
+		$('#editTd').show();
+	}
+	
+	
+}
 
 
 //点击"添加按钮"
@@ -37,16 +98,12 @@ function addFun(){
 	});
 	$('#addWin').window('open');
 	$('#addForm').form('clear');
-	$('#closeTd').hide();
-	$('#editTd').show();
-	
 	//入账时间默认为当天
 	$('#billDate').datebox('setValue',myDateFormatter(new Date()));
 	//默认收入
 	$("#radio_accountType_sr" ).prop("checked",true);
-	
 	bindAccountTypeChanged();
-	
+	addFormBtnShow('Add');
 }
 
 //点击"添加弹出框-取消按钮",提交表单
@@ -62,9 +119,11 @@ function reportForm(){
         url:'${ctx}/erpBill/report',
         data: $('#addForm').serialize(),
         success: function (data) {
+        	$.messager.alert('提示信息',data.msg);
        	 	$('#addWin').window('close');
 		    //刷新列表
 		    $("#dgTable").datagrid('reload');
+		    
         },
         error: function(data) {
             alert("error:"+data.responseText);
@@ -108,59 +167,87 @@ function viewFun(id) {
     //获取操作列
     var record=$('#dgTable').datagrid('getData').rows[rowIndex];
     $('#addWin').window('open');
-    
-    $('#closeTd').show();
-    $('#reportTd').hide();
-    $('#editTd').hide();
-    
     $('#addWin').panel({
 		title : '查看',
-		iconCls : "icon-edit"
+		iconCls : "Image",
+		height:425
 	});
-    
-    
     $("#addForm").form("load", record); 
+    //只读
+    $('input,select,textarea',$('form[id="addForm"]')).attr('readonly',true);
+    addFormBtnShow('View')
 }
 
 
 //点击“操作列-上报”
-function reportFun(id) {
+function reportFun(id,flag) {
+	//设置状态
+	$('#sbFlag').val(flag);
+	
 	bindAccountTypeChanged();
 	var rowIndex=getSelectRowIndex(id);
     //获取操作列
     var record=$('#dgTable').datagrid('getData').rows[rowIndex];
     $('#addWin').window('open');
-    
     $('#closeTd').hide();
-    $('#reportTd').show();
     $('#editTd').hide();
+    $('#shTd').hide();
+    $('#reportTd').hide();
+    $('#sqggTd').hide();
+    $('#shOption').hide();
+   
+    //上报
+    if(flag=='SB'){
+    	  $('#addWin').panel({
+    			title : '上报',
+    			iconCls : "Folderup"
+    	});
+        $('#reportTd').show();
+       
+    	  
+    }else if(flag=='SH'){
+    //审核	
+    	$('#addWin').panel({
+			title : '审核',
+			iconCls : "Useredit",
+			height:500
+		});
+       $('#shOption').show();
+       $('#shTd').show();	
+    }else if(flag=='SQGG'){
+    	$('#addWin').panel({
+			title : '申请更改',
+			iconCls : "Useredit",
+			height:500
+		});
+       $('#shOption').show();
+       $('#shTd').show();	
+    }
     
-    $('#addWin').panel({
-		title : '查看',
-		iconCls : "icon-edit"
-	});
-    
-    
+   
     $("#addForm").form("load", record);
     //只读
     $('input,select,textarea',$('form[id="addForm"]')).attr('readonly',true);
+    //审核意见放开，非只读
+    $('#shDesc').attr('readonly',false);
 }
 
 //点击“操作列-修改”
 function editFun(id) {
-	 bindAccountTypeChanged();
+	debugger;
+	bindAccountTypeChanged();
 	var rowIndex=getSelectRowIndex(id);
     //获取操作列
     var record=$('#dgTable').datagrid('getData').rows[rowIndex];
+   
     $('#addWin').window('open');
-    $('#closeTd').hide();
-    $('#reportTd').hide();
-    $('#editTd').show();
     $('#addWin').panel({
 		title : '编辑',
-		iconCls : "icon-edit"
+		iconCls : "icon-edit",
+		height:425
 	});
     $("#addForm").form("load", record); 
+    addFormBtnShow('Edit')
     //去除只读
     $('input,select,textarea',$('form[id="addForm"]')).attr('readonly',false);
 }
@@ -214,6 +301,41 @@ function doResetQuery(){
 	doQuery();
 }
 
+//展示审批记录
+function showLogFun(bizId){
+	$('#erpLogWin').panel({
+		title : '审批日志',
+		iconCls : "Textpaddingtop"
+	});
+	$('#erpLogWin').window('open');
+	
+	$('#erpLogDgTable').datagrid({  
+			url:ctx+'/erpLog/pagerList',
+			method:'post',
+		    queryParams: {
+		    	bizId:bizId
+			},
+			fit:false,
+			pageSize: 10,
+			height: 300,
+			fitColumns:true,
+			striped: true,
+			singleSelect:true,
+			pagination: true,  
+			rownumbers: true,  
+			columns:[[
+					{field:'id',title: 'ID',align: 'center',width: 100,hidden:true}, 
+					{field:'operateTime',title: '时间',align: 'center',width: 100},
+					{field:'loginUserName',title: '操作人',align: 'center',width: 80},
+					{field:'operateInfo',title: '操作',align: 'center',width: 100,formatter:function(val,rec){
+						 return "<span title='"+val+"'>"+val+"</span>";
+			          }}
+			]]
+		  });
+	
+	
+}
+
 
  $(function(){
 	 //初始化时先判断当前用户是否已经登录
@@ -224,19 +346,16 @@ function doResetQuery(){
          data:{},
          success: function (data) {
         		if(data.success){
-        			debugger; 
         			//如果是分公司财务，只能看到自己
         			if(data.msg.PTYG){
         				$('#queryAccountUserId').combobox('reload', ctx+ "/erpUser/getUserComboboxData?orgId="+data.msg.userInfo.belongOrgId+"&Id="+data.msg.userInfo.id);
         				$('#queryAccountUserId').combobox('setValue',data.msg.userInfo.id);
         			}
-        			
         			//如果是分公司财务，只能看到本公司员工
         			if(data.msg.CW){
         				$('#queryAccountUserId').combobox('reload', ctx+ "/erpUser/getUserComboboxData?orgId="+data.msg.userInfo.belongOrgId);
         				$('#queryAccountUserId').combobox('setValue',data.msg.userInfo.id);
         			}
-        			debugger;
         			//总经理或者管理员，不做筛选
         			if(data.msg.ZJL||data.msg.GLY){
         				$('#queryAccountUserId').combobox('reload', ctx+ "/erpUser/getUserComboboxData");
@@ -305,15 +424,23 @@ function doResetQuery(){
 		        	  }
 		          }},
 		          {field:'id',title: '操作',align: 'center',width: 85, formatter:function(val,rec){
-		        	  return "<button class='ibtn-front' onclick=viewFun('"+val+"')>查看</button><button class='ibtn-edit' onclick=editFun('"+val+"')>编辑</button><button class='ibtn-top' onclick=deleteFun('"+val+"')>删除</button>";
+		        	  if(rec.bizStatus=='1'){
+		        		  return "<button class='ibtn-front' onclick=viewFun('"+val+"')>查看</button><button class='ibtn-edit' onclick=editFun('"+val+"')>编辑</button><button class='ibtn-top' onclick=deleteFun('"+val+"')>删除</button>";  
+		        	  }else if(rec.bizStatus=='2'){
+		        		  return "<button class='ibtn-front' onclick=viewFun('"+val+"')>查看</button><button class='ibtn-edit ibtn-disabled'  onclick=notOperFun('"+val+"','EDIT')>编辑</button><button class='ibtn-top ibtn-disabled' onclick=notOperFun('"+val+"','DELETE')>删除</button>";  
+		        	  }else if(rec.bizStatus=='3'){
+		        		  return "<button class='ibtn-front' onclick=viewFun('"+val+"')>查看</button><button class='ibtn-edit ibtn-disabled' onclick=notOperFun('"+val+"','EDIT')>编辑</button><button class='ibtn-top ibtn-disabled' onclick=notOperFun('"+val+"','DELETE')>删除</button>";  
+		        	  }
+		        	  
+		        	 
 		          }},
 		          {field:'sb',title: '上报',align: 'center',width: 90,formatter:function(val,rec){
 		        	  if(rec.bizStatus=='1'){
-		        		  return "<button class='ibtn-front' onclick=reportFun('"+val+"')>上报</button><button class='ibtn-log' onclick=editFun('"+val+"')>审批日志</button>";
+		        		  return "<button class='ibtn-front' onclick=reportFun('"+rec.id+"','SB')>上报</button><button class='ibtn-log' onclick=showLogFun('"+rec.id+"')>审批日志</button>";
 		        	  }else if(rec.bizStatus=='2'){
-		        		  return "<button class='ibtn-front' onclick=viewFun('"+val+"')>审核</button><button class='ibtn-log' onclick=editFun('"+val+"')>审批日志</button>";
+		        		  return "<button class='ibtn-front' style='color:red' onclick=reportFun('"+rec.id+"','SH')>审核</button><button class='ibtn-log' onclick=showLogFun('"+rec.id+"')>审批日志</button>";
 		        	  }else if(rec.bizStatus=='3'){
-		        		  return "<button class='ibtn-front' onclick=viewFun('"+val+"')>申请更改</button><button class='ibtn-log' onclick=editFun('"+val+"')>审批日志</button>";
+		        		  return "<button class='ibtn-sqgg' onclick=reportFun('"+rec.id+"','SQGG')>申请更改</button><button class='ibtn-log' onclick=showLogFun('"+rec.id+"')>审批日志</button>";
 		        	  }
 		          }},
 		          {field:'billDesc',title: '备注',align: 'center',width: 60,hidden:true}
@@ -376,6 +503,8 @@ function doResetQuery(){
    			<td>
    				<input type="hidden" id="id" name="id"></input>
    				<input type="hidden" id="dataState" name="dataState" value="1"></input>
+   				<%--在上报或审核时使用，用于区分到底是上报还是审核 --%>
+   				<input type="hidden" id="sbFlag" name="sbFlag"></input>
    				
    				<input style="width:250px;"  class="easyui-datebox" type="text" id="billDate" name="billDate" data-options="required:false"></input>
    			</td>
@@ -434,7 +563,16 @@ function doResetQuery(){
    		      <td colspan="6" align="center" style="padding:1px;">
    		      	<textarea name="billDesc" style="width:248px;height:80px;">
    		      </textarea></td> 
-   		 </tr> 
+   		 </tr>
+   		 
+   		 
+   		 <tr id="shOption">
+   		      <th style="color:red" id="sqggTH">审核意见：</th>
+   		      <td colspan="6" align="center" style="padding:1px;">
+   		      	<textarea name="shDesc" id="shDesc" style="width:248px;height:80px;">
+   		      </textarea></td> 
+   		 </tr>
+   		  
    	</table>
    </form>
     <div style="text-align:center;padding:25px 5px 5px 5px;">
@@ -447,12 +585,33 @@ function doResetQuery(){
     			<td colspan="2" style="width:50%;text-align: center;"><a href="javascript:void(0)" data-options="iconCls:'Cross'" id="resetBtn" class="easyui-linkbutton" onclick="clearForm()">关闭</a></td>
     		</tr>
     		
+    		<%--上报 --%>
     		<tr id="reportTd">
-    			<td style="width:50%;text-align: right;padding-right: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Pagesave'" id="saveBtn" class="easyui-linkbutton" onclick="reportForm()">上报</a></td>
+    			<td style="width:50%;text-align: right;padding-right: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Folderup'" id="saveBtn" class="easyui-linkbutton" onclick="reportForm()">上报</a></td>
     			<td style="width:50%;text-align: left;padding-left: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearForm()">关闭</a></td>
     		</tr>
+    		
+    		<%--审核--%>
+    		<tr id="shTd">
+    			<td style="width:45%;text-align: right;"><a href="javascript:void(0)" data-options="iconCls:'Accept'" id="saveBtn" class="easyui-linkbutton" onclick="submitSpForm('TG')">通过</a></td>
+    			<td style="width:20%;text-align: center;"><a href="javascript:void(0)" data-options="iconCls:'Cancel'" id="saveBtn" class="easyui-linkbutton" onclick="submitSpForm('DH')">打回</a></td>
+    			<td style="width:45%;text-align: left;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearForm()">关闭</a></td>
+    		</tr>
+    		
+    		<%--申请更改--%>
+    		<tr id="sqggTd">
+    			<td style="width:50%;text-align: right;padding-right: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Folderup'" id="saveBtn" class="easyui-linkbutton" onclick="submitSpForm('SQGG')">申请更改</a></td>
+    			<td style="width:50%;text-align: left;padding-left: 15px;"><a href="javascript:void(0)" data-options="iconCls:'Arrowredo'" id="resetBtn" class="easyui-linkbutton" onclick="clearForm()">关闭</a></td>
+    		</tr>
+    		
 		 </table>
     </div>
+</div>
+
+
+<div id="erpLogWin" class="easyui-window" title="&nbsp;添加" data-options="collapsible:false,maximizable:false,minimizable:false,iconCls:'icon-add',resizable:true,closed:true,modal:true" style="width:460px;height:358px;padding:10px;">
+	 <table id="erpLogDgTable">
+	 </table>
 </div>
 
 </body>

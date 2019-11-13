@@ -22,8 +22,8 @@ public class ErpBillServiceImpl implements ErpBillService{
 	
 	
 	@Override
-	public void save(ErpBill erpBill) {
-		erpBillRespository.save(erpBill);
+	public ErpBill save(ErpBill erpBill) {
+		return erpBillRespository.save(erpBill);
 	}
 
 	@Override
@@ -32,6 +32,11 @@ public class ErpBillServiceImpl implements ErpBillService{
 		grid.setTotal(erpBillDao.getTotalCount(param));
 		grid.setRows(erpBillDao.pagerList(ePager,param));
 		return grid;
+	}
+
+	@Override
+	public ErpBill getErpBillById(String id) {
+		return erpBillRespository.findOne(id);
 	}
 
 }

@@ -151,6 +151,21 @@ table.gridtable td {
 	cursor: pointer;
 }
 
+
+.ibtn-sqgg{
+	color:#ff8040;
+	width:65px;
+	background-color: #FFF;
+	background-image:none;
+	border: 1px solid #ff8040;
+	margin: 0 2px;
+	text-align: center;
+}
+
+.ibtn-sqgg:hover{
+	cursor: pointer;
+}
+
 .ibtn-edit{
 	color:green;
 	width:50px;
@@ -163,6 +178,16 @@ table.gridtable td {
 
 .ibtn-edit:hover{
 	cursor: pointer;
+}
+
+.ibtn-disabled{
+	border: 1px solid #DDD;  
+	background-color: #F5F5F5;
+	color:#ACA899;  
+}
+
+.ibtn-disabled:hover{
+	cursor:help;
 }
 
 

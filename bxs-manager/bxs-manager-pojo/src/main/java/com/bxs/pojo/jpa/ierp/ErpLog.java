@@ -22,9 +22,10 @@ public class ErpLog implements java.io.Serializable {
 	private String id;
 	private String loginUserId;
 	private String loginClientIp;
-	private Date opreateTime;
-	private String opreateType;
-	private String opreateInfo;
+	private Date operateTime;
+	private String operateType;
+	private String bizId;
+	private String operateInfo;
 
 	// Constructors
 
@@ -39,13 +40,13 @@ public class ErpLog implements java.io.Serializable {
 
 	/** full constructor */
 	public ErpLog(String id, String loginUserId, String loginClientIp,
-			Date opreateTime, String opreateType, String opreateInfo) {
+			Date operateTime, String operateType, String operateInfo) {
 		this.id = id;
 		this.loginUserId = loginUserId;
 		this.loginClientIp = loginClientIp;
-		this.opreateTime = opreateTime;
-		this.opreateType = opreateType;
-		this.opreateInfo = opreateInfo;
+		this.operateTime = operateTime;
+		this.operateType = operateType;
+		this.operateInfo = operateInfo;
 	}
 
 	// Property accessors
@@ -80,31 +81,41 @@ public class ErpLog implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "OPREATE_TIME")
-	public Date getOpreateTime() {
-		return this.opreateTime;
+	@Column(name = "OPERATE_TIME")
+	public Date getOperateTime() {
+		return this.operateTime;
 	}
 
-	public void setOpreateTime(Date opreateTime) {
-		this.opreateTime = opreateTime;
+	public void setOperateTime(Date operateTime) {
+		this.operateTime = operateTime;
 	}
 
-	@Column(name = "OPREATE_TYPE", length = 10)
-	public String getOpreateType() {
-		return this.opreateType;
+	@Column(name = "OPERATE_TYPE", length = 10)
+	public String getOperateType() {
+		return this.operateType;
 	}
 
-	public void setOpreateType(String opreateType) {
-		this.opreateType = opreateType;
+	public void setOperateType(String operateType) {
+		this.operateType = operateType;
+	}
+	
+	
+	@Column(name = "BIZ_ID", length = 32)
+	public String getBizId() {
+		return bizId;
 	}
 
-	@Column(name = "OPREATE_INFO", length = 2000)
-	public String getOpreateInfo() {
-		return this.opreateInfo;
+	public void setBizId(String bizId) {
+		this.bizId = bizId;
 	}
 
-	public void setOpreateInfo(String opreateInfo) {
-		this.opreateInfo = opreateInfo;
+	@Column(name = "OPERATE_INFO", length = 2000)
+	public String getOperateInfo() {
+		return this.operateInfo;
+	}
+
+	public void setOperateInfo(String operateInfo) {
+		this.operateInfo = operateInfo;
 	}
 
 }

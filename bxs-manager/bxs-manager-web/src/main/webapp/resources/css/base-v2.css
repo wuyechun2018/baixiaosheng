@@ -162,6 +162,12 @@ table.gridtable td {
 	text-align: center;
 }
 
+.ibtn-disabled{
+	border: 1px solid #DDD;  
+	background-color: #F5F5F5;
+	color:#ACA899;  
+}
+
 .ibtn-edit:hover{
 	cursor: pointer;
 }

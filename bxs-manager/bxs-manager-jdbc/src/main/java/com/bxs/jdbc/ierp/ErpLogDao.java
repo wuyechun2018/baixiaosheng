@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import com.bxs.common.vo.EUIPager;
+import com.bxs.pojo.ierp.ErpLogInfoVo;
 import com.bxs.pojo.jpa.ierp.ErpLog;
 
 @Repository
@@ -24,7 +25,7 @@ public class ErpLogDao {
 	 * @return Long
 	 */
 	public Long getTotalCount(Map<String, Object> param) {
-		String sql="SELECT COUNT(1) FROM T_ERP_LOG T WHERE 1=1 \n"+getParamSql(param);
+		String sql="SELECT COUNT(1) FROM V_ERP_LOG_INFO T WHERE 1=1 \n"+getParamSql(param);
 		return  jdbcTemplate.queryForObject(sql,Long.class);
 	}
 
@@ -39,9 +40,9 @@ public class ErpLogDao {
 	 * @return List<?>
 	 */
 	public List<?> getPagerList(EUIPager ePager, Map<String, Object> param) {
-		String  querySql="SELECT * FROM T_ERP_LOG T WHERE 1=1 \n"+getParamSql(param);
+		String  querySql="SELECT * FROM V_ERP_LOG_INFO T WHERE 1=1 \n"+getParamSql(param);
 		String sql="SELECT * FROM ("+querySql+")S limit ?,?";
-		List<ErpLog> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ErpLog.class));
+		List<ErpLogInfoVo> list = jdbcTemplate.query(sql,new Object[]{ePager.getStart(),ePager.getRows()},new BeanPropertyRowMapper(ErpLogInfoVo.class));
 		return list;
 	}
 
@@ -59,7 +60,10 @@ public class ErpLogDao {
 		if(param.get("loginClientIp")!=null&&StringUtils.isNotBlank(param.get("loginClientIp").toString())){
 			sqlBuff.append(" AND T.LOGIN_CLIENT_IP = '" + param.get("loginClientIp").toString() + "'\n");
 		}
-		sqlBuff.append(" ORDER BY OPREATE_TIME DESC");
+		if(param.get("bizId")!=null&&StringUtils.isNotBlank(param.get("bizId").toString())){
+			sqlBuff.append(" AND T.BIZ_ID = '" + param.get("bizId").toString() + "'\n");
+		}
+		sqlBuff.append(" ORDER BY OPERATE_TIME DESC");
 		return sqlBuff.toString();
 	}
 }

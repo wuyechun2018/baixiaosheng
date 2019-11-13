@@ -41,6 +41,8 @@ Bxs 是“百晓生”的中文拼音首字符简写，起源于自己想做一�
 
 
 
+
+
 0、常见问题记录；
 ==
 1、406 Not Acceptable ，访问/user/list时出现该错误，检查发现正常引用了Json的相关包,但是仍然出现改错误，后发现spring-mvc.xml中没有配置 <mvc:annotation-driven /> ,添加该配置后，正常返回json数据；  
@@ -55,6 +57,9 @@ set global max_allowed_packet = 20*1024*1024;
 重启Mysql服务：  
 service mysql stop;    
 serivce mysql start;  
+
+
+4、几个值得一看的页面
 
 
 
@@ -74,6 +79,9 @@ serivce mysql start;
 #	modified:   bxs-manager/pom.xml
 #	modified:   bxs-parent/pom.xml
 #
+
+
+
 
 
 
