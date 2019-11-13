@@ -59,16 +59,16 @@ service mysql stop;
 serivce mysql start;  
 
 
-#几个值得一看的页面
-##1）http://localhost:2468/bxs-manager-web/stk/index  基于metronic-4.7的后台管理页面
-##2）http://localhost:2468/bxs-manager-web/index  后台管理登录页
-##3）http://localhost:2468/bxs-manager-web/stk/icalendar 记上一笔
-##4）http://localhost:2468/bxs-manager-web/stk/peach 树与标签
-##5）http://localhost:2468/bxs-manager-web/fan/index  爱好者内容发布页
-##6）http://localhost:2468/bxs-manager-web/portal/index 传统网站主页面
-##7）http://localhost:2468/bxs-manager-web/sois/login 信息报送登录页
-##8）http://localhost:2468/bxs-manager-web/sois/doLogin 会员系统主页面（基于easyui的会员系统）
-##9）http://localhost:2468/bxs-manager-web/sois/index 会员系统页面（基于LayUI的会员系统）
+# 几个值得一看的页面
+## 1）http://localhost:2468/bxs-manager-web/stk/index  基于metronic-4.7的后台管理页面
+## 2）http://localhost:2468/bxs-manager-web/index  后台管理登录页
+## 3）http://localhost:2468/bxs-manager-web/stk/icalendar 记上一笔
+## 4）http://localhost:2468/bxs-manager-web/stk/peach 树与标签
+## 5）http://localhost:2468/bxs-manager-web/fan/index  爱好者内容发布页
+## 6）http://localhost:2468/bxs-manager-web/portal/index 传统网站主页面
+## 7）http://localhost:2468/bxs-manager-web/sois/login 信息报送登录页
+## 8）http://localhost:2468/bxs-manager-web/sois/doLogin 会员系统主页面（基于easyui的会员系统）
+## 9）http://localhost:2468/bxs-manager-web/sois/index 会员系统页面（基于LayUI的会员系统）
 
 
 
