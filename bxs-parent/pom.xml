@@ -287,7 +287,7 @@
 			<!--Spring Data JPA End  -->
 			
 			
-			<!-- 发送邮件 -->
+			<!-- 发送邮件  -->
 			<dependency>
 				<groupId>javax.mail</groupId>
 				<artifactId>mail</artifactId>
